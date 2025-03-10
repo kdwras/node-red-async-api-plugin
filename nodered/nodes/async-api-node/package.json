@@ -1,0 +1,15 @@
+{
+  "name": "node-red-custom-node",
+  "version": "1.0.0",
+  "description": "A custom Node-RED node",
+  "dependencies": {
+    "@asyncapi/parser": "latest",
+    "express": "^4.21.2",
+    "node-red": "*"
+  },
+  "node-red": {
+    "nodes": {
+      "async-api-node": "async-api-red.js"
+    }
+  }
+}

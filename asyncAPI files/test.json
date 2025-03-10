@@ -1,0 +1,51 @@
+{
+  "asyncapi": "2.0.0",
+  "info": {
+    "title": "Temperature Sensor API",
+    "version": "1.0.0",
+    "description": "An AsyncAPI specification for a temperature sensor system using NATS."
+  },
+  "servers": {
+    "production": {
+      "url": "nats://localhost:4222",
+      "protocol": "nats"
+    }
+  },
+  "channels": {
+    "sensor/temperature": {
+      "description": "Channel for publishing temperature data.",
+      "subscribe": {
+        "summary": "Receive temperature updates.",
+        "operationId": "receiveTemperature",
+        "message": {
+          "contentType": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "sensorId": { "type": "string" },
+              "temperature": { "type": "number" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    },
+    "sensor/command": {
+      "description": "Channel for sending commands to sensors.",
+      "publish": {
+        "summary": "Send a command to the sensor.",
+        "operationId": "sendCommand",
+        "message": {
+          "contentType": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "sensorId": { "type": "string" },
+              "command": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

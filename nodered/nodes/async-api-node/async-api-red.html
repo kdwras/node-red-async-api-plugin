@@ -1,0 +1,154 @@
+<script type="text/javascript">
+    RED.nodes.registerType('async-api-red', {
+        category: 'network',
+        color: 'rgb(136 81 251)',
+        defaults: {
+            name: {value: ""},
+            selectedServer: {value: ""}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "white-globe.svg",
+        label: function () {
+            return this.name || "AsyncApi-red";
+        },
+        oneditprepare: function () {
+            const node = this;
+
+            // Fetch saved file
+            getFile(node.id);
+
+            // Handle file input selection
+            $("#node-input-file").on("change", function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    uploadFile(node.id, file);
+                }
+            });
+        }
+    });
+
+    /** Function to fetch saved file */
+    function getFile(nodeId) {
+        $.ajax({
+            url: `/async-api-red/${nodeId}/file`,
+            type: "GET",
+            success: function (response) {
+                console.log("File loaded:", response.fileName);
+
+                let fileContent = response.fileContent;
+                let blob = new Blob([fileContent], {type: "text/plain"});
+                let file = new File([blob], response.fileName, {type: response.fileType});
+                let dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+
+                $("#node-input-file")[0].files = dataTransfer.files;
+
+                // Fetch related information
+                getServers(nodeId);
+                getChannels(nodeId);
+            },
+            error: function (err) {
+                console.error("Error fetching file:", err);
+            }
+        });
+    }
+
+    /** Function to upload file */
+    function uploadFile(nodeId, file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        $.ajax({
+            url: `/async-api-red/${nodeId}/file`,
+            type: "POST",
+            data: formData,
+            processData: false, // Prevent jQuery from processing data
+            contentType: false, // Let browser set correct Content-Type
+            success: function (response) {
+                console.log("File uploaded:", response);
+                // Fetch updated information after file upload
+                getServers(nodeId);
+                getChannels(nodeId);
+            },
+            error: function () {
+                alert("File upload failed");
+            }
+        });
+    }
+
+    /** Function to fetch servers */
+    function getServers(nodeId) {
+        $.ajax({
+            type: "GET",
+            url: `/async-api-red/${nodeId}/servers`,
+            success: function (response) {
+                let dropdown = $("#node-input-select-server");
+                dropdown.empty();
+                if (response.servers) {
+                    Object.keys(response.servers).forEach(serverName => {
+                        let server = response.servers[serverName];
+                        dropdown.append(
+                            `<option value="${server.url}">${server.url}</option>`
+                        );
+                    });
+                }
+            },
+            error: function (err) {
+                console.error("Error fetching servers:", err);
+            }
+        });
+    }
+
+    /** Function to fetch channels */
+    function getChannels(nodeId) {
+        $.ajax({
+            type: "GET",
+            url: `/async-api-red/${nodeId}/channels`,
+            success: function (response) {
+                let dropdown = $("#node-input-channel");
+                dropdown.empty();
+                if (response.channels) {
+                    Object.keys(response.channels).forEach(channelName => {
+                        let channel = response.channels[channelName];
+                        dropdown.append(
+                            `<option value="${channel.address}">${channel.address}</option>`
+                        );
+                    });
+                }
+            },
+            error: function (err) {
+                console.error("Error fetching channels:", err);
+            }
+        });
+    }
+</script>
+
+<script type="text/html" data-template-name="async-api-red">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-file"><i class="fa fa-file"></i> Upload AsyncAPI File</label>
+        <input type="file" id="node-input-file">
+        <input type="hidden" id="node-input-fileContent"/>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-select-server"><i class="fa fa-server"></i> Select Server</label>
+        <select id="node-input-select-server"></select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="fa fa-server"></i> Select Topic</label>
+        <select id="node-input-channel"></select>
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="async-api-red">
+    <p>Parse AsyncAPI descriptions to nodered-ui</p>
+</script>
