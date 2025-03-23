@@ -45,8 +45,7 @@
                 $("#node-input-file")[0].files = dataTransfer.files;
 
                 // Fetch related information
-                getServers(nodeId);
-                getChannels(nodeId);
+                getData(nodeId);
             },
             error: function (err) {
                 console.error("Error fetching file:", err);
@@ -68,8 +67,7 @@
             success: function (response) {
                 console.log("File uploaded:", response);
                 // Fetch updated information after file upload
-                getServers(nodeId);
-                getChannels(nodeId);
+                getData(nodeId);
             },
             error: function () {
                 alert("File upload failed");
@@ -78,19 +76,38 @@
     }
 
     /** Function to fetch servers */
-    function getServers(nodeId) {
+    function getData(nodeId) {
         $.ajax({
             type: "GET",
-            url: `/async-api-red/${nodeId}/servers`,
+            url: `/async-api-red/${nodeId}/data`,
             success: function (response) {
-                let dropdown = $("#node-input-select-server");
-                dropdown.empty();
+                let serverDropdown = $("#node-input-select-server");
+                serverDropdown.empty();
                 if (response.servers) {
-                    Object.keys(response.servers).forEach(serverName => {
-                        let server = response.servers[serverName];
-                        dropdown.append(
+                    response.servers.forEach(server => {
+                        serverDropdown.append(
                             `<option value="${server.url}">${server.url}</option>`
                         );
+                    });
+                }
+                let channelDropdown = $("#node-input-channel");
+                channelDropdown.empty();
+                const channels = response.channels;
+                if (channels) {
+                    response.channels.forEach(channel => {
+                        channelDropdown.append(
+                            `<option value="${channel.address}">${channel.address}</option>`
+                        );
+                        if (channel.operations) {
+                            let operationDropdown = $("#node-input-operations");
+                            operationDropdown.empty();
+                            channel.operations.forEach(operation => {
+                                console.log(operation);
+                                operationDropdown.append(
+                                    `<option value="${operation.id}">${operation.id}</option>`
+                                );
+                            });
+                        }
                     });
                 }
             },
@@ -100,28 +117,6 @@
         });
     }
 
-    /** Function to fetch channels */
-    function getChannels(nodeId) {
-        $.ajax({
-            type: "GET",
-            url: `/async-api-red/${nodeId}/channels`,
-            success: function (response) {
-                let dropdown = $("#node-input-channel");
-                dropdown.empty();
-                if (response.channels) {
-                    Object.keys(response.channels).forEach(channelName => {
-                        let channel = response.channels[channelName];
-                        dropdown.append(
-                            `<option value="${channel.address}">${channel.address}</option>`
-                        );
-                    });
-                }
-            },
-            error: function (err) {
-                console.error("Error fetching channels:", err);
-            }
-        });
-    }
 </script>
 
 <script type="text/html" data-template-name="async-api-red">
@@ -132,19 +127,24 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-file"><i class="fa fa-file"></i> Upload AsyncAPI File</label>
+        <label for="node-input-file"><i class="fa fa-file"></i>AsyncAPI File</label>
         <input type="file" id="node-input-file">
         <input type="hidden" id="node-input-fileContent"/>
     </div>
 
     <div class="form-row">
-        <label for="node-input-select-server"><i class="fa fa-server"></i> Select Server</label>
+        <label for="node-input-select-server"><i class="fa fa-server"></i>Server</label>
         <select id="node-input-select-server"></select>
     </div>
 
     <div class="form-row">
-        <label for="node-input-channel"><i class="fa fa-server"></i> Select Topic</label>
+        <label for="node-input-channel"><i class="fa fa-comments"></i>Topic</label>
         <select id="node-input-channel"></select>
+    </div>
+
+    <div class="form-row">
+        <label><i class="fa fa-list"></i> Operations</label>
+        <select id="node-input-operations"></select>
     </div>
 
 </script>
@@ -152,3 +152,27 @@
 <script type="text/html" data-help-name="async-api-red">
     <p>Parse AsyncAPI descriptions to nodered-ui</p>
 </script>
+
+<style>
+    .messages-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        background: #f9f9f9;
+    }
+
+    .message-box {
+        padding: 5px;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        background: white;
+    }
+
+    pre {
+        background: #eef;
+        padding: 5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>

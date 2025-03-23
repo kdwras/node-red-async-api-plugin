@@ -11,7 +11,7 @@ module.exports = (RED) => {
 
     initRoutes();
 
-    async function getServers(req, res) {
+    async function getData(req, res) {
 
         const {nodeId} = req.params;
 
@@ -27,46 +27,52 @@ module.exports = (RED) => {
             const data = await getParsedAsyncApiFile(fileContent);
             const document = data.document;
 
-            const servers = {};
+            const servers = [];
             document.servers().forEach((server, name) => {
-                servers[name] = {
+                servers.push({
                     url: server.url(),
                     protocol: server.protocol(),
                     description: server.description()
-                };
+                })
             });
 
-            res.json({servers});
-        } catch (error) {
-            res.status(500).json({error: error});
-        }
-    }
-
-    async function getChannels(req, res) {
-
-        const {nodeId} = req.params;
-
-        try {
-            const filePath = getFilePath(nodeId);
-            const file = await fetchFile(filePath);
-            const fileContent = file.fileContent;
-
-
-            if (!fileContent) {
-                return res.status(400).json({error: "No file content provided"});
-            }
-
-            const data = await getParsedAsyncApiFile(fileContent);
-            const document = data.document;
-
-            const channels = {};
+            const channels = [];
             document.channels().forEach((channel, name) => {
-                channels[name] = {
-                    address: channel.address()
-                }
+                let operations = [];
+                let parameters = [];
+                channel.operations().forEach((operation) => {
+                    const action = operation.action(); // "publish" or "subscribe"
+                    const summary = operation.summary();
+                    const id = operation.id();
+                    const messages = [];
+                    operation.messages().forEach((msg) => {
+                        messages.push({
+                            name: msg.name(),
+                            payload: msg.payload().json(),
+                            contentType: msg.contentType(),
+                        })
+                    });
+                    operations.push({
+                        id,
+                        action,
+                        summary,
+                        messages
+                    });
+                });
+                channel.parameters().forEach((param) => {
+                    parameters.push({id: param.id(), description: param.description()});
+                });
+                channels.push({
+                    address: channel.address(),
+                    parameters: parameters,
+                    operations: operations
+                });
             });
 
-            res.json({channels});
+            res.json({
+                servers: servers,
+                channels: channels
+            });
         } catch (error) {
             res.status(500).json({error: error});
         }
@@ -167,8 +173,7 @@ module.exports = (RED) => {
 
     function initRoutes() {
         // Assign handlers to routes
-        router.get("/async-api-red/:nodeId/servers", getServers);
-        router.get("/async-api-red/:nodeId/channels", getChannels);
+        router.get("/async-api-red/:nodeId/data", getData);
         router.post("/async-api-red/:nodeId/file", getFileProvider().single("file"), uploadFile);
         router.get("/async-api-red/:nodeId/file", getFile);
     }

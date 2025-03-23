@@ -19,7 +19,7 @@
   },
   "servers": [
     {
-      "url": "http://172.16.1.1:5002/AirCondition_actuator",
+      "url": "http://172.16.1.1:8080/AirCondition_actuator",
       "description": "SwaggerHub API Auto Mocking"
     }
   ],

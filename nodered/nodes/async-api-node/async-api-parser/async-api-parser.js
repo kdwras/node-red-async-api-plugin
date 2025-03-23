@@ -22,7 +22,7 @@ async function getParsedAsyncApiFile(data) {
         const ret = await parser.parse(data);
 
         console.log('✅ AsyncAPI document is valid!');
-       // console.log('Parsed Document:', ret);
+      //  console.log('Parsed Document:', ret);
 
         return ret;
 
