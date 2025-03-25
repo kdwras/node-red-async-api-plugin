@@ -20,6 +20,8 @@ module.exports = function (RED) {
 
         nodesMap[node.id] = node;
         //mqtt://172.17.0.1:1883
+        node.serverUrl = 'mqtt://172.17.0.1:1883';
+        node.topic = 'home/sensor';
 
         console.log(config);
         if (!node.serverUrl || !node.topic) {
