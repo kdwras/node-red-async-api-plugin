@@ -3,23 +3,22 @@
         category: 'network',
         color: 'rgb(136 81 251)',
         defaults: {
-            name: {value: ""},
-            selectedServer: {value: ""}
+            name: {value: ""}
         },
         inputs: 1,
         outputs: 1,
         icon: "white-globe.svg",
-        label: function () {
+        label: () => {
             return this.name || "AsyncApi-red";
         },
-        oneditprepare: function () {
+        oneditprepare: () => {
             const node = this;
 
             // Fetch saved file
             getFile(node.id);
 
             // Handle file input selection
-            $("#node-input-file").on("change", function (event) {
+            $("#node-input-file").on("change", (event) => {
                 const file = event.target.files[0];
                 if (file) {
                     uploadFile(node.id, file);
@@ -117,6 +116,34 @@
         });
     }
 
+    function saveUserSelections(nodeId, data) {
+        $.ajax({
+            url: `/async-api-red/${nodeId}/user-selections`,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (err) {
+                console.error("Error saving data:", err);
+            }
+        });
+    }
+
+    function getUserSelections(nodeId){
+        $.ajax({
+            url: `/async-api-red/${nodeId}/user-selections`,
+            type: "GET",
+            success: function (data) {
+                console.log("Retrieved Data:", data);
+            },
+            error: function (err) {
+                console.error("Error fetching data:", err);
+            }
+        });
+    }
+
 </script>
 
 <script type="text/html" data-template-name="async-api-red">
@@ -152,27 +179,3 @@
 <script type="text/html" data-help-name="async-api-red">
     <p>Parse AsyncAPI descriptions to nodered-ui</p>
 </script>
-
-<style>
-    .messages-container {
-        border: 1px solid #ccc;
-        padding: 10px;
-        max-height: 200px;
-        overflow-y: auto;
-        background: #f9f9f9;
-    }
-
-    .message-box {
-        padding: 5px;
-        margin: 5px 0;
-        border: 1px solid #ddd;
-        background: white;
-    }
-
-    pre {
-        background: #eef;
-        padding: 5px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-    }
-</style>

@@ -5,7 +5,8 @@
   "dependencies": {
     "@asyncapi/parser": "latest",
     "express": "^4.21.2",
-    "node-red": "*"
+    "node-red": "*",
+    "mqtt": "^4.3.7"
   },
   "node-red": {
     "nodes": {

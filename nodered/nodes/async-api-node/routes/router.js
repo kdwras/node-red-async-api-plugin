@@ -105,6 +105,35 @@ module.exports = (RED) => {
 
     }
 
+    function saveUserSelections(req, res) {
+        const {nodeId} = req.params;
+        const payload = req.body;
+        const node = RED.nodes.getNode(nodeId);
+        if (node) {
+            try {
+                node.context().set("serverUrl", payload.serverUrl);
+                node.context().set("topic", payload.topic);
+                res.status(204);
+            } catch (error) {
+                res.status(500).json({error: error})
+            }
+        } else {
+            res.status(404).json({error: "Node not found!"});
+        }
+    }
+
+    function getUserSelections(req, res) {
+        const {nodeId} = req.params;
+        const node = RED.nodes.getNode(nodeId);
+        if (node) {
+            const serverUrl = node.context().get("serverUrl");
+            const topic = node.context().get("topic");
+            res.status(200).json({serverUrl: serverUrl, topic: topic});
+        } else {
+            res.status(404).json({error: "Node not found!"});
+        }
+    }
+
     /** private functions **/
     function getFileProvider() {
         const storage = multer.diskStorage({
@@ -176,6 +205,8 @@ module.exports = (RED) => {
         router.get("/async-api-red/:nodeId/data", getData);
         router.post("/async-api-red/:nodeId/file", getFileProvider().single("file"), uploadFile);
         router.get("/async-api-red/:nodeId/file", getFile);
+        router.get("/async-api-red/:nodeId/user-selections", getUserSelections);
+        router.post("/async-api-red/:nodeId/user-selections", saveUserSelections);
     }
 
     return router;
