@@ -12,19 +12,38 @@
             return this.name || "AsyncApi-red";
         },
         oneditprepare: () => {
+
             const node = this;
 
-            // Fetch saved file
-            getFile(node.id);
+            if (node?.id) {
+                // Fetch saved file
+                getFile(node.id);
+            }
 
             // Handle file input selection
             $("#node-input-file").on("change", (event) => {
                 const file = event.target.files[0];
-                if (file) {
+                if (file && node?.id) {
                     uploadFile(node.id, file);
                 }
             });
-        }
+
+        },
+        oneditsave: () => {
+            const node = this;
+            if (node?.id) {
+                const data = {
+                    serverUrl: document.getElementById("node-input-select-server").value,
+                    topic: document.getElementById("node-input-channel").value
+                }
+                saveUserSelections(node.id, data);
+            }
+        },
+        // oneditcancel: function () {
+        //     const node = this;
+        //     node.editor.destroy();
+        //     delete node.editor;
+        // },
     });
 
     /** Function to fetch saved file */
@@ -131,16 +150,18 @@
         });
     }
 
-    function getUserSelections(nodeId){
-        $.ajax({
-            url: `/async-api-red/${nodeId}/user-selections`,
-            type: "GET",
-            success: function (data) {
-                console.log("Retrieved Data:", data);
-            },
-            error: function (err) {
-                console.error("Error fetching data:", err);
-            }
+    function getUserSelections(nodeId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/async-api-red/${nodeId}/user-selections`,
+                type: "GET",
+                success: function (data) {
+                    resolve(data);
+                },
+                error: function (err) {
+                    reject(err);
+                }
+            });
         });
     }
 

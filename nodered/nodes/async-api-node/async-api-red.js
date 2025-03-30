@@ -14,14 +14,14 @@ module.exports = function (RED) {
     function getNode(config) {
         RED.nodes.createNode(this, config);
 
-        console.log(`config --> ${config}`);
-
         const node = this;
 
         nodesMap[node.id] = node;
         //mqtt://172.17.0.1:1883
-        node.serverUrl = 'mqtt://172.17.0.1:1883';
-        node.topic = 'home/sensor';
+        // node.serverUrl = 'mqtt://172.17.0.1:1883';
+        // node.topic = 'home/sensor';
+
+       //getUserSelections(node.id).then(res => console.log(res));
 
         console.log(config);
         if (!node.serverUrl || !node.topic) {

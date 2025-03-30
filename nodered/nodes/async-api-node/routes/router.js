@@ -15,6 +15,12 @@ module.exports = (RED) => {
 
         const {nodeId} = req.params;
 
+        const node = RED.nodes.getNode(nodeId);
+
+        if (!node) {
+            res.status(404).json({error: "Node not found!"});
+        }
+
         try {
             const filePath = getFilePath(nodeId);
             const file = await fetchFile(filePath);
@@ -79,6 +85,13 @@ module.exports = (RED) => {
     }
 
     function uploadFile(req, res) {
+        const {nodeId} = req.params;
+
+        const node = RED.nodes.getNode(nodeId);
+
+        if (!node) {
+            res.status(404).json({error: "Node not found!"});
+        }
         // Check if file exists in request (handled by multer)
         if (!req.file) {
             return res.status(400).json({error: "No file uploaded"});
@@ -89,6 +102,12 @@ module.exports = (RED) => {
     async function getFile(req, res) {
 
         const {nodeId} = req.params;
+
+        const node = RED.nodes.getNode(nodeId);
+
+        if (!node) {
+            res.status(404).json({error: "Node not found!"});
+        }
 
         const fileDest = getFilePath(nodeId);
 
@@ -109,29 +128,30 @@ module.exports = (RED) => {
         const {nodeId} = req.params;
         const payload = req.body;
         const node = RED.nodes.getNode(nodeId);
-        if (node) {
-            try {
-                node.context().set("serverUrl", payload.serverUrl);
-                node.context().set("topic", payload.topic);
-                res.status(204);
-            } catch (error) {
-                res.status(500).json({error: error})
-            }
-        } else {
+        if (!node) {
             res.status(404).json({error: "Node not found!"});
         }
+        try {
+            node.context().set("serverUrl", payload.serverUrl);
+            node.context().set("topic", payload.topic);
+            res.status(204).json({});
+        } catch (error) {
+            res.status(500).json({error: error})
+        }
+
     }
 
     function getUserSelections(req, res) {
         const {nodeId} = req.params;
         const node = RED.nodes.getNode(nodeId);
-        if (node) {
-            const serverUrl = node.context().get("serverUrl");
-            const topic = node.context().get("topic");
-            res.status(200).json({serverUrl: serverUrl, topic: topic});
-        } else {
+
+        if (!node) {
             res.status(404).json({error: "Node not found!"});
         }
+        const serverUrl = node.context().get("serverUrl");
+        const topic = node.context().get("topic");
+        res.status(200).json({serverUrl: serverUrl, topic: topic});
+
     }
 
     /** private functions **/
