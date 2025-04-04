@@ -8,10 +8,10 @@
         inputs: 1,
         outputs: 1,
         icon: "white-globe.svg",
-        label: () => {
+        label: function() {
             return this.name || "AsyncApi-red";
         },
-        oneditprepare: () => {
+        oneditprepare: function()  {
 
             const node = this;
 
@@ -29,7 +29,7 @@
             });
 
         },
-        oneditsave: () => {
+        oneditsave: function() {
             const node = this;
             if (node?.id) {
                 const data = {

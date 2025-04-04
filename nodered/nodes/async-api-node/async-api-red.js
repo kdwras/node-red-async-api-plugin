@@ -21,7 +21,10 @@ module.exports = function (RED) {
         // node.serverUrl = 'mqtt://172.17.0.1:1883';
         // node.topic = 'home/sensor';
 
-       //getUserSelections(node.id).then(res => console.log(res));
+       // getUserSelections(node.id).then(res => {
+       //     console.log('trimmm');
+       //     console.log(res);
+       // });
 
         console.log(config);
         if (!node.serverUrl || !node.topic) {
