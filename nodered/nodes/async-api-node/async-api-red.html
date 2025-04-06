@@ -8,10 +8,10 @@
         inputs: 1,
         outputs: 1,
         icon: "white-globe.svg",
-        label: function() {
+        label: function () {
             return this.name || "AsyncApi-red";
         },
-        oneditprepare: function()  {
+        oneditprepare: function () {
 
             const node = this;
 
@@ -29,7 +29,7 @@
             });
 
         },
-        oneditsave: function() {
+        oneditsave: function () {
             const node = this;
             if (node?.id) {
                 const data = {
@@ -120,7 +120,6 @@
                             let operationDropdown = $("#node-input-operations");
                             operationDropdown.empty();
                             channel.operations.forEach(operation => {
-                                console.log(operation);
                                 operationDropdown.append(
                                     `<option value="${operation.id}">${operation.id}</option>`
                                 );
@@ -128,6 +127,12 @@
                         }
                     });
                 }
+                const data = {
+                    serverUrl: document.getElementById("node-input-select-server").value,
+                    topic: document.getElementById("node-input-channel").value
+                }
+                saveUserSelections(nodeId, data);
+                getUserSelections(nodeId);
             },
             error: function (err) {
                 console.error("Error fetching servers:", err);
@@ -142,10 +147,9 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (response) {
-                console.log(response.message);
+
             },
             error: function (err) {
-                console.error("Error saving data:", err);
             }
         });
     }

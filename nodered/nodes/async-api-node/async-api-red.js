@@ -18,15 +18,10 @@ module.exports = function (RED) {
 
         nodesMap[node.id] = node;
         //mqtt://172.17.0.1:1883
-        // node.serverUrl = 'mqtt://172.17.0.1:1883';
-        // node.topic = 'home/sensor';
+        node.serverUrl = node.context().get("serverUrl");
+        node.topic = node.context().get("topic");
 
-       // getUserSelections(node.id).then(res => {
-       //     console.log('trimmm');
-       //     console.log(res);
-       // });
-
-        console.log(config);
+        console.log(`loool -> ${node.serverUrl}`);
         if (!node.serverUrl || !node.topic) {
             node.error("MQTT Server URL or Topic is missing!");
             node.status({fill: "red", shape: "ring", text: "Missing MQTT Config"});

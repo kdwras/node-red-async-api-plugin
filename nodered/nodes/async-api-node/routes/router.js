@@ -136,9 +136,8 @@ module.exports = (RED) => {
             node.context().set("topic", payload.topic);
             res.status(204).json({});
         } catch (error) {
-            res.status(500).json({error: error})
+            res.status(500).json({error: error});
         }
-
     }
 
     function getUserSelections(req, res) {
