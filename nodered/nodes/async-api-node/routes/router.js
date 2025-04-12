@@ -1,9 +1,8 @@
-
 module.exports = (RED) => {
 
     const express = require("express");
     const fs = require("fs");
-    const Providers = require("../providers/providers");
+    const Providers = require("../providers/providers")(RED);
     const Utils = require("../utils/utils")(RED);
 
     const router = express.Router();
@@ -108,7 +107,7 @@ module.exports = (RED) => {
             res.status(404).json({error: "Node not found!"});
         }
 
-        const fileDest = Utils.getFilePath(RED, nodeId);
+        const fileDest = Utils.getFilePath(nodeId);
 
         if (!fs.existsSync(fileDest)) {
             return res.status(404).json({error: "No uploaded files found"});
