@@ -37,6 +37,7 @@
                     topic: document.getElementById("node-input-channel").value
                 }
                 saveUserSelections(node.id, data);
+                connectToServer(node.id);
             }
         },
         // oneditcancel: function () {
@@ -166,6 +167,19 @@
                     reject(err);
                 }
             });
+        });
+    }
+
+    function connectToServer(nodeId) {
+        $.ajax({
+            url: `/async-api-red/${nodeId}/server-connect`,
+            type: "GET",
+            contentType: "application/json",
+            success: function (response) {
+                console.log('connected to server');
+            },
+            error: function (err) {
+            }
         });
     }
 

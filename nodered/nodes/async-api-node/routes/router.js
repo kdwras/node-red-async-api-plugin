@@ -213,7 +213,7 @@ module.exports = (RED) => {
         router.get("/async-api-red/:nodeId/file", getFile);
         router.get("/async-api-red/:nodeId/user-selections", getUserSelections);
         router.post("/async-api-red/:nodeId/user-selections", saveUserSelections);
-        router.post("/async-api-red/:nodeId/server-connect", connectToServer);
+        router.get("/async-api-red/:nodeId/server-connect", connectToServer);
     }
 
     return router;
