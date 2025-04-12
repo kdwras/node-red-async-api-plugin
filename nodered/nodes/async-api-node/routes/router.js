@@ -9,6 +9,12 @@ module.exports = (RED) => {
 
     initRoutes();
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @returns {Promise<*>}
+     */
     async function getData(req, res) {
 
         const {nodeId} = req.params;
@@ -82,6 +88,12 @@ module.exports = (RED) => {
         }
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @returns {*}
+     */
     function uploadFile(req, res) {
         const {nodeId} = req.params;
 
@@ -97,6 +109,12 @@ module.exports = (RED) => {
         res.json(204);
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @returns {Promise<*>}
+     */
     async function getFile(req, res) {
 
         const {nodeId} = req.params;
@@ -122,6 +140,11 @@ module.exports = (RED) => {
 
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     */
     function saveUserSelections(req, res) {
         const {nodeId} = req.params;
         const payload = req.body;
@@ -138,6 +161,12 @@ module.exports = (RED) => {
         }
     }
 
+
+    /**
+     *
+     * @param req
+     * @param res
+     */
     function getUserSelections(req, res) {
         const {nodeId} = req.params;
         const node = RED.nodes.getNode(nodeId);
@@ -151,6 +180,12 @@ module.exports = (RED) => {
 
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @returns {*}
+     */
     function connectToServer(req, res) {
         const {nodeId} = req.params;
         const node = RED.nodes.getNode(nodeId);
@@ -168,6 +203,9 @@ module.exports = (RED) => {
     }
 
 
+    /**
+     *
+     */
     function initRoutes() {
         // Assign handlers to routes
         router.get("/async-api-red/:nodeId/data", getData);

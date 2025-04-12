@@ -5,6 +5,11 @@ const path = require("path");
 const mime = require("mime-types");
 
 module.exports = (RED) => {
+
+    /**
+     *
+     * @param data
+     */
     async function getParsedAsyncApiFile(data) {
 
         // Read the AsyncAPI file
@@ -34,6 +39,10 @@ module.exports = (RED) => {
         }
     }
 
+    /**
+     *
+     * @param node
+     */
     function connectToServer(node) {
 
         //locally srv ----> mqtt://172.17.0.1:1883
@@ -82,6 +91,11 @@ module.exports = (RED) => {
 
     }
 
+    /**
+     *
+     * @param uri
+     * @returns {Promise<unknown>}
+     */
     function fetchFile(uri) {
         return new Promise((resolve, reject) => {
             fs.readdir(uri, (err, files) => {
@@ -109,6 +123,11 @@ module.exports = (RED) => {
         });
     }
 
+    /**
+     *
+     * @param nodeId
+     * @returns {string}
+     */
     function getFilePath(nodeId) {
         const userDir = RED.settings.userDir;
         const projects = RED.settings.get("projects");

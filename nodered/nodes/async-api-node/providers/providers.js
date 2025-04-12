@@ -3,6 +3,10 @@ module.exports = (RED) => {
     const multer = require("multer");
     const Utils = require("../utils/utils")(RED);
 
+    /**
+     *
+     * @returns {*}
+     */
     function getFile() {
         const storage = multer.diskStorage({
             destination: (req, file, cb) => {
