@@ -101,7 +101,14 @@
             url: `/async-api-red/${nodeId}/data`,
             success: function (response) {
                 let serverDropdown = $("#node-input-select-server");
+                let channelDropdown = $("#node-input-channel");
+                let operationDropdown = $("#node-input-operations");
+
                 serverDropdown.empty();
+                channelDropdown.empty();
+                operationDropdown.empty();
+
+                // Populate servers
                 if (response.servers) {
                     response.servers.forEach(server => {
                         serverDropdown.append(
@@ -109,31 +116,44 @@
                         );
                     });
                 }
-                let channelDropdown = $("#node-input-channel");
-                channelDropdown.empty();
-                const channels = response.channels;
-                if (channels) {
-                    response.channels.forEach(channel => {
-                        channelDropdown.append(
-                            `<option value="${channel.address}">${channel.address}</option>`
-                        );
-                        if (channel.operations) {
-                            let operationDropdown = $("#node-input-operations");
-                            operationDropdown.empty();
-                            channel.operations.forEach(operation => {
-                                operationDropdown.append(
-                                    `<option value="${operation.id}">${operation.id}</option>`
-                                );
-                            });
-                        }
-                    });
-                }
+
+                // Save channels for later use
+                const channels = response.channels || [];
+
+                // Populate channels dropdown
+                channels.forEach(channel => {
+                    channelDropdown.append(
+                        `<option value="${channel.address}">${channel.address}</option>`
+                    );
+                });
+
+                // Bind event to load operations based on selected channel
+                channelDropdown.off("change").on("change", function () {
+                    const selectedChannelAddress = $(this).val();
+                    operationDropdown.empty();
+
+                    const selectedChannel = channels.find(
+                        ch => ch.address === selectedChannelAddress
+                    );
+
+                    if (selectedChannel && selectedChannel.operations) {
+                        selectedChannel.operations.forEach(operation => {
+                            operationDropdown.append(
+                                `<option value="${operation.id}">${operation.id}</option>`
+                            );
+                        });
+                    }
+                });
+
+                //  trigger change event if you want to auto-load operations for the first channel
+                channelDropdown.trigger("change");
+
+                // Save current selections
                 const data = {
-                    serverUrl: document.getElementById("node-input-select-server").value,
-                    topic: document.getElementById("node-input-channel").value
-                }
+                    serverUrl: serverDropdown.val(),
+                    topic: channelDropdown.val()
+                };
                 saveUserSelections(nodeId, data);
-                getUserSelections(nodeId);
             },
             error: function (err) {
                 console.error("Error fetching servers:", err);

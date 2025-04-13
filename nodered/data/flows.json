@@ -2875,5 +2875,34 @@
                 "fd241870fe8e402a"
             ]
         ]
+    },
+    {
+        "id": "47483fe752884d4b",
+        "type": "async-api-red",
+        "z": "601e851c73ab7025",
+        "name": "",
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "1a496bc169efbe9e"
+            ]
+        ]
+    },
+    {
+        "id": "1a496bc169efbe9e",
+        "type": "debug",
+        "z": "601e851c73ab7025",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 300,
+        "wires": []
     }
 ]
