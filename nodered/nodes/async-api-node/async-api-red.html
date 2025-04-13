@@ -175,21 +175,6 @@
         });
     }
 
-    function getUserSelections(nodeId) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: `/async-api-red/${nodeId}/user-selections`,
-                type: "GET",
-                success: function (data) {
-                    resolve(data);
-                },
-                error: function (err) {
-                    reject(err);
-                }
-            });
-        });
-    }
-
     function connectToServer(nodeId) {
         $.ajax({
             url: `/async-api-red/${nodeId}/server-connect`,
