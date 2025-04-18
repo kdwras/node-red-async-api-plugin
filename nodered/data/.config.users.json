@@ -24,6 +24,7 @@
         },
         "debug": {
             "filter": "filterAll"
-        }
+        },
+        "menu-menu-item-palette": true
     }
 }

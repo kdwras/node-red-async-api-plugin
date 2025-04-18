@@ -148,6 +148,24 @@
                 //  trigger change event if you want to auto-load operations for the first channel
                 channelDropdown.trigger("change");
 
+                operationDropdown.off("change").on("change", function () {
+                    const selectedChannelAddress = $("#node-input-channel").val();
+                    const selectedOperationId = $(this).val();
+
+                    const selectedChannel = channels.find(
+                        ch => ch.address === selectedChannelAddress
+                    );
+
+                    const selectedOperation = selectedChannel?.operations?.find(
+                        op => op.id === selectedOperationId
+                    );
+
+                    renderMessages(selectedChannel, selectedOperation);
+
+                });
+
+                operationDropdown.trigger("change");
+
                 // Save current selections
                 const data = {
                     serverUrl: serverDropdown.val(),
@@ -188,6 +206,41 @@
         });
     }
 
+    function renderMessages(selectedChannel, selectedOperation) {
+        const messages = selectedOperation.messages;
+
+        const container = $("#node-messages-display");
+        container.empty();
+
+        if (!messages.length) {
+            container.append("<div>No messages available for this operation.</div>");
+            return;
+        }
+
+        messages.forEach((message, index) => {
+            const prettyPayload = JSON.stringify(message.payload, null, 2);
+            const html = `
+            <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                <strong>${index + 1}. ${message.name}</strong><br/>
+                <em>Summary:</em> ${selectedOperation.summary}<br/>
+                <em>Topic:</em> ${selectedChannel.address}<span style=" display: inline-block;
+                                                            color: #e1f5fe;
+                                                            background-color: #0277bd;
+                                                            border-radius: 10px;
+                                                            font-size: 11px;
+                                                            font-weight: bold;
+                                                            padding: 2px 8px;
+                                                            margin-left: 8px;
+                                                            text-transform: uppercase;">${selectedOperation.action === 'send' ? 'Publish' : 'Subscribe'}</span><br/>
+                <em>Operation:</em> ${selectedOperation.id}<br/>
+                <em>Content Type:</em> ${message.contentType}<br/>
+                <pre>${prettyPayload}</pre>
+            </div>
+        `;
+            container.append(html);
+        });
+    }
+
 </script>
 
 <script type="text/html" data-template-name="async-api-red">
@@ -214,9 +267,22 @@
     </div>
 
     <div class="form-row">
-        <label><i class="fa fa-list"></i> Operations</label>
+        <label><i class="fa fa-list"></i>Operations</label>
         <select id="node-input-operations"></select>
     </div>
+
+    <div class="form-row">
+        <label><i class="fa fa-envelope"></i>Message</label>
+        <div id="node-messages-display"
+             style="background: #f5f5f5;
+             padding: 10px;
+             max-height: 300px;
+             overflow-y: auto;
+             font-family: monospace;
+             font-size: 12px;">
+        </div>
+    </div>
+
 
 </script>
 

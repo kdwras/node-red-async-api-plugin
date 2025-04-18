@@ -43,7 +43,7 @@ module.exports = (RED) => {
                     url: server.url(),
                     protocol: server.protocol(),
                     description: server.description()
-                })
+                });
             });
 
             const channels = [];
@@ -56,11 +56,23 @@ module.exports = (RED) => {
                     const id = operation.id();
                     const messages = [];
                     operation.messages().forEach((msg) => {
+                        let payload = [];
+                        const payloadJson = msg.payload().json();
+                        if (payloadJson?.properties) {
+                            Object.entries(payloadJson.properties).forEach(([propName, propSchema]) => {
+                                payload.push({
+                                    type: propSchema.type,
+                                    description: propSchema.description,
+                                    name: propName
+                                });
+                            });
+                        }
                         messages.push({
                             name: msg.name(),
-                            payload: msg.payload().json(),
+                            description: msg.description(),
+                            payload: payload,
                             contentType: msg.contentType(),
-                        })
+                        });
                     });
                     operations.push({
                         id,
