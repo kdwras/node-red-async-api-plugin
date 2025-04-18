@@ -130,40 +130,15 @@
                 // Bind event to load operations based on selected channel
                 channelDropdown.off("change").on("change", function () {
                     const selectedChannelAddress = $(this).val();
-                    operationDropdown.empty();
-
-                    const selectedChannel = channels.find(
-                        ch => ch.address === selectedChannelAddress
-                    );
-
-                    if (selectedChannel && selectedChannel.operations) {
-                        selectedChannel.operations.forEach(operation => {
-                            operationDropdown.append(
-                                `<option value="${operation.id}">${operation.id}</option>`
-                            );
-                        });
-                    }
+                    updateOperationDropdown(operationDropdown, selectedChannelAddress, channels);
                 });
-
                 //  trigger change event if you want to auto-load operations for the first channel
                 channelDropdown.trigger("change");
 
                 operationDropdown.off("change").on("change", function () {
-                    const selectedChannelAddress = $("#node-input-channel").val();
                     const selectedOperationId = $(this).val();
-
-                    const selectedChannel = channels.find(
-                        ch => ch.address === selectedChannelAddress
-                    );
-
-                    const selectedOperation = selectedChannel?.operations?.find(
-                        op => op.id === selectedOperationId
-                    );
-
-                    renderMessages(selectedChannel, selectedOperation);
-
+                    updateMessagePanel(channels, selectedOperationId);
                 });
-
                 operationDropdown.trigger("change");
 
                 // Save current selections
@@ -239,6 +214,36 @@
         `;
             container.append(html);
         });
+    }
+
+    function updateMessagePanel(channels, selectedOperationId) {
+        const selectedChannelAddress = $("#node-input-channel").val();
+
+        const selectedChannel = channels.find(
+            ch => ch.address === selectedChannelAddress
+        );
+
+        const selectedOperation = selectedChannel?.operations?.find(
+            op => op.id === selectedOperationId
+        );
+
+        renderMessages(selectedChannel, selectedOperation);
+    }
+
+    function updateOperationDropdown(operationDropdown, selectedChannelAddress, channels) {
+        operationDropdown.empty();
+
+        const selectedChannel = channels.find(
+            ch => ch.address === selectedChannelAddress
+        );
+
+        if (selectedChannel && selectedChannel.operations) {
+            selectedChannel.operations.forEach(operation => {
+                operationDropdown.append(
+                    `<option value="${operation.id}">${operation.id}</option>`
+                );
+            });
+        }
     }
 
 </script>
