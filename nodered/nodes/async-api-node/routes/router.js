@@ -214,7 +214,13 @@ module.exports = (RED) => {
         }
     }
 
-    function createTopic(req, res) {
+    /**
+     *
+     * @param req
+     * @param res
+     * @returns {*}
+     */
+    function handleMessage(req, res) {
         const {nodeId} = req.params;
         const node = RED.nodes.getNode(nodeId);
 
@@ -223,9 +229,8 @@ module.exports = (RED) => {
         }
 
         try {
-            const topicName = req.body.topic;
-            Utils.createTopic(node, topicName);
-            res.status(200).json({message: `Topic: ${topicName} has successfully created`});
+            Utils.handleMessage(node);
+            res.status(200).json({message: `Topic: has successfully created`});
         } catch (err) {
             res.status(500).json({error: err.message});
         }
@@ -242,7 +247,7 @@ module.exports = (RED) => {
         router.get("/async-api-red/:nodeId/user-selections", getUserSelections);
         router.post("/async-api-red/:nodeId/user-selections", saveUserSelections);
         router.get("/async-api-red/:nodeId/server-connect", connectToServer);
-        router.post("/async-api-red/:nodeId/topic", createTopic);
+        router.post("/async-api-red/:nodeId/message", handleMessage);
     }
 
     return router;
