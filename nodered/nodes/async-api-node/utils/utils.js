@@ -6,6 +6,8 @@ const mime = require("mime-types");
 
 module.exports = (RED) => {
 
+    let mqttClient;
+
     /**
      *
      * @param data
@@ -63,32 +65,38 @@ module.exports = (RED) => {
         };
 
         // Connect to MQTT broker
-        const client = mqtt.connect(node.serverUrl, options);
+        mqttClient = mqtt.connect(node.serverUrl, options);
 
-        client.on("connect", function () {
+        mqttClient.on("connect", function () {
 
             node.log("Connected to MQTT Broker: " + node.serverUrl);
             node.status({fill: "green", shape: "dot", text: "Connected"});
-
-            client.subscribe(node.topic, function (err) {
-                if (!err) {
-                    node.log(`Subscribed to topic: ${node.topic}`);
-                } else {
-                    node.error("Subscription error: " + err.message);
-                }
-            });
-
         });
 
-        client.on("message", function (topic, message) {
+        mqttClient.on("message", function (topic, message) {
             node.log(`Received message on ${topic}: ${message.toString()}`);
             node.send({payload: message.toString(), topic: topic});
         });
 
-        client.on("error", function (error) {
+        mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
         });
 
+    }
+
+    /**
+     *
+     * @param node
+     * @param topicName
+     */
+    function createTopic(node, topicName) {
+        mqttClient.subscribe(topicName, function (err) {
+            if (err) {
+                node.error("Failed to create topic" + err.message);
+            }
+            node.log('Topic created:', topicName);
+            node.send({message: "Topic created", topic: topicName});
+        });
     }
 
     /**
@@ -142,6 +150,7 @@ module.exports = (RED) => {
     return {
         getParsedAsyncApiFile,
         connectToServer,
+        createTopic,
         fetchFile,
         getFilePath
     }

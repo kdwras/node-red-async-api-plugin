@@ -37,7 +37,12 @@
                     topic: document.getElementById("node-input-channel").value
                 }
                 saveUserSelections(node.id, data);
-                connectToServer(node.id);
+                connectToServer(node.id).then((res) => {
+                    console.log('Connected to server, now creating topic...');
+                    createTopic(node.id, data.topic);
+                }).catch((err) => {
+                    console.error('Failed to connect to server:', err);
+                });
             }
         },
         // oneditcancel: function () {
@@ -169,11 +174,11 @@
     }
 
     function connectToServer(nodeId) {
-        $.ajax({
+        return $.ajax({
             url: `/async-api-red/${nodeId}/server-connect`,
             type: "GET",
             contentType: "application/json",
-            success: function (response) {
+            success: function () {
                 console.log('connected to server');
             },
             error: function (err) {
@@ -244,6 +249,21 @@
                 );
             });
         }
+    }
+
+    function createTopic(nodeId, topicName) {
+        $.ajax({
+            url: `/async-api-red/${nodeId}/topic`,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ topic: topicName }),
+            success: function (response) {
+                console.log('Topic created successfully:', response.topic);
+            },
+            error: function (err) {
+                console.error('Failed to create topic', err);
+            }
+        });
     }
 
 </script>

@@ -118,7 +118,7 @@ module.exports = (RED) => {
         if (!req.file) {
             return res.status(400).json({error: "No file uploaded"});
         }
-        res.json(204);
+        res.json(204).send();
     }
 
     /**
@@ -167,7 +167,7 @@ module.exports = (RED) => {
         try {
             node.context().set("serverUrl", payload.serverUrl);
             node.context().set("topic", payload.topic);
-            res.status(204).json({});
+            res.status(204).send();
         } catch (error) {
             res.status(500).json({error: error});
         }
@@ -208,12 +208,28 @@ module.exports = (RED) => {
 
         try {
             Utils.connectToServer(node);
-            res.status(200).json({message: "MQTT connection initiated"});
+            res.status(204).send();
         } catch (err) {
             res.status(500).json({error: err.message});
         }
     }
 
+    function createTopic(req, res) {
+        const {nodeId} = req.params;
+        const node = RED.nodes.getNode(nodeId);
+
+        if (!node) {
+            return res.status(404).json({error: "Node not found"});
+        }
+
+        try {
+            const topicName = req.body.topic;
+            Utils.createTopic(node, topicName);
+            res.status(200).json({message: `Topic: ${topicName} has successfully created`});
+        } catch (err) {
+            res.status(500).json({error: err.message});
+        }
+    }
 
     /**
      *
@@ -226,6 +242,7 @@ module.exports = (RED) => {
         router.get("/async-api-red/:nodeId/user-selections", getUserSelections);
         router.post("/async-api-red/:nodeId/user-selections", saveUserSelections);
         router.get("/async-api-red/:nodeId/server-connect", connectToServer);
+        router.post("/async-api-red/:nodeId/topic", createTopic);
     }
 
     return router;
