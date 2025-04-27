@@ -91,10 +91,17 @@ module.exports = (RED) => {
      * @param node
      */
     function handleMessage(node) {
-        const topicName = node.context.get("topic");
-        const payload = node.context.get("message");
-        const action = node.context.get("action");
-        const serverOptions = node.context.get("serverOptions");
+        const topicName = node.context().get("topic");
+        const payload = node.context().get("message") || {lumens:5, sentAt:'2025-27-01'};
+        const action = node.context().get("action") || 'Publish';
+        const serverOptions = node.context().get("serverOptions");
+        mqttClient.subscribe(topicName, serverOptions, function (err) {
+            if (err) {
+                node.error("Failed to create topic" + err.message);
+            }
+            node.log('Topic created:', topicName);
+            node.send({message: "Topic created", topic: topicName});
+        });
         if (action === 'Publish') {
             mqttClient.publish(topicName, JSON.stringify(payload), serverOptions, (err) => {
                 if (err) {
@@ -103,18 +110,7 @@ module.exports = (RED) => {
                     console.log('JSON message published!');
                 }
             });
-        } else if (action === 'Subscribe') {
-            mqttClient.subscribe(topicName, serverOptions, function (err) {
-                if (err) {
-                    node.error("Failed to create topic" + err.message);
-                }
-                node.log('Topic created:', topicName);
-                node.send({message: "Topic created", topic: topicName});
-            });
-        } else {
-            node.error('Wrong action type. Must be Publish or Subscribe');
         }
-
     }
 
     /**

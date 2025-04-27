@@ -197,25 +197,54 @@
         }
 
         messages.forEach((message, index) => {
-            const prettyPayload = JSON.stringify(message.payload, null, 2);
-            const html = `
-            <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-                <strong>${index + 1}. ${message.name}</strong><br/>
-                <em>Summary:</em> ${selectedOperation.summary}<br/>
-                <em>Topic:</em> ${selectedChannel.address}<span style=" display: inline-block;
-                                                            color: #e1f5fe;
-                                                            background-color: #0277bd;
-                                                            border-radius: 10px;
-                                                            font-size: 11px;
-                                                            font-weight: bold;
-                                                            padding: 2px 8px;
-                                                            margin-left: 8px;
-                                                            text-transform: uppercase;">${selectedOperation.action === 'send' ? 'Publish' : 'Subscribe'}</span><br/>
-                <em>Operation:</em> ${selectedOperation.id}<br/>
-                <em>Content Type:</em> ${message.contentType}<br/>
-                <pre>${prettyPayload}</pre>
-            </div>
+            // Start creating HTML for each message
+            let html = `
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <strong>${index + 1}. ${message.name}</strong><br/>
+            <em>Summary:</em> ${selectedOperation.summary}<br/>
+            <em>Topic:</em> ${selectedChannel.address}<span style=" display: inline-block;
+                                                        color: #e1f5fe;
+                                                        background-color: #0277bd;
+                                                        border-radius: 10px;
+                                                        font-size: 11px;
+                                                        font-weight: bold;
+                                                        padding: 2px 8px;
+                                                        margin-left: 8px;
+                                                        text-transform: uppercase;">${selectedOperation.action === 'send' ? 'Publish' : 'Subscribe'}</span><br/>
+            <em>Operation:</em> ${selectedOperation.id}<br/>
+            <em>Content Type:</em> ${message.contentType}<br/>
         `;
+
+            // Iterate through each property in the payload and create a form row
+            if (message.payload?.length) {
+                message.payload.forEach((item) => {
+                    let inputHtml = '';
+
+                    // Determine the input type based on the value's type
+                    if (typeof item.type === "number") {
+                        inputHtml = `
+                    <div class="form-row">
+                        <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
+                        <input type="number" id="node-input-${item.name}"  placeholder="${item.description}">
+                    </div>
+                    `;
+                    } else if (typeof item.type === "string") {
+                        inputHtml = `
+                    <div class="form-row">
+                        <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
+                        <input type="text" id="node-input-${item.name}" " placeholder="${item.description}">
+                    </div>
+                    `;
+                    }
+
+                    html += inputHtml; // Add the generated input field to the HTML
+                });
+            }
+
+            // Close the message div
+            html += `</div>`;
+
+            // Append the dynamically generated message HTML
             container.append(html);
         });
     }
