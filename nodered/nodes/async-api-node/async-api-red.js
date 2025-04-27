@@ -18,7 +18,7 @@ module.exports = function (RED) {
         nodesMap[node.id] = node;
 
         node.on("close", () => {
-            console.log(node.id);
+            console.log(`Close node ${node.id}`);
             delete nodesMap[node.id]; // Cleanup on node deletion
         });
     }

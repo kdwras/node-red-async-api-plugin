@@ -32,10 +32,20 @@
         oneditsave: function () {
             const node = this;
             if (node?.id) {
-                const data = {
+
+                let data = {
                     serverUrl: document.getElementById("node-input-select-server").value,
-                    topic: document.getElementById("node-input-channel").value
+                    topic: document.getElementById("node-input-channel").value,
+                    payload: {}
                 }
+
+                $("#node-messages-display input").each(function () {
+                    const key = $(this).attr('id').replace('node-input-', ''); // get the name
+                    const value = $(this).val(); // get the value
+                    data.payload[key] = value; // store in payload object
+                });
+
+                console.log(data);
                 saveUserSelections(node.id, data);
                 connectToServer(node.id).then(() => {
                     console.log('Connected to server, now creating topic...');
@@ -147,11 +157,11 @@
                 operationDropdown.trigger("change");
 
                 // Save current selections
-                const data = {
-                    serverUrl: serverDropdown.val(),
-                    topic: channelDropdown.val()
-                };
-                saveUserSelections(nodeId, data);
+                // const data = {
+                //     serverUrl: serverDropdown.val(),
+                //     topic: channelDropdown.val()
+                // };
+                // saveUserSelections(nodeId, data);
             },
             error: function (err) {
                 console.error("Error fetching servers:", err);
@@ -219,24 +229,22 @@
             if (message.payload?.length) {
                 message.payload.forEach((item) => {
                     let inputHtml = '';
-
                     // Determine the input type based on the value's type
-                    if (typeof item.type === "number") {
+                    if (item.type === "integer") {
                         inputHtml = `
-                    <div class="form-row">
+                    <div class="form-row" style="margin-top:.5em">
                         <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
                         <input type="number" id="node-input-${item.name}"  placeholder="${item.description}">
                     </div>
                     `;
-                    } else if (typeof item.type === "string") {
+                    } else if (item.type === "string") {
                         inputHtml = `
-                    <div class="form-row">
+                    <div class="form-row" style="margin-top:.5em">
                         <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
                         <input type="text" id="node-input-${item.name}" " placeholder="${item.description}">
                     </div>
                     `;
                     }
-
                     html += inputHtml; // Add the generated input field to the HTML
                 });
             }

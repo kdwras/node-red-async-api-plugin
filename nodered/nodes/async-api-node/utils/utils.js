@@ -92,8 +92,8 @@ module.exports = (RED) => {
      */
     function handleMessage(node) {
         const topicName = node.context().get("topic");
-        const payload = node.context().get("message") || {lumens:5, sentAt:'2025-27-01'};
-        const action = node.context().get("action") || 'Publish';
+        const payload = node.context().get("payload");
+        const action = node.context().get("action") || "Publish";
         const serverOptions = node.context().get("serverOptions");
         mqttClient.subscribe(topicName, serverOptions, function (err) {
             if (err) {

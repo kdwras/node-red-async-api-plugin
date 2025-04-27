@@ -167,6 +167,7 @@ module.exports = (RED) => {
         try {
             node.context().set("serverUrl", payload.serverUrl);
             node.context().set("topic", payload.topic);
+            node.context().set("payload", payload.payload);
             res.status(204).send();
         } catch (error) {
             res.status(500).json({error: error});
@@ -188,8 +189,8 @@ module.exports = (RED) => {
         }
         const serverUrl = node.context().get("serverUrl");
         const topic = node.context().get("topic");
-        res.status(200).json({serverUrl: serverUrl, topic: topic});
-
+        const payload = node.context().get("payload");
+        res.status(200).json({serverUrl: serverUrl, topic: topic, payload: payload});
     }
 
     /**
