@@ -146,6 +146,8 @@
                 channelDropdown.off("change").on("change", function () {
                     const selectedChannelAddress = $(this).val();
                     updateOperationDropdown(operationDropdown, selectedChannelAddress, channels);
+                    const selectedOperationId = operationDropdown.val();
+                    updateMessagePanel(channels, selectedOperationId);
                 });
                 //  trigger change event if you want to auto-load operations for the first channel
                 channelDropdown.trigger("change");
