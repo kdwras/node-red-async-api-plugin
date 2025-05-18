@@ -24,7 +24,7 @@ module.exports = (RED) => {
             if (errors.length) {
                 console.error('❌ Validation errors found:');
                 errors.forEach((error, index) => {
-                    console.error(`${index + 1}. ${error.message} (at ${error.location.pointer})`);
+                    console.error(`${index + 1}. ${error.message}`);
                 });
                 return;
             }

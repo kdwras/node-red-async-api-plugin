@@ -96,7 +96,7 @@
   },
   "channels": {
     "lightingMeasured": {
-      "address": "home/sensor",
+      "address": "home/sensor2",
       "messages": {
         "lightMeasured": {
           "$ref": "#/components/messages/lightMeasured"
