@@ -47,12 +47,25 @@
         "env": []
     },
     {
-        "id": "708a6fd3478e7443",
+        "id": "bb5d022f712f284a",
         "type": "tab",
-        "label": "Flow 5",
+        "label": "Smart Home Flow",
         "disabled": false,
-        "info": "",
-        "env": []
+        "info": ""
+    },
+    {
+        "id": "be65370b3971f2be",
+        "type": "tab",
+        "label": "Smart Door",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2b195a0442d69e99",
+        "type": "tab",
+        "label": "Smart Light - Brightness Control",
+        "disabled": false,
+        "info": ""
     },
     {
         "id": "2785aa7402e0c422",
@@ -193,6 +206,108 @@
         "h": 1024.5
     },
     {
+        "id": "e13c20c1cdec8fb7",
+        "type": "group",
+        "z": "bb5d022f712f284a",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "e885a2e3fe806323",
+            "40cd8721927865b8",
+            "86ce9a0b65fc667d",
+            "0c9260aaaea5194d",
+            "1b9ea922358366b0"
+        ],
+        "x": 34,
+        "y": 19,
+        "w": 992,
+        "h": 142
+    },
+    {
+        "id": "a5e70ddfc80c7dfc",
+        "type": "group",
+        "z": "bb5d022f712f284a",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "e64fdd38eb122a6b",
+            "85923d15319f7a08",
+            "486e42918a98a0bc",
+            "d6dbeb4459e588e3",
+            "7da7f6114a0cf0a7",
+            "5b7e9efca41d041d",
+            "8779998654f8eb47"
+        ],
+        "x": 34,
+        "y": 199,
+        "w": 922,
+        "h": 202
+    },
+    {
+        "id": "19c87f30e962ee99",
+        "type": "group",
+        "z": "bb5d022f712f284a",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "b8202e10b98e9c7b",
+            "a892560c7bd0e63b",
+            "17f4e31978aa3ea3",
+            "266c6ae489fe9418",
+            "b5095f47a69e5bd4",
+            "270f8973b0fd2d99"
+        ],
+        "x": 34,
+        "y": 439,
+        "w": 1012,
+        "h": 162
+    },
+    {
+        "id": "plug-group",
+        "type": "group",
+        "z": "bb5d022f712f284a",
+        "style": {
+            "stroke": "#999999",
+            "label": true,
+            "label-position": "nw",
+            "fill": "none"
+        },
+        "nodes": [
+            "plug-on",
+            "plug-off",
+            "inject-on",
+            "inject-off",
+            "plug-api",
+            "plug-debug",
+            "plug-label"
+        ],
+        "x": 34,
+        "y": 639,
+        "w": 952,
+        "h": 162
+    },
+    {
         "id": "7285f7e430313100",
         "type": "openApi-red-url",
         "name": "gg",
@@ -267,7 +382,7 @@
         "id": "51fce998cf99ca3b",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "172.17.0.1",
+        "broker": "mqtt://172.17.0.1:1883/",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
@@ -293,6 +408,133 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "mqtt-broker",
+        "type": "mqtt-broker",
+        "name": "Local MQTT",
+        "broker": "localhost",
+        "port": "1883",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 15,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthQos": "0",
+        "willQos": "0"
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "SmartHome",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "Main Room",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "b0633354d56d9009",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
     },
     {
         "id": "a683470f9f9d2be2",
@@ -351,7 +593,8 @@
                         "isActive": true,
                         "activeFilter": "",
                         "type": "msg",
-                        "value": "payload.id"
+                        "collapsed": false,
+                        "value": "payload.body.id"
                     },
                     "category": {
                         "name": "category",
@@ -374,8 +617,7 @@
                         "activeFilter": "",
                         "required": true,
                         "type": "msg",
-                        "collapsed": false,
-                        "value": "payload.name"
+                        "value": "payload.body.name"
                     },
                     "photoUrls": {
                         "name": "photoUrls",
@@ -383,7 +625,7 @@
                         "activeFilter": "",
                         "required": true,
                         "type": "msg",
-                        "value": "payload.photoUrls"
+                        "value": "payload.body.photoUrls"
                     },
                     "tags": {
                         "name": "tags",
@@ -391,9 +633,7 @@
                     },
                     "status": {
                         "name": "status",
-                        "activeFilter": "",
-                        "type": "select",
-                        "value": "available"
+                        "activeFilter": ""
                     }
                 },
                 "in": "body"
@@ -2930,32 +3170,652 @@
         "wires": []
     },
     {
-        "id": "48ec47034e6475a7",
-        "type": "async-api-red",
-        "z": "708a6fd3478e7443",
-        "name": "",
-        "x": 830,
-        "y": 560,
+        "id": "e64fdd38eb122a6b",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Lock Door",
+        "func": "msg.payload = { \"action\": \"lock\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 300,
         "wires": [
             [
-                "335ab970eea24766"
+                "5b7e9efca41d041d"
             ]
         ]
     },
     {
-        "id": "335ab970eea24766",
+        "id": "85923d15319f7a08",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Unlock Door",
+        "func": "msg.payload = { \"action\": \"unlock\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 360,
+        "wires": [
+            [
+                "5b7e9efca41d041d"
+            ]
+        ]
+    },
+    {
+        "id": "486e42918a98a0bc",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Lock Door Now",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 300,
+        "wires": [
+            [
+                "e64fdd38eb122a6b"
+            ]
+        ]
+    },
+    {
+        "id": "d6dbeb4459e588e3",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Unlock Door Now",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "85923d15319f7a08"
+            ]
+        ]
+    },
+    {
+        "id": "7da7f6114a0cf0a7",
         "type": "debug",
-        "z": "708a6fd3478e7443",
-        "name": "debug 2",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Door State Debug",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 820,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "5b7e9efca41d041d",
+        "type": "async-api-red",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Door state",
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "7da7f6114a0cf0a7"
+            ]
+        ]
+    },
+    {
+        "id": "e885a2e3fe806323",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "e13c20c1cdec8fb7",
+        "name": "Auto Turn Light",
+        "func": "if (msg.payload.detected === true) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "86ce9a0b65fc667d"
+            ]
+        ]
+    },
+    {
+        "id": "40cd8721927865b8",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "e13c20c1cdec8fb7",
+        "name": "Simulate Motion",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"detected\": true}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "e885a2e3fe806323"
+            ]
+        ]
+    },
+    {
+        "id": "86ce9a0b65fc667d",
+        "type": "async-api-red",
+        "z": "bb5d022f712f284a",
+        "g": "e13c20c1cdec8fb7",
+        "name": "Turn on light",
+        "x": 630,
+        "y": 120,
+        "wires": [
+            [
+                "0c9260aaaea5194d"
+            ]
+        ]
+    },
+    {
+        "id": "0c9260aaaea5194d",
+        "type": "debug",
+        "z": "bb5d022f712f284a",
+        "g": "e13c20c1cdec8fb7",
+        "name": "Light state Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
+        "x": 890,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "1b9ea922358366b0",
+        "type": "comment",
+        "z": "bb5d022f712f284a",
+        "g": "e13c20c1cdec8fb7",
+        "name": "Turn on/off light by brighness",
+        "info": "",
+        "x": 180,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8779998654f8eb47",
+        "type": "comment",
+        "z": "bb5d022f712f284a",
+        "g": "a5e70ddfc80c7dfc",
+        "name": "Lock/Unlock door",
+        "info": "",
+        "x": 140,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b8202e10b98e9c7b",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Fake Temp: 21°C",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "21",
+        "payloadType": "num",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "17f4e31978aa3ea3"
+            ]
+        ]
+    },
+    {
+        "id": "a892560c7bd0e63b",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Fake Temp: 24°C",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "24",
+        "payloadType": "num",
+        "x": 200,
+        "y": 560,
+        "wires": [
+            [
+                "17f4e31978aa3ea3"
+            ]
+        ]
+    },
+    {
+        "id": "17f4e31978aa3ea3",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Thermostat Logic",
+        "func": "const temp = msg.payload;\n\nif (temp <= 22) {\n    msg.payload = {\n        action: \"heater_on\"\n    };\n} else {\n    msg.payload = {\n        action: \"heater_off\"\n    };\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
         "y": 540,
+        "wires": [
+            [
+                "270f8973b0fd2d99"
+            ]
+        ]
+    },
+    {
+        "id": "266c6ae489fe9418",
+        "type": "comment",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Thermostat",
+        "info": "",
+        "x": 130,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b5095f47a69e5bd4",
+        "type": "debug",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Heater Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 920,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "270f8973b0fd2d99",
+        "type": "async-api-red",
+        "z": "bb5d022f712f284a",
+        "g": "19c87f30e962ee99",
+        "name": "Thermostat",
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "b5095f47a69e5bd4"
+            ]
+        ]
+    },
+    {
+        "id": "inject-on",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Turn Plug ON @08:00",
+        "props": [],
+        "repeat": "",
+        "crontab": "00 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 720,
+        "wires": [
+            [
+                "plug-on"
+            ]
+        ]
+    },
+    {
+        "id": "inject-off",
+        "type": "inject",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Turn Plug OFF @22:00",
+        "props": [],
+        "repeat": "",
+        "crontab": "00 22 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 760,
+        "wires": [
+            [
+                "plug-off"
+            ]
+        ]
+    },
+    {
+        "id": "plug-on",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Smart Plug ON",
+        "func": "msg.payload = { action: \"plug_on\" };\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 720,
+        "wires": [
+            [
+                "plug-api"
+            ]
+        ]
+    },
+    {
+        "id": "plug-off",
+        "type": "function",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Smart Plug OFF",
+        "func": "msg.payload = { action: \"plug_off\" };\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 760,
+        "wires": [
+            [
+                "plug-api"
+            ]
+        ]
+    },
+    {
+        "id": "plug-api",
+        "type": "async-api-red",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Smart Plug",
+        "x": 680,
+        "y": 740,
+        "wires": [
+            [
+                "plug-debug"
+            ]
+        ]
+    },
+    {
+        "id": "plug-debug",
+        "type": "debug",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Plug Status",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 870,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "plug-label",
+        "type": "comment",
+        "z": "bb5d022f712f284a",
+        "g": "plug-group",
+        "name": "Smart Plug (Timer Controlled)",
+        "x": 180,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "e582380fa231e1db",
+        "type": "inject",
+        "z": "be65370b3971f2be",
+        "name": "Simulate Motion",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"detected\": true}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "782f0eab2da19f22"
+            ]
+        ]
+    },
+    {
+        "id": "782f0eab2da19f22",
+        "type": "function",
+        "z": "be65370b3971f2be",
+        "name": "Auto Turn Light On",
+        "func": "if (msg.payload.detected === true) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "4439d2613daf2e93",
+                "c24f558a21c553d2"
+            ]
+        ]
+    },
+    {
+        "id": "4439d2613daf2e93",
+        "type": "async-api-red",
+        "z": "be65370b3971f2be",
+        "name": "Turn on light",
+        "x": 630,
+        "y": 80,
+        "wires": [
+            [
+                "061f674d14ef84fb"
+            ]
+        ]
+    },
+    {
+        "id": "061f674d14ef84fb",
+        "type": "debug",
+        "z": "be65370b3971f2be",
+        "name": "Light Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c24f558a21c553d2",
+        "type": "delay",
+        "z": "be65370b3971f2be",
+        "name": "Wait 10 seconds",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "513ca1e6bd97aeab"
+            ]
+        ]
+    },
+    {
+        "id": "513ca1e6bd97aeab",
+        "type": "function",
+        "z": "be65370b3971f2be",
+        "name": "Auto Turn Light Off",
+        "func": "msg.payload = {\n    state: \"off\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 180,
+        "wires": [
+            [
+                "4439d2613daf2e93"
+            ]
+        ]
+    },
+    {
+        "id": "f75b92894a80b309",
+        "type": "inject",
+        "z": "2b195a0442d69e99",
+        "name": "Simulate Brightness 20",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"brightness\": 20}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "1e555d78a4a2e1c5"
+            ]
+        ]
+    },
+    {
+        "id": "4c3eb46dc63cd004",
+        "type": "inject",
+        "z": "2b195a0442d69e99",
+        "name": "Simulate Brightness 75",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"brightness\": 75}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "1e555d78a4a2e1c5"
+            ]
+        ]
+    },
+    {
+        "id": "1e555d78a4a2e1c5",
+        "type": "function",
+        "z": "2b195a0442d69e99",
+        "name": "Check Brightness Level",
+        "func": "const brightness = msg.payload.brightness;\n\nif (brightness < 30) {\n    return {\n        payload: {\n            state: \"off\"\n        }\n    };\n} else if (brightness > 70) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\n\nreturn null;",
+        "outputs": 1,
+        "x": 420,
+        "y": 130,
+        "wires": [
+            [
+                "c7adfa83ea93b3a5"
+            ]
+        ]
+    },
+    {
+        "id": "c7adfa83ea93b3a5",
+        "type": "async-api-red",
+        "z": "2b195a0442d69e99",
+        "name": "Smart Light",
+        "x": 660,
+        "y": 130,
+        "wires": [
+            [
+                "84ac5d56a85d9b75"
+            ]
+        ]
+    },
+    {
+        "id": "84ac5d56a85d9b75",
+        "type": "debug",
+        "z": "2b195a0442d69e99",
+        "name": "Light Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 860,
+        "y": 130,
         "wires": []
     }
 ]
