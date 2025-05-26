@@ -1,0 +1,41 @@
+asyncapi: '2.6.0'
+info:
+  title: Smart Light Controller
+  version: '1.0.0'
+  description: |
+    Controls a smart light by receiving state (on/off) and brightness (0–100).
+servers:
+  local:
+    url: mqtt://localhost
+    protocol: mqtt
+
+channels:
+  light/state:
+    description: Channel to send light control messages.
+    publish:
+      summary: Send command to light
+      operationId: sendLightState
+      message:
+        $ref: '#/components/messages/LightCommand'
+
+components:
+  messages:
+    LightCommand:
+      name: LightCommand
+      title: Light Control Message
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - state
+          - brightness
+        properties:
+          state:
+            type: string
+            enum: [on, off]
+            description: The desired state of the light.
+          brightness:
+            type: integer
+            minimum: 0
+            maximum: 100
+            description: Brightness level from 0 to 100.
