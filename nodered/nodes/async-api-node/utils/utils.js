@@ -46,8 +46,6 @@ module.exports = (RED) => {
      */
     function connectToServer(node) {
 
-        console.log('mpikaaa stin connect to server');
-
         if (!node.serverUrl) {
             node.error("MQTT Server URL or Topic is missing!");
             node.status({fill: "red", shape: "ring", text: "Missing MQTT Config"});
@@ -83,6 +81,7 @@ module.exports = (RED) => {
         if (!node.mqttClient) {
             return;
         }
+        console.log(node.topic, node.action);
         if (node.action === 'Subscribe') {
             node.mqttClient.subscribe(node.topic, node.serverOptions, function (err) {
                 if (err) {
