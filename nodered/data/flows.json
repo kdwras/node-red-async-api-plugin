@@ -456,22 +456,6 @@
         "willQos": "0"
     },
     {
-        "id": "dashboard_tab",
-        "type": "ui_tab",
-        "name": "SmartHome",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "dashboard_group",
-        "type": "ui_group",
-        "name": "Main Room",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": "6"
-    },
-    {
         "id": "b0633354d56d9009",
         "type": "ui_base",
         "theme": {
@@ -566,6 +550,22 @@
                 "py": 0
             }
         }
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "SmartHome",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "Main Room",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": "6"
     },
     {
         "id": "a683470f9f9d2be2",
@@ -3712,7 +3712,6 @@
         "y": 660,
         "wires": [
             [
-                "37cdc8de12d85137",
                 "47b822a2f8f4cc47"
             ]
         ]
@@ -3723,7 +3722,7 @@
         "z": "bb5d022f712f284a",
         "g": "b52180ab0632e26b",
         "name": "Show Brightness",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3829,7 +3828,7 @@
         "z": "bb5d022f712f284a",
         "g": "b52180ab0632e26b",
         "name": "Async api node result",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3847,7 +3846,7 @@
         "z": "bb5d022f712f284a",
         "g": "b52180ab0632e26b",
         "name": "converter result",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,

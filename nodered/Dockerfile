@@ -8,3 +8,7 @@ WORKDIR /data
 
 # Copy custom node to the Node-RED user directory
 COPY nodes /data/nodes
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

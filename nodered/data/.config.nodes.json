@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "4.0.8",
+        "version": "4.0.9",
         "local": false,
         "user": false,
         "nodes": {
@@ -468,6 +468,25 @@
             }
         }
     },
+    "node-red-node-ui-table": {
+        "name": "node-red-node-ui-table",
+        "version": "0.4.4",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "ui_table": {
+                "name": "ui_table",
+                "types": [
+                    "ui_table"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-node-ui-table",
+                "file": "/data/node_modules/node-red-node-ui-table/node.js"
+            }
+        }
+    },
     "node-red-dashboard": {
         "name": "node-red-dashboard",
         "version": "3.6.5",
@@ -704,63 +723,6 @@
                 "user": false,
                 "module": "node-red-dashboard",
                 "file": "/data/node_modules/node-red-dashboard/nodes/ui_spacer.js"
-            }
-        }
-    },
-    "node-red-node-ui-table": {
-        "name": "node-red-node-ui-table",
-        "version": "0.4.4",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "ui_table": {
-                "name": "ui_table",
-                "types": [
-                    "ui_table"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-node-ui-table",
-                "file": "/data/node_modules/node-red-node-ui-table/node.js"
-            }
-        }
-    },
-    "node-red-contrib-mqtt-broker": {
-        "name": "node-red-contrib-mqtt-broker",
-        "version": "0.2.9",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "mosca-mqtt-broker": {
-                "name": "mosca-mqtt-broker",
-                "types": [
-                    "mosca in"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-mqtt-broker",
-                "file": "/data/node_modules/node-red-contrib-mqtt-broker/mosca.js"
-            }
-        }
-    },
-    "node-red-contrib-aedes": {
-        "name": "node-red-contrib-aedes",
-        "version": "0.6.0",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "aedes-mqtt-broker": {
-                "name": "aedes-mqtt-broker",
-                "types": [
-                    "aedes broker"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-aedes",
-                "file": "/data/node_modules/node-red-contrib-aedes/aedes.js"
             }
         }
     }
