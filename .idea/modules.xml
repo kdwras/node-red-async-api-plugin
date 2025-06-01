@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/myGrade.iml" filepath="$PROJECT_DIR$/.idea/myGrade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AsyncApi nodered plugin.iml" filepath="$PROJECT_DIR$/.idea/AsyncApi nodered plugin.iml" />
     </modules>
   </component>
 </project>
