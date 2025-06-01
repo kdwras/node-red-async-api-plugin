@@ -6,7 +6,6 @@ const mime = require("mime-types");
 
 module.exports = (RED) => {
 
-    let mqttClient;
 
     /**
      *
@@ -47,12 +46,7 @@ module.exports = (RED) => {
      */
     function connectToServer(node) {
 
-        //locally srv ----> mqtt://172.17.0.1:1883
-        //const client = mqtt.connect('mqtt://broker.example.com', {
-        //     username: 'yourUsername',
-        //     password: 'yourPassword'
-        // });
-        node.serverUrl = node.context().get("serverUrl");
+        console.log('mpikaaa stin connect to server');
 
         if (!node.serverUrl) {
             node.error("MQTT Server URL or Topic is missing!");
@@ -68,19 +62,14 @@ module.exports = (RED) => {
         };
 
         // Connect to MQTT broker
-        mqttClient = mqtt.connect(node.serverUrl, options);
+        node.mqttClient = mqtt.connect(node.serverUrl, options);
 
-        mqttClient.on("connect", function () {
-            node.log("Connected to MQTT Broker: " + node.serverUrl);
+        node.mqttClient.on("connect", function () {
+            node.log(`Connected to MQTT Broker: ${node.serverUrl}`);
             node.status({fill: "green", shape: "dot", text: "Connected"});
         });
 
-        mqttClient.on("message", function (topic, message) {
-            node.log(`Received message on ${topic}: ${message.toString()}`);
-            node.send({payload: message.toString()});
-        });
-
-        mqttClient.on("error", function (error) {
+        node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
         });
 
@@ -91,23 +80,24 @@ module.exports = (RED) => {
      * @param node
      */
     function handleMessage(node) {
-        const topicName = node.context().get("topic");
-        const payload = node.context().get("payload");
-        const action = node.context().get("action") || "Publish";
-        const serverOptions = node.context().get("serverOptions");
-        mqttClient.subscribe(topicName, serverOptions, function (err) {
-            if (err) {
-                node.error("Failed to create topic" + err.message);
-            }
-            node.log('Topic created:', topicName);
-            node.send({message: "Topic created", topic: topicName});
-        });
-        if (action === 'Publish') {
-            mqttClient.publish(topicName, JSON.stringify(payload), serverOptions, (err) => {
+        if (!node.mqttClient) {
+            return;
+        }
+        if (node.action === 'Subscribe') {
+            node.mqttClient.subscribe(node.topic, serverOptions, function (err) {
+                if (err) {
+                    node.error("Failed to create topic" + err.message);
+                }
+                node.log('Topic created:', node.topic);
+                node.send({message: "Topic created", topic: node.topic});
+            });
+        }
+        if (node.action === 'Publish') {
+            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), node.serverOptions, (err) => {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 } else {
-                    console.log('JSON message published!');
+                    node.log('message published!');
                 }
             });
         }
