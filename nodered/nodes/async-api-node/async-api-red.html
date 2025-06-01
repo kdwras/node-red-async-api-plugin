@@ -33,25 +33,44 @@
             const node = this;
             if (node?.id) {
 
-                let data = {
-                    serverUrl: document.getElementById("node-input-select-server").value,
-                    topic: document.getElementById("node-input-channel").value,
-                    payload: {}
-                }
+                const selectedServer =  $("#node-input-select-server").val();
+                const selectedChannelAddress = $("#node-input-channel").val();
+                const selectedOperationId = $("#node-input-operations").val();
 
-                $("#node-messages-display input").each(function () {
-                    const key = $(this).attr('id').replace('node-input-', ''); // get the name
-                    const value = $(this).val(); // get the value
-                    data.payload[key] = value; // store in payload object
+                getData(node.id).then((response) => {
+                    const selectedChannel = response.channels.find(
+                        ch => ch.address === selectedChannelAddress
+                    );
+
+                    const selectedOperation = selectedChannel?.operations?.find(
+                        op => op.id === selectedOperationId
+                    );
+
+                    console.log(response);
+
+                    let data = {
+                        serverUrl: selectedServer,
+                        topic: selectedChannel.address,
+                        action: selectedOperation.action === 'send' ? 'Publish' : 'Subscribe',
+                        payload: {}
+                    }
+
+                    $("#node-messages-display input").each(function () {
+                        const key = $(this).attr('id').replace('node-input-', ''); // get the name
+                        const value = $(this).val(); // get the value
+                        data.payload[key] = value; // store in payload object
+                    });
+
+
+                    saveUserSelections(node.id, data);
+                    connectToServer(node.id).then(() => {
+                        console.log('Connected to server, now creating topic...');
+                        handleMessage(node.id);
+                    }).catch((err) => {
+                        console.error('Failed to connect to server:', err);
+                    });
                 });
 
-                saveUserSelections(node.id, data);
-                connectToServer(node.id).then(() => {
-                    console.log('Connected to server, now creating topic...');
-                    handleMessage(node.id);
-                }).catch((err) => {
-                    console.error('Failed to connect to server:', err);
-                });
             }
         },
         // oneditcancel: function () {
@@ -78,7 +97,9 @@
                 $("#node-input-file")[0].files = dataTransfer.files;
 
                 // Fetch related information
-                getData(nodeId);
+                getData(nodeId).then((response) => {
+                    updateDialogData(response);
+                });
             },
             error: function (err) {
                 console.error("Error fetching file:", err);
@@ -106,7 +127,9 @@
             success: function (response) {
                 console.log("File uploaded:", response);
                 // Fetch updated information after file upload
-                getData(nodeId);
+                getData(nodeId).then((response) => {
+                    updateDialogData(response);
+                });
             },
             error: function () {
                 alert("File upload failed");
@@ -115,66 +138,23 @@
     }
 
     /** Function to fetch servers */
-    function getData(nodeId) {
-        $.ajax({
-            type: "GET",
-            url: `/async-api-red/${nodeId}/data`,
-            success: function (response) {
-                let serverDropdown = $("#node-input-select-server");
-                let channelDropdown = $("#node-input-channel");
-                let operationDropdown = $("#node-input-operations");
+    async function getData(nodeId) {
+        return new Promise((resolve, reject) => {
 
-                serverDropdown.empty();
-                channelDropdown.empty();
-                operationDropdown.empty();
-
-                // Populate servers
-                if (response.servers) {
-                    response.servers.forEach(server => {
-                        serverDropdown.append(
-                            `<option value="${server.url}">${server.url}</option>`
-                        );
-                    });
+            $.ajax({
+                type: "GET",
+                url: `/async-api-red/${nodeId}/data`,
+                success: function (response) {
+                    resolve(response)
+                },
+                error: function (err) {
+                    console.error("Error fetching servers:", err);
+                    reject(err);
                 }
-
-                // Save channels for later use
-                const channels = response.channels || [];
-
-                // Populate channels dropdown
-                channels.forEach(channel => {
-                    channelDropdown.append(
-                        `<option value="${channel.address}">${channel.address}</option>`
-                    );
-                });
-
-                // Bind event to load operations based on selected channel
-                channelDropdown.off("change").on("change", function () {
-                    const selectedChannelAddress = $(this).val();
-                    updateOperationDropdown(operationDropdown, selectedChannelAddress, channels);
-                    const selectedOperationId = operationDropdown.val();
-                    updateMessagePanel(channels, selectedOperationId);
-                });
-                //  trigger change event if you want to auto-load operations for the first channel
-                channelDropdown.trigger("change");
-
-                operationDropdown.off("change").on("change", function () {
-                    const selectedOperationId = $(this).val();
-                    updateMessagePanel(channels, selectedOperationId);
-                });
-                operationDropdown.trigger("change");
-
-                // Save current selections
-                // const data = {
-                //     serverUrl: serverDropdown.val(),
-                //     topic: channelDropdown.val()
-                // };
-                // saveUserSelections(nodeId, data);
-            },
-            error: function (err) {
-                console.error("Error fetching servers:", err);
-            }
+            });
         });
     }
+
 
     function saveUserSelections(nodeId, data) {
         $.ajax({
@@ -200,6 +180,56 @@
             error: function (err) {
             }
         });
+    }
+
+    /**
+     *
+     * @param data
+     */
+    function updateDialogData(data) {
+        let serverDropdown = $("#node-input-select-server");
+        let channelDropdown = $("#node-input-channel");
+        let operationDropdown = $("#node-input-operations");
+
+        serverDropdown.empty();
+        channelDropdown.empty();
+        operationDropdown.empty();
+
+        // Populate servers
+        if (data.servers) {
+            data.servers.forEach(server => {
+                serverDropdown.append(
+                    `<option value="${server.url}">${server.url}</option>`
+                );
+            });
+        }
+
+        // Save channels for later use
+        const channels = data.channels || [];
+
+        // Populate channels dropdown
+        channels.forEach(channel => {
+            channelDropdown.append(
+                `<option value="${channel.address}">${channel.address}</option>`
+            );
+        });
+
+        // Bind event to load operations based on selected channel
+        channelDropdown.off("change").on("change", function () {
+            const selectedChannelAddress = $(this).val();
+            updateOperationDropdown(operationDropdown, selectedChannelAddress, channels);
+            const selectedOperationId = operationDropdown.val();
+            updateMessagePanel(channels, selectedOperationId);
+        });
+        //  trigger change event if you want to auto-load operations for the first channel
+        channelDropdown.trigger("change");
+
+        operationDropdown.off("change").on("change", function () {
+            const selectedOperationId = $(this).val();
+            updateMessagePanel(channels, selectedOperationId);
+        });
+        operationDropdown.trigger("change");
+
     }
 
     function renderMessages(selectedChannel, selectedOperation) {

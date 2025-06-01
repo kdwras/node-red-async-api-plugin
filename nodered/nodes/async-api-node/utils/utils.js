@@ -84,7 +84,7 @@ module.exports = (RED) => {
             return;
         }
         if (node.action === 'Subscribe') {
-            node.mqttClient.subscribe(node.topic, serverOptions, function (err) {
+            node.mqttClient.subscribe(node.topic, node.serverOptions, function (err) {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 }

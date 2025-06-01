@@ -167,6 +167,7 @@ module.exports = (RED) => {
         try {
             node.serverUrl = payload.serverUrl;
             node.topic = payload.topic;
+            node.action = payload.action;
             node.payload = payload.payload;
             res.status(204).send();
         } catch (error) {
@@ -187,9 +188,10 @@ module.exports = (RED) => {
             res.status(404).json({error: "Node not found!"});
         }
         const serverUrl = node.serverUrl;
-        const topic = node.context().get("topic");
-        const payload = node.context().get("payload");
-        res.status(200).json({serverUrl: serverUrl, topic: topic, payload: payload});
+        const topic = node.topic;
+        const payload = node.payload;
+        const action = node.action;
+        res.status(200).json({serverUrl: serverUrl, topic: topic, payload: payload, action: action});
     }
 
     /**
