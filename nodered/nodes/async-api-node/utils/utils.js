@@ -67,6 +67,12 @@ module.exports = (RED) => {
             node.status({fill: "green", shape: "dot", text: "Connected"});
         });
 
+        node.mqttClient.on("message", function (topic, message) {
+            node.lastMsg =  message.toString();
+        //    node.send({ payload: node.lastMsg }); // Optionally send immediately
+        });
+
+
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
         });
@@ -82,17 +88,17 @@ module.exports = (RED) => {
             return;
         }
         console.log(node.topic, node.action);
-        if (node.action === 'Subscribe') {
-            node.mqttClient.subscribe(node.topic, node.serverOptions, function (err) {
+      //  if (node.action === 'Subscribe') {
+            node.mqttClient.subscribe(node.topic, {retain:true}, function (err) {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 }
                 node.log('Topic created:', node.topic);
-                node.send({message: "Topic created", topic: node.topic});
+                //node.send({message: "Topic created", topic: node.topic});
             });
-        }
+      //  }
         if (node.action === 'Publish') {
-            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), node.serverOptions, (err) => {
+            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), {retain:true}, (err) => {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 } else {

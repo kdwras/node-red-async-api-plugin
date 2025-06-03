@@ -599,6 +599,13 @@
         "collapse": false
     },
     {
+        "id": "99d6ed905710cf6f",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
         "id": "ce0e172c8f1724ec",
         "type": "ui_group",
         "name": "Humidity Dashboard",
@@ -606,13 +613,6 @@
         "order": 1,
         "disp": true,
         "width": "6"
-    },
-    {
-        "id": "99d6ed905710cf6f",
-        "type": "ui_tab",
-        "name": "Dashboard",
-        "icon": "dashboard",
-        "order": 1
     },
     {
         "id": "a683470f9f9d2be2",
@@ -4117,8 +4117,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 240,
-        "y": 180,
+        "x": 200,
+        "y": 240,
         "wires": [
             [
                 "generateBrightness"
@@ -4132,7 +4132,7 @@
         "name": "Generate Brightness",
         "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
         "outputs": 1,
-        "x": 500,
+        "x": 460,
         "y": 180,
         "wires": [
             [
@@ -4152,53 +4152,10 @@
         "y": 180,
         "wires": [
             [
-                "lightStatusText",
-                "gauge",
-                "7fce5d9f331022b3"
+                "7fce5d9f331022b3",
+                "316ac711be659b73"
             ]
         ]
-    },
-    {
-        "id": "gauge",
-        "type": "ui_gauge",
-        "z": "brightnessDashboardFlow",
-        "name": "Brightness",
-        "group": "group1",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Brightness",
-        "label": "%",
-        "format": "{{msg.payload.brightness}}",
-        "min": 0,
-        "max": 100,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 60,
-        "seg2": 80,
-        "x": 870,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "lightStatusText",
-        "type": "ui_text",
-        "z": "brightnessDashboardFlow",
-        "group": "group1",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "Light State",
-        "label": "Light State",
-        "format": "{{msg.payload.state}}",
-        "layout": "row-spread",
-        "x": 950,
-        "y": 120,
-        "wires": []
     },
     {
         "id": "chart",
@@ -4215,6 +4172,7 @@
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
         "nodata": "Waiting...",
+        "dot": false,
         "ymin": "0",
         "ymax": "100",
         "removeOlder": 1,
@@ -4222,11 +4180,22 @@
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
+        "useUTC": false,
         "colors": [
-            "#1f77b4"
+            "#1f77b4",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
         ],
         "outputs": 1,
-        "x": 670,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 650,
         "y": 300,
         "wires": [
             []
@@ -4254,8 +4223,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1250,
-        "y": 340,
+        "x": 1170,
+        "y": 120,
         "wires": [
             [
                 "countOn"
@@ -4272,8 +4241,8 @@
         "name": "Count ON",
         "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
-        "x": 1500,
-        "y": 280,
+        "x": 1460,
+        "y": 100,
         "wires": [
             [
                 "onText"
@@ -4287,8 +4256,8 @@
         "name": "Count OFF",
         "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
-        "x": 1500,
-        "y": 320,
+        "x": 1460,
+        "y": 140,
         "wires": [
             [
                 "offText"
@@ -4307,8 +4276,8 @@
         "label": "Light ON Count",
         "format": "{{msg.payload}} times",
         "layout": "row-spread",
-        "x": 1720,
-        "y": 280,
+        "x": 1680,
+        "y": 100,
         "wires": []
     },
     {
@@ -4323,8 +4292,8 @@
         "label": "Light OFF Count",
         "format": "{{msg.payload}} times",
         "layout": "row-spread",
-        "x": 1720,
-        "y": 320,
+        "x": 1680,
+        "y": 140,
         "wires": []
     },
     {
@@ -4332,13 +4301,90 @@
         "type": "async-api-red",
         "z": "brightnessDashboardFlow",
         "name": "Send to Light Device",
-        "x": 980,
+        "x": 940,
         "y": 240,
         "wires": [
             [
-                "lightSwitch"
+                "lightSwitch",
+                "gauge",
+                "lightStatusText",
+                "66eb03e7305c1f2a"
             ]
         ]
+    },
+    {
+        "id": "gauge",
+        "type": "ui_gauge",
+        "z": "brightnessDashboardFlow",
+        "name": "Brightness",
+        "group": "group1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Brightness",
+        "label": "%",
+        "format": "{{msg.payload.brightness}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 60,
+        "seg2": 80,
+        "x": 1190,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "lightStatusText",
+        "type": "ui_text",
+        "z": "brightnessDashboardFlow",
+        "group": "group1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Light State",
+        "label": "Light State",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 1190,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "316ac711be659b73",
+        "type": "debug",
+        "z": "brightnessDashboardFlow",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "66eb03e7305c1f2a",
+        "type": "debug",
+        "z": "brightnessDashboardFlow",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 400,
+        "wires": []
     },
     {
         "id": "309565de86e36daf",

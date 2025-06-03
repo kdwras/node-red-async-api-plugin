@@ -599,6 +599,13 @@
         "collapse": false
     },
     {
+        "id": "99d6ed905710cf6f",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
         "id": "ce0e172c8f1724ec",
         "type": "ui_group",
         "name": "Humidity Dashboard",
@@ -606,13 +613,6 @@
         "order": 1,
         "disp": true,
         "width": "6"
-    },
-    {
-        "id": "99d6ed905710cf6f",
-        "type": "ui_tab",
-        "name": "Dashboard",
-        "icon": "dashboard",
-        "order": 1
     },
     {
         "id": "a683470f9f9d2be2",
@@ -4171,6 +4171,7 @@
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
         "nodata": "Waiting...",
+        "dot": false,
         "ymin": "0",
         "ymax": "100",
         "removeOlder": 1,
@@ -4178,10 +4179,21 @@
         "removeOlderUnit": "3600",
         "cutout": 0,
         "useOneColor": false,
+        "useUTC": false,
         "colors": [
-            "#1f77b4"
+            "#1f77b4",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
         ],
         "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
         "x": 650,
         "y": 300,
         "wires": [
@@ -4294,7 +4306,8 @@
             [
                 "lightSwitch",
                 "gauge",
-                "lightStatusText"
+                "lightStatusText",
+                "66eb03e7305c1f2a"
             ]
         ]
     },
@@ -4338,6 +4351,22 @@
         "layout": "row-spread",
         "x": 1190,
         "y": 320,
+        "wires": []
+    },
+    {
+        "id": "66eb03e7305c1f2a",
+        "type": "debug",
+        "z": "brightnessDashboardFlow",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 400,
         "wires": []
     },
     {

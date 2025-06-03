@@ -25,15 +25,19 @@ module.exports = function (RED) {
 
         //This sets up a handler that is called every time a message (msg) arrives into node.
         node.on("input", function (msg, send, done) {
-            node.payload = msg.payload;
-
-            // Connect to the server
             const Utils = require("./utils/utils")(RED);
+            node.payload = msg.payload
+
             Utils.connectToServer(node);
-            Utils.handleMessage(node);
-            // Send the message onward
-            send(msg);
-            // Indicate processing is done (especially important for async work)
+            Utils.handleMessage(node); // stores lastMsg
+
+            // Send the last message received from the MQTT server
+            if (node.lastMsg !== undefined) {
+                send({ payload: JSON.parse(node.lastMsg) });
+            } else {
+                node.warn("No message has been received yet.");
+            }
+
             done();
         });
     }

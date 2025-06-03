@@ -468,25 +468,6 @@
             }
         }
     },
-    "node-red-node-ui-table": {
-        "name": "node-red-node-ui-table",
-        "version": "0.4.4",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "ui_table": {
-                "name": "ui_table",
-                "types": [
-                    "ui_table"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-node-ui-table",
-                "file": "/data/node_modules/node-red-node-ui-table/node.js"
-            }
-        }
-    },
     "node-red-dashboard": {
         "name": "node-red-dashboard",
         "version": "3.6.5",
@@ -723,6 +704,25 @@
                 "user": false,
                 "module": "node-red-dashboard",
                 "file": "/data/node_modules/node-red-dashboard/nodes/ui_spacer.js"
+            }
+        }
+    },
+    "node-red-node-ui-table": {
+        "name": "node-red-node-ui-table",
+        "version": "0.4.4",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "ui_table": {
+                "name": "ui_table",
+                "types": [
+                    "ui_table"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-node-ui-table",
+                "file": "/data/node_modules/node-red-node-ui-table/node.js"
             }
         }
     },
