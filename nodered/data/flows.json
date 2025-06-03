@@ -68,6 +68,20 @@
         "info": ""
     },
     {
+        "id": "brightnessDashboardFlow",
+        "type": "tab",
+        "label": "Brightness Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1800032368ab7c0e",
+        "type": "tab",
+        "label": "Humidity Control",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "2785aa7402e0c422",
         "type": "group",
         "z": "0c8e0c86799d088c",
@@ -566,6 +580,39 @@
         "order": 1,
         "disp": true,
         "width": "6"
+    },
+    {
+        "id": "tab1",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "group1",
+        "type": "ui_group",
+        "name": "Light Stats",
+        "tab": "tab1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ce0e172c8f1724ec",
+        "type": "ui_group",
+        "name": "Humidity Dashboard",
+        "tab": "99d6ed905710cf6f",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "99d6ed905710cf6f",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 1
     },
     {
         "id": "a683470f9f9d2be2",
@@ -3697,8 +3744,8 @@
         "y": 660,
         "wires": [
             [
-                "85aa8a1fd4ea0dd7",
-                "b2090fe550aa0808"
+                "b2090fe550aa0808",
+                "85aa8a1fd4ea0dd7"
             ]
         ]
     },
@@ -3708,8 +3755,8 @@
         "z": "bb5d022f712f284a",
         "g": "b52180ab0632e26b",
         "name": "Send to Light Device",
-        "x": 2110,
-        "y": 660,
+        "x": 2140,
+        "y": 680,
         "wires": [
             [
                 "47b822a2f8f4cc47",
@@ -3729,8 +3776,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 2120,
-        "y": 720,
+        "x": 2090,
+        "y": 740,
         "wires": []
     },
     {
@@ -4057,6 +4104,458 @@
         "targetType": "msg",
         "x": 860,
         "y": 130,
+        "wires": []
+    },
+    {
+        "id": "inject1",
+        "type": "inject",
+        "z": "brightnessDashboardFlow",
+        "name": "Inject Random Brightness",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 240,
+        "wires": [
+            [
+                "generateBrightness"
+            ]
+        ]
+    },
+    {
+        "id": "generateBrightness",
+        "type": "function",
+        "z": "brightnessDashboardFlow",
+        "name": "Generate Brightness",
+        "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 180,
+        "wires": [
+            [
+                "checkBrightness",
+                "chart"
+            ]
+        ]
+    },
+    {
+        "id": "checkBrightness",
+        "type": "function",
+        "z": "brightnessDashboardFlow",
+        "name": "Check Brightness",
+        "func": "const brightness = msg.payload.brightness;\nmsg.payload = {\n    state: brightness >= 80 ? \"on\" : \"off\",\n    brightness\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "7fce5d9f331022b3"
+            ]
+        ]
+    },
+    {
+        "id": "chart",
+        "type": "ui_chart",
+        "z": "brightnessDashboardFlow",
+        "name": "Brightness Chart",
+        "group": "group1",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Brightness Over Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Waiting...",
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4"
+        ],
+        "outputs": 1,
+        "x": 650,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "lightSwitch",
+        "type": "switch",
+        "z": "brightnessDashboardFlow",
+        "name": "Light ON or OFF?",
+        "property": "payload.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 120,
+        "wires": [
+            [
+                "countOn"
+            ],
+            [
+                "countOff"
+            ]
+        ]
+    },
+    {
+        "id": "countOn",
+        "type": "function",
+        "z": "brightnessDashboardFlow",
+        "name": "Count ON",
+        "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1460,
+        "y": 100,
+        "wires": [
+            [
+                "onText"
+            ]
+        ]
+    },
+    {
+        "id": "countOff",
+        "type": "function",
+        "z": "brightnessDashboardFlow",
+        "name": "Count OFF",
+        "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1460,
+        "y": 140,
+        "wires": [
+            [
+                "offText"
+            ]
+        ]
+    },
+    {
+        "id": "onText",
+        "type": "ui_text",
+        "z": "brightnessDashboardFlow",
+        "group": "group1",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Times ON",
+        "label": "Light ON Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "x": 1680,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "offText",
+        "type": "ui_text",
+        "z": "brightnessDashboardFlow",
+        "group": "group1",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Times OFF",
+        "label": "Light OFF Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "x": 1680,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7fce5d9f331022b3",
+        "type": "async-api-red",
+        "z": "brightnessDashboardFlow",
+        "name": "Send to Light Device",
+        "x": 940,
+        "y": 240,
+        "wires": [
+            [
+                "lightSwitch",
+                "gauge",
+                "lightStatusText"
+            ]
+        ]
+    },
+    {
+        "id": "gauge",
+        "type": "ui_gauge",
+        "z": "brightnessDashboardFlow",
+        "name": "Brightness",
+        "group": "group1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Brightness",
+        "label": "%",
+        "format": "{{msg.payload.brightness}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 60,
+        "seg2": 80,
+        "x": 1190,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "lightStatusText",
+        "type": "ui_text",
+        "z": "brightnessDashboardFlow",
+        "group": "group1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Light State",
+        "label": "Light State",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 1190,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "309565de86e36daf",
+        "type": "async-api-red",
+        "z": "1800032368ab7c0e",
+        "name": "Humidity Device",
+        "x": 680,
+        "y": 180,
+        "wires": [
+            [
+                "88ae8225747629bf",
+                "4193bdcd6830db75",
+                "d95446a8c6101877",
+                "a95b568633c7c48d",
+                "5984992199a2ef31"
+            ]
+        ]
+    },
+    {
+        "id": "8c46ed0f9eb97f8f",
+        "type": "inject",
+        "z": "1800032368ab7c0e",
+        "name": "Trigger",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "76b89d6f5d292f50"
+            ]
+        ]
+    },
+    {
+        "id": "76b89d6f5d292f50",
+        "type": "function",
+        "z": "1800032368ab7c0e",
+        "name": "Simulate Humidity",
+        "func": "const humidity = Math.floor(Math.random() * 101);\nmsg.payload = {\n    brightness: humidity,\n    state: humidity > 60 ? \"on\" : \"off\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "309565de86e36daf"
+            ]
+        ]
+    },
+    {
+        "id": "88ae8225747629bf",
+        "type": "ui_gauge",
+        "z": "1800032368ab7c0e",
+        "name": "Humidity Level",
+        "group": "ce0e172c8f1724ec",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.brightness}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1120,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4193bdcd6830db75",
+        "type": "ui_text",
+        "z": "1800032368ab7c0e",
+        "group": "ce0e172c8f1724ec",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Dehumidifier State",
+        "label": "Dehumidifier",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1130,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d95446a8c6101877",
+        "type": "ui_chart",
+        "z": "1800032368ab7c0e",
+        "name": "Humidity Chart",
+        "group": "ce0e172c8f1724ec",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity Over Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4"
+        ],
+        "outputs": 1,
+        "className": "",
+        "x": 1120,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a95b568633c7c48d",
+        "type": "switch",
+        "z": "1800032368ab7c0e",
+        "name": "Is ON or OFF?",
+        "property": "payload.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1110,
+        "y": 260,
+        "wires": [
+            [
+                "03fb9da3615ce917"
+            ],
+            [
+                "d56fe9328a6db1e6"
+            ]
+        ]
+    },
+    {
+        "id": "03fb9da3615ce917",
+        "type": "ui_text",
+        "z": "1800032368ab7c0e",
+        "group": "ce0e172c8f1724ec",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "ON Counter",
+        "label": "Times ON",
+        "format": "{{count}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1300,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d56fe9328a6db1e6",
+        "type": "ui_text",
+        "z": "1800032368ab7c0e",
+        "group": "ce0e172c8f1724ec",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "OFF Counter",
+        "label": "Times OFF",
+        "format": "{{count}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1300,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5984992199a2ef31",
+        "type": "debug",
+        "z": "1800032368ab7c0e",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 380,
         "wires": []
     }
 ]

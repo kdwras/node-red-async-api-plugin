@@ -151,7 +151,7 @@
   },
   "operations": {
     "receiveLightMeasurement": {
-      "action": "receive",
+      "action": "send",
       "channel": {
         "$ref": "#/channels/lightingMeasured"
       },
