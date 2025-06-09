@@ -26,10 +26,15 @@ module.exports = function (RED) {
         //This sets up a handler that is called every time a message (msg) arrives into node.
         node.on("input", function (msg, send, done) {
             const Utils = require("./utils/utils")(RED);
-            node.payload = msg.payload
+            node.payload = msg.payload;
 
             Utils.connectToServer(node);
             Utils.handleMessage(node); // stores lastMsg
+
+            // event to send the message every time arrives to node red ui editor
+            RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
+                payload: node.payload
+            });
 
             // Send the last message received from the MQTT server
             if (node.lastMsg !== undefined) {

@@ -18,6 +18,17 @@
             if (node?.id) {
                 // Fetch saved file
                 getFile(node.id);
+                // get the payload and update the messages
+                RED.comms.subscribe(`async-api-red/payload-update/${node.id}`, function (topic, msg) {
+                    if (msg && msg.payload && typeof msg.payload === "object") {
+                        Object.entries(msg.payload).forEach(([key, value]) => {
+                            const input = $(`#node-input-${key}`);
+                            if (input.length) {
+                                input.val(value);
+                            }
+                        });
+                    }
+                });
             }
 
             // Handle file input selection
@@ -27,13 +38,12 @@
                     uploadFile(node.id, file);
                 }
             });
-
         },
         oneditsave: function () {
             const node = this;
             if (node?.id) {
 
-                const selectedServer =  $("#node-input-select-server").val();
+                const selectedServer = $("#node-input-select-server").val();
                 const selectedChannelAddress = $("#node-input-channel").val();
                 const selectedOperationId = $("#node-input-operations").val();
 
@@ -45,8 +55,6 @@
                     const selectedOperation = selectedChannel?.operations?.find(
                         op => op.id === selectedOperationId
                     );
-
-                    console.log(response);
 
                     let data = {
                         serverUrl: selectedServer,
@@ -61,7 +69,6 @@
                         data.payload[key] = value; // store in payload object
                     });
 
-
                     saveUserSelections(node.id, data);
                     connectToServer(node.id).then(() => {
                         console.log('Connected to server, now creating topic...');
@@ -70,14 +77,8 @@
                         console.error('Failed to connect to server:', err);
                     });
                 });
-
             }
         },
-        // oneditcancel: function () {
-        //     const node = this;
-        //     node.editor.destroy();
-        //     delete node.editor;
-        // },
     });
 
     /** Function to fetch saved file */

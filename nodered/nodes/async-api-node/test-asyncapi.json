@@ -263,12 +263,12 @@
       "lightMeasuredPayload": {
         "type": "object",
         "properties": {
-          "lumens": {
+          "brightness": {
             "type": "integer",
             "minimum": 0,
             "description": "Light intensity measured in lumens."
           },
-          "sentAt": {
+          "state": {
             "$ref": "#/components/schemas/sentAt"
           }
         }
