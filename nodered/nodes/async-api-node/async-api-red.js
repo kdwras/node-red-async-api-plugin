@@ -37,8 +37,8 @@ module.exports = function (RED) {
             });
 
             // Send the last message received from the MQTT server
-            if (node.lastMsg !== undefined) {
-                send({ payload: JSON.parse(node.lastMsg) });
+            if (node.messageReceivedFromSrv !== undefined) {
+                send({ payload: JSON.parse(node.messageReceivedFromSrv) });
             } else {
                 node.warn("No message has been received yet.");
             }

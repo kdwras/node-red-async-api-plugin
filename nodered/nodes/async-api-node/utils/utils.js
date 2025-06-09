@@ -68,8 +68,8 @@ module.exports = (RED) => {
         });
 
         node.mqttClient.on("message", function (topic, message) {
-            node.lastMsg =  message.toString();
-        //    node.send({ payload: node.lastMsg }); // Optionally send immediately
+            node.messageReceivedFromSrv =  message.toString();
+        //    node.send({ payload: node.messageReceivedFromSrv }); // Optionally send immediately
         });
 
 
