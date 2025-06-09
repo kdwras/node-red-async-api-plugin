@@ -26,25 +26,71 @@ module.exports = function (RED) {
         //This sets up a handler that is called every time a message (msg) arrives into node.
         node.on("input", function (msg, send, done) {
             const Utils = require("./utils/utils")(RED);
-            node.payload = msg.payload;
 
-            Utils.connectToServer(node);
-            Utils.handleMessage(node); // stores lastMsg
+            try {
+                node.payload = msg.payload;
 
-            // event to send the message every time arrives to node red ui editor
-            RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
-                payload: node.payload
-            });
+                validatePayload(node);
 
-            // Send the last message received from the MQTT server
-            if (node.messageReceivedFromSrv !== undefined) {
-                send({ payload: JSON.parse(node.messageReceivedFromSrv) });
-            } else {
-                node.warn("No message has been received yet.");
+                // If validation passes
+                Utils.connectToServer(node);
+                Utils.handleMessage(node);
+
+                RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
+                    payload: node.payload
+                });
+
+                if (node.messageReceivedFromSrv !== undefined) {
+                    send({payload: JSON.parse(node.messageReceivedFromSrv)});
+                } else {
+                    node.warn("No message has been received yet.");
+                }
+
+                done();
+
+            } catch (err) {
+                // ❗ Notify the editor
+                RED.comms.publish(`async-api-red/payload-error/${node.id}`, {
+                    error: err.message
+                });
+
+                // ❌ Stop execution
+                node.error(err.message, msg);
             }
 
-            done();
         });
+    }
+
+    /**
+     *
+     * @param node
+     */
+    function validatePayload(node) {
+        if (typeof node.payload !== 'object' || Array.isArray(node.payload) || node.payload === null) {
+            return;
+        }
+
+        if (!Array.isArray(node.expectedPayload)) {
+            return;
+        }
+
+        const expectedPayload = node.expectedPayload || [];
+
+        for (const spec of expectedPayload) {
+            const value = node.payload[spec.name];
+
+            if (value === undefined) {
+                throw new Error(`Missing required key: "${spec.name}"`);
+            }
+
+            if (spec.type === "string" && typeof value !== "string") {
+                throw new Error(`Key "${spec.name}" must be a string.`);
+            }
+
+            if (spec.type === "integer" && typeof value !== "number") {
+                throw new Error(`Key "${spec.name}" must be an integer.`);
+            }
+        }
     }
 
     RED.nodesMap = nodesMap;

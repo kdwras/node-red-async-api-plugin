@@ -168,7 +168,7 @@ module.exports = (RED) => {
             node.serverUrl = payload.serverUrl;
             node.topic = payload.topic;
             node.action = payload.action;
-            node.payload = payload.payload;
+            node.expectedPayload = payload.expectedPayload;
             res.status(204).send();
         } catch (error) {
             res.status(500).json({error: error});

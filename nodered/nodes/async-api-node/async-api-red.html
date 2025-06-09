@@ -29,6 +29,11 @@
                         });
                     }
                 });
+
+                RED.comms.subscribe(`async-api-red/payload-error/${node.id}`, function (topic, msg) {
+                    RED.notify(`❌ Validation Error: ${msg.error}`, "error");
+                });
+
             }
 
             // Handle file input selection
@@ -60,14 +65,8 @@
                         serverUrl: selectedServer,
                         topic: selectedChannel.address,
                         action: selectedOperation.action === 'send' ? 'Publish' : 'Subscribe',
-                        payload: {}
+                        expectedPayload : getExpectedMessages()
                     }
-
-                    $("#node-messages-display input").each(function () {
-                        const key = $(this).attr('id').replace('node-input-', ''); // get the name
-                        const value = $(this).val(); // get the value
-                        data.payload[key] = value; // store in payload object
-                    });
 
                     saveUserSelections(node.id, data);
                     connectToServer(node.id).then(() => {
@@ -76,8 +75,19 @@
                     }).catch((err) => {
                         console.error('Failed to connect to server:', err);
                     });
+
+                    function getExpectedMessages() {
+                        const messages = [];
+                        selectedOperation.messages.forEach(item =>{
+                            item.payload.forEach(message => {
+                                messages.push(message);
+                            });
+                        });
+                        return messages;
+                    }
                 });
             }
+            RED.comms.unsubscribe(`async-api-red/payload-error/${node.id}`);
         },
     });
 
@@ -141,7 +151,6 @@
     /** Function to fetch servers */
     async function getData(nodeId) {
         return new Promise((resolve, reject) => {
-
             $.ajax({
                 type: "GET",
                 url: `/async-api-red/${nodeId}/data`,
