@@ -1,0 +1,151 @@
+asyncapi: 3.0.0
+info:
+  title: SmartHome Automation API
+  version: '1.0.0'
+  description: AsyncAPI 3.0.0 spec for smart home automation using Node-RED and async-api-red.
+
+defaultContentType: application/json
+
+servers:
+  mqttBroker:
+    host: 172.17.0.1:1883
+    protocol: mqtt
+    description: Local MQTT broker
+
+channels:
+  thermostatSet:
+    address: home/thermostatet
+    messages:
+      thermostatSetMessage:
+        $ref: '#/components/messages/ThermostatSet'
+
+  acPower:
+    address: home/ac/power
+    messages:
+      acPowerMessage:
+        $ref: '#/components/messages/ACPower'
+
+  lightsState:
+    address: home/lights/state
+    messages:
+      lightStateMessage:
+        $ref: '#/components/messages/LightState'
+
+  doorLock:
+    address: home/door/lock
+    messages:
+      doorLockMessage:
+        $ref: '#/components/messages/DoorLock'
+
+  coffeeStart:
+    address: home/coffee/start
+    messages:
+      coffeeStartMessage:
+        $ref: '#/components/messages/CoffeeStart'
+
+operations:
+  setThermostat:
+    action: send
+    channel:
+      $ref: '#/channels/thermostatSet'
+    messages:
+      - $ref: '#/channels/thermostatSet/messages/thermostatSetMessage'
+
+  setACState:
+    action: send
+    channel:
+      $ref: '#/channels/acPower'
+    messages:
+      - $ref: '#/channels/acPower/messages/acPowerMessage'
+
+  controlLights:
+    action: send
+    channel:
+      $ref: '#/channels/lightsState'
+    messages:
+      - $ref: '#/channels/lightsState/messages/lightStateMessage'
+
+  controlDoorLock:
+    action: send
+    channel:
+      $ref: '#/channels/doorLock'
+    messages:
+      - $ref: '#/channels/doorLock/messages/doorLockMessage'
+
+  startCoffeeMachine:
+    action: send
+    channel:
+      $ref: '#/channels/coffeeStart'
+    messages:
+      - $ref: '#/channels/coffeeStart/messages/coffeeStartMessage'
+
+components:
+  messages:
+    ThermostatSet:
+      name: ThermostatSet
+      summary: Set thermostat temperature
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          temperature:
+            type: integer
+            description: Desired temperature
+          unit:
+            type: string
+            enum: [C, F]
+            description: Temperature unit
+
+    ACPower:
+      name: ACPower
+      summary: Turn AC ON/OFF
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          state:
+            type: string
+            enum: [ON, OFF]
+            description: AC power state
+
+    LightState:
+      name: LightState
+      summary: Set light state
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          state:
+            type: string
+            enum: [ON, OFF]
+            description: Light state
+          brightness:
+            type: integer
+            minimum: 0
+            maximum: 100
+            description: Brightness level
+
+    DoorLock:
+      name: DoorLock
+      summary: Lock or unlock door
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          locked:
+            type: boolean
+            description: Lock status
+
+    CoffeeStart:
+      name: CoffeeStart
+      summary: Start brewing coffee
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          strength:
+            type: string
+            enum: [light, medium, strong]
+          size:
+            type: string
+            enum: [small, medium, large]

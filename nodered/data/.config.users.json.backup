@@ -18,14 +18,14 @@
             "dialog": {
                 "export": {
                     "pretty": true,
-                    "json-view": false
+                    "json-view": true
                 }
             }
         },
         "debug": {
-            "filter": "filterCurrent"
+            "filter": "filterSelected"
         },
         "menu-menu-item-palette": true,
-        "menu-menu-item-sidebar": false
+        "menu-menu-item-sidebar": true
     }
 }

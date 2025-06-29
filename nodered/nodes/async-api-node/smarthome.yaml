@@ -1,0 +1,141 @@
+asyncapi: 3.0.0
+info:
+  title: Smart Home System
+  version: '1.0.0'
+  description: AsyncAPI for various smart home devices.
+defaultContentType: application/json
+servers:
+  localBroker:
+    host: 172.17.0.1:1883
+    protocol: mqtt
+    description: Local MQTT broker
+channels:
+  thermostat-set:
+    address: thermostat/set
+    messages:
+      thermostatSetMessage:
+        $ref: '#/components/messages/ThermostatSetting'
+  fan-set:
+    address: fan/set
+    messages:
+      fanSetMessage:
+        $ref: '#/components/messages/FanSetting'
+  light-set:
+    address: light/set
+    messages:
+      lightSetMessage:
+        $ref: '#/components/messages/LightSetting'
+  plug-set:
+    address: plug/set
+    messages:
+      plugSetMessage:
+        $ref: '#/components/messages/PlugSetting'
+  lock-set:
+    address: lock/set
+    messages:
+      lockSetMessage:
+        $ref: '#/components/messages/LockSetting'
+  motion-triggered:
+    address: motion/triggered
+    messages:
+      motionEventMessage:
+        $ref: '#/components/messages/MotionEvent'
+operations:
+  sendThermostatSetting:
+    action: send
+    channel:
+      $ref: '#/channels/thermostat-set'
+    messages:
+      - $ref: '#/channels/thermostat-set/messages/thermostatSetMessage'
+  sendFanSetting:
+    action: send
+    channel:
+      $ref: '#/channels/fan-set'
+    messages:
+      - $ref: '#/channels/fan-set/messages/fanSetMessage'
+  sendLightSetting:
+    action: send
+    channel:
+      $ref: '#/channels/light-set'
+    messages:
+      - $ref: '#/channels/light-set/messages/lightSetMessage'
+  sendPlugSetting:
+    action: send
+    channel:
+      $ref: '#/channels/plug-set'
+    messages:
+      - $ref: '#/channels/plug-set/messages/plugSetMessage'
+  sendLockSetting:
+    action: send
+    channel:
+      $ref: '#/channels/lock-set'
+    messages:
+      - $ref: '#/channels/lock-set/messages/lockSetMessage'
+  receiveMotionEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/motion-triggered'
+    messages:
+      - $ref: '#/channels/motion-triggered/messages/motionEventMessage'
+components:
+  messages:
+    ThermostatSetting:
+      name: ThermostatSetting
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          temperature:
+            type: integer
+            description: Desired room temperature
+    FanSetting:
+      name: FanSetting
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          speed:
+            type: integer
+            description: Fan speed (1-5)
+    LightSetting:
+      name: LightSetting
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          state:
+            type: string
+            enum: [on, off]
+            description: Turn light on or off
+    PlugSetting:
+      name: PlugSetting
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          state:
+            type: string
+            enum: [on, off]
+            description: Power state of plug
+    LockSetting:
+      name: LockSetting
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          locked:
+            type: boolean
+            description: Lock state of the door
+    MotionEvent:
+      name: MotionEvent
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          detected:
+            type: boolean
+            description: Whether motion was detected
+          timestamp:
+            type: string
+            format: date-time
+            description: Time of motion detection

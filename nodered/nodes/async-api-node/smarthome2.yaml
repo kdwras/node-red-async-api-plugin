@@ -1,0 +1,117 @@
+asyncapi: 3.0.0
+info:
+  title: Smart Home – Auto AC Control
+  version: '1.0.0'
+  description: >
+    Turns on the air conditioner to 24°C in cooling mode when:
+    - Temperature exceeds 28°C
+    - A person is present at home
+
+defaultContentType: application/json
+
+servers:
+  server:
+    host: 172.17.0.1:1883
+    protocol: mqtt
+    description: Local MQTT broker
+
+channels:
+  temperatureReadings:
+    address: temperatureReadings
+    messages:
+      temperatureReadingMessage:
+        $ref: '#/components/messages/TemperatureReading'
+
+  presenceStatus:
+    address: presenceStatus
+    messages:
+      presenceStatusMessage:
+        $ref: '#/components/messages/PresenceStatus'
+
+  acCommand:
+    address: acCommand
+    messages:
+      acCommandMessage:
+        $ref: '#/components/messages/ACCommand'
+
+operations:
+  receiveTemperature:
+    action: receive
+    channel:
+      $ref: '#/channels/temperatureReadings'
+    messages:
+      - $ref: '#/channels/temperatureReadings/messages/temperatureReadingMessage'
+
+  receivePresence:
+    action: receive
+    channel:
+      $ref: '#/channels/presenceStatus'
+    messages:
+      - $ref: '#/channels/presenceStatus/messages/presenceStatusMessage'
+
+  sendACCommand:
+    action: send
+    channel:
+      $ref: '#/channels/acCommand'
+    messages:
+      - $ref: '#/channels/acCommand/messages/acCommandMessage'
+
+components:
+  messages:
+    TemperatureReading:
+      name: TemperatureReading
+      contentType: application/json
+      summary: Indoor temperature sensor reading
+      payload:
+        type: object
+        properties:
+          sensorId:
+            type: string
+            example: sensor_living_room
+          temperature:
+            type: number
+            example: 29.4
+            description: Temperature in Celsius
+          timestamp:
+            type: string
+            format: date-time
+            description: Time of reading
+
+    PresenceStatus:
+      name: PresenceStatus
+      contentType: application/json
+      summary: Presence status of a person in the home
+      payload:
+        type: object
+        properties:
+          personId:
+            type: string
+            example: person1
+          status:
+            type: string
+            enum: [home, away]
+            example: home
+          timestamp:
+            type: string
+            format: date-time
+
+    ACCommand:
+      name: ACCommand
+      contentType: application/json
+      summary: Command to control the air conditioner
+      payload:
+        type: object
+        properties:
+          entityId:
+            type: string
+            example: climate.living_room_ac
+          hvacMode:
+            type: string
+            enum: [cool, heat, auto, off]
+            example: cool
+          temperature:
+            type: number
+            example: 24
+          source:
+            type: string
+            example: "Automation: temp > 28°C and person1 is home"
