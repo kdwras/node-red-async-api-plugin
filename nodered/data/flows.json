@@ -6661,7 +6661,7 @@
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
         "name": "Brightness Chart",
-        "group": "",
+        "group": "bca09b7d8c2ffdc1",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -6771,7 +6771,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "",
+        "group": "bca09b7d8c2ffdc1",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -6779,6 +6779,11 @@
         "label": "Light ON Count",
         "format": "{{msg.payload}} times",
         "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
         "x": 1760,
         "y": 900,
         "wires": []
@@ -6788,7 +6793,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "",
+        "group": "bca09b7d8c2ffdc1",
         "order": 5,
         "width": 0,
         "height": 0,
@@ -6796,6 +6801,11 @@
         "label": "Light OFF Count",
         "format": "{{msg.payload}} times",
         "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
         "x": 1760,
         "y": 940,
         "wires": []
@@ -6823,7 +6833,7 @@
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
         "name": "Brightness",
-        "group": "",
+        "group": "bca09b7d8c2ffdc1",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -6840,6 +6850,8 @@
         ],
         "seg1": 60,
         "seg2": 80,
+        "diff": false,
+        "className": "",
         "x": 1270,
         "y": 1020,
         "wires": []
@@ -6849,7 +6861,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "",
+        "group": "bca09b7d8c2ffdc1",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -6857,6 +6869,11 @@
         "label": "Light State",
         "format": "{{msg.payload.state}}",
         "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
         "x": 1270,
         "y": 1120,
         "wires": []
@@ -7205,136 +7222,6 @@
         "statusType": "auto",
         "x": 1120,
         "y": 80,
-        "wires": []
-    },
-    {
-        "id": "light_state_ui",
-        "type": "ui_switch",
-        "z": "1",
-        "name": "Light State",
-        "label": "Light ON/OFF",
-        "tooltip": "",
-        "group": "ui_group_lights",
-        "order": 1,
-        "width": 3,
-        "height": 1,
-        "passthru": true,
-        "decouple": "false",
-        "topic": "",
-        "style": "",
-        "onvalue": "ON",
-        "onvalueType": "str",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "OFF",
-        "offvalueType": "str",
-        "officon": "",
-        "offcolor": "",
-        "x": 180,
-        "y": 100,
-        "wires": [
-            [
-                "combine_light_state"
-            ]
-        ]
-    },
-    {
-        "id": "brightness_ui",
-        "type": "ui_slider",
-        "z": "1",
-        "name": "Brightness",
-        "label": "Brightness",
-        "tooltip": "",
-        "group": "ui_group_lights",
-        "order": 2,
-        "width": 3,
-        "height": 1,
-        "passthru": true,
-        "outs": "all",
-        "topic": "",
-        "min": 0,
-        "max": 100,
-        "step": 1,
-        "x": 180,
-        "y": 160,
-        "wires": [
-            [
-                "combine_light_state"
-            ]
-        ]
-    },
-    {
-        "id": "combine_light_state",
-        "type": "join",
-        "z": "1",
-        "name": "Combine State + Brightness",
-        "mode": "auto",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "1",
-        "count": "2",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "x": 440,
-        "y": 130,
-        "wires": [
-            [
-                "publish_light_state",
-                "display_light_state"
-            ]
-        ]
-    },
-    {
-        "id": "publish_light_state",
-        "type": "asyncapi-pub",
-        "z": "1",
-        "name": "Publish LightState",
-        "channel": "home/lights/state",
-        "channelType": "topic",
-        "operationId": "controlLights",
-        "x": 730,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "mqtt_subscribe_lights",
-        "type": "mqtt in",
-        "z": "1",
-        "name": "MQTT Sub Lights",
-        "topic": "home/lights/state",
-        "qos": "2",
-        "datatype": "json",
-        "broker": "mqtt_local_broker",
-        "inputs": 0,
-        "x": 160,
-        "y": 240,
-        "wires": [
-            [
-                "display_light_state"
-            ]
-        ]
-    },
-    {
-        "id": "display_light_state",
-        "type": "ui_text",
-        "z": "1",
-        "group": "ui_group_lights",
-        "order": 3,
-        "width": 6,
-        "height": 1,
-        "name": "Current Light State",
-        "label": "Light Status",
-        "format": "{{msg.payload.state}} at {{msg.payload.brightness}}%",
-        "layout": "row-spread",
-        "x": 760,
-        "y": 160,
         "wires": []
     }
 ]
