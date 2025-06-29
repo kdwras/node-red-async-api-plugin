@@ -128,6 +128,34 @@
         "info": ""
     },
     {
+        "id": "acFlow",
+        "type": "tab",
+        "label": "AC Control Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5a0421faf6b57874",
+        "type": "tab",
+        "label": "AC Control Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1",
+        "type": "tab",
+        "label": "Smart Lights Flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e4126d0caf35b74e",
+        "type": "tab",
+        "label": "Smart Lights Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "2785aa7402e0c422",
         "type": "group",
         "z": "0c8e0c86799d088c",
@@ -399,6 +427,99 @@
         "h": 362
     },
     {
+        "id": "50a045551ea38743",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d4f8c637ba287db1",
+            "ba5dc6718d645637",
+            "69ded1d17cbec561",
+            "9a05b0be9bfe3225",
+            "1d06a67200a8e66e",
+            "27b270e5d78bc103",
+            "d9d04269593328c3",
+            "1eb2f1ad87e9df5c",
+            "09f2f1cdc17cf192",
+            "5fd815fb2caf5aba"
+        ],
+        "x": 94,
+        "y": 179,
+        "w": 1362,
+        "h": 282
+    },
+    {
+        "id": "a0bc03072058d078",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "29eca096862b8fb4",
+            "a759b38ff08da238",
+            "b4d971cf3772f83e",
+            "e97196a0d8d49460",
+            "793cf3b0139849eb",
+            "4c2bce897c0d2007",
+            "dcb5ea5864cbccb9",
+            "3d5df840425aed95",
+            "6b793056cae7dfce"
+        ],
+        "x": 94,
+        "y": 519,
+        "w": 1302,
+        "h": 222
+    },
+    {
+        "id": "6996a7f421765b1a",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "1616e8d0253bffbf",
+            "29a719f9730293ac",
+            "b58e5041e4c9741b",
+            "d83a4d77d7f049bf",
+            "84eae99cd8fb8148",
+            "9b07cf1424fb44b6",
+            "499267adb5adb442",
+            "02494731b443fa30",
+            "4229373250208f05",
+            "dba1b26fa3a4b0a8",
+            "c0f6b3899961c14c",
+            "ae9ed5515183f125",
+            "bdacb97c9c98471c",
+            "f42d0e7a987f22d0"
+        ],
+        "x": 114,
+        "y": 859,
+        "w": 1742,
+        "h": 382
+    },
+    {
         "id": "7285f7e430313100",
         "type": "openApi-red-url",
         "name": "gg",
@@ -524,7 +645,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -716,6 +838,100 @@
         "width": 6,
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "ac-tab",
+        "type": "ui_tab",
+        "name": "AC Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ac-group",
+        "type": "ui_group",
+        "name": "AC Control",
+        "tab": "ac-tab",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "03ee92e1974696ed",
+        "type": "ui_group",
+        "name": "AC Control",
+        "tab": "tab1",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "07bd17c79e6d2022",
+        "type": "ui_group",
+        "name": "Thermostat",
+        "tab": "ui-tab",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "25c827561ad482f0",
+        "type": "ui_group",
+        "name": "AC Control",
+        "tab": "ui-tab",
+        "order": 2,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "ui_tab_lights",
+        "type": "ui_tab",
+        "name": "Home Automation",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "mqtt_local_broker",
+        "type": "mqtt-broker",
+        "name": "Local MQTT",
+        "broker": "172.17.0.1",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "ui_group_lights",
+        "type": "ui_group",
+        "name": "Smart Lights",
+        "tab": "ui_tab_lights",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "bca09b7d8c2ffdc1",
+        "type": "ui_group",
+        "name": "Smart Lights",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "a683470f9f9d2be2",
@@ -6022,6 +6238,7 @@
         "id": "d4f8c637ba287db1",
         "type": "inject",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Inject Current Temp",
         "props": [],
         "repeat": "5",
@@ -6029,8 +6246,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 150,
-        "y": 140,
+        "x": 260,
+        "y": 340,
         "wires": [
             [
                 "ba5dc6718d645637"
@@ -6041,11 +6258,12 @@
         "id": "ba5dc6718d645637",
         "type": "function",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Generate Current Temp",
         "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
         "outputs": 1,
-        "x": 390,
-        "y": 140,
+        "x": 500,
+        "y": 340,
         "wires": [
             [
                 "69ded1d17cbec561",
@@ -6054,57 +6272,22 @@
         ]
     },
     {
-        "id": "09f2f1cdc17cf192",
-        "type": "ui_slider",
-        "z": "a527806fb52a0bc0",
-        "name": "Desired Temp",
-        "label": "Set Desired Temp",
-        "tooltip": "",
-        "group": "2566b457ab10c854",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "",
-        "topicType": "str",
-        "min": 15,
-        "max": 30,
-        "step": 1,
-        "className": "",
-        "x": 160,
-        "y": 80,
-        "wires": [
-            [
-                "5fd815fb2caf5aba"
-            ]
-        ]
-    },
-    {
-        "id": "5fd815fb2caf5aba",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "name": "Store Desired Temp",
-        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
-        "outputs": 1,
-        "x": 390,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "69ded1d17cbec561",
         "type": "function",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Compare and Decide",
         "func": "const desired = flow.get('desired_temp') || 22;\nconst current = msg.payload.current;\nlet state = \"IDLE\";\nif (current < desired - 1) state = \"HEATING\";\nelse if (current > desired + 1) state = \"COOLING\";\nmsg.payload = { temperature: desired, unit: \"C\", current, state };\nreturn msg;",
         "outputs": 1,
-        "x": 620,
-        "y": 140,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 300,
         "wires": [
             [
-                "9a05b0be9bfe3225",
                 "1d06a67200a8e66e"
             ]
         ]
@@ -6113,6 +6296,7 @@
         "id": "9a05b0be9bfe3225",
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "group": "2566b457ab10c854",
         "order": 2,
         "width": 0,
@@ -6126,20 +6310,22 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 880,
-        "y": 180,
+        "x": 1330,
+        "y": 400,
         "wires": []
     },
     {
         "id": "1d06a67200a8e66e",
         "type": "async-api-red",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Send to Thermostat Device",
-        "x": 880,
-        "y": 120,
+        "x": 1010,
+        "y": 340,
         "wires": [
             [
-                "d9d04269593328c3"
+                "d9d04269593328c3",
+                "9a05b0be9bfe3225"
             ]
         ]
     },
@@ -6147,6 +6333,7 @@
         "id": "27b270e5d78bc103",
         "type": "ui_gauge",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Current Temp",
         "group": "2566b457ab10c854",
         "order": 3,
@@ -6167,14 +6354,15 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 620,
-        "y": 200,
+        "x": 730,
+        "y": 400,
         "wires": []
     },
     {
         "id": "d9d04269593328c3",
         "type": "debug",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Debug Output",
         "active": true,
         "tosidebar": true,
@@ -6183,8 +6371,970 @@
         "complete": "payload",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1220,
-        "y": 120,
+        "x": 1330,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1eb2f1ad87e9df5c",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Thermostat simulation",
+        "info": "",
+        "x": 220,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "29eca096862b8fb4",
+        "type": "inject",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 620,
+        "wires": [
+            [
+                "a759b38ff08da238"
+            ]
+        ]
+    },
+    {
+        "id": "a759b38ff08da238",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "b4d971cf3772f83e"
+            ]
+        ]
+    },
+    {
+        "id": "b4d971cf3772f83e",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    unit: 'C',\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "e97196a0d8d49460"
+            ]
+        ]
+    },
+    {
+        "id": "e97196a0d8d49460",
+        "type": "async-api-red",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "AC Controller Node",
+        "x": 1040,
+        "y": 620,
+        "wires": [
+            [
+                "793cf3b0139849eb",
+                "dcb5ea5864cbccb9"
+            ]
+        ]
+    },
+    {
+        "id": "793cf3b0139849eb",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "09f2f1cdc17cf192",
+        "type": "ui_slider",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "2566b457ab10c854",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 240,
+        "y": 420,
+        "wires": [
+            [
+                "5fd815fb2caf5aba"
+            ]
+        ]
+    },
+    {
+        "id": "5fd815fb2caf5aba",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 470,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4c2bce897c0d2007",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "AC simulation",
+        "info": "",
+        "x": 190,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "dcb5ea5864cbccb9",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1240,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "3d5df840425aed95",
+        "type": "ui_slider",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 300,
+        "y": 700,
+        "wires": [
+            [
+                "6b793056cae7dfce"
+            ]
+        ]
+    },
+    {
+        "id": "6b793056cae7dfce",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 570,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1616e8d0253bffbf",
+        "type": "inject",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Inject Random Brightness",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 1040,
+        "wires": [
+            [
+                "29a719f9730293ac"
+            ]
+        ]
+    },
+    {
+        "id": "29a719f9730293ac",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Generate Brightness",
+        "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
+        "outputs": 1,
+        "x": 540,
+        "y": 980,
+        "wires": [
+            [
+                "b58e5041e4c9741b",
+                "d83a4d77d7f049bf"
+            ]
+        ]
+    },
+    {
+        "id": "b58e5041e4c9741b",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Check Brightness",
+        "func": "const brightness = msg.payload.brightness;\nmsg.payload = {\n    state: brightness >= 80 ? \"on\" : \"off\",\n    brightness\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 980,
+        "wires": [
+            [
+                "dba1b26fa3a4b0a8"
+            ]
+        ]
+    },
+    {
+        "id": "d83a4d77d7f049bf",
+        "type": "ui_chart",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Brightness Chart",
+        "group": "",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Brightness Over Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Waiting...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 730,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "84eae99cd8fb8148",
+        "type": "switch",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Light ON or OFF?",
+        "property": "payload.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1250,
+        "y": 920,
+        "wires": [
+            [
+                "9b07cf1424fb44b6"
+            ],
+            [
+                "499267adb5adb442"
+            ]
+        ]
+    },
+    {
+        "id": "9b07cf1424fb44b6",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Count ON",
+        "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1540,
+        "y": 900,
+        "wires": [
+            [
+                "02494731b443fa30"
+            ]
+        ]
+    },
+    {
+        "id": "499267adb5adb442",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Count OFF",
+        "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1540,
+        "y": 940,
+        "wires": [
+            [
+                "4229373250208f05"
+            ]
+        ]
+    },
+    {
+        "id": "02494731b443fa30",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "group": "",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Times ON",
+        "label": "Light ON Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "x": 1760,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "4229373250208f05",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "group": "",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Times OFF",
+        "label": "Light OFF Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "x": 1760,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "dba1b26fa3a4b0a8",
+        "type": "async-api-red",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Send to Light Device",
+        "x": 1020,
+        "y": 1040,
+        "wires": [
+            [
+                "84eae99cd8fb8148",
+                "c0f6b3899961c14c",
+                "ae9ed5515183f125",
+                "bdacb97c9c98471c"
+            ]
+        ]
+    },
+    {
+        "id": "c0f6b3899961c14c",
+        "type": "ui_gauge",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "Brightness",
+        "group": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Brightness",
+        "label": "%",
+        "format": "{{msg.payload.brightness}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 60,
+        "seg2": 80,
+        "x": 1270,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "ae9ed5515183f125",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "group": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Light State",
+        "label": "Light State",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 1270,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "bdacb97c9c98471c",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "f42d0e7a987f22d0",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "6996a7f421765b1a",
+        "name": "smartlights simulation",
+        "info": "",
+        "x": 240,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "inject-ac",
+        "type": "inject",
+        "z": "acFlow",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "generate-temp-ac"
+            ]
+        ]
+    },
+    {
+        "id": "generate-temp-ac",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "x": 400,
+        "y": 80,
+        "wires": [
+            [
+                "check-ac"
+            ]
+        ]
+    },
+    {
+        "id": "check-ac",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [
+                "ac-node",
+                "ac-status",
+                "ac-gauge"
+            ]
+        ]
+    },
+    {
+        "id": "ac-node",
+        "type": "async-api-red",
+        "z": "acFlow",
+        "name": "AC Controller Node",
+        "x": 900,
+        "y": 80,
+        "wires": [
+            [
+                "ac-debug"
+            ]
+        ]
+    },
+    {
+        "id": "ac-status",
+        "type": "ui_text",
+        "z": "acFlow",
+        "group": "ac-group",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ac-gauge",
+        "type": "ui_gauge",
+        "z": "acFlow",
+        "name": "AC Temp Gauge",
+        "group": "ac-group",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": 16,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 24,
+        "seg2": 28,
+        "x": 900,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ac-temp-slider",
+        "type": "ui_slider",
+        "z": "acFlow",
+        "name": "AC Desired Temp",
+        "label": "Set Desired Temperature",
+        "group": "ac-group",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 16,
+        "max": 30,
+        "step": 1,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "set-desired-temp"
+            ]
+        ]
+    },
+    {
+        "id": "set-desired-temp",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Store Desired Temp",
+        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac-debug",
+        "type": "debug",
+        "z": "acFlow",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cf590dab5f86e032",
+        "type": "inject",
+        "z": "5a0421faf6b57874",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "7dd20985bb0f27fc"
+            ]
+        ]
+    },
+    {
+        "id": "7dd20985bb0f27fc",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "x": 400,
+        "y": 80,
+        "wires": [
+            [
+                "f3ce4a24a8c48efa"
+            ]
+        ]
+    },
+    {
+        "id": "f3ce4a24a8c48efa",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [
+                "5ce758d29a24b840",
+                "3f4a59c75fa63750",
+                "115837d8997ebb76"
+            ]
+        ]
+    },
+    {
+        "id": "5ce758d29a24b840",
+        "type": "async-api-red",
+        "z": "5a0421faf6b57874",
+        "name": "AC Controller Node",
+        "x": 900,
+        "y": 80,
+        "wires": [
+            [
+                "6226f490d290b6b1"
+            ]
+        ]
+    },
+    {
+        "id": "3f4a59c75fa63750",
+        "type": "ui_text",
+        "z": "5a0421faf6b57874",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "115837d8997ebb76",
+        "type": "ui_gauge",
+        "z": "5a0421faf6b57874",
+        "name": "AC Temp Gauge",
+        "group": "03ee92e1974696ed",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": 16,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 24,
+        "seg2": 28,
+        "x": 900,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8a881fcaa760e9bc",
+        "type": "ui_slider",
+        "z": "5a0421faf6b57874",
+        "name": "AC Desired Temp",
+        "label": "Set Desired Temperature",
+        "group": "03ee92e1974696ed",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 16,
+        "max": 30,
+        "step": 1,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "377e6ec821b6d5df"
+            ]
+        ]
+    },
+    {
+        "id": "377e6ec821b6d5df",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Store Desired Temp",
+        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6226f490d290b6b1",
+        "type": "debug",
+        "z": "5a0421faf6b57874",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "light_state_ui",
+        "type": "ui_switch",
+        "z": "1",
+        "name": "Light State",
+        "label": "Light ON/OFF",
+        "tooltip": "",
+        "group": "ui_group_lights",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "combine_light_state"
+            ]
+        ]
+    },
+    {
+        "id": "brightness_ui",
+        "type": "ui_slider",
+        "z": "1",
+        "name": "Brightness",
+        "label": "Brightness",
+        "tooltip": "",
+        "group": "ui_group_lights",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "combine_light_state"
+            ]
+        ]
+    },
+    {
+        "id": "combine_light_state",
+        "type": "join",
+        "z": "1",
+        "name": "Combine State + Brightness",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "x": 440,
+        "y": 130,
+        "wires": [
+            [
+                "publish_light_state",
+                "display_light_state"
+            ]
+        ]
+    },
+    {
+        "id": "publish_light_state",
+        "type": "asyncapi-pub",
+        "z": "1",
+        "name": "Publish LightState",
+        "channel": "home/lights/state",
+        "channelType": "topic",
+        "operationId": "controlLights",
+        "x": 730,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "mqtt_subscribe_lights",
+        "type": "mqtt in",
+        "z": "1",
+        "name": "MQTT Sub Lights",
+        "topic": "home/lights/state",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "mqtt_local_broker",
+        "inputs": 0,
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "display_light_state"
+            ]
+        ]
+    },
+    {
+        "id": "display_light_state",
+        "type": "ui_text",
+        "z": "1",
+        "group": "ui_group_lights",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "Current Light State",
+        "label": "Light Status",
+        "format": "{{msg.payload.state}} at {{msg.payload.brightness}}%",
+        "layout": "row-spread",
+        "x": 760,
+        "y": 160,
         "wires": []
     }
 ]

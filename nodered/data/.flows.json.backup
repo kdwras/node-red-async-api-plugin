@@ -128,6 +128,20 @@
         "info": ""
     },
     {
+        "id": "acFlow",
+        "type": "tab",
+        "label": "AC Control Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5a0421faf6b57874",
+        "type": "tab",
+        "label": "AC Control Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "2785aa7402e0c422",
         "type": "group",
         "z": "0c8e0c86799d088c",
@@ -399,6 +413,63 @@
         "h": 362
     },
     {
+        "id": "50a045551ea38743",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d4f8c637ba287db1",
+            "ba5dc6718d645637",
+            "69ded1d17cbec561",
+            "9a05b0be9bfe3225",
+            "1d06a67200a8e66e",
+            "27b270e5d78bc103",
+            "d9d04269593328c3",
+            "1eb2f1ad87e9df5c"
+        ],
+        "x": 94,
+        "y": 179,
+        "w": 1362,
+        "h": 262
+    },
+    {
+        "id": "a0bc03072058d078",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "29eca096862b8fb4",
+            "a759b38ff08da238",
+            "b4d971cf3772f83e",
+            "e97196a0d8d49460",
+            "793cf3b0139849eb",
+            "4c2bce897c0d2007",
+            "dcb5ea5864cbccb9",
+            "3d5df840425aed95",
+            "6b793056cae7dfce"
+        ],
+        "x": 94,
+        "y": 519,
+        "w": 1302,
+        "h": 222
+    },
+    {
         "id": "7285f7e430313100",
         "type": "openApi-red-url",
         "name": "gg",
@@ -524,7 +595,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -710,11 +782,40 @@
         "id": "2566b457ab10c854",
         "type": "ui_group",
         "name": "Thermostat dashbaord",
-        "tab": "",
+        "tab": "dashboard_tab",
+        "order": 1,
         "disp": true,
         "width": 6,
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "ac-tab",
+        "type": "ui_tab",
+        "name": "AC Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ac-group",
+        "type": "ui_group",
+        "name": "AC Control",
+        "tab": "ac-tab",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "03ee92e1974696ed",
+        "type": "ui_group",
+        "name": "AC Control",
+        "tab": "tab1",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "a683470f9f9d2be2",
@@ -6021,6 +6122,7 @@
         "id": "d4f8c637ba287db1",
         "type": "inject",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Inject Current Temp",
         "props": [],
         "repeat": "5",
@@ -6028,8 +6130,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 150,
-        "y": 140,
+        "x": 260,
+        "y": 340,
         "wires": [
             [
                 "ba5dc6718d645637"
@@ -6040,11 +6142,12 @@
         "id": "ba5dc6718d645637",
         "type": "function",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Generate Current Temp",
         "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
         "outputs": 1,
-        "x": 390,
-        "y": 140,
+        "x": 500,
+        "y": 340,
         "wires": [
             [
                 "69ded1d17cbec561",
@@ -6053,57 +6156,22 @@
         ]
     },
     {
-        "id": "09f2f1cdc17cf192",
-        "type": "ui_slider",
-        "z": "a527806fb52a0bc0",
-        "name": "Desired Temp",
-        "label": "Set Desired Temp",
-        "tooltip": "",
-        "group": "2566b457ab10c854",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "",
-        "topicType": "str",
-        "min": 15,
-        "max": 30,
-        "step": 1,
-        "className": "",
-        "x": 160,
-        "y": 80,
-        "wires": [
-            [
-                "5fd815fb2caf5aba"
-            ]
-        ]
-    },
-    {
-        "id": "5fd815fb2caf5aba",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "name": "Store Desired Temp",
-        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
-        "outputs": 1,
-        "x": 390,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "69ded1d17cbec561",
         "type": "function",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Compare and Decide",
         "func": "const desired = flow.get('desired_temp') || 22;\nconst current = msg.payload.current;\nlet state = \"IDLE\";\nif (current < desired - 1) state = \"HEATING\";\nelse if (current > desired + 1) state = \"COOLING\";\nmsg.payload = { temperature: desired, unit: \"C\", current, state };\nreturn msg;",
         "outputs": 1,
-        "x": 620,
-        "y": 140,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 300,
         "wires": [
             [
-                "9a05b0be9bfe3225",
                 "1d06a67200a8e66e"
             ]
         ]
@@ -6112,6 +6180,7 @@
         "id": "9a05b0be9bfe3225",
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "group": "2566b457ab10c854",
         "order": 2,
         "width": 0,
@@ -6125,20 +6194,22 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 880,
-        "y": 180,
+        "x": 1330,
+        "y": 400,
         "wires": []
     },
     {
         "id": "1d06a67200a8e66e",
         "type": "async-api-red",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Send to Thermostat Device",
-        "x": 880,
-        "y": 120,
+        "x": 1010,
+        "y": 340,
         "wires": [
             [
-                "d9d04269593328c3"
+                "d9d04269593328c3",
+                "9a05b0be9bfe3225"
             ]
         ]
     },
@@ -6146,6 +6217,7 @@
         "id": "27b270e5d78bc103",
         "type": "ui_gauge",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Current Temp",
         "group": "2566b457ab10c854",
         "order": 3,
@@ -6166,14 +6238,15 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 620,
-        "y": 200,
+        "x": 730,
+        "y": 400,
         "wires": []
     },
     {
         "id": "d9d04269593328c3",
         "type": "debug",
         "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
         "name": "Debug Output",
         "active": true,
         "tosidebar": true,
@@ -6182,8 +6255,541 @@
         "complete": "payload",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1220,
-        "y": 120,
+        "x": 1330,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1eb2f1ad87e9df5c",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Thermostat simulation",
+        "info": "",
+        "x": 220,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "29eca096862b8fb4",
+        "type": "inject",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 620,
+        "wires": [
+            [
+                "a759b38ff08da238"
+            ]
+        ]
+    },
+    {
+        "id": "a759b38ff08da238",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "b4d971cf3772f83e"
+            ]
+        ]
+    },
+    {
+        "id": "b4d971cf3772f83e",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    unit: 'C',\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "e97196a0d8d49460"
+            ]
+        ]
+    },
+    {
+        "id": "e97196a0d8d49460",
+        "type": "async-api-red",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "AC Controller Node",
+        "x": 1040,
+        "y": 620,
+        "wires": [
+            [
+                "793cf3b0139849eb",
+                "dcb5ea5864cbccb9"
+            ]
+        ]
+    },
+    {
+        "id": "793cf3b0139849eb",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "09f2f1cdc17cf192",
+        "type": "ui_slider",
+        "z": "a527806fb52a0bc0",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "2566b457ab10c854",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "5fd815fb2caf5aba"
+            ]
+        ]
+    },
+    {
+        "id": "5fd815fb2caf5aba",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4c2bce897c0d2007",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "AC simulation",
+        "info": "",
+        "x": 190,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "dcb5ea5864cbccb9",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1240,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "3d5df840425aed95",
+        "type": "ui_slider",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 300,
+        "y": 700,
+        "wires": [
+            [
+                "6b793056cae7dfce"
+            ]
+        ]
+    },
+    {
+        "id": "6b793056cae7dfce",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 570,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "inject-ac",
+        "type": "inject",
+        "z": "acFlow",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "generate-temp-ac"
+            ]
+        ]
+    },
+    {
+        "id": "generate-temp-ac",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "x": 400,
+        "y": 80,
+        "wires": [
+            [
+                "check-ac"
+            ]
+        ]
+    },
+    {
+        "id": "check-ac",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [
+                "ac-node",
+                "ac-status",
+                "ac-gauge"
+            ]
+        ]
+    },
+    {
+        "id": "ac-node",
+        "type": "async-api-red",
+        "z": "acFlow",
+        "name": "AC Controller Node",
+        "x": 900,
+        "y": 80,
+        "wires": [
+            [
+                "ac-debug"
+            ]
+        ]
+    },
+    {
+        "id": "ac-status",
+        "type": "ui_text",
+        "z": "acFlow",
+        "group": "ac-group",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ac-gauge",
+        "type": "ui_gauge",
+        "z": "acFlow",
+        "name": "AC Temp Gauge",
+        "group": "ac-group",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": 16,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 24,
+        "seg2": 28,
+        "x": 900,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ac-temp-slider",
+        "type": "ui_slider",
+        "z": "acFlow",
+        "name": "AC Desired Temp",
+        "label": "Set Desired Temperature",
+        "group": "ac-group",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 16,
+        "max": 30,
+        "step": 1,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "set-desired-temp"
+            ]
+        ]
+    },
+    {
+        "id": "set-desired-temp",
+        "type": "function",
+        "z": "acFlow",
+        "name": "Store Desired Temp",
+        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac-debug",
+        "type": "debug",
+        "z": "acFlow",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cf590dab5f86e032",
+        "type": "inject",
+        "z": "5a0421faf6b57874",
+        "name": "Random Temp Generator",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "7dd20985bb0f27fc"
+            ]
+        ]
+    },
+    {
+        "id": "7dd20985bb0f27fc",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Generate Random Temp",
+        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "outputs": 1,
+        "x": 400,
+        "y": 80,
+        "wires": [
+            [
+                "f3ce4a24a8c48efa"
+            ]
+        ]
+    },
+    {
+        "id": "f3ce4a24a8c48efa",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [
+                "5ce758d29a24b840",
+                "3f4a59c75fa63750",
+                "115837d8997ebb76"
+            ]
+        ]
+    },
+    {
+        "id": "5ce758d29a24b840",
+        "type": "async-api-red",
+        "z": "5a0421faf6b57874",
+        "name": "AC Controller Node",
+        "x": 900,
+        "y": 80,
+        "wires": [
+            [
+                "6226f490d290b6b1"
+            ]
+        ]
+    },
+    {
+        "id": "3f4a59c75fa63750",
+        "type": "ui_text",
+        "z": "5a0421faf6b57874",
+        "group": "03ee92e1974696ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "115837d8997ebb76",
+        "type": "ui_gauge",
+        "z": "5a0421faf6b57874",
+        "name": "AC Temp Gauge",
+        "group": "03ee92e1974696ed",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": 16,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 24,
+        "seg2": 28,
+        "x": 900,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8a881fcaa760e9bc",
+        "type": "ui_slider",
+        "z": "5a0421faf6b57874",
+        "name": "AC Desired Temp",
+        "label": "Set Desired Temperature",
+        "group": "03ee92e1974696ed",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 16,
+        "max": 30,
+        "step": 1,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "377e6ec821b6d5df"
+            ]
+        ]
+    },
+    {
+        "id": "377e6ec821b6d5df",
+        "type": "function",
+        "z": "5a0421faf6b57874",
+        "name": "Store Desired Temp",
+        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6226f490d290b6b1",
+        "type": "debug",
+        "z": "5a0421faf6b57874",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 80,
         "wires": []
     }
 ]
