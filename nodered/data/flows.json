@@ -7,151 +7,9 @@
         "info": ""
     },
     {
-        "id": "d34849846bd0f28f",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "601e851c73ab7025",
-        "type": "tab",
-        "label": "Flow 2",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "707c911c962a4918",
-        "type": "tab",
-        "label": "Flow 3",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "e3ea6053dc6e5c23",
-        "type": "tab",
-        "label": "Flow 4",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "bb5d022f712f284a",
-        "type": "tab",
-        "label": "Smart Home Flow",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "be65370b3971f2be",
-        "type": "tab",
-        "label": "Smart Door",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "2b195a0442d69e99",
-        "type": "tab",
-        "label": "Smart Light - Brightness Control",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "brightnessDashboardFlow",
-        "type": "tab",
-        "label": "Brightness Dashboard",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "1800032368ab7c0e",
-        "type": "tab",
-        "label": "Humidity Control",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "2d188b62e2fdbee2",
-        "type": "tab",
-        "label": "Flow 6",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "bfe71bd4b716691e",
-        "type": "tab",
-        "label": "Flow 5",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "588424ae9188bf48",
-        "type": "tab",
-        "label": "Smart Home AC Automation",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "e5a08239c694ef6a",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "c3ef06b53713e195",
-        "type": "tab",
-        "label": "SMARTHOME AUTO TEST",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "12ad55238146d9bf",
-        "type": "tab",
-        "label": "Flow 7",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "a527806fb52a0bc0",
         "type": "tab",
         "label": "Thermostat Dashboard",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "acFlow",
-        "type": "tab",
-        "label": "AC Control Dashboard",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "5a0421faf6b57874",
-        "type": "tab",
-        "label": "AC Control Dashboard",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "1",
-        "type": "tab",
-        "label": "Smart Lights Flow",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "e4126d0caf35b74e",
-        "type": "tab",
-        "label": "Smart Lights Dashboard",
         "disabled": false,
         "info": ""
     },
@@ -294,139 +152,6 @@
         "h": 1024.5
     },
     {
-        "id": "e13c20c1cdec8fb7",
-        "type": "group",
-        "z": "bb5d022f712f284a",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "e885a2e3fe806323",
-            "40cd8721927865b8",
-            "86ce9a0b65fc667d",
-            "0c9260aaaea5194d",
-            "1b9ea922358366b0"
-        ],
-        "x": 34,
-        "y": 39,
-        "w": 992,
-        "h": 142
-    },
-    {
-        "id": "a5e70ddfc80c7dfc",
-        "type": "group",
-        "z": "bb5d022f712f284a",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "e64fdd38eb122a6b",
-            "85923d15319f7a08",
-            "486e42918a98a0bc",
-            "d6dbeb4459e588e3",
-            "7da7f6114a0cf0a7",
-            "5b7e9efca41d041d",
-            "8779998654f8eb47"
-        ],
-        "x": 34,
-        "y": 219,
-        "w": 922,
-        "h": 202
-    },
-    {
-        "id": "19c87f30e962ee99",
-        "type": "group",
-        "z": "bb5d022f712f284a",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "b8202e10b98e9c7b",
-            "a892560c7bd0e63b",
-            "17f4e31978aa3ea3",
-            "266c6ae489fe9418",
-            "b5095f47a69e5bd4",
-            "270f8973b0fd2d99"
-        ],
-        "x": 34,
-        "y": 459,
-        "w": 1012,
-        "h": 162
-    },
-    {
-        "id": "plug-group",
-        "type": "group",
-        "z": "bb5d022f712f284a",
-        "style": {
-            "stroke": "#999999",
-            "label": true,
-            "label-position": "nw",
-            "fill": "none"
-        },
-        "nodes": [
-            "plug-on",
-            "plug-off",
-            "inject-on",
-            "inject-off",
-            "plug-api",
-            "plug-debug",
-            "plug-label"
-        ],
-        "x": 34,
-        "y": 659,
-        "w": 952,
-        "h": 162
-    },
-    {
-        "id": "b52180ab0632e26b",
-        "type": "group",
-        "z": "bb5d022f712f284a",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "777492c1cb7de48b",
-            "413e9d0fad403888",
-            "f8c02ad5439bfad9",
-            "85aa8a1fd4ea0dd7",
-            "b2090fe550aa0808",
-            "343dfc424280fb6a",
-            "0b59afbfdb63c909",
-            "359f40e9cee4c955",
-            "47b822a2f8f4cc47",
-            "3ff88f47d5f3092e",
-            "37cdc8de12d85137"
-        ],
-        "x": 1234,
-        "y": 559,
-        "w": 1732,
-        "h": 362
-    },
-    {
         "id": "50a045551ea38743",
         "type": "group",
         "z": "a527806fb52a0bc0",
@@ -452,7 +177,7 @@
             "5fd815fb2caf5aba"
         ],
         "x": 94,
-        "y": 179,
+        "y": 39,
         "w": 1362,
         "h": 282
     },
@@ -481,7 +206,7 @@
             "6b793056cae7dfce"
         ],
         "x": 94,
-        "y": 519,
+        "y": 359,
         "w": 1302,
         "h": 222
     },
@@ -514,22 +239,65 @@
             "bdacb97c9c98471c",
             "f42d0e7a987f22d0"
         ],
-        "x": 114,
-        "y": 859,
+        "x": 94,
+        "y": 619,
         "w": 1742,
         "h": 382
     },
     {
-        "id": "7285f7e430313100",
-        "type": "openApi-red-url",
-        "name": "gg",
-        "url": "openapi.json",
-        "urlType": "Files",
-        "server": "",
-        "serverType": "custom",
-        "devMode": "",
-        "headers": [],
-        "_version": "2.1.3"
+        "id": "38af56c2be0e770c",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "2f8c3fe9e3a364d1",
+            "aec069bf440e39e4",
+            "601a43db7ca6fa0a",
+            "47886e634365fb88",
+            "f324d4a123376c63",
+            "f6b18e5f375f811d",
+            "6aa34857a3f76ef9"
+        ],
+        "x": 94,
+        "y": 1039,
+        "w": 1332,
+        "h": 162
+    },
+    {
+        "id": "d6d6813509f8a19b",
+        "type": "group",
+        "z": "a527806fb52a0bc0",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d4868acaa6b1056b",
+            "format_coffee",
+            "join_coffee",
+            "debug_coffee",
+            "b972287969dd1e02",
+            "ui_size",
+            "ui_strength",
+            "ui_coffee_status"
+        ],
+        "x": 94,
+        "y": 1259,
+        "w": 1272,
+        "h": 222
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -734,89 +502,6 @@
         }
     },
     {
-        "id": "dashboard_tab",
-        "type": "ui_tab",
-        "name": "SmartHome",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "tab1",
-        "type": "ui_tab",
-        "name": "Dashboard",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "99d6ed905710cf6f",
-        "type": "ui_tab",
-        "name": "Dashboard",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "dashboard-tab",
-        "type": "ui_tab",
-        "name": "Home Automation"
-    },
-    {
-        "id": "dashboard-group",
-        "type": "ui_group",
-        "name": "Smart Home Controls",
-        "tab": "dashboard-tab",
-        "order": 1
-    },
-    {
-        "id": "9e6d733028677fc8",
-        "type": "ui_tab",
-        "name": "Smart Home",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "7c8c31701b5c4383",
-        "type": "ui_tab",
-        "name": "SmartHome",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "b1a88ff1e6015737",
-        "type": "ui_group",
-        "name": "AC Automation",
-        "tab": "7c8c31701b5c4383",
-        "order": 1,
-        "disp": true,
-        "width": "6"
-    },
-    {
-        "id": "b7ce3dfec691604e",
-        "type": "ui_group",
-        "name": "AC Simulation",
-        "tab": "9e6d733028677fc8",
-        "order": 1,
-        "disp": true,
-        "width": 6,
-        "collapse": false
-    },
-    {
-        "id": "ui-tab",
-        "type": "ui_tab",
-        "name": "Home Control",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "ui-group",
-        "type": "ui_group",
-        "name": "Smart Home",
-        "tab": "ui-tab",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
         "id": "4f0d8a914be2cfb6",
         "type": "mqtt-broker",
         "name": "Local MQTT",
@@ -827,70 +512,6 @@
         "protocolVersion": "4",
         "keepalive": "60",
         "cleansession": true
-    },
-    {
-        "id": "2566b457ab10c854",
-        "type": "ui_group",
-        "name": "Thermostat dashbaord",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "ac-tab",
-        "type": "ui_tab",
-        "name": "AC Dashboard",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "ac-group",
-        "type": "ui_group",
-        "name": "AC Control",
-        "tab": "ac-tab",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "03ee92e1974696ed",
-        "type": "ui_group",
-        "name": "AC Control",
-        "tab": "tab1",
-        "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "07bd17c79e6d2022",
-        "type": "ui_group",
-        "name": "Thermostat",
-        "tab": "ui-tab",
-        "order": 1,
-        "disp": true,
-        "width": 6
-    },
-    {
-        "id": "25c827561ad482f0",
-        "type": "ui_group",
-        "name": "AC Control",
-        "tab": "ui-tab",
-        "order": 2,
-        "disp": true,
-        "width": 6
-    },
-    {
-        "id": "ui_tab_lights",
-        "type": "ui_tab",
-        "name": "Home Automation",
-        "icon": "dashboard",
-        "order": 1
     },
     {
         "id": "mqtt_local_broker",
@@ -914,14 +535,43 @@
         "willPayload": ""
     },
     {
-        "id": "ui_group_lights",
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "SmartHome",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "2566b457ab10c854",
         "type": "ui_group",
-        "name": "Smart Lights",
-        "tab": "ui_tab_lights",
+        "name": "Thermostat dashbaord",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dad53fb0db2749ce",
+        "type": "ui_group",
+        "name": "Smart Door",
+        "tab": "dashboard_tab",
         "order": 1,
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "2484b2e7392bda74",
+        "type": "ui_group",
+        "name": "AC control",
+        "tab": "dashboard_tab",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "bca09b7d8c2ffdc1",
@@ -932,6 +582,17 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "b9c9d459bcc50b6b",
+        "type": "ui_group",
+        "name": "Coffee",
+        "tab": "dashboard_tab",
+        "order": 5,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "a683470f9f9d2be2",
@@ -3538,2703 +3199,6 @@
         ]
     },
     {
-        "id": "e64fdd38eb122a6b",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Lock Door",
-        "func": "msg.payload = { \"action\": \"lock\" };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 320,
-        "wires": [
-            [
-                "5b7e9efca41d041d"
-            ]
-        ]
-    },
-    {
-        "id": "85923d15319f7a08",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Unlock Door",
-        "func": "msg.payload = { \"action\": \"unlock\" };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 380,
-        "wires": [
-            [
-                "5b7e9efca41d041d"
-            ]
-        ]
-    },
-    {
-        "id": "486e42918a98a0bc",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Lock Door Now",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 200,
-        "y": 320,
-        "wires": [
-            [
-                "e64fdd38eb122a6b"
-            ]
-        ]
-    },
-    {
-        "id": "d6dbeb4459e588e3",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Unlock Door Now",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 380,
-        "wires": [
-            [
-                "85923d15319f7a08"
-            ]
-        ]
-    },
-    {
-        "id": "7da7f6114a0cf0a7",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Door State Debug",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 820,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "5b7e9efca41d041d",
-        "type": "async-api-red",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Door state",
-        "x": 620,
-        "y": 360,
-        "wires": [
-            [
-                "7da7f6114a0cf0a7"
-            ]
-        ]
-    },
-    {
-        "id": "e885a2e3fe806323",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "e13c20c1cdec8fb7",
-        "name": "Auto Turn Light",
-        "func": "if (msg.payload.detected === true) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\nreturn null;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 140,
-        "wires": [
-            [
-                "86ce9a0b65fc667d"
-            ]
-        ]
-    },
-    {
-        "id": "40cd8721927865b8",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "e13c20c1cdec8fb7",
-        "name": "Simulate Motion",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"detected\": true}",
-        "payloadType": "json",
-        "x": 180,
-        "y": 140,
-        "wires": [
-            [
-                "e885a2e3fe806323"
-            ]
-        ]
-    },
-    {
-        "id": "86ce9a0b65fc667d",
-        "type": "async-api-red",
-        "z": "bb5d022f712f284a",
-        "g": "e13c20c1cdec8fb7",
-        "name": "Turn on light",
-        "x": 630,
-        "y": 140,
-        "wires": [
-            [
-                "0c9260aaaea5194d"
-            ]
-        ]
-    },
-    {
-        "id": "0c9260aaaea5194d",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "e13c20c1cdec8fb7",
-        "name": "Light state Debug",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 890,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "1b9ea922358366b0",
-        "type": "comment",
-        "z": "bb5d022f712f284a",
-        "g": "e13c20c1cdec8fb7",
-        "name": "Turn on/off light by brighness",
-        "info": "",
-        "x": 180,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "8779998654f8eb47",
-        "type": "comment",
-        "z": "bb5d022f712f284a",
-        "g": "a5e70ddfc80c7dfc",
-        "name": "Lock/Unlock door",
-        "info": "",
-        "x": 140,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "b8202e10b98e9c7b",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Fake Temp: 21°C",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "21",
-        "payloadType": "num",
-        "x": 200,
-        "y": 540,
-        "wires": [
-            [
-                "17f4e31978aa3ea3"
-            ]
-        ]
-    },
-    {
-        "id": "a892560c7bd0e63b",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Fake Temp: 24°C",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "24",
-        "payloadType": "num",
-        "x": 200,
-        "y": 580,
-        "wires": [
-            [
-                "17f4e31978aa3ea3"
-            ]
-        ]
-    },
-    {
-        "id": "17f4e31978aa3ea3",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Thermostat Logic",
-        "func": "const temp = msg.payload;\n\nif (temp <= 22) {\n    msg.payload = {\n        action: \"heater_on\"\n    };\n} else {\n    msg.payload = {\n        action: \"heater_off\"\n    };\n}\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 450,
-        "y": 560,
-        "wires": [
-            [
-                "270f8973b0fd2d99"
-            ]
-        ]
-    },
-    {
-        "id": "266c6ae489fe9418",
-        "type": "comment",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Thermostat",
-        "info": "",
-        "x": 130,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "b5095f47a69e5bd4",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Heater Status",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 920,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "270f8973b0fd2d99",
-        "type": "async-api-red",
-        "z": "bb5d022f712f284a",
-        "g": "19c87f30e962ee99",
-        "name": "Thermostat",
-        "x": 690,
-        "y": 560,
-        "wires": [
-            [
-                "b5095f47a69e5bd4"
-            ]
-        ]
-    },
-    {
-        "id": "inject-on",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Turn Plug ON @08:00",
-        "props": [],
-        "repeat": "",
-        "crontab": "00 08 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 220,
-        "y": 740,
-        "wires": [
-            [
-                "plug-on"
-            ]
-        ]
-    },
-    {
-        "id": "inject-off",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Turn Plug OFF @22:00",
-        "props": [],
-        "repeat": "",
-        "crontab": "00 22 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 220,
-        "y": 780,
-        "wires": [
-            [
-                "plug-off"
-            ]
-        ]
-    },
-    {
-        "id": "plug-on",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Smart Plug ON",
-        "func": "msg.payload = { action: \"plug_on\" };\nreturn msg;",
-        "outputs": 1,
-        "x": 460,
-        "y": 740,
-        "wires": [
-            [
-                "plug-api"
-            ]
-        ]
-    },
-    {
-        "id": "plug-off",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Smart Plug OFF",
-        "func": "msg.payload = { action: \"plug_off\" };\nreturn msg;",
-        "outputs": 1,
-        "x": 460,
-        "y": 780,
-        "wires": [
-            [
-                "plug-api"
-            ]
-        ]
-    },
-    {
-        "id": "plug-api",
-        "type": "async-api-red",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Smart Plug",
-        "x": 680,
-        "y": 760,
-        "wires": [
-            [
-                "plug-debug"
-            ]
-        ]
-    },
-    {
-        "id": "plug-debug",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Plug Status",
-        "active": true,
-        "tosidebar": true,
-        "complete": "payload",
-        "x": 870,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "plug-label",
-        "type": "comment",
-        "z": "bb5d022f712f284a",
-        "g": "plug-group",
-        "name": "Smart Plug (Timer Controlled)",
-        "x": 180,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "777492c1cb7de48b",
-        "type": "inject",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Inject Random Brightness",
-        "props": [],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 1400,
-        "y": 660,
-        "wires": [
-            [
-                "413e9d0fad403888"
-            ]
-        ]
-    },
-    {
-        "id": "413e9d0fad403888",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Generate Brightness",
-        "func": "const brightness = Math.floor(Math.random() * 101);\n\nmsg.payload = { brightness };\nreturn msg;",
-        "outputs": 1,
-        "x": 1660,
-        "y": 660,
-        "wires": [
-            [
-                "f8c02ad5439bfad9"
-            ]
-        ]
-    },
-    {
-        "id": "f8c02ad5439bfad9",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Check Brightness",
-        "func": "const brightness = msg.payload.brightness;\n\nmsg.payload = {\n    state: brightness >= 80 ? \"on\" : \"off\",\n    brightness\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 1880,
-        "y": 660,
-        "wires": [
-            [
-                "b2090fe550aa0808",
-                "85aa8a1fd4ea0dd7"
-            ]
-        ]
-    },
-    {
-        "id": "85aa8a1fd4ea0dd7",
-        "type": "async-api-red",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Send to Light Device",
-        "x": 2140,
-        "y": 680,
-        "wires": [
-            [
-                "47b822a2f8f4cc47",
-                "343dfc424280fb6a"
-            ]
-        ]
-    },
-    {
-        "id": "b2090fe550aa0808",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Show Brightness",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 2090,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "343dfc424280fb6a",
-        "type": "switch",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Light ON or OFF?",
-        "property": "payload.state",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "on",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 2630,
-        "y": 660,
-        "wires": [
-            [
-                "0b59afbfdb63c909"
-            ],
-            [
-                "359f40e9cee4c955"
-            ]
-        ]
-    },
-    {
-        "id": "0b59afbfdb63c909",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Light is ON",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2850,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "359f40e9cee4c955",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Light is OFF",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 2850,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "47b822a2f8f4cc47",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "Async api node result",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2300,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "3ff88f47d5f3092e",
-        "type": "debug",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "converter result",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2620,
-        "y": 860,
-        "wires": []
-    },
-    {
-        "id": "37cdc8de12d85137",
-        "type": "function",
-        "z": "bb5d022f712f284a",
-        "g": "b52180ab0632e26b",
-        "name": "converter to JS obj",
-        "func": "msg.payload = JSON.parse(msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2390,
-        "y": 880,
-        "wires": [
-            [
-                "3ff88f47d5f3092e"
-            ]
-        ]
-    },
-    {
-        "id": "e582380fa231e1db",
-        "type": "inject",
-        "z": "be65370b3971f2be",
-        "name": "Simulate Motion",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"detected\": true}",
-        "payloadType": "json",
-        "x": 130,
-        "y": 100,
-        "wires": [
-            [
-                "782f0eab2da19f22"
-            ]
-        ]
-    },
-    {
-        "id": "782f0eab2da19f22",
-        "type": "function",
-        "z": "be65370b3971f2be",
-        "name": "Auto Turn Light On",
-        "func": "if (msg.payload.detected === true) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\nreturn null;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 100,
-        "wires": [
-            [
-                "4439d2613daf2e93",
-                "c24f558a21c553d2"
-            ]
-        ]
-    },
-    {
-        "id": "4439d2613daf2e93",
-        "type": "async-api-red",
-        "z": "be65370b3971f2be",
-        "name": "Turn on light",
-        "x": 630,
-        "y": 80,
-        "wires": [
-            [
-                "061f674d14ef84fb"
-            ]
-        ]
-    },
-    {
-        "id": "061f674d14ef84fb",
-        "type": "debug",
-        "z": "be65370b3971f2be",
-        "name": "Light Debug",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 850,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "c24f558a21c553d2",
-        "type": "delay",
-        "z": "be65370b3971f2be",
-        "name": "Wait 10 seconds",
-        "pauseType": "delay",
-        "timeout": "10",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 600,
-        "y": 180,
-        "wires": [
-            [
-                "513ca1e6bd97aeab"
-            ]
-        ]
-    },
-    {
-        "id": "513ca1e6bd97aeab",
-        "type": "function",
-        "z": "be65370b3971f2be",
-        "name": "Auto Turn Light Off",
-        "func": "msg.payload = {\n    state: \"off\"\n};\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 850,
-        "y": 180,
-        "wires": [
-            [
-                "4439d2613daf2e93"
-            ]
-        ]
-    },
-    {
-        "id": "f75b92894a80b309",
-        "type": "inject",
-        "z": "2b195a0442d69e99",
-        "name": "Simulate Brightness 20",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "payload": "{\"brightness\": 20}",
-        "payloadType": "json",
-        "x": 160,
-        "y": 100,
-        "wires": [
-            [
-                "1e555d78a4a2e1c5"
-            ]
-        ]
-    },
-    {
-        "id": "4c3eb46dc63cd004",
-        "type": "inject",
-        "z": "2b195a0442d69e99",
-        "name": "Simulate Brightness 75",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "payload": "{\"brightness\": 75}",
-        "payloadType": "json",
-        "x": 160,
-        "y": 160,
-        "wires": [
-            [
-                "1e555d78a4a2e1c5"
-            ]
-        ]
-    },
-    {
-        "id": "1e555d78a4a2e1c5",
-        "type": "function",
-        "z": "2b195a0442d69e99",
-        "name": "Check Brightness Level",
-        "func": "const brightness = msg.payload.brightness;\n\nif (brightness < 30) {\n    return {\n        payload: {\n            state: \"off\"\n        }\n    };\n} else if (brightness > 70) {\n    return {\n        payload: {\n            state: \"on\",\n            brightness: 80\n        }\n    };\n}\n\nreturn null;",
-        "outputs": 1,
-        "x": 420,
-        "y": 130,
-        "wires": [
-            [
-                "c7adfa83ea93b3a5"
-            ]
-        ]
-    },
-    {
-        "id": "c7adfa83ea93b3a5",
-        "type": "async-api-red",
-        "z": "2b195a0442d69e99",
-        "name": "Smart Light",
-        "x": 660,
-        "y": 130,
-        "wires": [
-            [
-                "84ac5d56a85d9b75"
-            ]
-        ]
-    },
-    {
-        "id": "84ac5d56a85d9b75",
-        "type": "debug",
-        "z": "2b195a0442d69e99",
-        "name": "Light Debug",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 860,
-        "y": 130,
-        "wires": []
-    },
-    {
-        "id": "inject1",
-        "type": "inject",
-        "z": "brightnessDashboardFlow",
-        "name": "Inject Random Brightness",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 200,
-        "y": 240,
-        "wires": [
-            [
-                "generateBrightness"
-            ]
-        ]
-    },
-    {
-        "id": "generateBrightness",
-        "type": "function",
-        "z": "brightnessDashboardFlow",
-        "name": "Generate Brightness",
-        "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
-        "outputs": 1,
-        "x": 460,
-        "y": 180,
-        "wires": [
-            [
-                "checkBrightness",
-                "chart"
-            ]
-        ]
-    },
-    {
-        "id": "checkBrightness",
-        "type": "function",
-        "z": "brightnessDashboardFlow",
-        "name": "Check Brightness",
-        "func": "const brightness = msg.payload.brightness;\nmsg.payload = {\n    state: brightness >= 80 ? \"on\" : \"off\",\n    brightness\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 710,
-        "y": 180,
-        "wires": [
-            [
-                "7fce5d9f331022b3"
-            ]
-        ]
-    },
-    {
-        "id": "chart",
-        "type": "ui_chart",
-        "z": "brightnessDashboardFlow",
-        "name": "Brightness Chart",
-        "group": "",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "label": "Brightness Over Time",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "Waiting...",
-        "dot": false,
-        "ymin": "0",
-        "ymax": "100",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#000000",
-            "#000000",
-            "#000000",
-            "#000000",
-            "#000000",
-            "#000000",
-            "#000000",
-            "#000000"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 650,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "lightSwitch",
-        "type": "switch",
-        "z": "brightnessDashboardFlow",
-        "name": "Light ON or OFF?",
-        "property": "payload.state",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "on",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1170,
-        "y": 120,
-        "wires": [
-            [
-                "countOn"
-            ],
-            [
-                "countOff"
-            ]
-        ]
-    },
-    {
-        "id": "countOn",
-        "type": "function",
-        "z": "brightnessDashboardFlow",
-        "name": "Count ON",
-        "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
-        "outputs": 1,
-        "x": 1460,
-        "y": 100,
-        "wires": [
-            [
-                "onText"
-            ]
-        ]
-    },
-    {
-        "id": "countOff",
-        "type": "function",
-        "z": "brightnessDashboardFlow",
-        "name": "Count OFF",
-        "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
-        "outputs": 1,
-        "x": 1460,
-        "y": 140,
-        "wires": [
-            [
-                "offText"
-            ]
-        ]
-    },
-    {
-        "id": "onText",
-        "type": "ui_text",
-        "z": "brightnessDashboardFlow",
-        "group": "",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "name": "Times ON",
-        "label": "Light ON Count",
-        "format": "{{msg.payload}} times",
-        "layout": "row-spread",
-        "x": 1680,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "offText",
-        "type": "ui_text",
-        "z": "brightnessDashboardFlow",
-        "group": "",
-        "order": 5,
-        "width": 0,
-        "height": 0,
-        "name": "Times OFF",
-        "label": "Light OFF Count",
-        "format": "{{msg.payload}} times",
-        "layout": "row-spread",
-        "x": 1680,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "7fce5d9f331022b3",
-        "type": "async-api-red",
-        "z": "brightnessDashboardFlow",
-        "name": "Send to Light Device",
-        "x": 940,
-        "y": 240,
-        "wires": [
-            [
-                "lightSwitch",
-                "gauge",
-                "lightStatusText",
-                "66eb03e7305c1f2a"
-            ]
-        ]
-    },
-    {
-        "id": "gauge",
-        "type": "ui_gauge",
-        "z": "brightnessDashboardFlow",
-        "name": "Brightness",
-        "group": "",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Brightness",
-        "label": "%",
-        "format": "{{msg.payload.brightness}}",
-        "min": 0,
-        "max": 100,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 60,
-        "seg2": 80,
-        "x": 1190,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "lightStatusText",
-        "type": "ui_text",
-        "z": "brightnessDashboardFlow",
-        "group": "",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "Light State",
-        "label": "Light State",
-        "format": "{{msg.payload.state}}",
-        "layout": "row-spread",
-        "x": 1190,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "66eb03e7305c1f2a",
-        "type": "debug",
-        "z": "brightnessDashboardFlow",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 980,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "309565de86e36daf",
-        "type": "async-api-red",
-        "z": "1800032368ab7c0e",
-        "name": "Humidity Device",
-        "x": 680,
-        "y": 180,
-        "wires": [
-            [
-                "88ae8225747629bf",
-                "4193bdcd6830db75",
-                "d95446a8c6101877",
-                "a95b568633c7c48d",
-                "5984992199a2ef31"
-            ]
-        ]
-    },
-    {
-        "id": "8c46ed0f9eb97f8f",
-        "type": "inject",
-        "z": "1800032368ab7c0e",
-        "name": "Trigger",
-        "props": [],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "x": 150,
-        "y": 160,
-        "wires": [
-            [
-                "76b89d6f5d292f50"
-            ]
-        ]
-    },
-    {
-        "id": "76b89d6f5d292f50",
-        "type": "function",
-        "z": "1800032368ab7c0e",
-        "name": "Simulate Humidity",
-        "func": "const humidity = Math.floor(Math.random() * 101);\nmsg.payload = {\n    brightness: humidity,\n    state: humidity > 60 ? \"on\" : \"off\"\n};\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 390,
-        "y": 160,
-        "wires": [
-            [
-                "309565de86e36daf"
-            ]
-        ]
-    },
-    {
-        "id": "88ae8225747629bf",
-        "type": "ui_gauge",
-        "z": "1800032368ab7c0e",
-        "name": "Humidity Level",
-        "group": "",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Humidity",
-        "label": "%",
-        "format": "{{msg.payload.brightness}}",
-        "min": 0,
-        "max": 100,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 1120,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "4193bdcd6830db75",
-        "type": "ui_text",
-        "z": "1800032368ab7c0e",
-        "group": "",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "Dehumidifier State",
-        "label": "Dehumidifier",
-        "format": "{{msg.payload.state}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 1130,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "d95446a8c6101877",
-        "type": "ui_chart",
-        "z": "1800032368ab7c0e",
-        "name": "Humidity Chart",
-        "group": "",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "label": "Humidity Over Time",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "0",
-        "ymax": "100",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "colors": [
-            "#1f77b4"
-        ],
-        "outputs": 1,
-        "className": "",
-        "x": 1120,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a95b568633c7c48d",
-        "type": "switch",
-        "z": "1800032368ab7c0e",
-        "name": "Is ON or OFF?",
-        "property": "payload.state",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "on",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1110,
-        "y": 260,
-        "wires": [
-            [
-                "03fb9da3615ce917"
-            ],
-            [
-                "d56fe9328a6db1e6"
-            ]
-        ]
-    },
-    {
-        "id": "03fb9da3615ce917",
-        "type": "ui_text",
-        "z": "1800032368ab7c0e",
-        "group": "",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "name": "ON Counter",
-        "label": "Times ON",
-        "format": "{{count}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 1300,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "d56fe9328a6db1e6",
-        "type": "ui_text",
-        "z": "1800032368ab7c0e",
-        "group": "",
-        "order": 5,
-        "width": 0,
-        "height": 0,
-        "name": "OFF Counter",
-        "label": "Times OFF",
-        "format": "{{count}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 1300,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "5984992199a2ef31",
-        "type": "debug",
-        "z": "1800032368ab7c0e",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 940,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "0157034ae65b91fa",
-        "type": "ui_slider",
-        "z": "2d188b62e2fdbee2",
-        "name": "Set Temperature",
-        "label": "Thermostat Temperature (°C)",
-        "group": "",
-        "order": 1,
-        "min": 10,
-        "max": 30,
-        "step": 1,
-        "x": 520,
-        "y": 160,
-        "wires": [
-            [
-                "21ac7f800edb45ad"
-            ]
-        ]
-    },
-    {
-        "id": "21ac7f800edb45ad",
-        "type": "function",
-        "z": "2d188b62e2fdbee2",
-        "name": "Format Thermostat Payload",
-        "func": "msg.payload = { temperature: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 800,
-        "y": 160,
-        "wires": [
-            [
-                "e3a937ee08b67678"
-            ]
-        ]
-    },
-    {
-        "id": "4c49074c47ac237b",
-        "type": "ui_slider",
-        "z": "2d188b62e2fdbee2",
-        "name": "Set Fan Speed",
-        "label": "Fan Speed (1-5)",
-        "group": "",
-        "order": 2,
-        "min": 1,
-        "max": 5,
-        "step": 1,
-        "x": 520,
-        "y": 220,
-        "wires": [
-            [
-                "737c9eea3a82aa22"
-            ]
-        ]
-    },
-    {
-        "id": "737c9eea3a82aa22",
-        "type": "function",
-        "z": "2d188b62e2fdbee2",
-        "name": "Format Fan Payload",
-        "func": "msg.payload = { speed: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 220,
-        "wires": [
-            [
-                "55b41f360c2d639d"
-            ]
-        ]
-    },
-    {
-        "id": "ea7f4a28f75e176a",
-        "type": "ui_switch",
-        "z": "2d188b62e2fdbee2",
-        "name": "Light Switch",
-        "label": "Light On/Off",
-        "group": "",
-        "order": 3,
-        "width": 3,
-        "height": 1,
-        "passthru": true,
-        "topic": "light/set",
-        "x": 520,
-        "y": 280,
-        "wires": [
-            [
-                "63644f8e02257d6d"
-            ]
-        ]
-    },
-    {
-        "id": "63644f8e02257d6d",
-        "type": "function",
-        "z": "2d188b62e2fdbee2",
-        "name": "Format Light Payload",
-        "func": "msg.payload = { state: msg.payload ? 'on' : 'off' };\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 780,
-        "y": 280,
-        "wires": [
-            [
-                "61f46b71ae33f534"
-            ]
-        ]
-    },
-    {
-        "id": "9975764267a271e0",
-        "type": "ui_switch",
-        "z": "2d188b62e2fdbee2",
-        "name": "Plug Switch",
-        "label": "Plug On/Off",
-        "group": "",
-        "order": 4,
-        "width": 3,
-        "height": 1,
-        "passthru": true,
-        "topic": "plug/set",
-        "x": 520,
-        "y": 340,
-        "wires": [
-            [
-                "7f9f4261e9931088"
-            ]
-        ]
-    },
-    {
-        "id": "7f9f4261e9931088",
-        "type": "function",
-        "z": "2d188b62e2fdbee2",
-        "name": "Format Plug Payload",
-        "func": "msg.payload = { state: msg.payload ? 'on' : 'off' };\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 780,
-        "y": 340,
-        "wires": [
-            [
-                "dd44662506344903"
-            ]
-        ]
-    },
-    {
-        "id": "ff9e251fabedaaf4",
-        "type": "ui_switch",
-        "z": "2d188b62e2fdbee2",
-        "name": "Lock Switch",
-        "label": "Lock Door",
-        "tooltip": "",
-        "group": "",
-        "order": 5,
-        "width": 3,
-        "height": 1,
-        "passthru": true,
-        "decouple": "false",
-        "topic": "lock/set",
-        "topicType": "str",
-        "onvalue": "",
-        "onvalueType": "str",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "",
-        "offvalueType": "str",
-        "officon": "",
-        "offcolor": "",
-        "animate": true,
-        "className": "",
-        "x": 520,
-        "y": 400,
-        "wires": [
-            [
-                "458fd9aed5060b6f"
-            ]
-        ]
-    },
-    {
-        "id": "458fd9aed5060b6f",
-        "type": "function",
-        "z": "2d188b62e2fdbee2",
-        "name": "Format Lock Payload",
-        "func": "msg.payload = { locked: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 400,
-        "wires": [
-            [
-                "1cb0a9053af7ac14"
-            ]
-        ]
-    },
-    {
-        "id": "d10a7c7d73f06ec4",
-        "type": "ui_text",
-        "z": "2d188b62e2fdbee2",
-        "group": "",
-        "order": 6,
-        "width": 6,
-        "height": 1,
-        "name": "Motion Status",
-        "label": "Motion Detected",
-        "format": "{{msg.payload.detected ? 'Yes' : 'No'}} at {{msg.payload.timestamp}}",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 720,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "55b41f360c2d639d",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 1110,
-        "y": 220,
-        "wires": [
-            [
-                "30e3b36a3eb9754b"
-            ]
-        ]
-    },
-    {
-        "id": "61f46b71ae33f534",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 1090,
-        "y": 280,
-        "wires": [
-            [
-                "c526b0b101ebc85f"
-            ]
-        ]
-    },
-    {
-        "id": "dd44662506344903",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 1110,
-        "y": 340,
-        "wires": [
-            [
-                "89ab31e84f746252"
-            ]
-        ]
-    },
-    {
-        "id": "1cb0a9053af7ac14",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 1110,
-        "y": 400,
-        "wires": [
-            [
-                "b47b3832a11c28b1"
-            ]
-        ]
-    },
-    {
-        "id": "f139093a2d0eb93a",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 530,
-        "y": 500,
-        "wires": [
-            [
-                "d10a7c7d73f06ec4"
-            ]
-        ]
-    },
-    {
-        "id": "e3a937ee08b67678",
-        "type": "async-api-red",
-        "z": "2d188b62e2fdbee2",
-        "name": "",
-        "x": 1110,
-        "y": 160,
-        "wires": [
-            [
-                "c199c5659fd20c42"
-            ]
-        ]
-    },
-    {
-        "id": "c199c5659fd20c42",
-        "type": "debug",
-        "z": "2d188b62e2fdbee2",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1360,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "30e3b36a3eb9754b",
-        "type": "debug",
-        "z": "2d188b62e2fdbee2",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1360,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "c526b0b101ebc85f",
-        "type": "debug",
-        "z": "2d188b62e2fdbee2",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1380,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "89ab31e84f746252",
-        "type": "debug",
-        "z": "2d188b62e2fdbee2",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "b47b3832a11c28b1",
-        "type": "debug",
-        "z": "2d188b62e2fdbee2",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1360,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "1541755f7f9c0f14",
-        "type": "inject",
-        "z": "bfe71bd4b716691e",
-        "name": "Generate Temp",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "payloadType": "date",
-        "x": 150,
-        "y": 300,
-        "wires": [
-            [
-                "5c15545b33b2bbfb"
-            ]
-        ]
-    },
-    {
-        "id": "5c15545b33b2bbfb",
-        "type": "function",
-        "z": "bfe71bd4b716691e",
-        "name": "Random Temp (20–40°C)",
-        "func": "const min = 20;\nconst max = 40;\n\nconst randomTemp = Math.floor(Math.random() * (max - min + 1)) + min;\nmsg.payload = randomTemp;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 390,
-        "y": 260,
-        "wires": [
-            [
-                "c04a6a633e4d57ba",
-                "7c098993042724c1"
-            ]
-        ]
-    },
-    {
-        "id": "c04a6a633e4d57ba",
-        "type": "ui_text",
-        "z": "bfe71bd4b716691e",
-        "group": "dashboard-group",
-        "order": 1,
-        "width": 4,
-        "height": 1,
-        "name": "Current Temperature",
-        "label": "Room Temp",
-        "format": "{{msg.payload}} °C",
-        "layout": "row-spread",
-        "x": 600,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "7c098993042724c1",
-        "type": "function",
-        "z": "bfe71bd4b716691e",
-        "name": "Temp Check → AC State",
-        "func": "const temp = msg.payload;\nmsg.payload = { state: temp >= 28 ? \"on\" : \"off\" };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 680,
-        "y": 240,
-        "wires": [
-            [
-                "5500e07e069c66de",
-                "f0b239fdc220028b"
-            ]
-        ]
-    },
-    {
-        "id": "f0b239fdc220028b",
-        "type": "function",
-        "z": "bfe71bd4b716691e",
-        "name": "Calc Power (1.5kW)",
-        "func": "const isOn = msg.payload.state === \"on\";\nmsg.payload = isOn ? 1.5 : 0; // kW\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 940,
-        "y": 240,
-        "wires": [
-            [
-                "3e5730a80423b1dc"
-            ]
-        ]
-    },
-    {
-        "id": "3e5730a80423b1dc",
-        "type": "ui_text",
-        "z": "bfe71bd4b716691e",
-        "group": "dashboard-group",
-        "order": 2,
-        "width": 4,
-        "height": 1,
-        "name": "Power Usage",
-        "label": "AC Power",
-        "format": "{{msg.payload}} kW",
-        "layout": "row-spread",
-        "x": 1180,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "5500e07e069c66de",
-        "type": "async-api-red",
-        "z": "bfe71bd4b716691e",
-        "name": "AC AsyncAPI Device",
-        "x": 880,
-        "y": 340,
-        "wires": [
-            [
-                "e942c3116c9d205a"
-            ]
-        ]
-    },
-    {
-        "id": "e942c3116c9d205a",
-        "type": "debug",
-        "z": "bfe71bd4b716691e",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1100,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "3a34e8ccfa2a68c6",
-        "type": "inject",
-        "z": "588424ae9188bf48",
-        "name": "Random Temp Every 2s",
-        "props": [],
-        "repeat": "2",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "payloadType": "date",
-        "x": 260,
-        "y": 200,
-        "wires": [
-            [
-                "cc9a2ec9e5fa6ac4"
-            ]
-        ]
-    },
-    {
-        "id": "cc9a2ec9e5fa6ac4",
-        "type": "function",
-        "z": "588424ae9188bf48",
-        "name": "Gen Random Temp",
-        "func": "msg.payload = {\n  sensorId: \"sensor_living_room\",\n  temperature: Math.floor(Math.random() * 10) + 24,\n  timestamp: new Date().toISOString()\n};\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 480,
-        "y": 200,
-        "wires": [
-            [
-                "f36ab165dab70ed9",
-                "29b59ab4e089c5ff"
-            ]
-        ]
-    },
-    {
-        "id": "f36ab165dab70ed9",
-        "type": "async-api-red",
-        "z": "588424ae9188bf48",
-        "name": "Send Temp",
-        "x": 990,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f6d76d7e6b108470",
-        "type": "ui_dropdown",
-        "z": "588424ae9188bf48",
-        "name": "Presence Picker",
-        "label": "person1 status",
-        "tooltip": "",
-        "place": "Select status",
-        "group": "b1a88ff1e6015737",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "home",
-                "value": "home"
-            },
-            {
-                "label": "away",
-                "value": "away"
-            }
-        ],
-        "x": 180,
-        "y": 320,
-        "wires": [
-            [
-                "9f12f5cdd7d72f26"
-            ]
-        ]
-    },
-    {
-        "id": "9f12f5cdd7d72f26",
-        "type": "function",
-        "z": "588424ae9188bf48",
-        "name": "Build Presence Payload",
-        "func": "msg.payload = {\n  personId: \"person1\",\n  status: msg.payload,\n  timestamp: new Date().toISOString()\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 410,
-        "y": 320,
-        "wires": [
-            [
-                "6292b92b1cf8473f",
-                "03edc5d564d10515"
-            ]
-        ]
-    },
-    {
-        "id": "6292b92b1cf8473f",
-        "type": "async-api-red",
-        "z": "588424ae9188bf48",
-        "name": "Send Presence",
-        "x": 980,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "29b59ab4e089c5ff",
-        "type": "function",
-        "z": "588424ae9188bf48",
-        "name": "Store Temp",
-        "func": "flow.set(\"lastTemp\", msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 260,
-        "wires": [
-            [
-                "beb6f6816b58bc57"
-            ]
-        ]
-    },
-    {
-        "id": "03edc5d564d10515",
-        "type": "function",
-        "z": "588424ae9188bf48",
-        "name": "Store Presence",
-        "func": "flow.set(\"lastPresence\", msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "x": 440,
-        "y": 480,
-        "wires": [
-            [
-                "beb6f6816b58bc57"
-            ]
-        ]
-    },
-    {
-        "id": "beb6f6816b58bc57",
-        "type": "function",
-        "z": "588424ae9188bf48",
-        "name": "Decide to Turn On AC",
-        "func": "let temp = flow.get(\"lastTemp\");\nlet presence = flow.get(\"lastPresence\");\n\nif (!temp || !presence) return null;\n\nif (temp.temperature > 28 && presence.status === \"home\") {\n    msg.payload = {\n        entityId: \"climate.living_room_ac\",\n        hvacMode: \"cool\",\n        temperature: 24,\n        source: \"Automation: temp > 28°C and person1 is home\"\n    };\n    return msg;\n}\nreturn null;",
-        "outputs": 1,
-        "x": 740,
-        "y": 460,
-        "wires": [
-            [
-                "cb173c9f19f32d96"
-            ]
-        ]
-    },
-    {
-        "id": "cb173c9f19f32d96",
-        "type": "async-api-red",
-        "z": "588424ae9188bf48",
-        "name": "Send AC Command",
-        "x": 1080,
-        "y": 460,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c8feb727f259df50",
-        "type": "inject",
-        "z": "e5a08239c694ef6a",
-        "name": "Inject every 5 sec",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": "2",
-        "topic": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 160,
-        "wires": [
-            [
-                "8fb1c7791ed36f60"
-            ]
-        ]
-    },
-    {
-        "id": "8fb1c7791ed36f60",
-        "type": "function",
-        "z": "e5a08239c694ef6a",
-        "name": "Random Temp Generator",
-        "func": "const temp = (Math.random() * 10 + 22).toFixed(1);\nmsg.payload = { temperature: Number(temp), unit: \"C\" };\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 340,
-        "y": 160,
-        "wires": [
-            [
-                "e09ba1f12e6ec222",
-                "66548cb2ae76c1ec"
-            ]
-        ]
-    },
-    {
-        "id": "66548cb2ae76c1ec",
-        "type": "ui_gauge",
-        "z": "e5a08239c694ef6a",
-        "name": "Temperature Gauge",
-        "group": "ui-group",
-        "order": 1,
-        "width": 6,
-        "height": 4,
-        "gtype": "gage",
-        "title": "Temperature (°C)",
-        "label": "°C",
-        "format": "{{value.temperature}}",
-        "min": 20,
-        "max": 40,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 25,
-        "seg2": 30,
-        "x": 540,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "e09ba1f12e6ec222",
-        "type": "async-api-red",
-        "z": "e5a08239c694ef6a",
-        "name": "Thermostat",
-        "x": 350,
-        "y": 280,
-        "wires": [
-            [
-                "e68d471a8aa34cdb"
-            ]
-        ]
-    },
-    {
-        "id": "0667687891cf44be",
-        "type": "async-api-red",
-        "z": "e5a08239c694ef6a",
-        "name": "AC",
-        "x": 510,
-        "y": 200,
-        "wires": [
-            [
-                "2e5a5e8c4bfcd193"
-            ]
-        ]
-    },
-    {
-        "id": "c61fd8729814e60c",
-        "type": "async-api-red",
-        "z": "e5a08239c694ef6a",
-        "name": "Lights",
-        "x": 550,
-        "y": 380,
-        "wires": [
-            [
-                "a72d40998f67919e"
-            ]
-        ]
-    },
-    {
-        "id": "5c2f09bca0127e2d",
-        "type": "async-api-red",
-        "z": "e5a08239c694ef6a",
-        "name": "Door Lock",
-        "x": 610,
-        "y": 500,
-        "wires": [
-            [
-                "092e836b8671cd3d"
-            ]
-        ]
-    },
-    {
-        "id": "e8178e367dd7a76c",
-        "type": "ui_form",
-        "z": "e5a08239c694ef6a",
-        "name": "Set Thermostat",
-        "label": "Thermostat",
-        "group": "ui-group",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "Temperature",
-                "value": "temperature",
-                "type": "number"
-            },
-            {
-                "label": "Unit",
-                "value": "unit",
-                "type": "text"
-            }
-        ],
-        "x": 160,
-        "y": 280,
-        "wires": [
-            [
-                "e09ba1f12e6ec222"
-            ]
-        ]
-    },
-    {
-        "id": "a4cec148c9b40cd8",
-        "type": "ui_dropdown",
-        "z": "e5a08239c694ef6a",
-        "name": "AC Power",
-        "label": "AC",
-        "group": "ui-group",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "ON",
-                "value": "ON"
-            },
-            {
-                "label": "OFF",
-                "value": "OFF"
-            }
-        ],
-        "x": 140,
-        "y": 200,
-        "wires": [
-            [
-                "17be29c3cedcdf00"
-            ]
-        ]
-    },
-    {
-        "id": "17be29c3cedcdf00",
-        "type": "function",
-        "z": "e5a08239c694ef6a",
-        "name": "Wrap AC State",
-        "func": "msg.payload = { state: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 320,
-        "y": 200,
-        "wires": [
-            [
-                "0667687891cf44be"
-            ]
-        ]
-    },
-    {
-        "id": "84ce128d0a675e5b",
-        "type": "ui_switch",
-        "z": "e5a08239c694ef6a",
-        "name": "Lights Switch",
-        "label": "Lights",
-        "group": "ui-group",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "onvalue": "ON",
-        "offvalue": "OFF",
-        "x": 150,
-        "y": 380,
-        "wires": [
-            [
-                "543ea70af8f9b654"
-            ]
-        ]
-    },
-    {
-        "id": "543ea70af8f9b654",
-        "type": "function",
-        "z": "e5a08239c694ef6a",
-        "name": "Wrap Light State",
-        "func": "msg.payload = { state: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 350,
-        "y": 380,
-        "wires": [
-            [
-                "c61fd8729814e60c"
-            ]
-        ]
-    },
-    {
-        "id": "e4b1220d5ac28142",
-        "type": "ui_switch",
-        "z": "e5a08239c694ef6a",
-        "name": "Door Lock Switch",
-        "label": "Lock Door",
-        "group": "ui-group",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "onvalue": true,
-        "offvalue": false,
-        "x": 170,
-        "y": 500,
-        "wires": [
-            [
-                "40d28e1371b24f82"
-            ]
-        ]
-    },
-    {
-        "id": "40d28e1371b24f82",
-        "type": "function",
-        "z": "e5a08239c694ef6a",
-        "name": "Wrap Lock State",
-        "func": "msg.payload = { locked: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 380,
-        "y": 500,
-        "wires": [
-            [
-                "5c2f09bca0127e2d"
-            ]
-        ]
-    },
-    {
-        "id": "e68d471a8aa34cdb",
-        "type": "debug",
-        "z": "e5a08239c694ef6a",
-        "name": "debug 10",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 540,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "2e5a5e8c4bfcd193",
-        "type": "debug",
-        "z": "e5a08239c694ef6a",
-        "name": "debug 11",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "092e836b8671cd3d",
-        "type": "debug",
-        "z": "e5a08239c694ef6a",
-        "name": "debug 12",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 800,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "a72d40998f67919e",
-        "type": "debug",
-        "z": "e5a08239c694ef6a",
-        "name": "debug 13",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 740,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "69c09d3145f1acea",
-        "type": "inject",
-        "z": "c3ef06b53713e195",
-        "name": "Inject every 5 sec",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": "2",
-        "topic": "",
-        "payloadType": "date",
-        "x": 290,
-        "y": 120,
-        "wires": [
-            [
-                "8530a7866923c246"
-            ]
-        ]
-    },
-    {
-        "id": "8530a7866923c246",
-        "type": "function",
-        "z": "c3ef06b53713e195",
-        "name": "Random Temp Generator",
-        "func": "const temp = (Math.random() * 10 + 22).toFixed(1);\nmsg.payload = { temperature: Number(temp), unit: \"C\" };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 530,
-        "y": 120,
-        "wires": [
-            [
-                "39390d0e45ffc066",
-                "8f6d0603555526bb"
-            ]
-        ]
-    },
-    {
-        "id": "3bc501f0039d7845",
-        "type": "ui_gauge",
-        "z": "c3ef06b53713e195",
-        "name": "Temperature Gauge",
-        "group": "ui-group",
-        "order": 1,
-        "width": 6,
-        "height": 4,
-        "gtype": "gage",
-        "title": "Temperature (°C)",
-        "label": "°C",
-        "format": "{{value}}",
-        "min": 20,
-        "max": 40,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 25,
-        "seg2": 30,
-        "diff": false,
-        "className": "",
-        "x": 900,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "39390d0e45ffc066",
-        "type": "async-api-red",
-        "z": "c3ef06b53713e195",
-        "name": "Thermostat",
-        "x": 550,
-        "y": 220,
-        "wires": [
-            [
-                "0c741c4f0f56df98"
-            ]
-        ]
-    },
-    {
-        "id": "b0a982f3ff6a18e5",
-        "type": "async-api-red",
-        "z": "c3ef06b53713e195",
-        "name": "AC",
-        "x": 730,
-        "y": 640,
-        "wires": [
-            [
-                "fe52ed548cdb2a72"
-            ]
-        ]
-    },
-    {
-        "id": "71b7bc3e0c76e541",
-        "type": "async-api-red",
-        "z": "c3ef06b53713e195",
-        "name": "Lights",
-        "x": 730,
-        "y": 400,
-        "wires": [
-            [
-                "f2761c06aa609a22"
-            ]
-        ]
-    },
-    {
-        "id": "bc18b592da7e4073",
-        "type": "async-api-red",
-        "z": "c3ef06b53713e195",
-        "name": "Door Lock",
-        "x": 790,
-        "y": 520,
-        "wires": [
-            [
-                "923282f160ab4db2"
-            ]
-        ]
-    },
-    {
-        "id": "7c54a859fc100178",
-        "type": "ui_form",
-        "z": "c3ef06b53713e195",
-        "name": "Set Thermostat",
-        "label": "Thermostat",
-        "group": "ui-group",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "Temperature",
-                "value": "temperature",
-                "type": "number"
-            },
-            {
-                "label": "Unit",
-                "value": "unit",
-                "type": "text"
-            }
-        ],
-        "x": 300,
-        "y": 240,
-        "wires": [
-            [
-                "39390d0e45ffc066"
-            ]
-        ]
-    },
-    {
-        "id": "396b6fc8d9050f1f",
-        "type": "ui_dropdown",
-        "z": "c3ef06b53713e195",
-        "name": "AC Power",
-        "label": "AC",
-        "group": "ui-group",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "ON",
-                "value": "ON"
-            },
-            {
-                "label": "OFF",
-                "value": "OFF"
-            }
-        ],
-        "x": 320,
-        "y": 640,
-        "wires": [
-            [
-                "ef1b2eb8641f1e77"
-            ]
-        ]
-    },
-    {
-        "id": "ef1b2eb8641f1e77",
-        "type": "function",
-        "z": "c3ef06b53713e195",
-        "name": "Wrap AC State",
-        "func": "msg.payload = { state: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 520,
-        "y": 640,
-        "wires": [
-            [
-                "b0a982f3ff6a18e5"
-            ]
-        ]
-    },
-    {
-        "id": "773fba319ce1c61b",
-        "type": "ui_switch",
-        "z": "c3ef06b53713e195",
-        "name": "Lights Switch",
-        "label": "Lights",
-        "group": "ui-group",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "onvalue": "ON",
-        "offvalue": "OFF",
-        "x": 330,
-        "y": 400,
-        "wires": [
-            [
-                "6dda87ee7858f902"
-            ]
-        ]
-    },
-    {
-        "id": "6dda87ee7858f902",
-        "type": "function",
-        "z": "c3ef06b53713e195",
-        "name": "Wrap Light State",
-        "func": "msg.payload = { state: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 530,
-        "y": 400,
-        "wires": [
-            [
-                "71b7bc3e0c76e541"
-            ]
-        ]
-    },
-    {
-        "id": "4a410427daedd89c",
-        "type": "ui_switch",
-        "z": "c3ef06b53713e195",
-        "name": "Door Lock Switch",
-        "label": "Lock Door",
-        "group": "ui-group",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "onvalue": true,
-        "offvalue": false,
-        "x": 350,
-        "y": 520,
-        "wires": [
-            [
-                "e262cf143bf3bd5e"
-            ]
-        ]
-    },
-    {
-        "id": "e262cf143bf3bd5e",
-        "type": "function",
-        "z": "c3ef06b53713e195",
-        "name": "Wrap Lock State",
-        "func": "msg.payload = { locked: msg.payload };\nreturn msg;",
-        "outputs": 1,
-        "x": 560,
-        "y": 520,
-        "wires": [
-            [
-                "bc18b592da7e4073"
-            ]
-        ]
-    },
-    {
-        "id": "0c741c4f0f56df98",
-        "type": "debug",
-        "z": "c3ef06b53713e195",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 740,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "fe52ed548cdb2a72",
-        "type": "debug",
-        "z": "c3ef06b53713e195",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 920,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "923282f160ab4db2",
-        "type": "debug",
-        "z": "c3ef06b53713e195",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 980,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "f2761c06aa609a22",
-        "type": "debug",
-        "z": "c3ef06b53713e195",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 920,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "8f6d0603555526bb",
-        "type": "change",
-        "z": "c3ef06b53713e195",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "temperature",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 180,
-        "wires": [
-            [
-                "3bc501f0039d7845"
-            ]
-        ]
-    },
-    {
         "id": "d4f8c637ba287db1",
         "type": "inject",
         "z": "a527806fb52a0bc0",
@@ -6247,7 +3211,7 @@
         "topic": "",
         "payloadType": "date",
         "x": 260,
-        "y": 340,
+        "y": 200,
         "wires": [
             [
                 "ba5dc6718d645637"
@@ -6263,7 +3227,7 @@
         "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
         "outputs": 1,
         "x": 500,
-        "y": 340,
+        "y": 200,
         "wires": [
             [
                 "69ded1d17cbec561",
@@ -6285,7 +3249,7 @@
         "finalize": "",
         "libs": [],
         "x": 750,
-        "y": 300,
+        "y": 160,
         "wires": [
             [
                 "1d06a67200a8e66e"
@@ -6311,7 +3275,7 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1330,
-        "y": 400,
+        "y": 260,
         "wires": []
     },
     {
@@ -6321,7 +3285,7 @@
         "g": "50a045551ea38743",
         "name": "Send to Thermostat Device",
         "x": 1010,
-        "y": 340,
+        "y": 200,
         "wires": [
             [
                 "d9d04269593328c3",
@@ -6355,7 +3319,7 @@
         "diff": false,
         "className": "",
         "x": 730,
-        "y": 400,
+        "y": 260,
         "wires": []
     },
     {
@@ -6372,7 +3336,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1330,
-        "y": 320,
+        "y": 180,
         "wires": []
     },
     {
@@ -6383,7 +3347,7 @@
         "name": "Thermostat simulation",
         "info": "",
         "x": 220,
-        "y": 220,
+        "y": 80,
         "wires": []
     },
     {
@@ -6399,7 +3363,7 @@
         "topic": "",
         "payloadType": "date",
         "x": 260,
-        "y": 620,
+        "y": 460,
         "wires": [
             [
                 "a759b38ff08da238"
@@ -6420,7 +3384,7 @@
         "finalize": "",
         "libs": [],
         "x": 540,
-        "y": 620,
+        "y": 460,
         "wires": [
             [
                 "b4d971cf3772f83e"
@@ -6441,7 +3405,7 @@
         "finalize": "",
         "libs": [],
         "x": 780,
-        "y": 620,
+        "y": 460,
         "wires": [
             [
                 "e97196a0d8d49460"
@@ -6455,7 +3419,7 @@
         "g": "a0bc03072058d078",
         "name": "AC Controller Node",
         "x": 1040,
-        "y": 620,
+        "y": 460,
         "wires": [
             [
                 "793cf3b0139849eb",
@@ -6477,7 +3441,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1260,
-        "y": 620,
+        "y": 460,
         "wires": []
     },
     {
@@ -6501,7 +3465,7 @@
         "step": 1,
         "className": "",
         "x": 240,
-        "y": 420,
+        "y": 280,
         "wires": [
             [
                 "5fd815fb2caf5aba"
@@ -6517,7 +3481,7 @@
         "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
         "outputs": 1,
         "x": 470,
-        "y": 420,
+        "y": 280,
         "wires": [
             []
         ]
@@ -6530,7 +3494,7 @@
         "name": "AC simulation",
         "info": "",
         "x": 190,
-        "y": 560,
+        "y": 400,
         "wires": []
     },
     {
@@ -6538,7 +3502,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "a0bc03072058d078",
-        "group": "03ee92e1974696ed",
+        "group": "2484b2e7392bda74",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -6552,7 +3516,7 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1240,
-        "y": 700,
+        "y": 540,
         "wires": []
     },
     {
@@ -6563,7 +3527,7 @@
         "name": "Desired Temp",
         "label": "Set Desired Temp",
         "tooltip": "",
-        "group": "03ee92e1974696ed",
+        "group": "2484b2e7392bda74",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -6576,7 +3540,7 @@
         "step": 1,
         "className": "",
         "x": 300,
-        "y": 700,
+        "y": 540,
         "wires": [
             [
                 "6b793056cae7dfce"
@@ -6592,7 +3556,7 @@
         "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
         "outputs": 1,
         "x": 570,
-        "y": 700,
+        "y": 540,
         "wires": [
             []
         ]
@@ -6609,8 +3573,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 280,
-        "y": 1040,
+        "x": 260,
+        "y": 800,
         "wires": [
             [
                 "29a719f9730293ac"
@@ -6625,8 +3589,8 @@
         "name": "Generate Brightness",
         "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
         "outputs": 1,
-        "x": 540,
-        "y": 980,
+        "x": 520,
+        "y": 740,
         "wires": [
             [
                 "b58e5041e4c9741b",
@@ -6647,8 +3611,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
-        "y": 980,
+        "x": 770,
+        "y": 740,
         "wires": [
             [
                 "dba1b26fa3a4b0a8"
@@ -6694,8 +3658,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 730,
-        "y": 1100,
+        "x": 710,
+        "y": 860,
         "wires": [
             []
         ]
@@ -6723,8 +3687,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1250,
-        "y": 920,
+        "x": 1230,
+        "y": 680,
         "wires": [
             [
                 "9b07cf1424fb44b6"
@@ -6742,8 +3706,8 @@
         "name": "Count ON",
         "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
-        "x": 1540,
-        "y": 900,
+        "x": 1520,
+        "y": 660,
         "wires": [
             [
                 "02494731b443fa30"
@@ -6758,8 +3722,8 @@
         "name": "Count OFF",
         "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
-        "x": 1540,
-        "y": 940,
+        "x": 1520,
+        "y": 700,
         "wires": [
             [
                 "4229373250208f05"
@@ -6784,8 +3748,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1760,
-        "y": 900,
+        "x": 1740,
+        "y": 660,
         "wires": []
     },
     {
@@ -6806,8 +3770,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1760,
-        "y": 940,
+        "x": 1740,
+        "y": 700,
         "wires": []
     },
     {
@@ -6816,8 +3780,8 @@
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
         "name": "Send to Light Device",
-        "x": 1020,
-        "y": 1040,
+        "x": 1000,
+        "y": 800,
         "wires": [
             [
                 "84eae99cd8fb8148",
@@ -6852,8 +3816,8 @@
         "seg2": 80,
         "diff": false,
         "className": "",
-        "x": 1270,
-        "y": 1020,
+        "x": 1250,
+        "y": 780,
         "wires": []
     },
     {
@@ -6874,8 +3838,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1270,
-        "y": 1120,
+        "x": 1250,
+        "y": 880,
         "wires": []
     },
     {
@@ -6891,8 +3855,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1060,
-        "y": 1200,
+        "x": 1040,
+        "y": 960,
         "wires": []
     },
     {
@@ -6902,326 +3866,336 @@
         "g": "6996a7f421765b1a",
         "name": "smartlights simulation",
         "info": "",
-        "x": 240,
-        "y": 900,
+        "x": 220,
+        "y": 660,
         "wires": []
     },
     {
-        "id": "inject-ac",
-        "type": "inject",
-        "z": "acFlow",
-        "name": "Random Temp Generator",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 80,
-        "wires": [
-            [
-                "generate-temp-ac"
-            ]
-        ]
-    },
-    {
-        "id": "generate-temp-ac",
-        "type": "function",
-        "z": "acFlow",
-        "name": "Generate Random Temp",
-        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
-        "outputs": 1,
-        "x": 400,
-        "y": 80,
-        "wires": [
-            [
-                "check-ac"
-            ]
-        ]
-    },
-    {
-        "id": "check-ac",
-        "type": "function",
-        "z": "acFlow",
-        "name": "Check AC State",
-        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 640,
-        "y": 80,
-        "wires": [
-            [
-                "ac-node",
-                "ac-status",
-                "ac-gauge"
-            ]
-        ]
-    },
-    {
-        "id": "ac-node",
-        "type": "async-api-red",
-        "z": "acFlow",
-        "name": "AC Controller Node",
-        "x": 900,
-        "y": 80,
-        "wires": [
-            [
-                "ac-debug"
-            ]
-        ]
-    },
-    {
-        "id": "ac-status",
-        "type": "ui_text",
-        "z": "acFlow",
-        "group": "ac-group",
+        "id": "2f8c3fe9e3a364d1",
+        "type": "ui_switch",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "Door Lock Switch",
+        "label": "Lock Door",
+        "tooltip": "",
+        "group": "dad53fb0db2749ce",
         "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "AC State",
-        "label": "AC State",
-        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
-        "layout": "row-spread",
-        "x": 900,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "ac-gauge",
-        "type": "ui_gauge",
-        "z": "acFlow",
-        "name": "AC Temp Gauge",
-        "group": "ac-group",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Current Temperature",
-        "label": "°C",
-        "format": "{{msg.payload.temperature}}",
-        "min": 16,
-        "max": 35,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 24,
-        "seg2": 28,
-        "x": 900,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "ac-temp-slider",
-        "type": "ui_slider",
-        "z": "acFlow",
-        "name": "AC Desired Temp",
-        "label": "Set Desired Temperature",
-        "group": "ac-group",
-        "order": 3,
-        "width": 0,
-        "height": 0,
+        "width": 3,
+        "height": 1,
         "passthru": true,
-        "outs": "end",
+        "decouple": "false",
         "topic": "",
-        "min": 16,
-        "max": 30,
-        "step": 1,
-        "x": 190,
-        "y": 160,
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 210,
+        "y": 1140,
         "wires": [
             [
-                "set-desired-temp"
+                "aec069bf440e39e4"
             ]
         ]
     },
     {
-        "id": "set-desired-temp",
+        "id": "aec069bf440e39e4",
         "type": "function",
-        "z": "acFlow",
-        "name": "Store Desired Temp",
-        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "Format DoorLock Payload",
+        "func": "msg.payload = { locked: msg.payload };\nreturn msg;",
         "outputs": 1,
-        "x": 430,
-        "y": 160,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1140,
         "wires": [
-            []
+            [
+                "601a43db7ca6fa0a"
+            ]
         ]
     },
     {
-        "id": "ac-debug",
+        "id": "601a43db7ca6fa0a",
+        "type": "async-api-red",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "SmartDoor Lock ",
+        "x": 720,
+        "y": 1080,
+        "wires": [
+            [
+                "f6b18e5f375f811d",
+                "47886e634365fb88"
+            ]
+        ]
+    },
+    {
+        "id": "47886e634365fb88",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "Update Dashboard Status",
+        "func": "msg.payload = msg.payload.locked ? \"Locked\" : \"Unlocked\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 1160,
+        "wires": [
+            [
+                "f324d4a123376c63"
+            ]
+        ]
+    },
+    {
+        "id": "f324d4a123376c63",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "group": "dad53fb0db2749ce",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "name": "Lock Status Text",
+        "label": "Door Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1320,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "f6b18e5f375f811d",
         "type": "debug",
-        "z": "acFlow",
-        "name": "Debug AC Output",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "debug 15",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
+        "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
-        "y": 80,
+        "x": 1140,
+        "y": 1080,
         "wires": []
     },
     {
-        "id": "cf590dab5f86e032",
-        "type": "inject",
-        "z": "5a0421faf6b57874",
-        "name": "Random Temp Generator",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 80,
-        "wires": [
-            [
-                "7dd20985bb0f27fc"
-            ]
-        ]
+        "id": "6aa34857a3f76ef9",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "38af56c2be0e770c",
+        "name": "Smartdoor",
+        "info": "",
+        "x": 180,
+        "y": 1080,
+        "wires": []
     },
     {
-        "id": "7dd20985bb0f27fc",
+        "id": "d4868acaa6b1056b",
+        "type": "comment",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "cofee machine simulator",
+        "info": "",
+        "x": 230,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "format_coffee",
         "type": "function",
-        "z": "5a0421faf6b57874",
-        "name": "Generate Random Temp",
-        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "Format Coffee Payload",
+        "func": "msg.payload = {\n  strength: msg.payload.strength,\n  size: msg.payload.size\n};\nreturn msg;",
         "outputs": 1,
-        "x": 400,
-        "y": 80,
+        "noerr": 0,
+        "x": 770,
+        "y": 1400,
         "wires": [
             [
-                "f3ce4a24a8c48efa"
+                "b972287969dd1e02"
             ]
         ]
     },
     {
-        "id": "f3ce4a24a8c48efa",
-        "type": "function",
-        "z": "5a0421faf6b57874",
-        "name": "Check AC State",
-        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 640,
-        "y": 80,
+        "id": "join_coffee",
+        "type": "join",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "Join Strength & Size",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 480,
+        "y": 1400,
         "wires": [
             [
-                "5ce758d29a24b840",
-                "3f4a59c75fa63750",
-                "115837d8997ebb76"
+                "format_coffee"
             ]
         ]
     },
     {
-        "id": "5ce758d29a24b840",
+        "id": "debug_coffee",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "Debug Coffee Payload",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1220,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "b972287969dd1e02",
         "type": "async-api-red",
-        "z": "5a0421faf6b57874",
-        "name": "AC Controller Node",
-        "x": 900,
-        "y": 80,
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "SmartDoor Lock ",
+        "x": 1000,
+        "y": 1400,
         "wires": [
             [
-                "6226f490d290b6b1"
+                "debug_coffee",
+                "ui_coffee_status"
             ]
         ]
     },
     {
-        "id": "3f4a59c75fa63750",
-        "type": "ui_text",
-        "z": "5a0421faf6b57874",
-        "group": "03ee92e1974696ed",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "AC State",
-        "label": "AC State",
-        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
-        "layout": "row-spread",
-        "x": 900,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "115837d8997ebb76",
-        "type": "ui_gauge",
-        "z": "5a0421faf6b57874",
-        "name": "AC Temp Gauge",
-        "group": "03ee92e1974696ed",
+        "id": "ui_size",
+        "type": "ui_dropdown",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "Select Size",
+        "label": "Coffee Size",
+        "tooltip": "",
+        "place": "",
+        "group": "b9c9d459bcc50b6b",
         "order": 2,
         "width": 0,
         "height": 0,
-        "gtype": "gage",
-        "title": "Current Temperature",
-        "label": "°C",
-        "format": "{{msg.payload.temperature}}",
-        "min": 16,
-        "max": 35,
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": 24,
-        "seg2": 28,
-        "x": 900,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "8a881fcaa760e9bc",
-        "type": "ui_slider",
-        "z": "5a0421faf6b57874",
-        "name": "AC Desired Temp",
-        "label": "Set Desired Temperature",
-        "group": "03ee92e1974696ed",
-        "order": 3,
-        "width": 0,
-        "height": 0,
         "passthru": true,
-        "outs": "end",
-        "topic": "",
-        "min": 16,
-        "max": 30,
-        "step": 1,
-        "x": 190,
-        "y": 160,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Small",
+                "value": "small",
+                "type": "str"
+            },
+            {
+                "label": "Medium",
+                "value": "medium",
+                "type": "str"
+            },
+            {
+                "label": "Large",
+                "value": "large",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "size",
+        "topicType": "str",
+        "className": "",
+        "x": 230,
+        "y": 1440,
         "wires": [
             [
-                "377e6ec821b6d5df"
+                "join_coffee"
             ]
         ]
     },
     {
-        "id": "377e6ec821b6d5df",
-        "type": "function",
-        "z": "5a0421faf6b57874",
-        "name": "Store Desired Temp",
-        "func": "flow.set(\"acDesiredTemp\", msg.payload);\nreturn null;",
-        "outputs": 1,
-        "x": 430,
-        "y": 160,
+        "id": "ui_strength",
+        "type": "ui_dropdown",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "name": "Select Strength",
+        "label": "Coffee Strength",
+        "tooltip": "",
+        "place": "",
+        "group": "b9c9d459bcc50b6b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Light",
+                "value": "light",
+                "type": "str"
+            },
+            {
+                "label": "Medium",
+                "value": "medium",
+                "type": "str"
+            },
+            {
+                "label": "Strong",
+                "value": "strong",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "strength",
+        "topicType": "str",
+        "className": "",
+        "x": 220,
+        "y": 1380,
         "wires": [
-            []
+            [
+                "join_coffee"
+            ]
         ]
     },
     {
-        "id": "6226f490d290b6b1",
-        "type": "debug",
-        "z": "5a0421faf6b57874",
-        "name": "Debug AC Output",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1120,
-        "y": 80,
+        "id": "ui_coffee_status",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "d6d6813509f8a19b",
+        "group": "b9c9d459bcc50b6b",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Order Status",
+        "label": "Coffee Order",
+        "format": "{{msg.payload.strength}} / {{msg.payload.size}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1230,
+        "y": 1420,
         "wires": []
     }
 ]

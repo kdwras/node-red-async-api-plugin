@@ -23,7 +23,7 @@
             }
         },
         "debug": {
-            "filter": "filterSelected"
+            "filter": "filterCurrent"
         },
         "menu-menu-item-palette": true,
         "menu-menu-item-sidebar": true
