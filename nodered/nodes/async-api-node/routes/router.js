@@ -167,9 +167,8 @@ module.exports = (RED) => {
         try {
             node.serverUrl = payload.serverUrl;
             node.topic = payload.topic;
-            node.action = payload.action;
+            node.operation = payload.operation;
             node.expectedPayload = payload.expectedPayload;
-            console.log(`lolllll -> ${{action: node.action}}`);
             res.status(204).send();
         } catch (error) {
             res.status(500).json({error: error});
@@ -191,8 +190,8 @@ module.exports = (RED) => {
         const serverUrl = node.serverUrl;
         const topic = node.topic;
         const payload = node.payload;
-        const action = node.action;
-        res.status(200).json({serverUrl: serverUrl, topic: topic, payload: payload, action: action});
+        const operation = node.operation;
+        res.status(200).json({serverUrl: serverUrl, topic: topic, payload: payload, operation: operation});
     }
 
     /**

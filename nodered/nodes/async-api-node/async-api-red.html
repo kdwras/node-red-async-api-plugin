@@ -16,17 +16,15 @@
             const node = this;
 
             if (node?.id) {
-                console.log('trim ' + node.topic);
-
 
                 // Fetch saved file
-                getFile(node.id).then(() => {
-                    return getUserSelections(node.id);
-                }).then(function (res) {
-                    if(res) {
-                        prefillSelections(res);
-                    }
-                });
+                getFile(node.id)
+                    .then(() => getUserSelections(node.id))
+                    .then((res) => {
+                        if (res.serverUrl && res.topic && res.operation) {
+                            prefillSelections(res);
+                        }
+                    });
 
                 // get the payload and update the messages
                 RED.comms.subscribe(`async-api-red/payload-update/${node.id}`, function (topic, msg) {
@@ -75,7 +73,7 @@
                     let data = {
                         serverUrl: selectedServer,
                         topic: selectedChannel.address,
-                        action: selectedOperation.action === 'send' ? 'Publish' : 'Subscribe',
+                        operation: selectedOperation,
                         expectedPayload: getExpectedMessages()
                     }
 
@@ -397,7 +395,7 @@
 
         // Use a small timeout to ensure operations are populated first
         setTimeout(() => {
-            $("#node-input-operations").val(data.payload?.[0]?.operationId || "").trigger("change");
+            $("#node-input-operations").val(data.operation?.id || "").trigger("change");
         }, 300);
     }
 
