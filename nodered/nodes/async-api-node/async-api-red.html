@@ -16,8 +16,18 @@
             const node = this;
 
             if (node?.id) {
+                console.log('trim ' + node.topic);
+
+
                 // Fetch saved file
-                getFile(node.id);
+                getFile(node.id).then(() => {
+                    return getUserSelections(node.id);
+                }).then(function (res) {
+                    if(res) {
+                        prefillSelections(res);
+                    }
+                });
+
                 // get the payload and update the messages
                 RED.comms.subscribe(`async-api-red/payload-update/${node.id}`, function (topic, msg) {
                     if (msg && msg.payload && typeof msg.payload === "object") {
@@ -52,6 +62,7 @@
                 const selectedChannelAddress = $("#node-input-channel").val();
                 const selectedOperationId = $("#node-input-operations").val();
 
+
                 getData(node.id).then((response) => {
                     const selectedChannel = response.channels.find(
                         ch => ch.address === selectedChannelAddress
@@ -65,7 +76,7 @@
                         serverUrl: selectedServer,
                         topic: selectedChannel.address,
                         action: selectedOperation.action === 'send' ? 'Publish' : 'Subscribe',
-                        expectedPayload : getExpectedMessages()
+                        expectedPayload: getExpectedMessages()
                     }
 
                     saveUserSelections(node.id, data);
@@ -78,7 +89,7 @@
 
                     function getExpectedMessages() {
                         const messages = [];
-                        selectedOperation.messages.forEach(item =>{
+                        selectedOperation.messages.forEach(item => {
                             item.payload.forEach(message => {
                                 messages.push(message);
                             });
@@ -93,30 +104,42 @@
 
     /** Function to fetch saved file */
     function getFile(nodeId) {
-        $.ajax({
-            url: `/async-api-red/${nodeId}/file`,
-            type: "GET",
-            success: function (response) {
-                console.log("File loaded:", response.fileName);
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/async-api-red/${nodeId}/file`,
+                type: "GET",
+                success: function (response) {
+                    try {
+                        console.log("File loaded:", response.fileName);
 
-                let fileContent = response.fileContent;
-                let blob = new Blob([fileContent], {type: "text/plain"});
-                let file = new File([blob], response.fileName, {type: response.fileType});
-                let dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
+                        let fileContent = response.fileContent;
+                        let blob = new Blob([fileContent], {type: "text/plain"});
+                        let file = new File([blob], response.fileName, {type: response.fileType});
+                        let dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
 
-                $("#node-input-file")[0].files = dataTransfer.files;
+                        $("#node-input-file")[0].files = dataTransfer.files;
 
-                // Fetch related information
-                getData(nodeId).then((response) => {
-                    updateDialogData(response);
-                });
-            },
-            error: function (err) {
-                console.error("Error fetching file:", err);
-            }
+                        // Fetch related information
+                        getData(nodeId).then((dataResponse) => {
+                            updateDialogData(dataResponse);
+                            resolve({file: response, data: dataResponse});
+                        }).catch(err => {
+                            console.error("Error fetching related data:", err);
+                            reject(err);
+                        });
+                    } catch (e) {
+                        reject(e);
+                    }
+                },
+                error: function (err) {
+                    console.error("Error fetching file:", err);
+                    reject(err);
+                }
+            });
         });
     }
+
 
     /** Function to upload file */
     function uploadFile(nodeId, file) {
@@ -178,6 +201,24 @@
             }
         });
     }
+
+    function getUserSelections(nodeId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/async-api-red/${nodeId}/user-selections`,
+                type: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    resolve(response); // Pass the response back
+                },
+                error: function (err) {
+                    console.error("Error fetching user selections:", err);
+                    reject(err);
+                }
+            });
+        });
+    }
+
 
     function connectToServer(nodeId) {
         return $.ajax({
@@ -348,6 +389,18 @@
             }
         });
     }
+
+    function prefillSelections(data) {
+        // Prefill form inputs
+        $("#node-input-select-server").val(data.serverUrl);
+        $("#node-input-channel").val(data.topic).trigger("change");
+
+        // Use a small timeout to ensure operations are populated first
+        setTimeout(() => {
+            $("#node-input-operations").val(data.payload?.[0]?.operationId || "").trigger("change");
+        }, 300);
+    }
+
 
 </script>
 

@@ -169,6 +169,7 @@ module.exports = (RED) => {
             node.topic = payload.topic;
             node.action = payload.action;
             node.expectedPayload = payload.expectedPayload;
+            console.log(`lolllll -> ${{action: node.action}}`);
             res.status(204).send();
         } catch (error) {
             res.status(500).json({error: error});
