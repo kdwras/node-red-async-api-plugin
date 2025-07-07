@@ -68,8 +68,8 @@ module.exports = (RED) => {
         });
 
         node.mqttClient.on("message", function (topic, message) {
-            const msgStr = message.toString();
-            node.send({payload: JSON.parse(msgStr)});
+            // const msgStr = message.toString();
+            // node.send({payload: JSON.parse(msgStr)});
         });
 
 
@@ -105,6 +105,7 @@ module.exports = (RED) => {
                     node.error("Failed to create topic" + err.message);
                 } else {
                     node.log('message published!');
+                    node.send({payload: node.payload});
                 }
             });
         }

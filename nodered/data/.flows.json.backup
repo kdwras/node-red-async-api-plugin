@@ -4611,7 +4611,7 @@
         "g": "50a045551ea38743",
         "name": "Inject Current Temp",
         "props": [],
-        "repeat": "300",
+        "repeat": "5",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
