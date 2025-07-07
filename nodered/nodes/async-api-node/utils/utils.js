@@ -81,8 +81,7 @@ module.exports = (RED) => {
         if (!node.mqttClient) {
             return;
         }
-        //TODo
-        console.log(node.operation.action);
+
         if (node.operation?.action === 'receive') {
             node.mqttClient.subscribe(node.topic, {}, function (err) {
                 if (err) {
@@ -102,12 +101,6 @@ module.exports = (RED) => {
             });
         }
     }
-
-    //Todo
-    function createMqttTopic() {
-
-    }
-
 
     /**
      *
