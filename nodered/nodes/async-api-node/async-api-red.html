@@ -219,15 +219,14 @@
 
 
     function connectToServer(nodeId) {
-        return $.ajax({
-            url: `/async-api-red/${nodeId}/server-connect`,
-            type: "GET",
-            contentType: "application/json",
-            success: function () {
-                console.log('connected to server');
-            },
-            error: function (err) {
-            }
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: `/async-api-red/${nodeId}/server-connect`,
+                type: "GET",
+                contentType: "application/json",
+                success: resolve,
+                error: reject
+            });
         });
     }
 

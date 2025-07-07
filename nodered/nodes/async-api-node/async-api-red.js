@@ -40,12 +40,6 @@ module.exports = function (RED) {
                     payload: node.payload
                 });
 
-                if (node.messageReceivedFromSrv !== undefined) {
-                    send({payload: JSON.parse(node.messageReceivedFromSrv)});
-                } else {
-                    node.warn("No message has been received yet.");
-                }
-
                 done();
 
             } catch (err) {

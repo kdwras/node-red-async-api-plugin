@@ -68,8 +68,10 @@ module.exports = (RED) => {
         });
 
         node.mqttClient.on("message", function (topic, message) {
-            node.messageReceivedFromSrv =  message.toString();
+            const msgStr = message.toString();
+            node.send({payload: JSON.parse(msgStr)});
         });
+
 
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
@@ -85,17 +87,20 @@ module.exports = (RED) => {
         if (!node.mqttClient) {
             return;
         }
-       //if (node.operation?.action === 'Subscribe') {
-            node.mqttClient.subscribe(node.topic, {retain:true}, function (err) {
+        //TODo
+        console.log(node.operation.action);
+        if (node.operation?.action === 'receive') {
+            node.mqttClient.subscribe(node.topic, {}, function (err) {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 }
                 node.log('Topic created:', node.topic);
                 //node.send({message: "Topic created", topic: node.topic});
             });
-     //  }
-        if (node.operation?.action === 'Publish') {
-            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), {retain:true}, (err) => {
+        }
+        if (node.operation?.action === 'send') {
+            console.log('mpika sto publish')
+            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), {}, (err) => {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
                 } else {
@@ -104,6 +109,12 @@ module.exports = (RED) => {
             });
         }
     }
+
+    //Todo
+    function createMqttTopic() {
+
+    }
+
 
     /**
      *

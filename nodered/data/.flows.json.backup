@@ -14,6 +14,70 @@
         "info": ""
     },
     {
+        "id": "d68460b3bb47684e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a7f4785e36cba6a2",
+        "type": "tab",
+        "label": "Thermostats Demo",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "eeca424b18026ca1",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "043c9b21da5cbba8",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "subflow-thermostat-logic",
+        "type": "subflow",
+        "name": "Thermostat Logic",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f1b4a93aa4e5e122"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 440,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f1b4a93aa4e5e122",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "2785aa7402e0c422",
         "type": "group",
         "z": "0c8e0c86799d088c",
@@ -166,20 +230,21 @@
         },
         "nodes": [
             "d4f8c637ba287db1",
-            "ba5dc6718d645637",
             "69ded1d17cbec561",
             "9a05b0be9bfe3225",
             "1d06a67200a8e66e",
-            "27b270e5d78bc103",
             "d9d04269593328c3",
             "1eb2f1ad87e9df5c",
             "09f2f1cdc17cf192",
-            "5fd815fb2caf5aba"
+            "5fd815fb2caf5aba",
+            "ba5dc6718d645637",
+            "27b270e5d78bc103",
+            "8081e1c458fe1e4b"
         ],
         "x": 94,
-        "y": 39,
+        "y": 79,
         "w": 1362,
-        "h": 282
+        "h": 242
     },
     {
         "id": "a0bc03072058d078",
@@ -195,20 +260,26 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "29eca096862b8fb4",
-            "a759b38ff08da238",
-            "b4d971cf3772f83e",
-            "e97196a0d8d49460",
-            "793cf3b0139849eb",
             "4c2bce897c0d2007",
-            "dcb5ea5864cbccb9",
-            "3d5df840425aed95",
-            "6b793056cae7dfce"
+            "652fef5d99c41776",
+            "98def4b9de0bd9e0",
+            "977bf35655af95ea",
+            "325004b4427897ea",
+            "4ffc7d206027f2ef",
+            "180cc2c38f2b7ec2",
+            "6f5c1f35a0395420",
+            "c90d975ea0894abd",
+            "e5f04a5e61c95926",
+            "87c71e9f1e18a5cb",
+            "a11a61d05abb0fd9",
+            "97a42e312b36f637",
+            "96ab1cc712be6574",
+            "3cdc3eae3c728601"
         ],
         "x": 94,
         "y": 359,
-        "w": 1302,
-        "h": 222
+        "w": 1412,
+        "h": 282
     },
     {
         "id": "6996a7f421765b1a",
@@ -240,7 +311,7 @@
             "f42d0e7a987f22d0"
         ],
         "x": 94,
-        "y": 619,
+        "y": 679,
         "w": 1742,
         "h": 382
     },
@@ -267,7 +338,7 @@
             "6aa34857a3f76ef9"
         ],
         "x": 94,
-        "y": 1039,
+        "y": 1099,
         "w": 1332,
         "h": 162
     },
@@ -295,9 +366,181 @@
             "ui_coffee_status"
         ],
         "x": 94,
-        "y": 1259,
+        "y": 1319,
         "w": 1272,
         "h": 222
+    },
+    {
+        "id": "9d8fc96b503dd8a9",
+        "type": "group",
+        "z": "043c9b21da5cbba8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "2c2826fa3fc78558",
+            "f034a42a7690f2b6",
+            "5d88956b6c0935c0",
+            "386c2541306d379c",
+            "c9dd5b14b31c8ac4",
+            "80a07121563fc510",
+            "5838340eeabc7fc3",
+            "a9a704cd8fe91875",
+            "f5b57f8f9931df1d",
+            "da3a80e17247daa5"
+        ],
+        "x": 134,
+        "y": 19,
+        "w": 1362,
+        "h": 282
+    },
+    {
+        "id": "9d700ddc16539c15",
+        "type": "group",
+        "z": "043c9b21da5cbba8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "4f9b9aad403a7716",
+            "37bc8c54b51e0544",
+            "238dc90f83e202b5",
+            "47a8e2a4a04033b2",
+            "19c76ec98c6c6f9e",
+            "d91d138267780e70",
+            "871fbf285c97ad32",
+            "58cc42a80fabb538",
+            "428fababd41468e5",
+            "a2be1e487fc29763",
+            "d402ccc398ad8e11",
+            "f80d0cef913ac3b6",
+            "7dad711be4a117f7",
+            "b7bddd515b8a9da3",
+            "9cc41c71b7e8e277"
+        ],
+        "x": 134,
+        "y": 339,
+        "w": 1412,
+        "h": 282
+    },
+    {
+        "id": "a2a5c6556a04c7ed",
+        "type": "group",
+        "z": "043c9b21da5cbba8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "2611be0f7bfa29c3",
+            "641a94a8fde2acc3",
+            "bc1ec909440f8c22",
+            "bd9cca5d85c07dd4",
+            "60cd23ec6f422ac1",
+            "59f210ba6791d0a1",
+            "9f318a7151cc5d6d",
+            "56bd1f17c275a653",
+            "4077b1f7c25ba23c",
+            "d543fbc9eaaeb755",
+            "326076c19834796f",
+            "6cf09c18f6619610",
+            "b73d117192e42809",
+            "db70af4f273bfc97"
+        ],
+        "x": 134,
+        "y": 659,
+        "w": 1742,
+        "h": 382
+    },
+    {
+        "id": "e49647927e3b9d1e",
+        "type": "group",
+        "z": "043c9b21da5cbba8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d9daa6e7df2953bb",
+            "a87e8394d9f25e8c",
+            "fb30e09493d3f725",
+            "83982045fbc9296b",
+            "0fb2875d235f6c99",
+            "b6b89773a30b7a33",
+            "f50a98b0aabb9eac"
+        ],
+        "x": 134,
+        "y": 1079,
+        "w": 1332,
+        "h": 162
+    },
+    {
+        "id": "1a95f1f2d410aea3",
+        "type": "group",
+        "z": "043c9b21da5cbba8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "efee14a4a88be124",
+            "c12f4c5b3b6032a4",
+            "1855218a50989a4b",
+            "9b2e7830db9edc47",
+            "a8097aa9ba390408",
+            "cd4279d372ca3068",
+            "921bcc21c54deadc",
+            "9e910b904fa61a23"
+        ],
+        "x": 134,
+        "y": 1299,
+        "w": 1272,
+        "h": 222
+    },
+    {
+        "id": "111",
+        "type": "ui_group",
+        "name": "Thermostat 1",
+        "tab": "main-tab",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "222",
+        "type": "ui_group",
+        "name": "Thermostat 2",
+        "tab": "main-tab",
+        "order": 2,
+        "disp": true,
+        "width": 6
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -582,6 +825,1180 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "b9c9d459bcc50b6b",
+        "type": "ui_group",
+        "name": "Coffee",
+        "tab": "dashboard_tab",
+        "order": 5,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dashboard_energy_group",
+        "type": "ui_group",
+        "name": "Energy Monitor",
+        "tab": "dashboard_tab",
+        "order": 6,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "main-tab",
+        "type": "ui_tab",
+        "name": "Thermostats",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "2c2826fa3fc78558",
+        "type": "inject",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Inject Current Temp",
+        "props": [],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "f5b57f8f9931df1d"
+            ]
+        ]
+    },
+    {
+        "id": "f034a42a7690f2b6",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Compare and Decide",
+        "func": "const desired = flow.get('desired_temp') || 22;\nconst current = msg.payload.current;\nlet state = \"IDLE\";\nif (current < desired - 1) state = \"HEATING\";\nelse if (current > desired + 1) state = \"COOLING\";\nmsg.payload = { temperature: desired, unit: \"C\", current, state };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 140,
+        "wires": [
+            [
+                "386c2541306d379c"
+            ]
+        ]
+    },
+    {
+        "id": "5d88956b6c0935c0",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "group": "2566b457ab10c854",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Status Display",
+        "label": "Thermostat Status",
+        "format": "{{msg.payload.state}} | Current: {{msg.payload.current}}°C | Target: {{msg.payload.temperature}}°C",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "386c2541306d379c",
+        "type": "async-api-red",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Send to Thermostat Device",
+        "x": 1050,
+        "y": 180,
+        "wires": [
+            [
+                "c9dd5b14b31c8ac4",
+                "5d88956b6c0935c0"
+            ]
+        ]
+    },
+    {
+        "id": "c9dd5b14b31c8ac4",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Debug Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1370,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "80a07121563fc510",
+        "type": "comment",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Thermostat simulation",
+        "info": "",
+        "x": 260,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5838340eeabc7fc3",
+        "type": "ui_slider",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "2566b457ab10c854",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "a9a704cd8fe91875"
+            ]
+        ]
+    },
+    {
+        "id": "a9a704cd8fe91875",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 510,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5b57f8f9931df1d",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Generate Current Temp",
+        "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
+        "outputs": 1,
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "f034a42a7690f2b6",
+                "da3a80e17247daa5"
+            ]
+        ]
+    },
+    {
+        "id": "da3a80e17247daa5",
+        "type": "ui_gauge",
+        "z": "043c9b21da5cbba8",
+        "g": "9d8fc96b503dd8a9",
+        "name": "Current Temp",
+        "group": "2566b457ab10c854",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.current}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 770,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4f9b9aad403a7716",
+        "type": "comment",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "AC simulation",
+        "info": "",
+        "x": 230,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "37bc8c54b51e0544",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"desired_temp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    unit: 'C',\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 440,
+        "wires": [
+            [
+                "238dc90f83e202b5",
+                "9cc41c71b7e8e277"
+            ]
+        ]
+    },
+    {
+        "id": "238dc90f83e202b5",
+        "type": "async-api-red",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "AC Controller Node",
+        "x": 1080,
+        "y": 440,
+        "wires": [
+            [
+                "47a8e2a4a04033b2",
+                "19c76ec98c6c6f9e",
+                "58cc42a80fabb538"
+            ]
+        ]
+    },
+    {
+        "id": "47a8e2a4a04033b2",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "19c76ec98c6c6f9e",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "group": "2484b2e7392bda74",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1440,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d91d138267780e70",
+        "type": "ui_slider",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "2484b2e7392bda74",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 340,
+        "y": 520,
+        "wires": [
+            [
+                "871fbf285c97ad32"
+            ]
+        ]
+    },
+    {
+        "id": "871fbf285c97ad32",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 610,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58cc42a80fabb538",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Track Energy",
+        "func": "// Constants\nconst power_kW = 1.5; // Power usage of the AC in kW\n\n// Get previous state and timestamp\nconst prevState = flow.get(\"ac_last_state\") || \"OFF\";\nconst lastChange = flow.get(\"ac_last_change\") || Date.now();\nconst energy = flow.get(\"energy_consumed\") || 0;\n\nconst now = Date.now();\nlet newEnergy = energy;\n\nif (prevState === \"ON\" && msg.payload.state === \"OFF\") {\n    const durationHrs = (now - lastChange) / (1000 * 60 * 60);\n    newEnergy += durationHrs * power_kW;\n    flow.set(\"energy_consumed\", newEnergy);\n}\n\n// Update flow context\nflow.set(\"ac_last_state\", msg.payload.state);\nflow.set(\"ac_last_change\", now);\n\nmsg.energy = newEnergy.toFixed(3);\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 520,
+        "wires": [
+            [
+                "428fababd41468e5"
+            ]
+        ]
+    },
+    {
+        "id": "428fababd41468e5",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "group": "2484b2e7392bda74",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Energy Display",
+        "label": "Total Energy (kWh)",
+        "format": "{{msg.energy}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1440,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "a2be1e487fc29763",
+        "type": "ui_button",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Reset Energy",
+        "label": "Reset Energy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "d402ccc398ad8e11"
+            ]
+        ]
+    },
+    {
+        "id": "d402ccc398ad8e11",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Reset Energy Values",
+        "func": "flow.set(\"energy_consumed\", 0);\nflow.set(\"ac_last_change\", Date.now());\nreturn null;",
+        "outputs": 0,
+        "x": 610,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f80d0cef913ac3b6",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Generate Current Temp",
+        "func": "msg.payload = { temperature: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "b7bddd515b8a9da3",
+                "37bc8c54b51e0544"
+            ]
+        ]
+    },
+    {
+        "id": "7dad711be4a117f7",
+        "type": "inject",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Inject Current Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "f80d0cef913ac3b6"
+            ]
+        ]
+    },
+    {
+        "id": "b7bddd515b8a9da3",
+        "type": "ui_gauge",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "Current Temp",
+        "group": "2484b2e7392bda74",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 830,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9cc41c71b7e8e277",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "9d700ddc16539c15",
+        "name": "input ac",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "2611be0f7bfa29c3",
+        "type": "inject",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Inject Random Brightness",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 840,
+        "wires": [
+            [
+                "641a94a8fde2acc3"
+            ]
+        ]
+    },
+    {
+        "id": "641a94a8fde2acc3",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Generate Brightness",
+        "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
+        "outputs": 1,
+        "x": 560,
+        "y": 780,
+        "wires": [
+            [
+                "bc1ec909440f8c22",
+                "bd9cca5d85c07dd4"
+            ]
+        ]
+    },
+    {
+        "id": "bc1ec909440f8c22",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Check Brightness",
+        "func": "const brightness = msg.payload.brightness;\nmsg.payload = {\n    state: brightness >= 80 ? \"on\" : \"off\",\n    brightness\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 780,
+        "wires": [
+            [
+                "d543fbc9eaaeb755"
+            ]
+        ]
+    },
+    {
+        "id": "bd9cca5d85c07dd4",
+        "type": "ui_chart",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Brightness Chart",
+        "group": "bca09b7d8c2ffdc1",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Brightness Over Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Waiting...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 750,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "60cd23ec6f422ac1",
+        "type": "switch",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Light ON or OFF?",
+        "property": "payload.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1270,
+        "y": 720,
+        "wires": [
+            [
+                "59f210ba6791d0a1"
+            ],
+            [
+                "9f318a7151cc5d6d"
+            ]
+        ]
+    },
+    {
+        "id": "59f210ba6791d0a1",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Count ON",
+        "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1560,
+        "y": 700,
+        "wires": [
+            [
+                "56bd1f17c275a653"
+            ]
+        ]
+    },
+    {
+        "id": "9f318a7151cc5d6d",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Count OFF",
+        "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
+        "outputs": 1,
+        "x": 1560,
+        "y": 740,
+        "wires": [
+            [
+                "4077b1f7c25ba23c"
+            ]
+        ]
+    },
+    {
+        "id": "56bd1f17c275a653",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "group": "bca09b7d8c2ffdc1",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Times ON",
+        "label": "Light ON Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1780,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "4077b1f7c25ba23c",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "group": "bca09b7d8c2ffdc1",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Times OFF",
+        "label": "Light OFF Count",
+        "format": "{{msg.payload}} times",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1780,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "d543fbc9eaaeb755",
+        "type": "async-api-red",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Send to Light Device",
+        "x": 1040,
+        "y": 840,
+        "wires": [
+            [
+                "60cd23ec6f422ac1",
+                "326076c19834796f",
+                "6cf09c18f6619610",
+                "b73d117192e42809"
+            ]
+        ]
+    },
+    {
+        "id": "326076c19834796f",
+        "type": "ui_gauge",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "Brightness",
+        "group": "bca09b7d8c2ffdc1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Brightness",
+        "label": "%",
+        "format": "{{msg.payload.brightness}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 60,
+        "seg2": 80,
+        "diff": false,
+        "className": "",
+        "x": 1290,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "6cf09c18f6619610",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "group": "bca09b7d8c2ffdc1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Light State",
+        "label": "Light State",
+        "format": "{{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1290,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "b73d117192e42809",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "db70af4f273bfc97",
+        "type": "comment",
+        "z": "043c9b21da5cbba8",
+        "g": "a2a5c6556a04c7ed",
+        "name": "smartlights simulation",
+        "info": "",
+        "x": 260,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "d9daa6e7df2953bb",
+        "type": "ui_switch",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "Door Lock Switch",
+        "label": "Lock Door",
+        "tooltip": "",
+        "group": "dad53fb0db2749ce",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 250,
+        "y": 1180,
+        "wires": [
+            [
+                "a87e8394d9f25e8c"
+            ]
+        ]
+    },
+    {
+        "id": "a87e8394d9f25e8c",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "Format DoorLock Payload",
+        "func": "msg.payload = { locked: msg.payload };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1180,
+        "wires": [
+            [
+                "fb30e09493d3f725"
+            ]
+        ]
+    },
+    {
+        "id": "fb30e09493d3f725",
+        "type": "async-api-red",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "SmartDoor Lock ",
+        "x": 760,
+        "y": 1120,
+        "wires": [
+            [
+                "b6b89773a30b7a33",
+                "83982045fbc9296b"
+            ]
+        ]
+    },
+    {
+        "id": "83982045fbc9296b",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "Update Dashboard Status",
+        "func": "msg.payload = msg.payload.locked ? \"Locked\" : \"Unlocked\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 1200,
+        "wires": [
+            [
+                "0fb2875d235f6c99"
+            ]
+        ]
+    },
+    {
+        "id": "0fb2875d235f6c99",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "group": "dad53fb0db2749ce",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "name": "Lock Status Text",
+        "label": "Door Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1360,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "b6b89773a30b7a33",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "f50a98b0aabb9eac",
+        "type": "comment",
+        "z": "043c9b21da5cbba8",
+        "g": "e49647927e3b9d1e",
+        "name": "Smartdoor",
+        "info": "",
+        "x": 220,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "efee14a4a88be124",
+        "type": "comment",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "cofee machine simulator",
+        "info": "",
+        "x": 270,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "c12f4c5b3b6032a4",
+        "type": "function",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "Format Coffee Payload",
+        "func": "msg.payload = {\n  strength: msg.payload.strength,\n  size: msg.payload.size\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 1440,
+        "wires": [
+            [
+                "a8097aa9ba390408"
+            ]
+        ]
+    },
+    {
+        "id": "1855218a50989a4b",
+        "type": "join",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "Join Strength & Size",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 520,
+        "y": 1440,
+        "wires": [
+            [
+                "c12f4c5b3b6032a4"
+            ]
+        ]
+    },
+    {
+        "id": "9b2e7830db9edc47",
+        "type": "debug",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "Debug Coffee Payload",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1260,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "a8097aa9ba390408",
+        "type": "async-api-red",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "SmartDoor Lock ",
+        "x": 1040,
+        "y": 1440,
+        "wires": [
+            [
+                "9b2e7830db9edc47",
+                "9e910b904fa61a23"
+            ]
+        ]
+    },
+    {
+        "id": "cd4279d372ca3068",
+        "type": "ui_dropdown",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "Select Size",
+        "label": "Coffee Size",
+        "tooltip": "",
+        "place": "",
+        "group": "b9c9d459bcc50b6b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Small",
+                "value": "small",
+                "type": "str"
+            },
+            {
+                "label": "Medium",
+                "value": "medium",
+                "type": "str"
+            },
+            {
+                "label": "Large",
+                "value": "large",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "size",
+        "topicType": "str",
+        "className": "",
+        "x": 270,
+        "y": 1480,
+        "wires": [
+            [
+                "1855218a50989a4b"
+            ]
+        ]
+    },
+    {
+        "id": "921bcc21c54deadc",
+        "type": "ui_dropdown",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "name": "Select Strength",
+        "label": "Coffee Strength",
+        "tooltip": "",
+        "place": "",
+        "group": "b9c9d459bcc50b6b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Light",
+                "value": "light",
+                "type": "str"
+            },
+            {
+                "label": "Medium",
+                "value": "medium",
+                "type": "str"
+            },
+            {
+                "label": "Strong",
+                "value": "strong",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "strength",
+        "topicType": "str",
+        "className": "",
+        "x": 260,
+        "y": 1420,
+        "wires": [
+            [
+                "1855218a50989a4b"
+            ]
+        ]
+    },
+    {
+        "id": "9e910b904fa61a23",
+        "type": "ui_text",
+        "z": "043c9b21da5cbba8",
+        "g": "1a95f1f2d410aea3",
+        "group": "b9c9d459bcc50b6b",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Order Status",
+        "label": "Coffee Order",
+        "format": "{{msg.payload.strength}} / {{msg.payload.size}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1270,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "f1b4a93aa4e5e122",
+        "type": "function",
+        "z": "subflow-thermostat-logic",
+        "name": "Compare Temps",
+        "func": "const desired = msg.desired || 22;\nconst current = msg.payload.current;\nlet state = \"IDLE\";\n\nif (current < desired - 1) state = \"HEATING\";\nelse if (current > desired + 1) state = \"COOLING\";\n\nmsg.payload = {\n    current,\n    desired,\n    state\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 80,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "a683470f9f9d2be2",
@@ -3194,33 +4611,16 @@
         "g": "50a045551ea38743",
         "name": "Inject Current Temp",
         "props": [],
-        "repeat": "5",
+        "repeat": "300",
+        "crontab": "",
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "payloadType": "date",
         "x": 260,
         "y": 200,
         "wires": [
             [
                 "ba5dc6718d645637"
-            ]
-        ]
-    },
-    {
-        "id": "ba5dc6718d645637",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "g": "50a045551ea38743",
-        "name": "Generate Current Temp",
-        "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
-        "outputs": 1,
-        "x": 500,
-        "y": 200,
-        "wires": [
-            [
-                "69ded1d17cbec561",
-                "27b270e5d78bc103"
             ]
         ]
     },
@@ -3241,7 +4641,8 @@
         "y": 160,
         "wires": [
             [
-                "1d06a67200a8e66e"
+                "1d06a67200a8e66e",
+                "8081e1c458fe1e4b"
             ]
         ]
     },
@@ -3283,35 +4684,6 @@
         ]
     },
     {
-        "id": "27b270e5d78bc103",
-        "type": "ui_gauge",
-        "z": "a527806fb52a0bc0",
-        "g": "50a045551ea38743",
-        "name": "Current Temp",
-        "group": "2566b457ab10c854",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Current Temperature",
-        "label": "°C",
-        "format": "{{msg.payload.current}}",
-        "min": "10",
-        "max": "35",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 730,
-        "y": 260,
-        "wires": []
-    },
-    {
         "id": "d9d04269593328c3",
         "type": "debug",
         "z": "a527806fb52a0bc0",
@@ -3336,101 +4708,7 @@
         "name": "Thermostat simulation",
         "info": "",
         "x": 220,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "29eca096862b8fb4",
-        "type": "inject",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Random Temp Generator",
-        "props": [],
-        "repeat": "5",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 260,
-        "y": 460,
-        "wires": [
-            [
-                "a759b38ff08da238"
-            ]
-        ]
-    },
-    {
-        "id": "a759b38ff08da238",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Generate Random Temp",
-        "func": "const temp = Math.floor(Math.random() * 15) + 20;\nmsg.payload = { temperature: temp };\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 460,
-        "wires": [
-            [
-                "b4d971cf3772f83e"
-            ]
-        ]
-    },
-    {
-        "id": "b4d971cf3772f83e",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Check AC State",
-        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"acDesiredTemp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    unit: 'C',\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 460,
-        "wires": [
-            [
-                "e97196a0d8d49460"
-            ]
-        ]
-    },
-    {
-        "id": "e97196a0d8d49460",
-        "type": "async-api-red",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "AC Controller Node",
-        "x": 1040,
-        "y": 460,
-        "wires": [
-            [
-                "793cf3b0139849eb",
-                "dcb5ea5864cbccb9"
-            ]
-        ]
-    },
-    {
-        "id": "793cf3b0139849eb",
-        "type": "debug",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Debug AC Output",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1260,
-        "y": 460,
+        "y": 120,
         "wires": []
     },
     {
@@ -3487,70 +4765,6 @@
         "wires": []
     },
     {
-        "id": "dcb5ea5864cbccb9",
-        "type": "ui_text",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "group": "2484b2e7392bda74",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "AC State",
-        "label": "AC State",
-        "format": "Current Temp: {{msg.payload.temperature}} °C → AC is {{msg.payload.state}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1240,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "3d5df840425aed95",
-        "type": "ui_slider",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Desired Temp",
-        "label": "Set Desired Temp",
-        "tooltip": "",
-        "group": "2484b2e7392bda74",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "outs": "end",
-        "topic": "",
-        "topicType": "str",
-        "min": 15,
-        "max": 30,
-        "step": 1,
-        "className": "",
-        "x": 300,
-        "y": 540,
-        "wires": [
-            [
-                "6b793056cae7dfce"
-            ]
-        ]
-    },
-    {
-        "id": "6b793056cae7dfce",
-        "type": "function",
-        "z": "a527806fb52a0bc0",
-        "g": "a0bc03072058d078",
-        "name": "Store Desired Temp",
-        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
-        "outputs": 1,
-        "x": 570,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "1616e8d0253bffbf",
         "type": "inject",
         "z": "a527806fb52a0bc0",
@@ -3563,7 +4777,7 @@
         "topic": "",
         "payloadType": "date",
         "x": 260,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
                 "29a719f9730293ac"
@@ -3579,7 +4793,7 @@
         "func": "const brightness = Math.floor(Math.random() * 101);\nmsg.payload = { brightness };\nreturn msg;",
         "outputs": 1,
         "x": 520,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "b58e5041e4c9741b",
@@ -3601,7 +4815,7 @@
         "finalize": "",
         "libs": [],
         "x": 770,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "dba1b26fa3a4b0a8"
@@ -3648,7 +4862,7 @@
         "useDifferentColor": false,
         "className": "",
         "x": 710,
-        "y": 860,
+        "y": 920,
         "wires": [
             []
         ]
@@ -3677,7 +4891,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1230,
-        "y": 680,
+        "y": 740,
         "wires": [
             [
                 "9b07cf1424fb44b6"
@@ -3696,7 +4910,7 @@
         "func": "let count = context.get('on') || 0;\ncount += 1;\ncontext.set('on', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
         "x": 1520,
-        "y": 660,
+        "y": 720,
         "wires": [
             [
                 "02494731b443fa30"
@@ -3712,7 +4926,7 @@
         "func": "let count = context.get('off') || 0;\ncount += 1;\ncontext.set('off', count);\nmsg.payload = count;\nreturn msg;",
         "outputs": 1,
         "x": 1520,
-        "y": 700,
+        "y": 760,
         "wires": [
             [
                 "4229373250208f05"
@@ -3738,7 +4952,7 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1740,
-        "y": 660,
+        "y": 720,
         "wires": []
     },
     {
@@ -3760,7 +4974,7 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1740,
-        "y": 700,
+        "y": 760,
         "wires": []
     },
     {
@@ -3770,7 +4984,7 @@
         "g": "6996a7f421765b1a",
         "name": "Send to Light Device",
         "x": 1000,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
                 "84eae99cd8fb8148",
@@ -3806,7 +5020,7 @@
         "diff": false,
         "className": "",
         "x": 1250,
-        "y": 780,
+        "y": 840,
         "wires": []
     },
     {
@@ -3828,7 +5042,7 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1250,
-        "y": 880,
+        "y": 940,
         "wires": []
     },
     {
@@ -3845,7 +5059,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1040,
-        "y": 960,
+        "y": 1020,
         "wires": []
     },
     {
@@ -3856,7 +5070,7 @@
         "name": "smartlights simulation",
         "info": "",
         "x": 220,
-        "y": 660,
+        "y": 720,
         "wires": []
     },
     {
@@ -3887,7 +5101,7 @@
         "animate": true,
         "className": "",
         "x": 210,
-        "y": 1140,
+        "y": 1200,
         "wires": [
             [
                 "aec069bf440e39e4"
@@ -3907,7 +5121,7 @@
         "finalize": "",
         "libs": [],
         "x": 450,
-        "y": 1140,
+        "y": 1200,
         "wires": [
             [
                 "601a43db7ca6fa0a"
@@ -3921,7 +5135,7 @@
         "g": "38af56c2be0e770c",
         "name": "SmartDoor Lock ",
         "x": 720,
-        "y": 1080,
+        "y": 1140,
         "wires": [
             [
                 "f6b18e5f375f811d",
@@ -3939,7 +5153,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1030,
-        "y": 1160,
+        "y": 1220,
         "wires": [
             [
                 "f324d4a123376c63"
@@ -3960,7 +5174,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1320,
-        "y": 1160,
+        "y": 1220,
         "wires": []
     },
     {
@@ -3977,7 +5191,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1140,
-        "y": 1080,
+        "y": 1140,
         "wires": []
     },
     {
@@ -3988,7 +5202,7 @@
         "name": "Smartdoor",
         "info": "",
         "x": 180,
-        "y": 1080,
+        "y": 1140,
         "wires": []
     },
     {
@@ -3999,7 +5213,7 @@
         "name": "cofee machine simulator",
         "info": "",
         "x": 230,
-        "y": 1300,
+        "y": 1360,
         "wires": []
     },
     {
@@ -4012,7 +5226,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 770,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "b972287969dd1e02"
@@ -4042,7 +5256,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 480,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "format_coffee"
@@ -4059,7 +5273,7 @@
         "console": "false",
         "complete": "true",
         "x": 1220,
-        "y": 1340,
+        "y": 1400,
         "wires": []
     },
     {
@@ -4069,7 +5283,7 @@
         "g": "d6d6813509f8a19b",
         "name": "SmartDoor Lock ",
         "x": 1000,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "debug_coffee",
@@ -4086,7 +5300,7 @@
         "label": "Coffee Size",
         "tooltip": "",
         "place": "",
-        "group": "",
+        "group": "b9c9d459bcc50b6b",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -4114,7 +5328,7 @@
         "topicType": "str",
         "className": "",
         "x": 230,
-        "y": 1440,
+        "y": 1500,
         "wires": [
             [
                 "join_coffee"
@@ -4130,7 +5344,7 @@
         "label": "Coffee Strength",
         "tooltip": "",
         "place": "",
-        "group": "",
+        "group": "b9c9d459bcc50b6b",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -4158,7 +5372,7 @@
         "topicType": "str",
         "className": "",
         "x": 220,
-        "y": 1380,
+        "y": 1440,
         "wires": [
             [
                 "join_coffee"
@@ -4170,7 +5384,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "d6d6813509f8a19b",
-        "group": "",
+        "group": "b9c9d459bcc50b6b",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -4184,7 +5398,638 @@
         "fontSize": "",
         "color": "#000000",
         "x": 1230,
-        "y": 1420,
+        "y": 1480,
         "wires": []
+    },
+    {
+        "id": "652fef5d99c41776",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Check AC State",
+        "func": "const currentTemp = msg.payload.temperature;\nconst desiredTemp = flow.get(\"desired_temp\") || 24;\nmsg.payload = {\n    temperature: currentTemp,\n    desired: desiredTemp,\n    unit: 'C',\n    state: currentTemp > desiredTemp ? \"ON\" : \"OFF\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "98def4b9de0bd9e0",
+                "3cdc3eae3c728601"
+            ]
+        ]
+    },
+    {
+        "id": "98def4b9de0bd9e0",
+        "type": "async-api-red",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "AC Controller Node",
+        "x": 1040,
+        "y": 460,
+        "wires": [
+            [
+                "977bf35655af95ea",
+                "325004b4427897ea",
+                "6f5c1f35a0395420"
+            ]
+        ]
+    },
+    {
+        "id": "977bf35655af95ea",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Debug AC Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1370,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "325004b4427897ea",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "group": "2484b2e7392bda74",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AC State",
+        "label": "AC State",
+        "format": "AC is {{msg.payload.state}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1400,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "4ffc7d206027f2ef",
+        "type": "ui_slider",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Desired Temp",
+        "label": "Set Desired Temp",
+        "tooltip": "",
+        "group": "2484b2e7392bda74",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "topicType": "str",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "className": "",
+        "x": 300,
+        "y": 540,
+        "wires": [
+            [
+                "180cc2c38f2b7ec2"
+            ]
+        ]
+    },
+    {
+        "id": "180cc2c38f2b7ec2",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Store Desired Temp",
+        "func": "flow.set('desired_temp', msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 570,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f5c1f35a0395420",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Track Energy",
+        "func": "// Constants\nconst power_kW = 1.5; // Power usage of the AC in kW\n\n// Get previous state and timestamp\nconst prevState = flow.get(\"ac_last_state\") || \"OFF\";\nconst lastChange = flow.get(\"ac_last_change\") || Date.now();\nconst energy = flow.get(\"energy_consumed\") || 0;\n\nconst now = Date.now();\nlet newEnergy = energy;\n\nif (prevState === \"ON\" && msg.payload.state === \"OFF\") {\n    const durationHrs = (now - lastChange) / (1000 * 60 * 60);\n    newEnergy += durationHrs * power_kW;\n    flow.set(\"energy_consumed\", newEnergy);\n}\n\n// Update flow context\nflow.set(\"ac_last_state\", msg.payload.state);\nflow.set(\"ac_last_change\", now);\n\nmsg.energy = newEnergy.toFixed(3);\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 540,
+        "wires": [
+            [
+                "c90d975ea0894abd"
+            ]
+        ]
+    },
+    {
+        "id": "c90d975ea0894abd",
+        "type": "ui_text",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "group": "2484b2e7392bda74",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Energy Display",
+        "label": "Total Energy (kWh)",
+        "format": "{{msg.energy}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1400,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e5f04a5e61c95926",
+        "type": "ui_button",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Reset Energy",
+        "label": "Reset Energy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 300,
+        "y": 600,
+        "wires": [
+            [
+                "87c71e9f1e18a5cb"
+            ]
+        ]
+    },
+    {
+        "id": "87c71e9f1e18a5cb",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Reset Energy Values",
+        "func": "flow.set(\"energy_consumed\", 0);\nflow.set(\"ac_last_change\", Date.now());\nreturn null;",
+        "outputs": 0,
+        "x": 570,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "ba5dc6718d645637",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Generate Current Temp",
+        "func": "msg.payload = { current: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
+        "outputs": 1,
+        "x": 490,
+        "y": 200,
+        "wires": [
+            [
+                "69ded1d17cbec561",
+                "27b270e5d78bc103"
+            ]
+        ]
+    },
+    {
+        "id": "27b270e5d78bc103",
+        "type": "ui_gauge",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "Current Temp",
+        "group": "2566b457ab10c854",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.current}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a11a61d05abb0fd9",
+        "type": "function",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Generate Current Temp",
+        "func": "msg.payload = { temperature: Math.floor(15 + Math.random() * 15) };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 460,
+        "wires": [
+            [
+                "96ab1cc712be6574",
+                "652fef5d99c41776"
+            ]
+        ]
+    },
+    {
+        "id": "97a42e312b36f637",
+        "type": "inject",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Inject Current Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 460,
+        "wires": [
+            [
+                "a11a61d05abb0fd9"
+            ]
+        ]
+    },
+    {
+        "id": "96ab1cc712be6574",
+        "type": "ui_gauge",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "Current Temp",
+        "group": "2484b2e7392bda74",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temperature}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 790,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3cdc3eae3c728601",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "a0bc03072058d078",
+        "name": "input ac",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "8081e1c458fe1e4b",
+        "type": "debug",
+        "z": "a527806fb52a0bc0",
+        "g": "50a045551ea38743",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "209eb22e55aef159",
+        "type": "subflow:subflow-thermostat-logic",
+        "z": "a7f4785e36cba6a2",
+        "name": "Thermostat 1 Logic",
+        "x": 1290,
+        "y": 300,
+        "wires": [
+            [
+                "b693ac0c316bb007",
+                "278d3dc18bde92a3"
+            ]
+        ]
+    },
+    {
+        "id": "b693ac0c316bb007",
+        "type": "ui_text",
+        "z": "a7f4785e36cba6a2",
+        "group": "111",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Status 1",
+        "label": "Thermostat 1",
+        "format": "{{msg.payload.state}} | {{msg.payload.current}}°C / {{msg.payload.desired}}°C",
+        "layout": "row-spread",
+        "x": 1530,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "278d3dc18bde92a3",
+        "type": "ui_gauge",
+        "z": "a7f4785e36cba6a2",
+        "name": "Gauge 1",
+        "group": "111",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temp 1",
+        "label": "°C",
+        "format": "{{msg.payload.current}}",
+        "min": 10,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 1530,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d413c272304f7027",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Attach Desired Temp 1",
+        "func": "msg.desired = flow.get(\"desired1\") || 22;\nreturn msg;",
+        "outputs": 1,
+        "x": 1070,
+        "y": 300,
+        "wires": [
+            [
+                "209eb22e55aef159"
+            ]
+        ]
+    },
+    {
+        "id": "04f14957bb63ad6c",
+        "type": "inject",
+        "z": "a7f4785e36cba6a2",
+        "name": "Simulate Temp 1",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "e5cf4791a88d36ed"
+            ]
+        ]
+    },
+    {
+        "id": "e5cf4791a88d36ed",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Generate Random Temp",
+        "func": "msg.payload = { current: Math.floor(15 + Math.random() * 10) };\nreturn msg;",
+        "outputs": 1,
+        "x": 890,
+        "y": 360,
+        "wires": [
+            [
+                "d413c272304f7027"
+            ]
+        ]
+    },
+    {
+        "id": "b1b29f96499e193e",
+        "type": "ui_slider",
+        "z": "a7f4785e36cba6a2",
+        "name": "Slider 1",
+        "label": "Desired Temp 1",
+        "tooltip": "",
+        "group": "111",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "x": 890,
+        "y": 240,
+        "wires": [
+            [
+                "a3b785ec104fb684"
+            ]
+        ]
+    },
+    {
+        "id": "a3b785ec104fb684",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Store Desired 1",
+        "func": "flow.set(\"desired1\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 1080,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3c546cb501a34c1",
+        "type": "subflow:subflow-thermostat-logic",
+        "z": "a7f4785e36cba6a2",
+        "name": "Thermostat 2 Logic",
+        "x": 1290,
+        "y": 500,
+        "wires": [
+            [
+                "de83e57ebf24426f",
+                "f43d8752f3a53b9e"
+            ]
+        ]
+    },
+    {
+        "id": "de83e57ebf24426f",
+        "type": "ui_text",
+        "z": "a7f4785e36cba6a2",
+        "group": "222",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Status 2",
+        "label": "Thermostat 2",
+        "format": "{{msg.payload.state}} | {{msg.payload.current}}°C / {{msg.payload.desired}}°C",
+        "layout": "row-spread",
+        "x": 1530,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "f43d8752f3a53b9e",
+        "type": "ui_gauge",
+        "z": "a7f4785e36cba6a2",
+        "name": "Gauge 2",
+        "group": "222",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current Temp 2",
+        "label": "°C",
+        "format": "{{msg.payload.current}}",
+        "min": 10,
+        "max": 35,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 1530,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1deeb3c38486ec3e",
+        "type": "inject",
+        "z": "a7f4785e36cba6a2",
+        "name": "Simulate Temp 2",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 610,
+        "y": 500,
+        "wires": [
+            [
+                "dcbcc6db108b2ef3"
+            ]
+        ]
+    },
+    {
+        "id": "dcbcc6db108b2ef3",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Generate Temp 2",
+        "func": "msg.payload = { current: Math.floor(15 + Math.random() * 10) };\nreturn msg;",
+        "outputs": 1,
+        "x": 830,
+        "y": 560,
+        "wires": [
+            [
+                "a7f9f85e8ad8fa6e"
+            ]
+        ]
+    },
+    {
+        "id": "a7f9f85e8ad8fa6e",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Attach Desired 2",
+        "func": "msg.desired = flow.get(\"desired2\") || 22;\nreturn msg;",
+        "outputs": 1,
+        "x": 1070,
+        "y": 500,
+        "wires": [
+            [
+                "f3c546cb501a34c1"
+            ]
+        ]
+    },
+    {
+        "id": "1f5477c9da2d418f",
+        "type": "ui_slider",
+        "z": "a7f4785e36cba6a2",
+        "name": "Slider 2",
+        "label": "Desired Temp 2",
+        "tooltip": "",
+        "group": "222",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "x": 840,
+        "y": 440,
+        "wires": [
+            [
+                "ba9cd257a3f10828"
+            ]
+        ]
+    },
+    {
+        "id": "ba9cd257a3f10828",
+        "type": "function",
+        "z": "a7f4785e36cba6a2",
+        "name": "Store Desired 2",
+        "func": "flow.set(\"desired2\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "x": 1080,
+        "y": 440,
+        "wires": [
+            []
+        ]
     }
 ]
