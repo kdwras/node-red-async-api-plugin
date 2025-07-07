@@ -67,12 +67,6 @@ module.exports = (RED) => {
             node.status({fill: "green", shape: "dot", text: "Connected"});
         });
 
-        node.mqttClient.on("message", function (topic, message) {
-            // const msgStr = message.toString();
-            // node.send({payload: JSON.parse(msgStr)});
-        });
-
-
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
         });
@@ -95,11 +89,9 @@ module.exports = (RED) => {
                     node.error("Failed to create topic" + err.message);
                 }
                 node.log('Topic created:', node.topic);
-                //node.send({message: "Topic created", topic: node.topic});
             });
         }
         if (node.operation?.action === 'send') {
-            console.log('mpika sto publish')
             node.mqttClient.publish(node.topic, JSON.stringify(node.payload), {}, (err) => {
                 if (err) {
                     node.error("Failed to create topic" + err.message);
