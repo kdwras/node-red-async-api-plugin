@@ -45,7 +45,6 @@ module.exports = (RED) => {
      * @param node
      */
     function connectToServer(node) {
-
         if (!node.serverUrl) {
             node.error("MQTT Server URL or Topic is missing!");
             node.status({fill: "red", shape: "ring", text: "Missing MQTT Config"});
@@ -55,11 +54,10 @@ module.exports = (RED) => {
         node.status({fill: "yellow", shape: "ring", text: "Connecting..."});
 
         const options = {
-            connectTimeout: 5000,  // Wait for 5 seconds before timeout
-            reconnectPeriod: 2000  // Try to reconnect every 2 seconds
+            connectTimeout: 5000,
+            reconnectPeriod: 2000
         };
 
-        // Connect to MQTT broker
         node.mqttClient = mqtt.connect(node.serverUrl, options);
 
         node.mqttClient.on("connect", function () {
@@ -69,38 +67,70 @@ module.exports = (RED) => {
 
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
+            node.status({fill: "red", shape: "dot", text: "Error"});
         });
 
+        node.mqttClient.on("close", function () {
+            node.status({fill: "red", shape: "ring", text: "Disconnected"});
+        });
     }
 
-    /**
-     *
-     * @param node
-     */
+
     function handleMessage(node) {
         if (!node.mqttClient) {
             return;
         }
 
+        const subscribeIfNeeded = () => {
+            if (!node.subscribed) {
+                node.mqttClient.subscribe(node.topic, {}, (err) => {
+                    if (err) {
+                        node.error("Failed to subscribe: " + err.message);
+                    } else {
+                        node.log("Subscribed to topic: " + node.topic);
+                        node.subscribed = true;
+                    }
+                });
+                // Listen to messages
+                node.mqttClient.on("message", (topic, message) => {
+                    let payload;
+                    try {
+                        payload = JSON.parse(message.toString());
+                    } catch (e) {
+                        payload = message.toString();
+                    }
+                    node.lastMessage = payload; // save last message
+                    node.log("Message received on " + topic + ": " + JSON.stringify(payload));
+                    node.send({ payload });
+                });
+            }
+        };
+
         if (node.operation?.action === 'receive') {
-            node.mqttClient.subscribe(node.topic, {}, function (err) {
-                if (err) {
-                    node.error("Failed to create topic" + err.message);
-                }
-                node.log('Topic created:', node.topic);
-            });
+            subscribeIfNeeded();
         }
+
         if (node.operation?.action === 'send') {
-            node.mqttClient.publish(node.topic, JSON.stringify(node.payload), {}, (err) => {
+            subscribeIfNeeded(); // ensure subscribed before sending
+
+            const toPublish = node.payload || node.lastMessage;
+            if (!toPublish) {
+                node.warn("Nothing to publish (no payload or last message available).");
+                return;
+            }
+
+            node.mqttClient.publish(node.topic, JSON.stringify(toPublish), {}, (err) => {
                 if (err) {
-                    node.error("Failed to create topic" + err.message);
+                    node.error("Failed to publish: " + err.message);
                 } else {
-                    node.log('message published!');
-                    node.send({payload: node.payload});
+                    node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
+                    node.send({ payload: toPublish });
                 }
             });
         }
     }
+
+
 
     /**
      *

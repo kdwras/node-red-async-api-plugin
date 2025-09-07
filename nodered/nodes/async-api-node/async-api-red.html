@@ -329,6 +329,13 @@
                         <input type="text" id="node-input-${item.name}" " placeholder="${item.description}">
                     </div>
                     `;
+                    } else if (item.type === "number") {
+                        inputHtml = `
+                            <div class="form-row" style="margin-top:.5em">
+                                <label for="node-input-${item.name}"><i class="fa fa-list-ol"></i> ${item.name}</label>
+                                <input type="number" step="any" id="node-input-${item.name}" placeholder="${item.description}">
+                            </div>
+                            `;
                     }
                     html += inputHtml; // Add the generated input field to the HTML
                 });

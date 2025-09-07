@@ -29,6 +29,42 @@
         "info": ""
     },
     {
+        "id": "b0c6f1e3d4fc18a3",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "smarthome_flow",
+        "type": "tab",
+        "label": "SmartHome+",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9d0b8d8486bf692d",
+        "type": "tab",
+        "label": "SmartHome+",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "db6486d1d2cd59d6",
+        "type": "tab",
+        "label": "SmartHome+",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4f4855f52107b72b",
+        "type": "tab",
+        "label": "SmartHome+",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "eeca424b18026ca1",
         "type": "subflow",
         "name": "Subflow 1",
@@ -525,22 +561,356 @@
         "h": 222
     },
     {
-        "id": "111",
-        "type": "ui_group",
-        "name": "Thermostat 1",
-        "tab": "main-tab",
-        "order": 1,
-        "disp": true,
-        "width": 6
+        "id": "6fbdbe15acb6baf1",
+        "type": "group",
+        "z": "b0c6f1e3d4fc18a3",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "inject_temp",
+            "gen_temp",
+            "decide_mode",
+            "thermostat_asyncapi",
+            "thermostat_debug",
+            "thermostat_ui",
+            "7a5f61a9eaff8de0"
+        ],
+        "x": 114,
+        "y": 159,
+        "w": 1332,
+        "h": 202
     },
     {
-        "id": "222",
-        "type": "ui_group",
-        "name": "Thermostat 2",
-        "tab": "main-tab",
-        "order": 2,
-        "disp": true,
-        "width": 6
+        "id": "thermostat_group",
+        "type": "group",
+        "z": "smarthome_flow",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "inject_thermostat",
+            "func_thermostat",
+            "asyncapi_thermostat",
+            "debug_thermostat",
+            "ui_thermostat",
+            "comment_thermostat"
+        ],
+        "x": 124,
+        "y": 89,
+        "w": 1122,
+        "h": 172
+    },
+    {
+        "id": "60aadd304320ab68",
+        "type": "group",
+        "z": "9d0b8d8486bf692d",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "ec8567273d2eeee4",
+            "4f76589d9ce93708",
+            "3c02180f43d76483",
+            "52372a1a90bed450",
+            "08eba1a39da3c211",
+            "d34fbeffad5f26c3"
+        ],
+        "x": 54,
+        "y": 9,
+        "w": 982,
+        "h": 172
+    },
+    {
+        "id": "7495cd4d423a5333",
+        "type": "group",
+        "z": "9d0b8d8486bf692d",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "b2ace2b50a3cffc6",
+            "5767fb305640ce22",
+            "320f5263b6a058cb",
+            "6c79919ed6d57634",
+            "d61ec178a3c22e54",
+            "29acb7a9e4ad24bf"
+        ],
+        "x": 74,
+        "y": 259,
+        "w": 942,
+        "h": 172
+    },
+    {
+        "id": "5b08965eee815217",
+        "type": "group",
+        "z": "db6486d1d2cd59d6",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "565b754961e5b93e",
+            "230fec0f35cc4133",
+            "55079425775637d9",
+            "559b9f04cf93c275",
+            "512fb36647226d10"
+        ],
+        "x": 84,
+        "y": 39,
+        "w": 952,
+        "h": 142
+    },
+    {
+        "id": "4575d7c456ea2458",
+        "type": "group",
+        "z": "db6486d1d2cd59d6",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "01573af29b531a78",
+            "4d738e0fc0f1352c",
+            "a946ef667e501665",
+            "0ab73cc9fa9c5c90",
+            "91288be2c27b7ea4"
+        ],
+        "x": 74,
+        "y": 289,
+        "w": 942,
+        "h": 142
+    },
+    {
+        "id": "c99ee48a54796f90",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "07d92834eb8e47f5",
+            "598f2008fafaa0f4",
+            "fc5e972c26387247",
+            "c52b9fba2d85efa8"
+        ],
+        "x": 414,
+        "y": 539,
+        "w": 672,
+        "h": 142
+    },
+    {
+        "id": "lights_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_lights",
+            "asyncapi_lights",
+            "debug_lights",
+            "ui_lights"
+        ],
+        "x": 414,
+        "y": 739,
+        "w": 672,
+        "h": 142
+    },
+    {
+        "id": "door_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_door",
+            "asyncapi_door",
+            "debug_door",
+            "ui_door"
+        ],
+        "x": 414,
+        "y": 939,
+        "w": 672,
+        "h": 142
+    },
+    {
+        "id": "fridge_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_fridge",
+            "asyncapi_fridge",
+            "debug_fridge",
+            "ui_fridge"
+        ],
+        "x": 394,
+        "y": 1119,
+        "w": 692,
+        "h": 142
+    },
+    {
+        "id": "launder_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_launder",
+            "asyncapi_launder",
+            "debug_launder",
+            "ui_launder"
+        ],
+        "x": 374,
+        "y": 1319,
+        "w": 692,
+        "h": 142
+    },
+    {
+        "id": "dehumidifier_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_dehumidifier",
+            "asyncapi_dehumidifier",
+            "debug_dehumidifier",
+            "ui_dehumidifier"
+        ],
+        "x": 334,
+        "y": 1539,
+        "w": 722,
+        "h": 142
+    },
+    {
+        "id": "cooker_group",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "func_cooker",
+            "asyncapi_cooker",
+            "debug_cooker",
+            "ui_cooker"
+        ],
+        "x": 294,
+        "y": 1779,
+        "w": 692,
+        "h": 142
+    },
+    {
+        "id": "19609f77c4ba5897",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "1915adae0ac41c37",
+            "94935853959483b3",
+            "d7982dd2528420ba",
+            "73bf6d7335b49a26",
+            "808f1a17e940fa3c",
+            "830b9ca09789c78d",
+            "214c7a5c82508290",
+            "fa29a1d7a019e819",
+            "dbd082096676a420"
+        ],
+        "x": 294,
+        "y": 159,
+        "w": 1152,
+        "h": 282
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -648,7 +1018,40 @@
         "willQos": "0"
     },
     {
-        "id": "b0633354d56d9009",
+        "id": "4f0d8a914be2cfb6",
+        "type": "mqtt-broker",
+        "name": "Local MQTT",
+        "broker": "172.17.0.1",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "mqtt_local_broker",
+        "type": "mqtt-broker",
+        "name": "Local MQTT",
+        "broker": "172.17.0.1",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "3ff102b65ec67eb7",
         "type": "ui_base",
         "theme": {
             "name": "theme-light",
@@ -745,114 +1148,40 @@
         }
     },
     {
-        "id": "4f0d8a914be2cfb6",
-        "type": "mqtt-broker",
-        "name": "Local MQTT",
-        "broker": "172.17.0.1",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true
-    },
-    {
-        "id": "mqtt_local_broker",
-        "type": "mqtt-broker",
-        "name": "Local MQTT",
-        "broker": "172.17.0.1",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
-    },
-    {
-        "id": "dashboard_tab",
+        "id": "83c770877dc34b82",
         "type": "ui_tab",
-        "name": "SmartHome",
+        "name": "Smarthome+",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8c896da163d208f1",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "83c770877dc34b82",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "878fdd13b31382f1",
+        "type": "ui_tab",
+        "name": "Smarthome+",
         "icon": "dashboard",
         "order": 1
     },
     {
-        "id": "2566b457ab10c854",
+        "id": "50ee364d11f0bce8",
         "type": "ui_group",
-        "name": "Thermostat dashbaord",
-        "tab": "dashboard_tab",
+        "name": "Default",
+        "tab": "878fdd13b31382f1",
         "order": 1,
         "disp": true,
         "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "dad53fb0db2749ce",
-        "type": "ui_group",
-        "name": "Smart Door",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": "6",
         "collapse": false
-    },
-    {
-        "id": "2484b2e7392bda74",
-        "type": "ui_group",
-        "name": "AC control",
-        "tab": "dashboard_tab",
-        "order": 4,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "bca09b7d8c2ffdc1",
-        "type": "ui_group",
-        "name": "Smart Lights",
-        "tab": "dashboard_tab",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "b9c9d459bcc50b6b",
-        "type": "ui_group",
-        "name": "Coffee",
-        "tab": "dashboard_tab",
-        "order": 5,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "dashboard_energy_group",
-        "type": "ui_group",
-        "name": "Energy Monitor",
-        "tab": "dashboard_tab",
-        "order": 6,
-        "disp": true,
-        "width": 6,
-        "collapse": false
-    },
-    {
-        "id": "main-tab",
-        "type": "ui_tab",
-        "name": "Thermostats",
-        "icon": "dashboard",
-        "order": 1
     },
     {
         "id": "2c2826fa3fc78558",
@@ -900,7 +1229,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "9d8fc96b503dd8a9",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -968,7 +1297,7 @@
         "name": "Desired Temp",
         "label": "Set Desired Temp",
         "tooltip": "",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1025,7 +1354,7 @@
         "z": "043c9b21da5cbba8",
         "g": "9d8fc96b503dd8a9",
         "name": "Current Temp",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -1120,7 +1449,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "9d700ddc16539c15",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1145,7 +1474,7 @@
         "name": "Desired Temp",
         "label": "Set Desired Temp",
         "tooltip": "",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1205,7 +1534,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "9d700ddc16539c15",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -1304,7 +1633,7 @@
         "z": "043c9b21da5cbba8",
         "g": "9d700ddc16539c15",
         "name": "Current Temp",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -1409,7 +1738,7 @@
         "z": "043c9b21da5cbba8",
         "g": "a2a5c6556a04c7ed",
         "name": "Brightness Chart",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -1519,7 +1848,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "a2a5c6556a04c7ed",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -1541,7 +1870,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "a2a5c6556a04c7ed",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 5,
         "width": 0,
         "height": 0,
@@ -1581,7 +1910,7 @@
         "z": "043c9b21da5cbba8",
         "g": "a2a5c6556a04c7ed",
         "name": "Brightness",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1609,7 +1938,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "a2a5c6556a04c7ed",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -1662,7 +1991,7 @@
         "name": "Door Lock Switch",
         "label": "Lock Door",
         "tooltip": "",
-        "group": "dad53fb0db2749ce",
+        "group": "",
         "order": 1,
         "width": 3,
         "height": 1,
@@ -1746,7 +2075,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "e49647927e3b9d1e",
-        "group": "dad53fb0db2749ce",
+        "group": "",
         "order": 2,
         "width": 3,
         "height": 1,
@@ -1881,7 +2210,7 @@
         "label": "Coffee Size",
         "tooltip": "",
         "place": "",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -1925,7 +2254,7 @@
         "label": "Coffee Strength",
         "tooltip": "",
         "place": "",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -1965,7 +2294,7 @@
         "type": "ui_text",
         "z": "043c9b21da5cbba8",
         "g": "1a95f1f2d410aea3",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -4651,7 +4980,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "50a045551ea38743",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -4719,7 +5048,7 @@
         "name": "Desired Temp",
         "label": "Set Desired Temp",
         "tooltip": "",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -4828,7 +5157,7 @@
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
         "name": "Brightness Chart",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -4938,7 +5267,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -4960,7 +5289,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 5,
         "width": 0,
         "height": 0,
@@ -5000,7 +5329,7 @@
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
         "name": "Brightness",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -5028,7 +5357,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "6996a7f421765b1a",
-        "group": "bca09b7d8c2ffdc1",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -5081,7 +5410,7 @@
         "name": "Door Lock Switch",
         "label": "Lock Door",
         "tooltip": "",
-        "group": "dad53fb0db2749ce",
+        "group": "",
         "order": 1,
         "width": 3,
         "height": 1,
@@ -5165,7 +5494,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "38af56c2be0e770c",
-        "group": "dad53fb0db2749ce",
+        "group": "",
         "order": 2,
         "width": 3,
         "height": 1,
@@ -5300,7 +5629,7 @@
         "label": "Coffee Size",
         "tooltip": "",
         "place": "",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -5344,7 +5673,7 @@
         "label": "Coffee Strength",
         "tooltip": "",
         "place": "",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -5384,7 +5713,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "d6d6813509f8a19b",
-        "group": "b9c9d459bcc50b6b",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -5462,7 +5791,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "a0bc03072058d078",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -5487,7 +5816,7 @@
         "name": "Desired Temp",
         "label": "Set Desired Temp",
         "tooltip": "",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -5547,7 +5876,7 @@
         "type": "ui_text",
         "z": "a527806fb52a0bc0",
         "g": "a0bc03072058d078",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -5621,7 +5950,7 @@
         "z": "a527806fb52a0bc0",
         "g": "50a045551ea38743",
         "name": "Current Temp",
-        "group": "2566b457ab10c854",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -5692,7 +6021,7 @@
         "z": "a527806fb52a0bc0",
         "g": "a0bc03072058d078",
         "name": "Current Temp",
-        "group": "2484b2e7392bda74",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -5768,7 +6097,7 @@
         "id": "b693ac0c316bb007",
         "type": "ui_text",
         "z": "a7f4785e36cba6a2",
-        "group": "111",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -5785,7 +6114,7 @@
         "type": "ui_gauge",
         "z": "a7f4785e36cba6a2",
         "name": "Gauge 1",
-        "group": "111",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -5860,7 +6189,7 @@
         "name": "Slider 1",
         "label": "Desired Temp 1",
         "tooltip": "",
-        "group": "111",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -5909,7 +6238,7 @@
         "id": "de83e57ebf24426f",
         "type": "ui_text",
         "z": "a7f4785e36cba6a2",
-        "group": "222",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -5926,7 +6255,7 @@
         "type": "ui_gauge",
         "z": "a7f4785e36cba6a2",
         "name": "Gauge 2",
-        "group": "222",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -6001,7 +6330,7 @@
         "name": "Slider 2",
         "label": "Desired Temp 2",
         "tooltip": "",
-        "group": "222",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -6030,6 +6359,1243 @@
         "y": 440,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "inject_temp",
+        "type": "inject",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "Inject Current Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "topic": "",
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "gen_temp"
+            ]
+        ]
+    },
+    {
+        "id": "gen_temp",
+        "type": "function",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "Generate Current Temp",
+        "func": "msg.payload = { current: 15 + Math.floor(Math.random()*10) };\nreturn msg;",
+        "outputs": 1,
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "decide_mode"
+            ]
+        ]
+    },
+    {
+        "id": "decide_mode",
+        "type": "function",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "Compare and Decide",
+        "func": "const desired = flow.get('desired_temp') || 22;\nconst current = msg.payload.current;\nlet mode = \"idle\";\nif (current < desired - 1) mode = \"heat\";\nelse if (current > desired + 1) mode = \"cool\";\n\n// track energy use\nlet energy = flow.get('energy.thermostat') || 0;\nif (mode !== \"idle\") energy += 0.05; // add kWh step\nflow.set('energy.thermostat', energy);\n\nmsg.payload = {\n    temperature: current,\n    humidity: Math.floor(40 + Math.random()*20),\n    mode: mode,\n    energyUsed: energy,\n    unit: \"C\"\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 810,
+        "y": 260,
+        "wires": [
+            [
+                "thermostat_asyncapi",
+                "thermostat_ui"
+            ]
+        ]
+    },
+    {
+        "id": "thermostat_asyncapi",
+        "type": "async-api-red",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "thermostatState",
+        "x": 1080,
+        "y": 260,
+        "wires": [
+            [
+                "thermostat_debug"
+            ]
+        ]
+    },
+    {
+        "id": "thermostat_debug",
+        "type": "debug",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "Thermostat Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1310,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "thermostat_ui",
+        "type": "ui_text",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "group": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Thermostat Status",
+        "label": "Thermostat",
+        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "row-spread",
+        "x": 1080,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7a5f61a9eaff8de0",
+        "type": "comment",
+        "z": "b0c6f1e3d4fc18a3",
+        "g": "6fbdbe15acb6baf1",
+        "name": "Thermostat",
+        "info": "",
+        "x": 210,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "inject_thermostat",
+        "type": "inject",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "name": "Inject Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "func_thermostat"
+            ]
+        ]
+    },
+    {
+        "id": "func_thermostat",
+        "type": "function",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "name": "Thermostat State & Energy",
+        "func": "const desired = flow.get('desired_temp') || 22;\nconst current = 15 + Math.floor(Math.random()*10);\nlet mode='idle';\nif(current < desired-1) mode='heat';\nelse if(current>desired+1) mode='cool';\nlet energy=flow.get('energy.thermostat')||0;\nif(mode!=='idle') energy+=0.05;\nflow.set('energy.thermostat',energy);\nmsg.payload={temperature:current,humidity:40+Math.floor(Math.random()*20),mode:mode,energyUsed:energy,unit:'C'};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "asyncapi_thermostat",
+                "ui_thermostat"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_thermostat",
+        "type": "async-api-red",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "name": "Thermostat AsyncAPI",
+        "x": 840,
+        "y": 160,
+        "wires": [
+            [
+                "debug_thermostat"
+            ]
+        ]
+    },
+    {
+        "id": "debug_thermostat",
+        "type": "debug",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "name": "Thermostat Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 1110,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ui_thermostat",
+        "type": "ui_text",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Thermostat",
+        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 810,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "comment_thermostat",
+        "type": "comment",
+        "z": "smarthome_flow",
+        "g": "thermostat_group",
+        "name": "Thermostat",
+        "info": "",
+        "x": 220,
+        "y": 130,
+        "wires": []
+    },
+    {
+        "id": "ec8567273d2eeee4",
+        "type": "inject",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "name": "Inject Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "4f76589d9ce93708"
+            ]
+        ]
+    },
+    {
+        "id": "4f76589d9ce93708",
+        "type": "function",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "name": "Thermostat State & Energy",
+        "func": "const desired = flow.get('desired_temp') || 22;\nconst current = 15 + Math.floor(Math.random()*10);\nlet mode='idle';\nif(current < desired-1) mode='heat';\nelse if(current>desired+1) mode='cool';\nlet energy=flow.get('energy.thermostat')||0;\nif(mode!=='idle') energy+=0.05;\nflow.set('energy.thermostat',energy);\nmsg.payload={temperature:current,humidity:40+Math.floor(Math.random()*20),mode:mode,energyUsed:energy,unit:'C'};\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "3c02180f43d76483",
+                "08eba1a39da3c211"
+            ]
+        ]
+    },
+    {
+        "id": "3c02180f43d76483",
+        "type": "async-api-red",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "name": "Thermostat AsyncAPI",
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "52372a1a90bed450"
+            ]
+        ]
+    },
+    {
+        "id": "52372a1a90bed450",
+        "type": "debug",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "name": "Thermostat Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "08eba1a39da3c211",
+        "type": "ui_text",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "group": "",
+        "order": 1,
+        "label": "Thermostat",
+        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "x": 700,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d34fbeffad5f26c3",
+        "type": "comment",
+        "z": "9d0b8d8486bf692d",
+        "g": "60aadd304320ab68",
+        "name": "Thermostat",
+        "info": "",
+        "x": 150,
+        "y": 50,
+        "wires": []
+    },
+    {
+        "id": "b2ace2b50a3cffc6",
+        "type": "inject",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "name": "Inject AC State",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "x": 200,
+        "y": 330,
+        "wires": [
+            [
+                "5767fb305640ce22"
+            ]
+        ]
+    },
+    {
+        "id": "5767fb305640ce22",
+        "type": "function",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "name": "AC State & Energy",
+        "func": "const state=Math.random()>0.5?'ON':'OFF';\nlet energy=flow.get('energy.ac')||0;\nif(state==='ON') energy+=0.2;\nflow.set('energy.ac',energy);\nmsg.payload={state:state,energyUsed:energy,mode:'cooling'};\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 330,
+        "wires": [
+            [
+                "320f5263b6a058cb",
+                "d61ec178a3c22e54"
+            ]
+        ]
+    },
+    {
+        "id": "320f5263b6a058cb",
+        "type": "async-api-red",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "name": "AC AsyncAPI",
+        "x": 700,
+        "y": 330,
+        "wires": [
+            [
+                "6c79919ed6d57634"
+            ]
+        ]
+    },
+    {
+        "id": "6c79919ed6d57634",
+        "type": "debug",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "name": "AC Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 900,
+        "y": 330,
+        "wires": []
+    },
+    {
+        "id": "d61ec178a3c22e54",
+        "type": "ui_text",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "group": "",
+        "order": 1,
+        "label": "AC",
+        "format": "State: {{msg.payload.state}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "x": 700,
+        "y": 390,
+        "wires": []
+    },
+    {
+        "id": "29acb7a9e4ad24bf",
+        "type": "comment",
+        "z": "9d0b8d8486bf692d",
+        "g": "7495cd4d423a5333",
+        "name": "AC",
+        "info": "",
+        "x": 150,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "565b754961e5b93e",
+        "type": "inject",
+        "z": "db6486d1d2cd59d6",
+        "g": "5b08965eee815217",
+        "name": "Inject Temp",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "230fec0f35cc4133"
+            ]
+        ]
+    },
+    {
+        "id": "230fec0f35cc4133",
+        "type": "function",
+        "z": "db6486d1d2cd59d6",
+        "g": "5b08965eee815217",
+        "name": "Thermostat State & Energy",
+        "func": "const desired = flow.get('desired_temp') || 22;\nconst current = 15 + Math.floor(Math.random()*10);\nlet mode='idle';\nif(current < desired-1) mode='heat';\nelse if(current>desired+1) mode='cool';\nlet energy=flow.get('energy.thermostat')||0;\nif(mode!=='idle') energy+=0.05;\nflow.set('energy.thermostat',energy);\nmsg.payload={temperature:current,humidity:40+Math.floor(Math.random()*20),mode:mode,energyUsed:energy,unit:'C'};\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "55079425775637d9",
+                "512fb36647226d10"
+            ]
+        ]
+    },
+    {
+        "id": "55079425775637d9",
+        "type": "async-api-red",
+        "z": "db6486d1d2cd59d6",
+        "g": "5b08965eee815217",
+        "name": "Thermostat AsyncAPI",
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "559b9f04cf93c275"
+            ]
+        ]
+    },
+    {
+        "id": "559b9f04cf93c275",
+        "type": "debug",
+        "z": "db6486d1d2cd59d6",
+        "g": "5b08965eee815217",
+        "name": "Thermostat Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "512fb36647226d10",
+        "type": "ui_text",
+        "z": "db6486d1d2cd59d6",
+        "g": "5b08965eee815217",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Thermostat",
+        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 700,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "01573af29b531a78",
+        "type": "inject",
+        "z": "db6486d1d2cd59d6",
+        "g": "4575d7c456ea2458",
+        "name": "Inject AC State",
+        "props": [],
+        "repeat": "5",
+        "once": true,
+        "x": 200,
+        "y": 330,
+        "wires": [
+            [
+                "4d738e0fc0f1352c"
+            ]
+        ]
+    },
+    {
+        "id": "4d738e0fc0f1352c",
+        "type": "function",
+        "z": "db6486d1d2cd59d6",
+        "g": "4575d7c456ea2458",
+        "name": "AC State & Energy",
+        "func": "const state=Math.random()>0.5?'ON':'OFF';\nlet energy=flow.get('energy.ac')||0;\nif(state==='ON') energy+=0.2;\nflow.set('energy.ac',energy);\nmsg.payload={state:state,energyUsed:energy,mode:'cooling'};\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 330,
+        "wires": [
+            [
+                "a946ef667e501665",
+                "91288be2c27b7ea4"
+            ]
+        ]
+    },
+    {
+        "id": "a946ef667e501665",
+        "type": "async-api-red",
+        "z": "db6486d1d2cd59d6",
+        "g": "4575d7c456ea2458",
+        "name": "AC AsyncAPI",
+        "x": 700,
+        "y": 330,
+        "wires": [
+            [
+                "0ab73cc9fa9c5c90"
+            ]
+        ]
+    },
+    {
+        "id": "0ab73cc9fa9c5c90",
+        "type": "debug",
+        "z": "db6486d1d2cd59d6",
+        "g": "4575d7c456ea2458",
+        "name": "AC Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 900,
+        "y": 330,
+        "wires": []
+    },
+    {
+        "id": "91288be2c27b7ea4",
+        "type": "ui_text",
+        "z": "db6486d1d2cd59d6",
+        "g": "4575d7c456ea2458",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "AC",
+        "format": "State: {{msg.payload.state}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 700,
+        "y": 390,
+        "wires": []
+    },
+    {
+        "id": "07d92834eb8e47f5",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "name": "AC Telemetry",
+        "func": "const state=Math.random()>0.5?'ON':'OFF';\nlet energy=flow.get('energy.ac')||0;\nif(state==='ON') energy+=0.2;\nflow.set('energy.ac',energy);\nmsg.payload={state:state,energyUsed:energy,mode:'cooling'};\nreturn msg;",
+        "outputs": 1,
+        "x": 520,
+        "y": 580,
+        "wires": [
+            [
+                "598f2008fafaa0f4",
+                "c52b9fba2d85efa8"
+            ]
+        ]
+    },
+    {
+        "id": "598f2008fafaa0f4",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "name": "AC AsyncAPI",
+        "x": 770,
+        "y": 580,
+        "wires": [
+            [
+                "fc5e972c26387247"
+            ]
+        ]
+    },
+    {
+        "id": "fc5e972c26387247",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "name": "AC Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 970,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c52b9fba2d85efa8",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "AC",
+        "format": "State: {{msg.payload.state}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 770,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "func_lights",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "lights_group",
+        "name": "Lights Telemetry",
+        "func": "const state = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst brightness = state==='ON' ? Math.floor(Math.random()*101) : 0;\nlet energy = flow.get('energy.lights')||0;\nif(state==='ON') energy += brightness*0.01;\nflow.set('energy.lights',energy);\nmsg.payload = { state: state, brightness: brightness, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 520,
+        "y": 780,
+        "wires": [
+            [
+                "asyncapi_lights",
+                "ui_lights"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_lights",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "lights_group",
+        "name": "Lights AsyncAPI",
+        "x": 770,
+        "y": 780,
+        "wires": [
+            [
+                "debug_lights"
+            ]
+        ]
+    },
+    {
+        "id": "debug_lights",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "lights_group",
+        "name": "Lights Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 970,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "ui_lights",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "lights_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Lights",
+        "format": "State: {{msg.payload.state}} | Brightness: {{msg.payload.brightness}}% | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 770,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "func_door",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "door_group",
+        "name": "Door Telemetry",
+        "func": "const locked = Math.random() > 0.5;\nconst battery = 50 + Math.floor(Math.random()*51);\nlet energy = flow.get('energy.door')||0;\nif(!locked) energy += 0.01;\nflow.set('energy.door',energy);\nmsg.payload = { locked: locked, battery: battery, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 520,
+        "y": 980,
+        "wires": [
+            [
+                "asyncapi_door",
+                "ui_door"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_door",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "door_group",
+        "name": "Door AsyncAPI",
+        "x": 770,
+        "y": 980,
+        "wires": [
+            [
+                "debug_door"
+            ]
+        ]
+    },
+    {
+        "id": "debug_door",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "door_group",
+        "name": "Door Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 970,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "ui_door",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "door_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Door",
+        "format": "Locked: {{msg.payload.locked}} | Battery: {{msg.payload.battery}}% | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 770,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "func_fridge",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "name": "Fridge Telemetry",
+        "func": "const power = Math.random() > 0.1 ? 'ON' : 'OFF';\nconst modes = ['eco','normal','turbo'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst fridgeTemp = 2 + Math.floor(Math.random()*5);\nconst freezerTemp = -18 + Math.floor(Math.random()*5);\nconst doorOpen = Math.random() > 0.8;\n\nlet energy = flow.get('energy.fridge')||0;\nif(power==='ON') energy += 0.05;\nflow.set('energy.fridge', energy);\n\nmsg.payload = { power, mode, fridgeTemp, freezerTemp, doorOpen, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 510,
+        "y": 1160,
+        "wires": [
+            [
+                "asyncapi_fridge",
+                "ui_fridge"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_fridge",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "name": "Fridge AsyncAPI",
+        "x": 760,
+        "y": 1160,
+        "wires": [
+            [
+                "debug_fridge"
+            ]
+        ]
+    },
+    {
+        "id": "debug_fridge",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "name": "Fridge Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 960,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "ui_fridge",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Fridge",
+        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Fridge: {{msg.payload.fridgeTemp}}°C | Freezer: {{msg.payload.freezerTemp}}°C | Door: {{msg.payload.doorOpen}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 760,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "func_launder",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "name": "Launder Telemetry",
+        "func": "const running = Math.random() > 0.5;\nconst modes = ['quick','delicate','heavy','normal'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) + 10 : 0;\n\nlet energy = flow.get('energy.launder') || 0;\nif(running) energy += 0.1;\nflow.set('energy.launder', energy);\n\nmsg.payload = { running, mode, remainingTime, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 490,
+        "y": 1360,
+        "wires": [
+            [
+                "asyncapi_launder",
+                "ui_launder"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_launder",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "name": "Launder AsyncAPI",
+        "x": 740,
+        "y": 1360,
+        "wires": [
+            [
+                "debug_launder"
+            ]
+        ]
+    },
+    {
+        "id": "debug_launder",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "name": "Launder Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 940,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "ui_launder",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "group": "smarthome_ui_group",
+        "order": 1,
+        "label": "Launder",
+        "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Remaining: {{msg.payload.remainingTime}} min | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "x": 740,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "func_dehumidifier",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "dehumidifier_group",
+        "name": "Dehumidifier Telemetry",
+        "func": "const power = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst targetHumidity = 40 + Math.floor(Math.random()*20);\nconst currentHumidity = 30 + Math.floor(Math.random()*50);\n\nlet energy = flow.get('energy.dehumidifier') || 0;\nif(power === 'ON') energy += 0.08;\nflow.set('energy.dehumidifier', energy);\n\nmsg.payload = { power, currentHumidity, targetHumidity, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 1580,
+        "wires": [
+            [
+                "asyncapi_dehumidifier",
+                "ui_dehumidifier"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_dehumidifier",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "dehumidifier_group",
+        "name": "Dehumidifier AsyncAPI",
+        "x": 710,
+        "y": 1580,
+        "wires": [
+            [
+                "debug_dehumidifier"
+            ]
+        ]
+    },
+    {
+        "id": "debug_dehumidifier",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "dehumidifier_group",
+        "name": "Dehumidifier Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 910,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "ui_dehumidifier",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "dehumidifier_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Dehumidifier",
+        "format": "Power: {{msg.payload.power}} | Current: {{msg.payload.currentHumidity}}% | Target: {{msg.payload.targetHumidity}}% | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 710,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "func_cooker",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "cooker_group",
+        "name": "Cooker Telemetry",
+        "func": "const running = Math.random() > 0.5;\nconst modes = ['boil','steam','fry','bake'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) : 0;\nconst temperature = running ? 100 + Math.floor(Math.random()*150) : 0;\n\nlet energy = flow.get('energy.cooker') || 0;\nif(running) energy += 0.25; // kWh step when active\nflow.set('energy.cooker', energy);\n\nmsg.payload = { running, mode, remainingTime, temperature, energyUsed: energy };\nreturn msg;",
+        "outputs": 1,
+        "x": 410,
+        "y": 1820,
+        "wires": [
+            [
+                "asyncapi_cooker",
+                "ui_cooker"
+            ]
+        ]
+    },
+    {
+        "id": "asyncapi_cooker",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "cooker_group",
+        "name": "Cooker AsyncAPI",
+        "x": 660,
+        "y": 1820,
+        "wires": [
+            [
+                "debug_cooker"
+            ]
+        ]
+    },
+    {
+        "id": "debug_cooker",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "cooker_group",
+        "name": "Cooker Debug",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 860,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "ui_cooker",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "cooker_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "",
+        "label": "Cooker",
+        "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Time: {{msg.payload.remainingTime}} min | Temp: {{msg.payload.temperature}}°C | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 660,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "1915adae0ac41c37",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Thermostat Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "94935853959483b3",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Total Energy Calculator",
+        "func": "let total = flow.get('energy.total') || 0;\nlet deviceEnergy = msg.payload.energyUsed || 0;\n\n// Update total energy\nif(msg.payload.device){\n    total = 0;\n    let devices = [\"thermostat\"];\n    devices.forEach(d => {\n        total += flow.get('energy.'+d) || 0;\n    });\n}\n\nflow.set('energy.total', total);\nmsg.payload.totalEnergy = total;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 260,
+        "wires": [
+            [
+                "d7982dd2528420ba"
+            ]
+        ]
+    },
+    {
+        "id": "d7982dd2528420ba",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Total Energy Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.totalEnergy",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "73bf6d7335b49a26",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "group": "8c896da163d208f1",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Thermostat",
+        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1030,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "808f1a17e940fa3c",
+        "type": "ui_chart",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Temperature Chart",
+        "group": "8c896da163d208f1",
+        "order": 2,
+        "width": 6,
+        "height": 3,
+        "label": "Temperature Over Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "60",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 730,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "830b9ca09789c78d",
+        "type": "ui_chart",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Energy Chart",
+        "group": "8c896da163d208f1",
+        "order": 3,
+        "width": 6,
+        "height": 3,
+        "label": "Energy Consumption (kWh)",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "60",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1060,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "214c7a5c82508290",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Thermostat Telemetry",
+        "func": "const desired = flow.get('desired_temp') || 22; // default target temp\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nif (mode === 'heat') {\n    energy += 0.1; // heating uses more\n} else if (mode === 'cool') {\n    energy += 0.08; // cooling uses slightly less\n}\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current); // persist state\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: energy,\n    unit: \"C\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "fa29a1d7a019e819",
+                "dbd082096676a420"
+            ]
+        ]
+    },
+    {
+        "id": "inject_sim_clock",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "name": "Sim Clock Trigger",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "x": 130,
+        "y": 840,
+        "wires": [
+            [
+                "214c7a5c82508290",
+                "dbd082096676a420"
+            ]
+        ]
+    },
+    {
+        "id": "fa29a1d7a019e819",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Thermostat pub",
+        "x": 740,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dbd082096676a420",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "",
+        "x": 730,
+        "y": 300,
+        "wires": [
+            [
+                "94935853959483b3",
+                "808f1a17e940fa3c",
+                "830b9ca09789c78d",
+                "73bf6d7335b49a26",
+                "1915adae0ac41c37"
+            ]
         ]
     }
 ]
