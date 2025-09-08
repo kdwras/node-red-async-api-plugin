@@ -101,7 +101,7 @@ module.exports = (RED) => {
                     }
                     node.lastMessage = payload; // save last message
                     node.log("Message received on " + topic + ": " + JSON.stringify(payload));
-                    node.send({ payload });
+                    node.send({payload});
                 });
             }
         };
@@ -124,13 +124,11 @@ module.exports = (RED) => {
                     node.error("Failed to publish: " + err.message);
                 } else {
                     node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
-                    node.send({ payload: toPublish });
+                    node.send({payload: toPublish});
                 }
             });
         }
     }
-
-
 
     /**
      *

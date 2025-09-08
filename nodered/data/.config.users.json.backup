@@ -14,7 +14,7 @@
                 "view-node-info-icon": true
             },
             "tours": {
-                "welcome": "4.0.8"
+                "welcome": "4.1.0"
             },
             "dialog": {
                 "export": {
@@ -24,7 +24,8 @@
             }
         },
         "debug": {
-            "filter": "filterCurrent"
+            "filter": "filterAll",
+            "filteredNodes": []
         },
         "menu-menu-item-palette": true,
         "menu-menu-item-sidebar": true

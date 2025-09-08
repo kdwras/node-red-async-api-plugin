@@ -734,7 +734,7 @@
             "fc5e972c26387247",
             "c52b9fba2d85efa8"
         ],
-        "x": 414,
+        "x": 634,
         "y": 539,
         "w": 672,
         "h": 142
@@ -758,7 +758,7 @@
             "debug_lights",
             "ui_lights"
         ],
-        "x": 414,
+        "x": 634,
         "y": 739,
         "w": 672,
         "h": 142
@@ -782,7 +782,7 @@
             "debug_door",
             "ui_door"
         ],
-        "x": 414,
+        "x": 634,
         "y": 939,
         "w": 672,
         "h": 142
@@ -806,8 +806,8 @@
             "debug_fridge",
             "ui_fridge"
         ],
-        "x": 394,
-        "y": 1119,
+        "x": 634,
+        "y": 1139,
         "w": 692,
         "h": 142
     },
@@ -830,8 +830,8 @@
             "debug_launder",
             "ui_launder"
         ],
-        "x": 374,
-        "y": 1319,
+        "x": 614,
+        "y": 1359,
         "w": 692,
         "h": 142
     },
@@ -854,8 +854,8 @@
             "debug_dehumidifier",
             "ui_dehumidifier"
         ],
-        "x": 334,
-        "y": 1539,
+        "x": 614,
+        "y": 1579,
         "w": 722,
         "h": 142
     },
@@ -878,8 +878,8 @@
             "debug_cooker",
             "ui_cooker"
         ],
-        "x": 294,
-        "y": 1779,
+        "x": 614,
+        "y": 1799,
         "w": 692,
         "h": 142
     },
@@ -898,19 +898,14 @@
         },
         "nodes": [
             "1915adae0ac41c37",
-            "94935853959483b3",
-            "d7982dd2528420ba",
             "73bf6d7335b49a26",
-            "808f1a17e940fa3c",
-            "830b9ca09789c78d",
             "214c7a5c82508290",
-            "fa29a1d7a019e819",
             "dbd082096676a420"
         ],
-        "x": 294,
-        "y": 159,
-        "w": 1152,
-        "h": 282
+        "x": 634,
+        "y": 179,
+        "w": 892,
+        "h": 182
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -6912,7 +6907,7 @@
         "name": "AC Telemetry",
         "func": "const state=Math.random()>0.5?'ON':'OFF';\nlet energy=flow.get('energy.ac')||0;\nif(state==='ON') energy+=0.2;\nflow.set('energy.ac',energy);\nmsg.payload={state:state,energyUsed:energy,mode:'cooling'};\nreturn msg;",
         "outputs": 1,
-        "x": 520,
+        "x": 740,
         "y": 580,
         "wires": [
             [
@@ -6927,7 +6922,7 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 770,
+        "x": 990,
         "y": 580,
         "wires": [
             [
@@ -6944,7 +6939,7 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 970,
+        "x": 1190,
         "y": 580,
         "wires": []
     },
@@ -6966,7 +6961,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 770,
+        "x": 990,
         "y": 640,
         "wires": []
     },
@@ -6978,7 +6973,7 @@
         "name": "Lights Telemetry",
         "func": "const state = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst brightness = state==='ON' ? Math.floor(Math.random()*101) : 0;\nlet energy = flow.get('energy.lights')||0;\nif(state==='ON') energy += brightness*0.01;\nflow.set('energy.lights',energy);\nmsg.payload = { state: state, brightness: brightness, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 520,
+        "x": 740,
         "y": 780,
         "wires": [
             [
@@ -6993,7 +6988,7 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 770,
+        "x": 990,
         "y": 780,
         "wires": [
             [
@@ -7010,7 +7005,7 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 970,
+        "x": 1190,
         "y": 780,
         "wires": []
     },
@@ -7032,7 +7027,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 770,
+        "x": 990,
         "y": 840,
         "wires": []
     },
@@ -7044,7 +7039,7 @@
         "name": "Door Telemetry",
         "func": "const locked = Math.random() > 0.5;\nconst battery = 50 + Math.floor(Math.random()*51);\nlet energy = flow.get('energy.door')||0;\nif(!locked) energy += 0.01;\nflow.set('energy.door',energy);\nmsg.payload = { locked: locked, battery: battery, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 520,
+        "x": 740,
         "y": 980,
         "wires": [
             [
@@ -7059,7 +7054,7 @@
         "z": "4f4855f52107b72b",
         "g": "door_group",
         "name": "Door AsyncAPI",
-        "x": 770,
+        "x": 990,
         "y": 980,
         "wires": [
             [
@@ -7076,7 +7071,7 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 970,
+        "x": 1190,
         "y": 980,
         "wires": []
     },
@@ -7098,7 +7093,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 770,
+        "x": 990,
         "y": 1040,
         "wires": []
     },
@@ -7110,8 +7105,8 @@
         "name": "Fridge Telemetry",
         "func": "const power = Math.random() > 0.1 ? 'ON' : 'OFF';\nconst modes = ['eco','normal','turbo'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst fridgeTemp = 2 + Math.floor(Math.random()*5);\nconst freezerTemp = -18 + Math.floor(Math.random()*5);\nconst doorOpen = Math.random() > 0.8;\n\nlet energy = flow.get('energy.fridge')||0;\nif(power==='ON') energy += 0.05;\nflow.set('energy.fridge', energy);\n\nmsg.payload = { power, mode, fridgeTemp, freezerTemp, doorOpen, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 510,
-        "y": 1160,
+        "x": 750,
+        "y": 1180,
         "wires": [
             [
                 "asyncapi_fridge",
@@ -7125,8 +7120,8 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge AsyncAPI",
-        "x": 760,
-        "y": 1160,
+        "x": 1000,
+        "y": 1180,
         "wires": [
             [
                 "debug_fridge"
@@ -7142,8 +7137,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 960,
-        "y": 1160,
+        "x": 1200,
+        "y": 1180,
         "wires": []
     },
     {
@@ -7164,8 +7159,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 760,
-        "y": 1220,
+        "x": 1000,
+        "y": 1240,
         "wires": []
     },
     {
@@ -7176,8 +7171,8 @@
         "name": "Launder Telemetry",
         "func": "const running = Math.random() > 0.5;\nconst modes = ['quick','delicate','heavy','normal'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) + 10 : 0;\n\nlet energy = flow.get('energy.launder') || 0;\nif(running) energy += 0.1;\nflow.set('energy.launder', energy);\n\nmsg.payload = { running, mode, remainingTime, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 490,
-        "y": 1360,
+        "x": 730,
+        "y": 1400,
         "wires": [
             [
                 "asyncapi_launder",
@@ -7191,8 +7186,8 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Launder AsyncAPI",
-        "x": 740,
-        "y": 1360,
+        "x": 980,
+        "y": 1400,
         "wires": [
             [
                 "debug_launder"
@@ -7208,8 +7203,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 940,
-        "y": 1360,
+        "x": 1180,
+        "y": 1400,
         "wires": []
     },
     {
@@ -7221,8 +7216,8 @@
         "order": 1,
         "label": "Launder",
         "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Remaining: {{msg.payload.remainingTime}} min | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "x": 740,
-        "y": 1420,
+        "x": 980,
+        "y": 1460,
         "wires": []
     },
     {
@@ -7233,8 +7228,8 @@
         "name": "Dehumidifier Telemetry",
         "func": "const power = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst targetHumidity = 40 + Math.floor(Math.random()*20);\nconst currentHumidity = 30 + Math.floor(Math.random()*50);\n\nlet energy = flow.get('energy.dehumidifier') || 0;\nif(power === 'ON') energy += 0.08;\nflow.set('energy.dehumidifier', energy);\n\nmsg.payload = { power, currentHumidity, targetHumidity, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 460,
-        "y": 1580,
+        "x": 740,
+        "y": 1620,
         "wires": [
             [
                 "asyncapi_dehumidifier",
@@ -7248,8 +7243,8 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier AsyncAPI",
-        "x": 710,
-        "y": 1580,
+        "x": 990,
+        "y": 1620,
         "wires": [
             [
                 "debug_dehumidifier"
@@ -7265,8 +7260,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 910,
-        "y": 1580,
+        "x": 1190,
+        "y": 1620,
         "wires": []
     },
     {
@@ -7287,8 +7282,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 710,
-        "y": 1640,
+        "x": 990,
+        "y": 1680,
         "wires": []
     },
     {
@@ -7299,8 +7294,8 @@
         "name": "Cooker Telemetry",
         "func": "const running = Math.random() > 0.5;\nconst modes = ['boil','steam','fry','bake'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) : 0;\nconst temperature = running ? 100 + Math.floor(Math.random()*150) : 0;\n\nlet energy = flow.get('energy.cooker') || 0;\nif(running) energy += 0.25; // kWh step when active\nflow.set('energy.cooker', energy);\n\nmsg.payload = { running, mode, remainingTime, temperature, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 410,
-        "y": 1820,
+        "x": 730,
+        "y": 1840,
         "wires": [
             [
                 "asyncapi_cooker",
@@ -7314,8 +7309,8 @@
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker AsyncAPI",
-        "x": 660,
-        "y": 1820,
+        "x": 980,
+        "y": 1840,
         "wires": [
             [
                 "debug_cooker"
@@ -7331,8 +7326,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 860,
-        "y": 1820,
+        "x": 1180,
+        "y": 1840,
         "wires": []
     },
     {
@@ -7353,8 +7348,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 660,
-        "y": 1880,
+        "x": 980,
+        "y": 1900,
         "wires": []
     },
     {
@@ -7371,47 +7366,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1050,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "94935853959483b3",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "name": "Total Energy Calculator",
-        "func": "let total = flow.get('energy.total') || 0;\nlet deviceEnergy = msg.payload.energyUsed || 0;\n\n// Update total energy\nif(msg.payload.device){\n    total = 0;\n    let devices = [\"thermostat\"];\n    devices.forEach(d => {\n        total += flow.get('energy.'+d) || 0;\n    });\n}\n\nflow.set('energy.total', total);\nmsg.payload.totalEnergy = total;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1070,
-        "y": 260,
-        "wires": [
-            [
-                "d7982dd2528420ba"
-            ]
-        ]
-    },
-    {
-        "id": "d7982dd2528420ba",
-        "type": "debug",
-        "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "name": "Total Energy Debug",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload.totalEnergy",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1310,
-        "y": 260,
+        "x": 1390,
+        "y": 220,
         "wires": []
     },
     {
@@ -7432,60 +7388,108 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1030,
-        "y": 400,
+        "x": 1430,
+        "y": 300,
         "wires": []
     },
     {
-        "id": "808f1a17e940fa3c",
-        "type": "ui_chart",
+        "id": "214c7a5c82508290",
+        "type": "function",
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
-        "name": "Temperature Chart",
-        "group": "8c896da163d208f1",
-        "order": 2,
-        "width": 6,
-        "height": 3,
-        "label": "Temperature Over Time",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "No Data",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "60",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "60",
-        "cutout": "",
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
+        "name": "Thermostat Telemetry",
+        "func": "const desired = flow.get('desired_temp') || 22; // default target temp\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking with realistic conversion\nlet energy = flow.get('energy.thermostat') || 0;\n\n// Device power ratings (Watts)\nconst heaterPower = 2000; // 2kW heater\nconst acPower = 1200;     // 1.2kW AC\n\n// Simulation tick duration (seconds)\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current); // persist state\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: energy,\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 730,
-        "y": 400,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 240,
         "wires": [
-            []
+            [
+                "dbd082096676a420"
+            ]
         ]
+    },
+    {
+        "id": "dbd082096676a420",
+        "type": "async-api-red",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "",
+        "x": 1070,
+        "y": 320,
+        "wires": [
+            [
+                "73bf6d7335b49a26",
+                "1915adae0ac41c37",
+                "94935853959483b3"
+            ]
+        ]
+    },
+    {
+        "id": "577012c85e361b8b",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "name": "Sim Clock Trigger",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.1",
+        "topic": "",
+        "x": 90,
+        "y": 600,
+        "wires": [
+            [
+                "8084d0c60d963452"
+            ]
+        ]
+    },
+    {
+        "id": "94935853959483b3",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "name": "Total Energy Calculator",
+        "func": "// Get previous total from flow or global context\nlet total = flow.get('energy.total') || 0;\n\n// Add new energy from this payload\nlet deviceEnergy = msg.payload.energyUsed || 0;\ntotal += deviceEnergy;\n\n// Round to 2 decimal places\ntotal = parseFloat(total.toFixed(2));\n\n// Save updated total\nflow.set('energy.total', total);\nglobal.set('energy.total', total); // optional\n\n// Prepare payload for ui_chart\nmsg.payload = {\n    series: [\"Total Energy\"],\n    data: [[total]],\n    labels: [new Date().toLocaleTimeString()]\n};\n\n// Also send total for debug node\nmsg.totalEnergy = `${total} KWh`;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 700,
+        "wires": [
+            [
+                "d7982dd2528420ba",
+                "830b9ca09789c78d"
+            ]
+        ]
+    },
+    {
+        "id": "d7982dd2528420ba",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "name": "Total Energy Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "totalEnergy",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1690,
+        "y": 620,
+        "wires": []
     },
     {
         "id": "830b9ca09789c78d",
         "type": "ui_chart",
         "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
         "name": "Energy Chart",
         "group": "8c896da163d208f1",
         "order": 3,
@@ -7520,81 +7524,67 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1060,
-        "y": 340,
+        "x": 1690,
+        "y": 800,
         "wires": [
             []
         ]
     },
     {
-        "id": "214c7a5c82508290",
+        "id": "8084d0c60d963452",
         "type": "function",
         "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "name": "Thermostat Telemetry",
-        "func": "const desired = flow.get('desired_temp') || 22; // default target temp\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nif (mode === 'heat') {\n    energy += 0.1; // heating uses more\n} else if (mode === 'cool') {\n    energy += 0.08; // cooling uses slightly less\n}\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current); // persist state\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: energy,\n    unit: \"C\"\n};\nreturn msg;",
+        "name": "Environment Generator",
+        "func": "const desired = flow.get('desired_temp') || 22;\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2));\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Calculate humidity\nlet humidity = 40 + Math.floor(Math.random() * 20);\n\n// Save globally for all devices\nflow.set('env.temperature', current);\nflow.set('env.humidity', humidity);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    environment: true,\n    temperature: current.toFixed(1),\n    humidity: humidity,\n    unit: \"C\"\n};\nreturn msg;",
         "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 220,
+        "x": 370,
+        "y": 600,
         "wires": [
             [
-                "fa29a1d7a019e819"
+                "cf5c5c9ec94c1a80",
+                "214c7a5c82508290"
             ]
         ]
     },
     {
-        "id": "inject_sim_clock",
-        "type": "inject",
+        "id": "cf5c5c9ec94c1a80",
+        "type": "function",
         "z": "4f4855f52107b72b",
-        "name": "Sim Clock Trigger",
-        "props": [],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "0.1",
-        "topic": "",
-        "x": 130,
-        "y": 840,
+        "name": "Extract Temperature for Gauge",
+        "func": "msg.payload = parseFloat(msg.payload.temperature);\nreturn msg;",
+        "outputs": 1,
+        "x": 270,
+        "y": 680,
         "wires": [
             [
-                "214c7a5c82508290",
-                "dbd082096676a420"
+                "7c1d0269d7dabda8"
             ]
         ]
     },
     {
-        "id": "fa29a1d7a019e819",
-        "type": "async-api-red",
+        "id": "7c1d0269d7dabda8",
+        "type": "ui_gauge",
         "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "name": "Thermostat pub",
-        "x": 740,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "dbd082096676a420",
-        "type": "async-api-red",
-        "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "name": "",
-        "x": 730,
-        "y": 300,
-        "wires": [
-            [
-                "94935853959483b3",
-                "808f1a17e940fa3c",
-                "830b9ca09789c78d",
-                "73bf6d7335b49a26",
-                "1915adae0ac41c37"
-            ]
-        ]
+        "name": "Temperature Gauge",
+        "group": "8c896da163d208f1",
+        "order": 3,
+        "width": 6,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Room Temperature",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 50,
+        "colors": [
+            "#00B500",
+            "#E6E600",
+            "#CA3838"
+        ],
+        "seg1": 18,
+        "seg2": 26,
+        "x": 180,
+        "y": 780,
+        "wires": []
     }
 ]
