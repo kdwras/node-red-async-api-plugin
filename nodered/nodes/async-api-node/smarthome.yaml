@@ -34,30 +34,6 @@ channels:
       lightStateMessage:
         $ref: '#/components/messages/LightState'
 
-  doorLock:
-    address: home/door/lock
-    messages:
-      doorLockMessage:
-        $ref: '#/components/messages/DoorLock'
-
-  doorState:
-    address: home/door/state
-    messages:
-      doorStateMessage:
-        $ref: '#/components/messages/DoorState'
-
-  coffeeStart:
-    address: home/coffee/start
-    messages:
-      coffeeStartMessage:
-        $ref: '#/components/messages/CoffeeStart'
-
-  coffeeState:
-    address: home/coffee/state
-    messages:
-      coffeeStateMessage:
-        $ref: '#/components/messages/CoffeeState'
-
   fridgeControl:
     address: home/fridge/control
     messages:
@@ -130,33 +106,6 @@ operations:
     messages:
       - $ref: '#/channels/lightsState/messages/lightStateMessage'
 
-  controlDoorLock:
-    action: send
-    channel:
-      $ref: '#/channels/doorLock'
-    messages:
-      - $ref: '#/channels/doorLock/messages/doorLockMessage'
-
-  doorTelemetry:
-    action: receive
-    channel:
-      $ref: '#/channels/doorState'
-    messages:
-      - $ref: '#/channels/doorState/messages/doorStateMessage'
-
-  startCoffeeMachine:
-    action: send
-    channel:
-      $ref: '#/channels/coffeeStart'
-    messages:
-      - $ref: '#/channels/coffeeStart/messages/coffeeStartMessage'
-
-  coffeeTelemetry:
-    action: receive
-    channel:
-      $ref: '#/channels/coffeeState'
-    messages:
-      - $ref: '#/channels/coffeeState/messages/coffeeStateMessage'
 
   controlFridge:
     action: send
@@ -272,11 +221,6 @@ components:
             type: number
             description: Cumulative energy used in kWh
             example: 12.34
-          timestamp:
-            type: string
-            format: date-time
-            description: ISO 8601 timestamp of the measurement
-            example: "2025-09-10T12:30:00Z"
 
     LightState:
       name: LightState
@@ -325,63 +269,6 @@ components:
             description: Current power draw in Watts
             example: 8.5
 
-    DoorLock:
-      name: DoorLock
-      summary: Lock or unlock door
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          locked:
-            type: boolean
-
-    DoorState:
-      name: DoorState
-      summary: Current door status
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          locked:
-            type: boolean
-          battery:
-            type: integer
-            description: Battery percentage
-          energyUsed:
-            type: number
-            description: Cumulative energy used in kWh
-
-    CoffeeStart:
-      name: CoffeeStart
-      summary: Start brewing coffee
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          strength:
-            type: string
-            enum: [ light, medium, strong ]
-          size:
-            type: string
-            enum: [ small, medium, large ]
-
-    CoffeeState:
-      name: CoffeeState
-      summary: Coffee machine status
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          brewing:
-            type: boolean
-          remainingTime:
-            type: integer
-          lastBrew:
-            type: string
-            format: date-time
-          energyUsed:
-            type: number
-            description: Cumulative energy used in kWh
 
     FridgeControl:
       name: FridgeControl
