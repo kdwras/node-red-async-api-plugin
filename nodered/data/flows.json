@@ -732,7 +732,7 @@
             "07d92834eb8e47f5",
             "598f2008fafaa0f4",
             "fc5e972c26387247",
-            "356d54b29496b3ef"
+            "c52b9fba2d85efa8"
         ],
         "x": 654,
         "y": 439,
@@ -6905,7 +6905,7 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC Telemetry",
-        "func": "// Desired cooling setpoint\nconst desired = flow.get('desired_ac_temp') || 24; // default 24°C\nlet current = flow.get('current_ac_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine AC mode\nlet mode = 'idle';\nif (current > desired + 1) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n} else if (current < desired - 1) {\n    mode = 'fan'; // fan mode (no cooling)\n}\n\n// Energy tracking\nlet energy = flow.get('energy.ac') || 0;\n\n// Device power ratings (Watts)\nconst acPower = 1200; // 1.2kW when cooling\nconst fanPower = 100; // 100W when fan only\n\n// Simulation tick duration (seconds)\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n} else if (mode === 'fan') {\n    energy += wattToKwh(fanPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\nmsg.payload = {\n    device: \"ac\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Environment values\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\n\n// Desired AC setpoint\nconst desired = flow.get('desired_ac_temp') || 24;\nlet current = flow.get('current_ac_temp') || envTemp;\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine AC mode\nlet mode = 'idle';\nif (current > desired + 1) mode = 'cool';\nelse if (current < desired - 1) mode = 'fan';\n\n// Energy tracking\nlet energy = flow.get('energy.ac') || 0;\nconst acPower = 1200;\nconst fanPower = 100;\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'cool') energy += wattToKwh(acPower, tickDuration);\nelse if (mode === 'fan') energy += wattToKwh(fanPower, tickDuration);\n\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\nmsg.payload = {\n    device: \"ac\",\n    temperature: current.toFixed(1),\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6932,7 +6932,7 @@
             [
                 "fc5e972c26387247",
                 "94935853959483b3",
-                "356d54b29496b3ef"
+                "c52b9fba2d85efa8"
             ]
         ]
     },
@@ -6955,7 +6955,7 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights Telemetry",
-        "func": "const state = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst brightness = state==='ON' ? Math.floor(Math.random()*101) : 0;\nlet energy = flow.get('energy.lights')||0;\nif(state==='ON') energy += brightness*0.01;\nflow.set('energy.lights',energy);\nmsg.payload = { state: state, brightness: brightness, energyUsed: energy };\nreturn msg;",
+        "func": "// Environment values (optional for lights)\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\n\n// Simulate light telemetry\nconst states = [\"ON\", \"OFF\"];\nlet state = states[Math.floor(Math.random() * states.length)];\nlet brightness = state === \"ON\" ? Math.floor(Math.random() * 101) : 0;\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// Energy tracking\nlet energy = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0;\nconst tickSeconds = 1;\nenergy += (power / 1000) * (tickSeconds / 3600);\nenergy = parseFloat(energy.toFixed(3));\nflow.set('energy.light', energy);\n\nmsg.payload = {\n    state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energy,\n    voltage: 230,\n    power: parseFloat(power.toFixed(2)),\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7393,7 +7393,7 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "const desired = flow.get('desired_temp') || 22; // default target temp\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking with realistic conversion\nlet energy = flow.get('energy.thermostat') || 0;\n\n// Device power ratings (Watts)\nconst heaterPower = 2000; // 2kW heater\nconst acPower = 1200;     // 1.2kW AC\n\n// Simulation tick duration (seconds)\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current); // persist state\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: energy,\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = flow.get('desired_temp') || 22;\n\n// Start at environment temperature\nlet current = flow.get('current_temp') || envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') energy += wattToKwh(heaterPower, tickDuration);\nelse if (mode === 'cool') energy += wattToKwh(acPower, tickDuration);\n\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: current.toFixed(1),\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7532,13 +7532,14 @@
         "name": "Environment Generator",
         "func": "const desired = flow.get('desired_temp') || 22;\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2));\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Calculate humidity\nlet humidity = 40 + Math.floor(Math.random() * 20);\n\n// Save globally for all devices\nflow.set('env.temperature', current);\nflow.set('env.humidity', humidity);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    environment: true,\n    temperature: current.toFixed(1),\n    humidity: humidity,\n    unit: \"C\"\n};\nreturn msg;",
         "outputs": 1,
-        "x": 370,
-        "y": 600,
+        "x": 390,
+        "y": 560,
         "wires": [
             [
                 "cf5c5c9ec94c1a80",
                 "214c7a5c82508290",
-                "07d92834eb8e47f5"
+                "07d92834eb8e47f5",
+                "func_lights"
             ]
         ]
     },
@@ -7584,17 +7585,17 @@
         "wires": []
     },
     {
-        "id": "356d54b29496b3ef",
+        "id": "c52b9fba2d85efa8",
         "type": "ui_text",
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "group": "8c896da163d208f1",
         "order": 1,
         "width": 6,
-        "height": 1,
+        "height": 2,
         "name": "AC Dashboard",
         "label": "AC",
-        "format": "State: {{msg.payload.state}} | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "format": "Mode: {{msg.payload.mode}} | Temp: {{msg.payload.temperature}}{{msg.payload.unit}} (Setpoint: {{msg.payload.setpoint}}{{msg.payload.unit}}) | Humidity: {{msg.payload.humidity}}% | Fan: {{msg.payload.fanSpeed}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh | Time: {{msg.payload.timestamp}}",
         "layout": "row-spread",
         "className": "",
         "style": "",

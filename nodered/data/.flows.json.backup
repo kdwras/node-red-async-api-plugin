@@ -732,10 +732,10 @@
             "07d92834eb8e47f5",
             "598f2008fafaa0f4",
             "fc5e972c26387247",
-            "356d54b29496b3ef"
+            "c52b9fba2d85efa8"
         ],
-        "x": 634,
-        "y": 539,
+        "x": 654,
+        "y": 439,
         "w": 712,
         "h": 162
     },
@@ -758,8 +758,8 @@
             "debug_lights",
             "ui_lights"
         ],
-        "x": 634,
-        "y": 739,
+        "x": 654,
+        "y": 679,
         "w": 712,
         "h": 162
     },
@@ -782,8 +782,8 @@
             "debug_door",
             "ui_door"
         ],
-        "x": 634,
-        "y": 939,
+        "x": 654,
+        "y": 919,
         "w": 672,
         "h": 162
     },
@@ -6912,8 +6912,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 580,
+        "x": 760,
+        "y": 480,
         "wires": [
             [
                 "598f2008fafaa0f4"
@@ -6926,13 +6926,13 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 990,
-        "y": 580,
+        "x": 1010,
+        "y": 480,
         "wires": [
             [
                 "fc5e972c26387247",
                 "94935853959483b3",
-                "356d54b29496b3ef"
+                "c52b9fba2d85efa8"
             ]
         ]
     },
@@ -6945,8 +6945,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1230,
-        "y": 600,
+        "x": 1250,
+        "y": 500,
         "wires": []
     },
     {
@@ -6962,8 +6962,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 780,
+        "x": 760,
+        "y": 720,
         "wires": [
             [
                 "asyncapi_lights"
@@ -6976,8 +6976,8 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 990,
-        "y": 780,
+        "x": 1010,
+        "y": 720,
         "wires": [
             [
                 "debug_lights",
@@ -6995,8 +6995,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1230,
-        "y": 780,
+        "x": 1250,
+        "y": 720,
         "wires": []
     },
     {
@@ -7017,8 +7017,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1190,
-        "y": 860,
+        "x": 1210,
+        "y": 800,
         "wires": []
     },
     {
@@ -7029,8 +7029,8 @@
         "name": "Door Telemetry",
         "func": "const locked = Math.random() > 0.5;\nconst battery = 50 + Math.floor(Math.random()*51);\nlet energy = flow.get('energy.door')||0;\nif(!locked) energy += 0.01;\nflow.set('energy.door',energy);\nmsg.payload = { locked: locked, battery: battery, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 740,
-        "y": 980,
+        "x": 760,
+        "y": 960,
         "wires": [
             [
                 "asyncapi_door"
@@ -7043,8 +7043,8 @@
         "z": "4f4855f52107b72b",
         "g": "door_group",
         "name": "Door AsyncAPI",
-        "x": 990,
-        "y": 980,
+        "x": 1010,
+        "y": 960,
         "wires": [
             [
                 "debug_door",
@@ -7062,8 +7062,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1190,
-        "y": 980,
+        "x": 1210,
+        "y": 960,
         "wires": []
     },
     {
@@ -7084,8 +7084,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1190,
-        "y": 1060,
+        "x": 1210,
+        "y": 1040,
         "wires": []
     },
     {
@@ -7584,25 +7584,25 @@
         "wires": []
     },
     {
-        "id": "356d54b29496b3ef",
+        "id": "c52b9fba2d85efa8",
         "type": "ui_text",
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "group": "8c896da163d208f1",
         "order": 1,
         "width": 6,
-        "height": 1,
+        "height": 2,
         "name": "AC Dashboard",
         "label": "AC",
-        "format": "State: {{msg.payload.state}} | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "format": "Mode: {{msg.payload.mode}} | Temp: {{msg.payload.temperature}}{{msg.payload.unit}} (Setpoint: {{msg.payload.setpoint}}{{msg.payload.unit}}) | Humidity: {{msg.payload.humidity}}% | Fan: {{msg.payload.fanSpeed}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh | Time: {{msg.payload.timestamp}}",
         "layout": "row-spread",
         "className": "",
         "style": "",
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1220,
-        "y": 660,
+        "x": 1240,
+        "y": 560,
         "wires": []
     }
 ]

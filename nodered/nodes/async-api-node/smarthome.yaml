@@ -287,14 +287,43 @@ components:
         properties:
           state:
             type: string
+            description: Current power state of the light
             enum: [ ON, OFF ]
           brightness:
             type: integer
             minimum: 0
             maximum: 100
+            description: Brightness level as percentage
+          color:
+            type: string
+            description: Hex or RGB color value (e.g., "#FFAA00" or "rgb(255,170,0)")
+            example: "#FFFFFF"
+          colorTemperature:
+            type: integer
+            description: Color temperature in Kelvin (e.g., 2700 warm white – 6500 cool white)
+            minimum: 1500
+            maximum: 9000
+            example: 4000
+          mode:
+            type: string
+            description: Current light mode
+            enum: [ normal, reading, nightlight, ambient, effect ]
+          effect:
+            type: string
+            description: Active effect (if any, e.g., "rainbow", "pulse", "candle")
+            example: "candle"
           energyUsed:
             type: number
             description: Cumulative energy used in kWh
+            example: 5.23
+          voltage:
+            type: number
+            description: Operating voltage in Volts
+            example: 230
+          power:
+            type: number
+            description: Current power draw in Watts
+            example: 8.5
 
     DoorLock:
       name: DoorLock
