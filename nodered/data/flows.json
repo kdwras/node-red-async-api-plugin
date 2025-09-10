@@ -732,12 +732,12 @@
             "07d92834eb8e47f5",
             "598f2008fafaa0f4",
             "fc5e972c26387247",
-            "c52b9fba2d85efa8"
+            "356d54b29496b3ef"
         ],
-        "x": 634,
-        "y": 539,
-        "w": 672,
-        "h": 142
+        "x": 654,
+        "y": 439,
+        "w": 712,
+        "h": 162
     },
     {
         "id": "lights_group",
@@ -758,10 +758,10 @@
             "debug_lights",
             "ui_lights"
         ],
-        "x": 634,
-        "y": 739,
-        "w": 672,
-        "h": 142
+        "x": 654,
+        "y": 679,
+        "w": 712,
+        "h": 162
     },
     {
         "id": "door_group",
@@ -782,10 +782,10 @@
             "debug_door",
             "ui_door"
         ],
-        "x": 634,
-        "y": 939,
+        "x": 654,
+        "y": 919,
         "w": 672,
-        "h": 142
+        "h": 162
     },
     {
         "id": "fridge_group",
@@ -809,7 +809,7 @@
         "x": 634,
         "y": 1139,
         "w": 692,
-        "h": 142
+        "h": 162
     },
     {
         "id": "launder_group",
@@ -833,7 +833,7 @@
         "x": 614,
         "y": 1359,
         "w": 692,
-        "h": 142
+        "h": 162
     },
     {
         "id": "dehumidifier_group",
@@ -855,9 +855,9 @@
             "ui_dehumidifier"
         ],
         "x": 614,
-        "y": 1579,
-        "w": 722,
-        "h": 142
+        "y": 1559,
+        "w": 832,
+        "h": 162
     },
     {
         "id": "cooker_group",
@@ -880,8 +880,8 @@
         ],
         "x": 614,
         "y": 1799,
-        "w": 692,
-        "h": 142
+        "w": 752,
+        "h": 162
     },
     {
         "id": "19609f77c4ba5897",
@@ -6905,14 +6905,18 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC Telemetry",
-        "func": "const state=Math.random()>0.5?'ON':'OFF';\nlet energy=flow.get('energy.ac')||0;\nif(state==='ON') energy+=0.2;\nflow.set('energy.ac',energy);\nmsg.payload={state:state,energyUsed:energy,mode:'cooling'};\nreturn msg;",
+        "func": "// Desired cooling setpoint\nconst desired = flow.get('desired_ac_temp') || 24; // default 24°C\nlet current = flow.get('current_ac_temp') || (desired + (Math.random() * 4 - 2)); // start near desired\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine AC mode\nlet mode = 'idle';\nif (current > desired + 1) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n} else if (current < desired - 1) {\n    mode = 'fan'; // fan mode (no cooling)\n}\n\n// Energy tracking\nlet energy = flow.get('energy.ac') || 0;\n\n// Device power ratings (Watts)\nconst acPower = 1200; // 1.2kW when cooling\nconst fanPower = 100; // 100W when fan only\n\n// Simulation tick duration (seconds)\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n} else if (mode === 'fan') {\n    energy += wattToKwh(fanPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\nmsg.payload = {\n    device: \"ac\",\n    temperature: current.toFixed(1),\n    humidity: 40 + Math.floor(Math.random() * 20),\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
-        "x": 740,
-        "y": 580,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 480,
         "wires": [
             [
-                "598f2008fafaa0f4",
-                "c52b9fba2d85efa8"
+                "598f2008fafaa0f4"
             ]
         ]
     },
@@ -6922,11 +6926,13 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 990,
-        "y": 580,
+        "x": 1010,
+        "y": 480,
         "wires": [
             [
-                "fc5e972c26387247"
+                "fc5e972c26387247",
+                "94935853959483b3",
+                "356d54b29496b3ef"
             ]
         ]
     },
@@ -6939,30 +6945,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1190,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "c52b9fba2d85efa8",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "c99ee48a54796f90",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "",
-        "label": "AC",
-        "format": "State: {{msg.payload.state}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 990,
-        "y": 640,
+        "x": 1250,
+        "y": 500,
         "wires": []
     },
     {
@@ -6973,12 +6957,16 @@
         "name": "Lights Telemetry",
         "func": "const state = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst brightness = state==='ON' ? Math.floor(Math.random()*101) : 0;\nlet energy = flow.get('energy.lights')||0;\nif(state==='ON') energy += brightness*0.01;\nflow.set('energy.lights',energy);\nmsg.payload = { state: state, brightness: brightness, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 740,
-        "y": 780,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 720,
         "wires": [
             [
-                "asyncapi_lights",
-                "ui_lights"
+                "asyncapi_lights"
             ]
         ]
     },
@@ -6988,11 +6976,13 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 990,
-        "y": 780,
+        "x": 1010,
+        "y": 720,
         "wires": [
             [
-                "debug_lights"
+                "debug_lights",
+                "ui_lights",
+                "94935853959483b3"
             ]
         ]
     },
@@ -7005,8 +6995,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1190,
-        "y": 780,
+        "x": 1250,
+        "y": 720,
         "wires": []
     },
     {
@@ -7027,8 +7017,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 990,
-        "y": 840,
+        "x": 1210,
+        "y": 800,
         "wires": []
     },
     {
@@ -7039,12 +7029,11 @@
         "name": "Door Telemetry",
         "func": "const locked = Math.random() > 0.5;\nconst battery = 50 + Math.floor(Math.random()*51);\nlet energy = flow.get('energy.door')||0;\nif(!locked) energy += 0.01;\nflow.set('energy.door',energy);\nmsg.payload = { locked: locked, battery: battery, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 740,
-        "y": 980,
+        "x": 760,
+        "y": 960,
         "wires": [
             [
-                "asyncapi_door",
-                "ui_door"
+                "asyncapi_door"
             ]
         ]
     },
@@ -7054,11 +7043,13 @@
         "z": "4f4855f52107b72b",
         "g": "door_group",
         "name": "Door AsyncAPI",
-        "x": 990,
-        "y": 980,
+        "x": 1010,
+        "y": 960,
         "wires": [
             [
-                "debug_door"
+                "debug_door",
+                "94935853959483b3",
+                "ui_door"
             ]
         ]
     },
@@ -7071,8 +7062,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1190,
-        "y": 980,
+        "x": 1210,
+        "y": 960,
         "wires": []
     },
     {
@@ -7093,7 +7084,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 990,
+        "x": 1210,
         "y": 1040,
         "wires": []
     },
@@ -7109,8 +7100,7 @@
         "y": 1180,
         "wires": [
             [
-                "asyncapi_fridge",
-                "ui_fridge"
+                "asyncapi_fridge"
             ]
         ]
     },
@@ -7124,7 +7114,9 @@
         "y": 1180,
         "wires": [
             [
-                "debug_fridge"
+                "debug_fridge",
+                "ui_fridge",
+                "94935853959483b3"
             ]
         ]
     },
@@ -7159,8 +7151,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1000,
-        "y": 1240,
+        "x": 1250,
+        "y": 1260,
         "wires": []
     },
     {
@@ -7175,8 +7167,7 @@
         "y": 1400,
         "wires": [
             [
-                "asyncapi_launder",
-                "ui_launder"
+                "asyncapi_launder"
             ]
         ]
     },
@@ -7190,7 +7181,9 @@
         "y": 1400,
         "wires": [
             [
-                "debug_launder"
+                "debug_launder",
+                "ui_launder",
+                "94935853959483b3"
             ]
         ]
     },
@@ -7216,8 +7209,8 @@
         "order": 1,
         "label": "Launder",
         "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Remaining: {{msg.payload.remainingTime}} min | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "x": 980,
-        "y": 1460,
+        "x": 1220,
+        "y": 1480,
         "wires": []
     },
     {
@@ -7232,8 +7225,7 @@
         "y": 1620,
         "wires": [
             [
-                "asyncapi_dehumidifier",
-                "ui_dehumidifier"
+                "asyncapi_dehumidifier"
             ]
         ]
     },
@@ -7247,7 +7239,9 @@
         "y": 1620,
         "wires": [
             [
-                "debug_dehumidifier"
+                "debug_dehumidifier",
+                "ui_dehumidifier",
+                "94935853959483b3"
             ]
         ]
     },
@@ -7260,8 +7254,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1190,
-        "y": 1620,
+        "x": 1300,
+        "y": 1600,
         "wires": []
     },
     {
@@ -7282,7 +7276,7 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 990,
+        "x": 1250,
         "y": 1680,
         "wires": []
     },
@@ -7298,8 +7292,7 @@
         "y": 1840,
         "wires": [
             [
-                "asyncapi_cooker",
-                "ui_cooker"
+                "asyncapi_cooker"
             ]
         ]
     },
@@ -7313,7 +7306,9 @@
         "y": 1840,
         "wires": [
             [
-                "debug_cooker"
+                "debug_cooker",
+                "94935853959483b3",
+                "ui_cooker"
             ]
         ]
     },
@@ -7326,7 +7321,7 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1180,
+        "x": 1240,
         "y": 1840,
         "wires": []
     },
@@ -7348,8 +7343,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 980,
-        "y": 1900,
+        "x": 1240,
+        "y": 1920,
         "wires": []
     },
     {
@@ -7460,8 +7455,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1690,
-        "y": 520,
+        "x": 1930,
+        "y": 980,
         "wires": [
             [
                 "d7982dd2528420ba",
@@ -7482,8 +7477,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2030,
-        "y": 400,
+        "x": 2170,
+        "y": 920,
         "wires": []
     },
     {
@@ -7524,8 +7519,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 2010,
-        "y": 600,
+        "x": 2150,
+        "y": 1020,
         "wires": [
             []
         ]
@@ -7542,7 +7537,8 @@
         "wires": [
             [
                 "cf5c5c9ec94c1a80",
-                "214c7a5c82508290"
+                "214c7a5c82508290",
+                "07d92834eb8e47f5"
             ]
         ]
     },
@@ -7585,6 +7581,28 @@
         "seg2": 26,
         "x": 180,
         "y": 780,
+        "wires": []
+    },
+    {
+        "id": "356d54b29496b3ef",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "group": "8c896da163d208f1",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "AC Dashboard",
+        "label": "AC",
+        "format": "State: {{msg.payload.state}} | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "row-spread",
+        "className": "",
+        "style": "",
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1240,
+        "y": 560,
         "wires": []
     }
 ]
