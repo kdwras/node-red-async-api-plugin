@@ -47,11 +47,6 @@ channels:
       launderStateMessage:
         $ref: '#/components/messages/LaunderState'
 
-  dehumidifierControl:
-    address: home/dehumidifier/control
-    messages:
-      dehumidifierControlMessage:
-        $ref: '#/components/messages/DehumidifierControl'
 
   dehumidifierState:
     address: home/dehumidifier/state
@@ -59,11 +54,6 @@ channels:
       dehumidifierStateMessage:
         $ref: '#/components/messages/DehumidifierState'
 
-  cookerControl:
-    address: home/cooker/control
-    messages:
-      cookerControlMessage:
-        $ref: '#/components/messages/CookerControl'
 
   cookerState:
     address: home/cooker/state
@@ -104,35 +94,23 @@ operations:
 
 
   launderTelemetry:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/launderState'
     messages:
       - $ref: '#/channels/launderState/messages/launderStateMessage'
 
-  controlDehumidifier:
-    action: send
-    channel:
-      $ref: '#/channels/dehumidifierControl'
-    messages:
-      - $ref: '#/channels/dehumidifierControl/messages/dehumidifierControlMessage'
 
   dehumidifierTelemetry:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/dehumidifierState'
     messages:
       - $ref: '#/channels/dehumidifierState/messages/dehumidifierStateMessage'
 
-  controlCooker:
-    action: send
-    channel:
-      $ref: '#/channels/cookerControl'
-    messages:
-      - $ref: '#/channels/cookerControl/messages/cookerControlMessage'
 
   cookerTelemetry:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/cookerState'
     messages:
@@ -343,74 +321,74 @@ components:
             enum: [ open, closed, locked ]
 
 
-    DehumidifierControl:
-      name: DehumidifierControl
-      summary: Control smart dehumidifier
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          power:
-            type: string
-            enum: [ ON, OFF ]
-          targetHumidity:
-            type: integer
-            minimum: 30
-            maximum: 80
-
     DehumidifierState:
       name: DehumidifierState
-      summary: Dehumidifier telemetry
+      summary: Smart dehumidifier telemetry
       contentType: application/json
       payload:
         type: object
         properties:
+          device:
+            type: string
+            example: "dehumidifier"
           power:
             type: string
             enum: [ ON, OFF ]
-          currentHumidity:
-            type: integer
-          targetHumidity:
-            type: integer
+          mode:
+            type: string
+            enum: [ auto, manual ]
+          fanSpeed:
+            type: string
+            enum: [ low, medium, high ]
+          tankLevel:
+            type: number
+            description: Water tank fill level in %
+            example: 45
+          humidityRemoved:
+            type: number
+            description: Amount of humidity removed from room (%RH)
+            example: 3.5
           energyUsed:
             type: number
             description: Cumulative energy used in kWh
+            example: 0.12
+          environmentHumidity:
+            type: number
+            description: Current room humidity %
+            example: 55
 
-    CookerControl:
-      name: CookerControl
-      summary: Start cooking process
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          command:
-            type: string
-            enum: [ start, stop ]
-          mode:
-            type: string
-            enum: [ boil, steam, fry, bake ]
-          duration:
-            type: integer
-          temperature:
-            type: integer
-            minimum: 50
-            maximum: 300
+
 
     CookerState:
       name: CookerState
-      summary: Cooker telemetry
+      summary: Smart cooker/oven telemetry
       contentType: application/json
       payload:
         type: object
         properties:
-          running:
-            type: boolean
+          device:
+            type: string
+            example: "cooker"
+          power:
+            type: string
+            enum: [ ON, OFF ]
           mode:
             type: string
-          remainingTime:
+            enum: [ idle, bake, grill, roast, steam ]
+          setTemp:
+            type: number
+            description: Target temperature in Celsius
+            example: 200
+          currentTemp:
+            type: number
+            description: Current oven temperature
+            example: 180
+          timer:
             type: integer
-          temperature:
-            type: integer
+            description: Minutes remaining in cooking cycle
+            example: 25
           energyUsed:
             type: number
             description: Cumulative energy used in kWh
+            example: 0.45
+
