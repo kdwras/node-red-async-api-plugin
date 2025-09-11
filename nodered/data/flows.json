@@ -716,9 +716,45 @@
         "h": 142
     },
     {
+        "id": "876a8dac7a94efab",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "94935853959483b3",
+            "d7982dd2528420ba",
+            "830b9ca09789c78d",
+            "c99ee48a54796f90",
+            "lights_group",
+            "fridge_group",
+            "launder_group",
+            "dehumidifier_group",
+            "cooker_group",
+            "19609f77c4ba5897",
+            "dbcecb9927394929",
+            "8084d0c60d963452",
+            "577012c85e361b8b",
+            "cf5c5c9ec94c1a80",
+            "7c1d0269d7dabda8"
+        ],
+        "x": 154,
+        "y": 79,
+        "w": 2352,
+        "h": 1568
+    },
+    {
         "id": "c99ee48a54796f90",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -734,8 +770,8 @@
             "fc5e972c26387247",
             "c52b9fba2d85efa8"
         ],
-        "x": 654,
-        "y": 479,
+        "x": 854,
+        "y": 459,
         "w": 712,
         "h": 162
     },
@@ -743,6 +779,7 @@
         "id": "lights_group",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -758,8 +795,8 @@
             "debug_lights",
             "ui_lights"
         ],
-        "x": 654,
-        "y": 679,
+        "x": 854,
+        "y": 659,
         "w": 712,
         "h": 162
     },
@@ -767,6 +804,7 @@
         "id": "fridge_group",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -780,17 +818,18 @@
             "func_fridge",
             "asyncapi_fridge",
             "debug_fridge",
-            "ui_fridge"
+            "83b2a6a09af78248"
         ],
-        "x": 654,
-        "y": 879,
+        "x": 854,
+        "y": 859,
         "w": 692,
-        "h": 162
+        "h": 142
     },
     {
         "id": "launder_group",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -806,8 +845,8 @@
             "debug_launder",
             "ui_launder"
         ],
-        "x": 654,
-        "y": 1079,
+        "x": 854,
+        "y": 1059,
         "w": 692,
         "h": 162
     },
@@ -815,6 +854,7 @@
         "id": "dehumidifier_group",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -830,8 +870,8 @@
             "debug_dehumidifier",
             "ui_dehumidifier"
         ],
-        "x": 654,
-        "y": 1279,
+        "x": 854,
+        "y": 1259,
         "w": 832,
         "h": 162
     },
@@ -839,6 +879,7 @@
         "id": "cooker_group",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -854,8 +895,8 @@
             "debug_cooker",
             "ui_cooker"
         ],
-        "x": 654,
-        "y": 1479,
+        "x": 854,
+        "y": 1459,
         "w": 752,
         "h": 162
     },
@@ -863,6 +904,7 @@
         "id": "19609f77c4ba5897",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -878,8 +920,8 @@
             "214c7a5c82508290",
             "dbd082096676a420"
         ],
-        "x": 654,
-        "y": 259,
+        "x": 854,
+        "y": 239,
         "w": 892,
         "h": 162
     },
@@ -6888,8 +6930,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 520,
+        "x": 960,
+        "y": 500,
         "wires": [
             [
                 "598f2008fafaa0f4"
@@ -6902,8 +6944,8 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 1010,
-        "y": 520,
+        "x": 1210,
+        "y": 500,
         "wires": [
             [
                 "fc5e972c26387247",
@@ -6921,8 +6963,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1250,
-        "y": 540,
+        "x": 1450,
+        "y": 520,
         "wires": []
     },
     {
@@ -6938,8 +6980,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 720,
+        "x": 960,
+        "y": 700,
         "wires": [
             [
                 "asyncapi_lights"
@@ -6952,8 +6994,8 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 1010,
-        "y": 720,
+        "x": 1210,
+        "y": 700,
         "wires": [
             [
                 "debug_lights",
@@ -6971,8 +7013,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1250,
-        "y": 720,
+        "x": 1450,
+        "y": 700,
         "wires": []
     },
     {
@@ -6993,8 +7035,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1210,
-        "y": 800,
+        "x": 1410,
+        "y": 780,
         "wires": []
     },
     {
@@ -7003,10 +7045,15 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge Telemetry",
-        "func": "const power = Math.random() > 0.1 ? 'ON' : 'OFF';\nconst modes = ['eco','normal','turbo'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst fridgeTemp = 2 + Math.floor(Math.random()*5);\nconst freezerTemp = -18 + Math.floor(Math.random()*5);\nconst doorOpen = Math.random() > 0.8;\n\nlet energy = flow.get('energy.fridge')||0;\nif(power==='ON') energy += 0.05;\nflow.set('energy.fridge', energy);\n\nmsg.payload = { power, mode, fridgeTemp, freezerTemp, doorOpen, energyUsed: energy };\nreturn msg;",
+        "func": "// === Fridge Telemetry Simulation ===\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(\"fridge.setTemp\") || 4;   // °C\nconst freezerSet = flow.get(\"freezer.setTemp\") || -18; // °C\n\n// Current temps (with drift around setpoint)\nlet fridgeTemp = flow.get(\"fridge.currentTemp\") || fridgeSet + (Math.random() * 2 - 1);\nlet freezerTemp = flow.get(\"freezer.currentTemp\") || freezerSet + (Math.random() * 2 - 1);\n\n// Random drift\nfridgeTemp += (Math.random() * 0.4 - 0.2);\nfreezerTemp += (Math.random() * 0.6 - 0.3);\n\n// Compressor state logic\nlet compressor = \"OFF\";\nif (fridgeTemp > fridgeSet + 1 || freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3;   // cooling effect\n    freezerTemp -= 0.5;\n}\n\n// Energy usage tracking\nlet energy = flow.get(\"energy.fridge\") || 0;\nconst compressorPower = 150; // W typical fridge draw\nconst idlePower = 5;         // W electronics/LEDs\nconst tickSeconds = 1;\n\nfunction wattToKwh(power, sec) {\n    return (power / 1000) * (sec / 3600);\n}\nif (compressor === \"ON\") {\n    energy += wattToKwh(compressorPower, tickSeconds);\n} else {\n    energy += wattToKwh(idlePower, tickSeconds);\n}\nflow.set(\"energy.fridge\", energy);\n\n// Door status simulation (10% chance door is open)\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// Save temps for next tick\nflow.set(\"fridge.currentTemp\", fridgeTemp);\nflow.set(\"freezer.currentTemp\", freezerTemp);\n\n// Telemetry payload\nmsg.payload = {\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus: doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    energyUsed: parseFloat(energy.toFixed(3)),\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
-        "x": 770,
-        "y": 920,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 900,
         "wires": [
             [
                 "asyncapi_fridge"
@@ -7019,13 +7066,13 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge AsyncAPI",
-        "x": 1020,
-        "y": 920,
+        "x": 1220,
+        "y": 900,
         "wires": [
             [
                 "debug_fridge",
-                "ui_fridge",
-                "94935853959483b3"
+                "94935853959483b3",
+                "83b2a6a09af78248"
             ]
         ]
     },
@@ -7038,30 +7085,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1220,
-        "y": 920,
-        "wires": []
-    },
-    {
-        "id": "ui_fridge",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "fridge_group",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "",
-        "label": "Fridge",
-        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Fridge: {{msg.payload.fridgeTemp}}°C | Freezer: {{msg.payload.freezerTemp}}°C | Door: {{msg.payload.doorOpen}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1270,
-        "y": 1000,
+        "x": 1420,
+        "y": 900,
         "wires": []
     },
     {
@@ -7072,8 +7097,8 @@
         "name": "Launder Telemetry",
         "func": "const running = Math.random() > 0.5;\nconst modes = ['quick','delicate','heavy','normal'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) + 10 : 0;\n\nlet energy = flow.get('energy.launder') || 0;\nif(running) energy += 0.1;\nflow.set('energy.launder', energy);\n\nmsg.payload = { running, mode, remainingTime, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 770,
-        "y": 1120,
+        "x": 970,
+        "y": 1100,
         "wires": [
             [
                 "asyncapi_launder"
@@ -7086,8 +7111,8 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Launder AsyncAPI",
-        "x": 1020,
-        "y": 1120,
+        "x": 1220,
+        "y": 1100,
         "wires": [
             [
                 "debug_launder",
@@ -7105,8 +7130,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1220,
-        "y": 1120,
+        "x": 1420,
+        "y": 1100,
         "wires": []
     },
     {
@@ -7118,8 +7143,8 @@
         "order": 1,
         "label": "Launder",
         "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Remaining: {{msg.payload.remainingTime}} min | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "x": 1260,
-        "y": 1200,
+        "x": 1460,
+        "y": 1180,
         "wires": []
     },
     {
@@ -7130,8 +7155,8 @@
         "name": "Dehumidifier Telemetry",
         "func": "const power = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst targetHumidity = 40 + Math.floor(Math.random()*20);\nconst currentHumidity = 30 + Math.floor(Math.random()*50);\n\nlet energy = flow.get('energy.dehumidifier') || 0;\nif(power === 'ON') energy += 0.08;\nflow.set('energy.dehumidifier', energy);\n\nmsg.payload = { power, currentHumidity, targetHumidity, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 780,
-        "y": 1340,
+        "x": 980,
+        "y": 1320,
         "wires": [
             [
                 "asyncapi_dehumidifier"
@@ -7144,8 +7169,8 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier AsyncAPI",
-        "x": 1030,
-        "y": 1340,
+        "x": 1230,
+        "y": 1320,
         "wires": [
             [
                 "debug_dehumidifier",
@@ -7163,8 +7188,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1340,
-        "y": 1320,
+        "x": 1540,
+        "y": 1300,
         "wires": []
     },
     {
@@ -7185,8 +7210,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1290,
-        "y": 1400,
+        "x": 1490,
+        "y": 1380,
         "wires": []
     },
     {
@@ -7197,8 +7222,8 @@
         "name": "Cooker Telemetry",
         "func": "const running = Math.random() > 0.5;\nconst modes = ['boil','steam','fry','bake'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) : 0;\nconst temperature = running ? 100 + Math.floor(Math.random()*150) : 0;\n\nlet energy = flow.get('energy.cooker') || 0;\nif(running) energy += 0.25; // kWh step when active\nflow.set('energy.cooker', energy);\n\nmsg.payload = { running, mode, remainingTime, temperature, energyUsed: energy };\nreturn msg;",
         "outputs": 1,
-        "x": 770,
-        "y": 1520,
+        "x": 970,
+        "y": 1500,
         "wires": [
             [
                 "asyncapi_cooker"
@@ -7211,8 +7236,8 @@
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker AsyncAPI",
-        "x": 1020,
-        "y": 1520,
+        "x": 1220,
+        "y": 1500,
         "wires": [
             [
                 "debug_cooker",
@@ -7230,8 +7255,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1280,
-        "y": 1520,
+        "x": 1480,
+        "y": 1500,
         "wires": []
     },
     {
@@ -7252,8 +7277,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1280,
-        "y": 1600,
+        "x": 1480,
+        "y": 1580,
         "wires": []
     },
     {
@@ -7270,8 +7295,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1410,
-        "y": 300,
+        "x": 1610,
+        "y": 280,
         "wires": []
     },
     {
@@ -7292,8 +7317,8 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1450,
-        "y": 380,
+        "x": 1650,
+        "y": 360,
         "wires": []
     },
     {
@@ -7309,8 +7334,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 320,
+        "x": 980,
+        "y": 300,
         "wires": [
             [
                 "dbd082096676a420"
@@ -7323,8 +7348,8 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": " Thermostat AsyncAPI",
-        "x": 1100,
-        "y": 340,
+        "x": 1300,
+        "y": 320,
         "wires": [
             [
                 "73bf6d7335b49a26",
@@ -7337,6 +7362,7 @@
         "id": "577012c85e361b8b",
         "type": "inject",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Sim Clock Trigger",
         "props": [],
         "repeat": "5",
@@ -7344,8 +7370,8 @@
         "once": false,
         "onceDelay": "0.1",
         "topic": "",
-        "x": 90,
-        "y": 600,
+        "x": 290,
+        "y": 660,
         "wires": [
             [
                 "8084d0c60d963452"
@@ -7356,6 +7382,7 @@
         "id": "94935853959483b3",
         "type": "function",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Total Energy Calculator",
         "func": "// Get previous total from flow or global context\nlet total = flow.get('energy.total') || 0;\n\n// Add new energy from this payload\nlet deviceEnergy = msg.payload.energyUsed || 0;\ntotal += deviceEnergy;\n\n// Round to 2 decimal places\ntotal = parseFloat(total.toFixed(2));\n\n// Save updated total\nflow.set('energy.total', total);\nglobal.set('energy.total', total); // optional\n\n// Prepare payload for ui_chart\nmsg.payload = {\n    series: [\"Total Energy\"],\n    data: [[total]],\n    labels: [new Date().toLocaleTimeString()]\n};\n\n// Also send total for debug node\nmsg.totalEnergy = `${total} KWh`;\n\nreturn msg;\n",
         "outputs": 1,
@@ -7364,8 +7391,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1930,
-        "y": 980,
+        "x": 2130,
+        "y": 960,
         "wires": [
             [
                 "d7982dd2528420ba",
@@ -7377,6 +7404,7 @@
         "id": "d7982dd2528420ba",
         "type": "debug",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Total Energy Debug",
         "active": true,
         "tosidebar": true,
@@ -7386,14 +7414,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2170,
-        "y": 920,
+        "x": 2370,
+        "y": 900,
         "wires": []
     },
     {
         "id": "830b9ca09789c78d",
         "type": "ui_chart",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Energy Chart",
         "group": "8c896da163d208f1",
         "order": 3,
@@ -7428,8 +7457,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 2150,
-        "y": 1020,
+        "x": 2350,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -7438,6 +7467,7 @@
         "id": "8084d0c60d963452",
         "type": "function",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Environment Generator",
         "func": "// Environment Generator\nconst desired = flow.get('desired_temp') || 22;\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2));\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Calculate humidity\nlet humidity = 40 + Math.floor(Math.random() * 20);\n\n// Simulate room light intensity (0 = dark, 100 = very bright)\nlet lightIntensity = Math.floor(Math.random() * 101);\n\n// Save globally for all devices\nflow.set('env.temperature', current);\nflow.set('env.humidity', humidity);\nflow.set('env.lightIntensity', lightIntensity);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    environment: true,\n    temperature: current.toFixed(1),\n    humidity: humidity,\n    lightIntensity: lightIntensity,\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
@@ -7446,14 +7476,15 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 390,
-        "y": 560,
+        "x": 590,
+        "y": 620,
         "wires": [
             [
                 "cf5c5c9ec94c1a80",
                 "214c7a5c82508290",
                 "07d92834eb8e47f5",
-                "func_lights"
+                "func_lights",
+                "func_fridge"
             ]
         ]
     },
@@ -7461,11 +7492,12 @@
         "id": "cf5c5c9ec94c1a80",
         "type": "function",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Extract Temperature for Gauge",
         "func": "msg.payload = parseFloat(msg.payload.temperature);\nreturn msg;",
         "outputs": 1,
-        "x": 270,
-        "y": 680,
+        "x": 470,
+        "y": 740,
         "wires": [
             [
                 "7c1d0269d7dabda8"
@@ -7476,6 +7508,7 @@
         "id": "7c1d0269d7dabda8",
         "type": "ui_gauge",
         "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
         "name": "Temperature Gauge",
         "group": "8c896da163d208f1",
         "order": 3,
@@ -7494,8 +7527,8 @@
         ],
         "seg1": 18,
         "seg2": 26,
-        "x": 180,
-        "y": 780,
+        "x": 380,
+        "y": 840,
         "wires": []
     },
     {
@@ -7516,8 +7549,41 @@
         "font": "",
         "fontSize": "",
         "color": "#000000",
-        "x": 1240,
-        "y": 600,
+        "x": 1440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "dbcecb9927394929",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "SMARTHOME",
+        "info": "",
+        "x": 280,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "83b2a6a09af78248",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "group": "8c896da163d208f1",
+        "order": 1,
+        "width": 12,
+        "height": 2,
+        "name": "Fridge Status",
+        "label": "Fridge",
+        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Fridge: {{msg.payload.fridgeTemp}}°C | Freezer: {{msg.payload.freezerTemp}}°C | Door: {{msg.payload.doorStatus}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
+        "layout": "row-spread",
+        "className": "",
+        "style": "",
+        "font": "",
+        "fontSize": "16px",
+        "color": "#000000",
+        "x": 1410,
+        "y": 960,
         "wires": []
     }
 ]

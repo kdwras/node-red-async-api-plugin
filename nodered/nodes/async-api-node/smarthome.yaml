@@ -34,23 +34,12 @@ channels:
       lightStateMessage:
         $ref: '#/components/messages/LightState'
 
-  fridgeControl:
-    address: home/fridge/control
-    messages:
-      fridgeControlMessage:
-        $ref: '#/components/messages/FridgeControl'
-
   fridgeState:
     address: home/fridge/state
     messages:
       fridgeStateMessage:
         $ref: '#/components/messages/FridgeState'
 
-  launderControl:
-    address: home/launder/control
-    messages:
-      launderControlMessage:
-        $ref: '#/components/messages/LaunderControl'
 
   launderState:
     address: home/launder/state
@@ -106,27 +95,13 @@ operations:
     messages:
       - $ref: '#/channels/lightsState/messages/lightStateMessage'
 
-
-  controlFridge:
-    action: send
-    channel:
-      $ref: '#/channels/fridgeControl'
-    messages:
-      - $ref: '#/channels/fridgeControl/messages/fridgeControlMessage'
-
   fridgeTelemetry:
-    action: receive
+    action: send
     channel:
       $ref: '#/channels/fridgeState'
     messages:
       - $ref: '#/channels/fridgeState/messages/fridgeStateMessage'
 
-  controlLaunder:
-    action: send
-    channel:
-      $ref: '#/channels/launderControl'
-    messages:
-      - $ref: '#/channels/launderControl/messages/launderControlMessage'
 
   launderTelemetry:
     action: receive
@@ -270,24 +245,6 @@ components:
             example: 8.5
 
 
-    FridgeControl:
-      name: FridgeControl
-      summary: Control smart fridge
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          power:
-            type: string
-            enum: [ ON, OFF ]
-          mode:
-            type: string
-            enum: [ eco, normal, turbo ]
-          fridgeTemp:
-            type: integer
-          freezerTemp:
-            type: integer
-
     FridgeState:
       name: FridgeState
       summary: Fridge telemetry
@@ -297,34 +254,42 @@ components:
         properties:
           power:
             type: string
+            description: Power state of the fridge
             enum: [ ON, OFF ]
           mode:
             type: string
+            description: Operating mode
+            enum: [ eco, normal, turbo, vacation ]
           fridgeTemp:
-            type: integer
-          freezerTemp:
-            type: integer
-          doorOpen:
-            type: boolean
-          energyUsed:
             type: number
-            description: Cumulative energy used in kWh
-
-    LaunderControl:
-      name: LaunderControl
-      summary: Control smart washing machine
-      contentType: application/json
-      payload:
-        type: object
-        properties:
-          command:
+            description: Target temperature for fridge compartment in °C
+            example: 4
+          freezerTemp:
+            type: number
+            description: Target temperature for freezer compartment in °C
+            example: -18
+          doorStatus:
             type: string
-            enum: [ start, stop, pause ]
-          mode:
+            description: Whether fridge or freezer door is open
+            enum: [ closed, fridge_open, freezer_open, both_open ]
+          humidityControl:
             type: string
-            enum: [ quick, delicate, heavy, normal ]
-          duration:
-            type: integer
+            description: Humidity control for vegetable/fruit drawers
+            enum: [ low, medium, high ]
+          filterStatus:
+            type: string
+            description: Water filter status
+            enum: [ good, replace_soon, expired ]
+          defrostMode:
+            type: string
+            description: Defrost cycle setting
+            enum: [ auto, manual, off ]
+          alarms:
+            type: array
+            description: Active alarms or alerts
+            items:
+              type: string
+              example: [ "door_open", "high_temp", "filter_expired" ]
 
     LaunderState:
       name: LaunderState
@@ -333,15 +298,50 @@ components:
       payload:
         type: object
         properties:
+          power:
+            type: string
+            description: Power state of the machine
+            enum: [ ON, OFF, STANDBY ]
           running:
             type: boolean
+            description: Whether a cycle is currently active
           mode:
             type: string
+            description: Selected washing program
+            enum: [ eco, normal, quick, heavy, delicate, wool, rinse, spin, dry ]
+          cyclePhase:
+            type: string
+            description: Current cycle phase
+            enum: [ filling, washing, rinsing, spinning, drying, completed, idle ]
+          waterTemp:
+            type: number
+            description: Current water temperature in °C
+            example: 40
+          spinSpeed:
+            type: integer
+            description: Spin speed in RPM
+            example: 1200
           remainingTime:
             type: integer
+            description: Estimated remaining time in minutes
+            example: 45
+          loadWeight:
+            type: number
+            description: Estimated laundry load weight in kg
+            example: 6.5
+          waterUsed:
+            type: number
+            description: Cumulative water used in liters
+            example: 35.2
           energyUsed:
             type: number
             description: Cumulative energy used in kWh
+            example: 1.23
+          doorStatus:
+            type: string
+            description: Current door state
+            enum: [ open, closed, locked ]
+
 
     DehumidifierControl:
       name: DehumidifierControl
