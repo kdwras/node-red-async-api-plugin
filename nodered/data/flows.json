@@ -840,14 +840,14 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "func_launder",
             "asyncapi_launder",
             "debug_launder",
-            "ui_launder"
+            "ui_laundry",
+            "func_laundry_telemetry"
         ],
-        "x": 854,
+        "x": 874,
         "y": 1059,
-        "w": 692,
+        "w": 732,
         "h": 162
     },
     {
@@ -7090,34 +7090,18 @@
         "wires": []
     },
     {
-        "id": "func_launder",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "launder_group",
-        "name": "Launder Telemetry",
-        "func": "const running = Math.random() > 0.5;\nconst modes = ['quick','delicate','heavy','normal'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) + 10 : 0;\n\nlet energy = flow.get('energy.launder') || 0;\nif(running) energy += 0.1;\nflow.set('energy.launder', energy);\n\nmsg.payload = { running, mode, remainingTime, energyUsed: energy };\nreturn msg;",
-        "outputs": 1,
-        "x": 970,
-        "y": 1100,
-        "wires": [
-            [
-                "asyncapi_launder"
-            ]
-        ]
-    },
-    {
         "id": "asyncapi_launder",
         "type": "async-api-red",
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Launder AsyncAPI",
-        "x": 1220,
+        "x": 1210,
         "y": 1100,
         "wires": [
             [
                 "debug_launder",
-                "ui_launder",
-                "94935853959483b3"
+                "94935853959483b3",
+                "ui_laundry"
             ]
         ]
     },
@@ -7130,21 +7114,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1420,
-        "y": 1100,
-        "wires": []
-    },
-    {
-        "id": "ui_launder",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "launder_group",
-        "group": "smarthome_ui_group",
-        "order": 1,
-        "label": "Launder",
-        "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Remaining: {{msg.payload.remainingTime}} min | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "x": 1460,
-        "y": 1180,
+        "x": 1480,
+        "y": 1120,
         "wires": []
     },
     {
@@ -7484,7 +7455,8 @@
                 "214c7a5c82508290",
                 "07d92834eb8e47f5",
                 "func_lights",
-                "func_fridge"
+                "func_fridge",
+                "func_laundry_telemetry"
             ]
         ]
     },
@@ -7584,6 +7556,49 @@
         "color": "#000000",
         "x": 1410,
         "y": 960,
+        "wires": []
+    },
+    {
+        "id": "func_laundry_telemetry",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "name": "Laundry Telemetry",
+        "func": "// --- Washing machine telemetry simulator ---\n\n// Persist cycle state across ticks\nlet cyclePhase = flow.get('laundry.phase') || \"idle\";\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || false;\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\n\n// Randomly decide if machine is turned on\nlet powerStates = [\"ON\", \"OFF\", \"STANDBY\"];\nlet power = powerStates[Math.floor(Math.random() * powerStates.length)];\n\n// If machine is ON and idle, start a new cycle sometimes\nif (power === \"ON\" && !running && Math.random() < 0.05) {\n    running = true;\n    const modes = [\"eco\", \"normal\", \"quick\", \"heavy\", \"delicate\", \"wool\", \"rinse\", \"spin\", \"dry\"];\n    let mode = modes[Math.floor(Math.random() * modes.length)];\n    flow.set('laundry.mode', mode);\n\n    // Random cycle length based on mode\n    let cycleLengths = {\n        eco: 120,\n        normal: 90,\n        quick: 30,\n        heavy: 150,\n        delicate: 60,\n        wool: 70,\n        rinse: 20,\n        spin: 15,\n        dry: 80\n    };\n    remainingTime = cycleLengths[mode];\n    cyclePhase = \"filling\";\n}\n\n// Progress cycle if running\nif (running && power === \"ON\") {\n    remainingTime = Math.max(0, remainingTime - 1);\n\n    // Phase progression\n    if (remainingTime === 0) {\n        running = false;\n        cyclePhase = \"completed\";\n    } else if (remainingTime > 60) {\n        cyclePhase = \"washing\";\n    } else if (remainingTime > 30) {\n        cyclePhase = \"rinsing\";\n    } else if (remainingTime > 10) {\n        cyclePhase = \"spinning\";\n    } else {\n        cyclePhase = \"drying\";\n    }\n\n    // Energy & water usage simulation\n    const tickSeconds = 60; // 1-minute ticks\n    let powerWatts = 0;\n    if (cyclePhase === \"washing\") powerWatts = 500;\n    if (cyclePhase === \"rinsing\") powerWatts = 300;\n    if (cyclePhase === \"spinning\") powerWatts = 800;\n    if (cyclePhase === \"drying\") powerWatts = 2000;\n\n    function wattToKwh(powerWatts, seconds) {\n        return (powerWatts / 1000) * (seconds / 3600);\n    }\n\n    energy += wattToKwh(powerWatts, tickSeconds);\n    if ([\"filling\", \"washing\", \"rinsing\"].includes(cyclePhase)) {\n        waterUsed += Math.random() * 0.5; // liters per minute\n    }\n}\n\n// Simulated values\nlet mode = flow.get('laundry.mode') || \"idle\";\nlet waterTemp = (cyclePhase === \"washing\") ? 40 + Math.random() * 20 : 25;\nlet spinSpeed = (cyclePhase === \"spinning\") ? 800 + Math.floor(Math.random() * 400) : 0;\nlet loadWeight = 5 + Math.random() * 3; // 5-8 kg load\n\n// Door status\nlet doorStatus = (running || cyclePhase === \"completed\") ? \"locked\" : (Math.random() < 0.8 ? \"closed\" : \"open\");\n\n// Save state\nflow.set('laundry.phase', cyclePhase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('laundry.energy', energy);\nflow.set('laundry.waterUsed', waterUsed);\n\n// Output payload\nmsg.payload = {\n    device: \"laundry\",\n    power,\n    running,\n    mode,\n    cyclePhase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)),\n    doorStatus\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1100,
+        "wires": [
+            [
+                "asyncapi_launder"
+            ]
+        ]
+    },
+    {
+        "id": "ui_laundry",
+        "type": "ui_text",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "group": "",
+        "order": 1,
+        "width": "",
+        "height": "",
+        "name": "Laundry UI",
+        "label": "Laundry",
+        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Phase: {{msg.payload.cyclePhase}} | Temp: {{msg.payload.waterTemp}}°C | Spin: {{msg.payload.spinSpeed}} RPM | Time Left: {{msg.payload.remainingTime}} min | Load: {{msg.payload.loadWeight}} kg | Water: {{msg.payload.waterUsed.toFixed(1)}} L | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh | Door: {{msg.payload.doorStatus}}",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1430,
+        "y": 1180,
         "wires": []
     }
 ]
