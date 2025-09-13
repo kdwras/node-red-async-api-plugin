@@ -254,10 +254,6 @@ components:
             type: string
             description: Humidity control for vegetable/fruit drawers
             enum: [ low, medium, high ]
-          filterStatus:
-            type: string
-            description: Water filter status
-            enum: [ good, replace_soon, expired ]
           defrostMode:
             type: string
             description: Defrost cycle setting

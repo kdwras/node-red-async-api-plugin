@@ -731,7 +731,6 @@
         "nodes": [
             "94935853959483b3",
             "d7982dd2528420ba",
-            "830b9ca09789c78d",
             "c99ee48a54796f90",
             "lights_group",
             "fridge_group",
@@ -743,12 +742,14 @@
             "8084d0c60d963452",
             "577012c85e361b8b",
             "cf5c5c9ec94c1a80",
-            "7c1d0269d7dabda8"
+            "cfd0c0cd3eef0619",
+            "ac3d20fc32eaea2e",
+            "edb33e26e7c57208"
         ],
         "x": 154,
         "y": 79,
         "w": 2352,
-        "h": 1568
+        "h": 1488
     },
     {
         "id": "c99ee48a54796f90",
@@ -767,13 +768,12 @@
         "nodes": [
             "07d92834eb8e47f5",
             "598f2008fafaa0f4",
-            "fc5e972c26387247",
-            "c52b9fba2d85efa8"
+            "fc5e972c26387247"
         ],
         "x": 854,
         "y": 459,
         "w": 712,
-        "h": 162
+        "h": 102
     },
     {
         "id": "lights_group",
@@ -792,13 +792,12 @@
         "nodes": [
             "func_lights",
             "asyncapi_lights",
-            "debug_lights",
-            "ui_lights"
+            "debug_lights"
         ],
         "x": 854,
         "y": 659,
         "w": 712,
-        "h": 162
+        "h": 82
     },
     {
         "id": "fridge_group",
@@ -817,13 +816,12 @@
         "nodes": [
             "func_fridge",
             "asyncapi_fridge",
-            "debug_fridge",
-            "83b2a6a09af78248"
+            "debug_fridge"
         ],
         "x": 854,
         "y": 859,
-        "w": 692,
-        "h": 142
+        "w": 752,
+        "h": 82
     },
     {
         "id": "launder_group",
@@ -842,13 +840,12 @@
         "nodes": [
             "asyncapi_launder",
             "debug_launder",
-            "ui_laundry",
             "func_laundry_telemetry"
         ],
         "x": 874,
         "y": 1059,
         "w": 732,
-        "h": 162
+        "h": 102
     },
     {
         "id": "dehumidifier_group",
@@ -867,13 +864,12 @@
         "nodes": [
             "func_dehumidifier",
             "asyncapi_dehumidifier",
-            "debug_dehumidifier",
-            "ui_dehumidifier"
+            "debug_dehumidifier"
         ],
         "x": 854,
         "y": 1259,
         "w": 832,
-        "h": 162
+        "h": 102
     },
     {
         "id": "cooker_group",
@@ -892,13 +888,12 @@
         "nodes": [
             "func_cooker",
             "asyncapi_cooker",
-            "debug_cooker",
-            "ui_cooker"
+            "debug_cooker"
         ],
         "x": 854,
         "y": 1459,
         "w": 752,
-        "h": 162
+        "h": 82
     },
     {
         "id": "19609f77c4ba5897",
@@ -916,14 +911,13 @@
         },
         "nodes": [
             "1915adae0ac41c37",
-            "73bf6d7335b49a26",
             "214c7a5c82508290",
             "dbd082096676a420"
         ],
         "x": 854,
         "y": 239,
         "w": 892,
-        "h": 162
+        "h": 102
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -1195,6 +1189,17 @@
         "disp": true,
         "width": 6,
         "collapse": false
+    },
+    {
+        "id": "dc836ed8a4522e30",
+        "type": "ui_group",
+        "name": "AC Device",
+        "tab": "83c770877dc34b82",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "2c2826fa3fc78558",
@@ -6923,7 +6928,7 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC Telemetry",
-        "func": "// Environment values\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\n\n// Random setpoint between 16–30°C\nlet setpoint = Math.floor(16 + Math.random() * (30 - 16 + 1));\n\n// Random drift\nlet current = envTemp;\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine AC mode\nlet mode = 'idle';\nlet fanSpeed = 'low';\n\nif (current > setpoint + 1) {\n    mode = 'cool';\n    fanSpeed = 'high';\n} else if (current < setpoint - 1) {\n    mode = 'fan';\n    fanSpeed = 'medium';\n}\n\n// Energy tracking\nlet energy = flow.get('energy.ac') || 0;\nconst acPower = 1200;\nconst fanPower = 100;\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'cool') energy += wattToKwh(acPower, tickDuration);\nelse if (mode === 'fan') energy += wattToKwh(fanPower, tickDuration);\n\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\nmsg.payload = {\n    device: \"ac\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    fanSpeed: fanSpeed,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Environment values\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\n\n// Random setpoint between 16–30°C\nlet setpoint = Math.floor(16 + Math.random() * (30 - 16 + 1));\n\n// Random drift\nlet current = envTemp;\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine AC mode\nlet mode = 'idle';\nlet fanSpeed = 'low';\n\nif (current > setpoint + 1) {\n    mode = 'cool';\n    fanSpeed = 'high';\n} else if (current < setpoint - 1) {\n    mode = 'fan';\n    fanSpeed = 'medium';\n}\n\n// Energy tracking\nlet energy = flow.get('energy.ac') || 0;\nconst acPower = 1200;  // W\nconst fanPower = 100;  // W\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n} else if (mode === 'fan') {\n    energy += wattToKwh(fanPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"ac\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    fanSpeed: fanSpeed,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6933,7 +6938,9 @@
         "x": 960,
         "y": 500,
         "wires": [
-            []
+            [
+                "598f2008fafaa0f4"
+            ]
         ]
     },
     {
@@ -6948,7 +6955,7 @@
             [
                 "fc5e972c26387247",
                 "94935853959483b3",
-                "c52b9fba2d85efa8"
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -6958,7 +6965,7 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC Debug",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "complete": "payload",
         "x": 1450,
@@ -6971,7 +6978,7 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights Telemetry",
-        "func": "// Get environment info\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\nlet envLight = msg.payload.lightIntensity;\n\n// Threshold for turning on lights (0-100)\nconst lightThreshold = 30;\n\n// Determine light state based on room intensity\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// Random brightness if ON, otherwise 0\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50-100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// Energy tracking\nlet energy = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0;\nconst tickSeconds = 1;\nenergy += (power / 1000) * (tickSeconds / 3600);\nenergy = parseFloat(energy.toFixed(3));\nflow.set('energy.light', energy);\n\nmsg.payload = {\n    state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energy,\n    voltage: 230,\n    power: parseFloat(power.toFixed(2)),\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// Get environment info\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\nlet envLight = msg.payload.lightIntensity;\n\n// Threshold for turning on lights (0-100)\nconst lightThreshold = 30;\n\n// Determine light state based on room intensity\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// Random brightness if ON, otherwise 0\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50-100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Energy tracking\nlet energy = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0;\nenergy += (power / 1000) * (tickSeconds / 3600);\nenergy = parseFloat(energy.toFixed(3));\nflow.set('energy.light', energy);\n\n// Telemetry output\nmsg.payload = {\n    state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energy,\n    voltage: 230,\n    power: parseFloat(power.toFixed(2)),\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6981,7 +6988,9 @@
         "x": 960,
         "y": 700,
         "wires": [
-            []
+            [
+                "asyncapi_lights"
+            ]
         ]
     },
     {
@@ -6990,13 +6999,13 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 1210,
+        "x": 1220,
         "y": 700,
         "wires": [
             [
                 "debug_lights",
-                "ui_lights",
-                "94935853959483b3"
+                "94935853959483b3",
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7014,34 +7023,12 @@
         "wires": []
     },
     {
-        "id": "ui_lights",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "lights_group",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "",
-        "label": "Lights",
-        "format": "State: {{msg.payload.state}} | Brightness: {{msg.payload.brightness}}% | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1410,
-        "y": 780,
-        "wires": []
-    },
-    {
         "id": "func_fridge",
         "type": "function",
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge Telemetry",
-        "func": "// === Fridge Telemetry Simulation ===\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(\"fridge.setTemp\") || 4;   // °C\nconst freezerSet = flow.get(\"freezer.setTemp\") || -18; // °C\n\n// Current temps (with drift around setpoint)\nlet fridgeTemp = flow.get(\"fridge.currentTemp\") || fridgeSet + (Math.random() * 2 - 1);\nlet freezerTemp = flow.get(\"freezer.currentTemp\") || freezerSet + (Math.random() * 2 - 1);\n\n// Random drift\nfridgeTemp += (Math.random() * 0.4 - 0.2);\nfreezerTemp += (Math.random() * 0.6 - 0.3);\n\n// Compressor state logic\nlet compressor = \"OFF\";\nif (fridgeTemp > fridgeSet + 1 || freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3;   // cooling effect\n    freezerTemp -= 0.5;\n}\n\n// Energy usage tracking\nlet energy = flow.get(\"energy.fridge\") || 0;\nconst compressorPower = 150; // W typical fridge draw\nconst idlePower = 5;         // W electronics/LEDs\nconst tickSeconds = 1;\n\nfunction wattToKwh(power, sec) {\n    return (power / 1000) * (sec / 3600);\n}\nif (compressor === \"ON\") {\n    energy += wattToKwh(compressorPower, tickSeconds);\n} else {\n    energy += wattToKwh(idlePower, tickSeconds);\n}\nflow.set(\"energy.fridge\", energy);\n\n// Door status simulation (10% chance door is open)\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// Save temps for next tick\nflow.set(\"fridge.currentTemp\", fridgeTemp);\nflow.set(\"freezer.currentTemp\", freezerTemp);\n\n// Telemetry payload\nmsg.payload = {\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus: doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    energyUsed: parseFloat(energy.toFixed(3)),\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// === Fridge Telemetry Simulation ===\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(\"fridge.setTemp\") || 4;    // °C\nconst freezerSet = flow.get(\"freezer.setTemp\") || -18; // °C\n\n// Current temps (with drift around setpoint)\nlet fridgeTemp = flow.get(\"fridge.currentTemp\") || fridgeSet + (Math.random() * 2 - 1);\nlet freezerTemp = flow.get(\"freezer.currentTemp\") || freezerSet + (Math.random() * 2 - 1);\n\n// Random drift\nfridgeTemp += (Math.random() * 0.4 - 0.2);\nfreezerTemp += (Math.random() * 0.6 - 0.3);\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Compressor state logic\nlet compressor = \"OFF\";\nif (fridgeTemp > fridgeSet + 1 || freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3 * scale;   // cooling effect scales\n    freezerTemp -= 0.5 * scale;\n}\n\n// Energy usage tracking\nlet energy = flow.get(\"energy.fridge\") || 0;\nconst compressorPower = 150; // W typical fridge draw\nconst idlePower = 5;         // W electronics/LEDs\n\nfunction wattToKwh(power, sec) {\n    return (power / 1000) * (sec / 3600);\n}\n\nif (compressor === \"ON\") {\n    energy += wattToKwh(compressorPower, tickSeconds);\n} else {\n    energy += wattToKwh(idlePower, tickSeconds);\n}\n\nflow.set(\"energy.fridge\", energy);\n\n// Door status simulation (10% chance door is open)\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// Save temps for next tick\nflow.set(\"fridge.currentTemp\", fridgeTemp);\nflow.set(\"freezer.currentTemp\", freezerTemp);\n\n// Telemetry payload\nmsg.payload = {\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus: doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    energyUsed: parseFloat(energy.toFixed(3)),\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7051,7 +7038,9 @@
         "x": 970,
         "y": 900,
         "wires": [
-            []
+            [
+                "asyncapi_fridge"
+            ]
         ]
     },
     {
@@ -7066,7 +7055,7 @@
             [
                 "debug_fridge",
                 "94935853959483b3",
-                "83b2a6a09af78248"
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7079,7 +7068,7 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1420,
+        "x": 1480,
         "y": 900,
         "wires": []
     },
@@ -7095,7 +7084,7 @@
             [
                 "debug_launder",
                 "94935853959483b3",
-                "ui_laundry"
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7118,8 +7107,13 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier Telemetry",
-        "func": "const power = Math.random() > 0.5 ? 'ON' : 'OFF';\nconst targetHumidity = 40 + Math.floor(Math.random()*20);\nconst currentHumidity = 30 + Math.floor(Math.random()*50);\n\nlet energy = flow.get('energy.dehumidifier') || 0;\nif(power === 'ON') energy += 0.08;\nflow.set('energy.dehumidifier', energy);\n\nmsg.payload = { power, currentHumidity, targetHumidity, energyUsed: energy };\nreturn msg;",
+        "func": "// --- Dehumidifier Telemetry Simulator ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1;\n\n// Random running state\nconst power = Math.random() > 0.5 ? \"ON\" : \"OFF\";\n\n// Modes and fan speeds\nconst modes = [\"auto\", \"manual\"];\nconst mode = modes[Math.floor(Math.random() * modes.length)];\n\nconst fanSpeeds = [\"low\", \"medium\", \"high\"];\nconst fanSpeed = power === \"ON\" ? fanSpeeds[Math.floor(Math.random() * fanSpeeds.length)] : \"low\";\n\n// Random humidity values\nconst environmentHumidity = 30 + Math.floor(Math.random() * 50); // current room humidity\nconst humidityRemoved = power === \"ON\" ? parseFloat((Math.random() * 5).toFixed(2)) : 0; // %RH removed\n\n// Tank level simulation\nconst tankLevel = Math.min(100, Math.max(0, (flow.get('dehumidifier.tankLevel') || 0) + (humidityRemoved / 2)));\nflow.set('dehumidifier.tankLevel', tankLevel);\n\n// Energy tracking\nlet energy = flow.get('energy.dehumidifier') || 0;\nconst powerWatts = 200; // average dehumidifier power\nconst tickSeconds = 60 * scale;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (power === \"ON\") {\n    energy += wattToKwh(powerWatts, tickSeconds);\n}\n\nflow.set('energy.dehumidifier', energy);\n\n// Telemetry payload\nmsg.payload = {\n    device: \"dehumidifier\",\n    power: power,\n    mode: mode,\n    fanSpeed: fanSpeed,\n    tankLevel: parseFloat(tankLevel.toFixed(1)),\n    humidityRemoved: humidityRemoved,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    environmentHumidity: environmentHumidity\n};\n\nreturn msg;\n",
         "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 980,
         "y": 1320,
         "wires": [
@@ -7139,8 +7133,8 @@
         "wires": [
             [
                 "debug_dehumidifier",
-                "ui_dehumidifier",
-                "94935853959483b3"
+                "94935853959483b3",
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7158,35 +7152,18 @@
         "wires": []
     },
     {
-        "id": "ui_dehumidifier",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "dehumidifier_group",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "",
-        "label": "Dehumidifier",
-        "format": "Power: {{msg.payload.power}} | Current: {{msg.payload.currentHumidity}}% | Target: {{msg.payload.targetHumidity}}% | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1490,
-        "y": 1380,
-        "wires": []
-    },
-    {
         "id": "func_cooker",
         "type": "function",
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker Telemetry",
-        "func": "const running = Math.random() > 0.5;\nconst modes = ['boil','steam','fry','bake'];\nconst mode = modes[Math.floor(Math.random()*modes.length)];\nconst remainingTime = running ? Math.floor(Math.random()*60) : 0;\nconst temperature = running ? 100 + Math.floor(Math.random()*150) : 0;\n\nlet energy = flow.get('energy.cooker') || 0;\nif(running) energy += 0.25; // kWh step when active\nflow.set('energy.cooker', energy);\n\nmsg.payload = { running, mode, remainingTime, temperature, energyUsed: energy };\nreturn msg;",
+        "func": "// --- Cooker/Oven Telemetry Simulator ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1;\n\n// Random running state\nconst running = Math.random() > 0.5;\n\n// Cooking modes\nconst modes = ['idle','bake','grill','roast','steam'];\nconst mode = running ? modes[Math.floor(Math.random() * (modes.length - 1)) + 1] : 'idle';\n\n// Timer and temperature\nconst timer = running ? Math.floor(Math.random() * 60) : 0;          // minutes remaining\nconst currentTemp = running ? 100 + Math.floor(Math.random() * 150) : 25; // current oven temp\nconst setTemp = running ? currentTemp + Math.floor(Math.random() * 20) : 0; // target temp\n\n// Energy tracking\nlet energy = flow.get('energy.cooker') || 0;\nconst powerWatts = 1500; // average cooker power\nconst tickSeconds = 60 * scale;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (running) {\n    energy += wattToKwh(powerWatts, tickSeconds);\n}\n\nflow.set('energy.cooker', energy);\n\n// Telemetry payload matching your schema\nmsg.payload = {\n    device: \"cooker\",\n    power: running ? \"ON\" : \"OFF\",\n    mode: mode,\n    setTemp: setTemp,\n    currentTemp: currentTemp,\n    timer: timer,\n    energyUsed: parseFloat(energy.toFixed(3))\n};\n\nreturn msg;\n",
         "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 970,
         "y": 1500,
         "wires": [
@@ -7207,7 +7184,7 @@
             [
                 "debug_cooker",
                 "94935853959483b3",
-                "ui_cooker"
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7225,34 +7202,12 @@
         "wires": []
     },
     {
-        "id": "ui_cooker",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "cooker_group",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "",
-        "label": "Cooker",
-        "format": "Running: {{msg.payload.running}} | Mode: {{msg.payload.mode}} | Time: {{msg.payload.remainingTime}} min | Temp: {{msg.payload.temperature}}°C | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1480,
-        "y": 1580,
-        "wires": []
-    },
-    {
         "id": "1915adae0ac41c37",
         "type": "debug",
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Debug",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -7265,34 +7220,12 @@
         "wires": []
     },
     {
-        "id": "73bf6d7335b49a26",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "19609f77c4ba5897",
-        "group": "8c896da163d208f1",
-        "order": 1,
-        "width": 6,
-        "height": 1,
-        "name": "",
-        "label": "Thermostat",
-        "format": "Temp: {{msg.payload.temperature}}°C | Mode: {{msg.payload.mode}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1650,
-        "y": 360,
-        "wires": []
-    },
-    {
         "id": "214c7a5c82508290",
         "type": "function",
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired =  24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\nconst tickDuration = 1;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') energy += wattToKwh(heaterPower, tickDuration);\nelse if (mode === 'cool') energy += wattToKwh(acPower, tickDuration);\n\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    device: \"thermostat\",\n    temperature:envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7302,7 +7235,9 @@
         "x": 980,
         "y": 300,
         "wires": [
-            []
+            [
+                "dbd082096676a420"
+            ]
         ]
     },
     {
@@ -7311,13 +7246,13 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": " Thermostat AsyncAPI",
-        "x": 1300,
-        "y": 320,
+        "x": 1320,
+        "y": 300,
         "wires": [
             [
-                "73bf6d7335b49a26",
                 "1915adae0ac41c37",
-                "94935853959483b3"
+                "94935853959483b3",
+                "ac3d20fc32eaea2e"
             ]
         ]
     },
@@ -7358,8 +7293,7 @@
         "y": 960,
         "wires": [
             [
-                "d7982dd2528420ba",
-                "830b9ca09789c78d"
+                "d7982dd2528420ba"
             ]
         ]
     },
@@ -7382,57 +7316,12 @@
         "wires": []
     },
     {
-        "id": "830b9ca09789c78d",
-        "type": "ui_chart",
-        "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
-        "name": "Energy Chart",
-        "group": "8c896da163d208f1",
-        "order": 3,
-        "width": 6,
-        "height": 3,
-        "label": "Energy Consumption (kWh)",
-        "chartType": "bar",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "No Data",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "60",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "60",
-        "cutout": "",
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 2350,
-        "y": 1000,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "8084d0c60d963452",
         "type": "function",
         "z": "4f4855f52107b72b",
         "g": "876a8dac7a94efab",
         "name": "Environment Generator",
-        "func": "// Environment Generator\nconst desired = flow.get('desired_temp') || 22;\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2));\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Calculate humidity\nlet humidity = 40 + Math.floor(Math.random() * 20);\n\n// Simulate room light intensity (0 = dark, 100 = very bright)\nlet lightIntensity = Math.floor(Math.random() * 101);\n\n// Save globally for all devices\nflow.set('env.temperature', current);\nflow.set('env.humidity', humidity);\nflow.set('env.lightIntensity', lightIntensity);\nflow.set('current_temp', current);\n\nmsg.payload = {\n    environment: true,\n    temperature: current.toFixed(1),\n    humidity: humidity,\n    lightIntensity: lightIntensity,\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// --- Simulation Scale ---\n// Only set once (if not already set)\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 60);\n    // 1s = 1 minute\n    // change to 3600 for 1s = 1 hour\n}\n\n// --- Environment State ---\nconst desired = flow.get('desired_temp') || 22;\nlet current = flow.get('current_temp') || (desired + (Math.random() * 4 - 2));\n\n// Random drift\ncurrent += (Math.random() * 1 - 0.5);\n\n// Calculate humidity\nlet humidity = 40 + Math.floor(Math.random() * 20);\n\n// Simulate room light intensity (0 = dark, 100 = very bright)\nlet lightIntensity = Math.floor(Math.random() * 101);\n\n// Save globally for all devices\nflow.set('env.temperature', current);\nflow.set('env.humidity', humidity);\nflow.set('env.lightIntensity', lightIntensity);\nflow.set('current_temp', current);\n\n// Output payload\nmsg.payload = {\n    environment: true,\n    temperature: current.toFixed(1),\n    humidity: humidity,\n    lightIntensity: lightIntensity,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\") // include scale for visibility\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7448,7 +7337,9 @@
                 "07d92834eb8e47f5",
                 "func_lights",
                 "func_fridge",
-                "func_laundry_telemetry"
+                "func_laundry_telemetry",
+                "func_dehumidifier",
+                "func_cooker"
             ]
         ]
     },
@@ -7463,59 +7354,8 @@
         "x": 470,
         "y": 740,
         "wires": [
-            [
-                "7c1d0269d7dabda8"
-            ]
+            []
         ]
-    },
-    {
-        "id": "7c1d0269d7dabda8",
-        "type": "ui_gauge",
-        "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
-        "name": "Temperature Gauge",
-        "group": "8c896da163d208f1",
-        "order": 3,
-        "width": 6,
-        "height": 3,
-        "gtype": "gage",
-        "title": "Room Temperature",
-        "label": "°C",
-        "format": "{{value}}",
-        "min": 0,
-        "max": 50,
-        "colors": [
-            "#00B500",
-            "#E6E600",
-            "#CA3838"
-        ],
-        "seg1": 18,
-        "seg2": 26,
-        "x": 380,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "c52b9fba2d85efa8",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "c99ee48a54796f90",
-        "group": "8c896da163d208f1",
-        "order": 1,
-        "width": 6,
-        "height": 2,
-        "name": "AC Dashboard",
-        "label": "AC",
-        "format": "Mode: {{msg.payload.mode}} | Temp: {{msg.payload.temperature}}{{msg.payload.unit}} (Setpoint: {{msg.payload.setpoint}}{{msg.payload.unit}}) | Humidity: {{msg.payload.humidity}}% | Fan: {{msg.payload.fanSpeed}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh | Time: {{msg.payload.timestamp}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": "",
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1440,
-        "y": 580,
-        "wires": []
     },
     {
         "id": "dbcecb9927394929",
@@ -7529,34 +7369,12 @@
         "wires": []
     },
     {
-        "id": "83b2a6a09af78248",
-        "type": "ui_text",
-        "z": "4f4855f52107b72b",
-        "g": "fridge_group",
-        "group": "8c896da163d208f1",
-        "order": 1,
-        "width": 12,
-        "height": 2,
-        "name": "Fridge Status",
-        "label": "Fridge",
-        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Fridge: {{msg.payload.fridgeTemp}}°C | Freezer: {{msg.payload.freezerTemp}}°C | Door: {{msg.payload.doorStatus}} | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh",
-        "layout": "row-spread",
-        "className": "",
-        "style": "",
-        "font": "",
-        "fontSize": "16px",
-        "color": "#000000",
-        "x": 1410,
-        "y": 960,
-        "wires": []
-    },
-    {
         "id": "func_laundry_telemetry",
         "type": "function",
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Laundry Telemetry",
-        "func": "// --- Washing machine telemetry simulator ---\n\n// Persist cycle state across ticks\nlet cyclePhase = flow.get('laundry.phase') || \"idle\";\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || false;\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\n\n// Randomly decide if machine is turned on\nlet powerStates = [\"ON\", \"OFF\", \"STANDBY\"];\nlet power = powerStates[Math.floor(Math.random() * powerStates.length)];\n\n// If machine is ON and idle, start a new cycle sometimes\nif (power === \"ON\" && !running && Math.random() < 0.05) {\n    running = true;\n    const modes = [\"eco\", \"normal\", \"quick\", \"heavy\", \"delicate\", \"wool\", \"rinse\", \"spin\", \"dry\"];\n    let mode = modes[Math.floor(Math.random() * modes.length)];\n    flow.set('laundry.mode', mode);\n\n    // Random cycle length based on mode\n    let cycleLengths = {\n        eco: 120,\n        normal: 90,\n        quick: 30,\n        heavy: 150,\n        delicate: 60,\n        wool: 70,\n        rinse: 20,\n        spin: 15,\n        dry: 80\n    };\n    remainingTime = cycleLengths[mode];\n    cyclePhase = \"filling\";\n}\n\n// Progress cycle if running\nif (running && power === \"ON\") {\n    remainingTime = Math.max(0, remainingTime - 1);\n\n    // Phase progression\n    if (remainingTime === 0) {\n        running = false;\n        cyclePhase = \"completed\";\n    } else if (remainingTime > 60) {\n        cyclePhase = \"washing\";\n    } else if (remainingTime > 30) {\n        cyclePhase = \"rinsing\";\n    } else if (remainingTime > 10) {\n        cyclePhase = \"spinning\";\n    } else {\n        cyclePhase = \"drying\";\n    }\n\n    // Energy & water usage simulation\n    const tickSeconds = 60; // 1-minute ticks\n    let powerWatts = 0;\n    if (cyclePhase === \"washing\") powerWatts = 500;\n    if (cyclePhase === \"rinsing\") powerWatts = 300;\n    if (cyclePhase === \"spinning\") powerWatts = 800;\n    if (cyclePhase === \"drying\") powerWatts = 2000;\n\n    function wattToKwh(powerWatts, seconds) {\n        return (powerWatts / 1000) * (seconds / 3600);\n    }\n\n    energy += wattToKwh(powerWatts, tickSeconds);\n    if ([\"filling\", \"washing\", \"rinsing\"].includes(cyclePhase)) {\n        waterUsed += Math.random() * 0.5; // liters per minute\n    }\n}\n\n// Simulated values\nlet mode = flow.get('laundry.mode') || \"idle\";\nlet waterTemp = (cyclePhase === \"washing\") ? 40 + Math.random() * 20 : 25;\nlet spinSpeed = (cyclePhase === \"spinning\") ? 800 + Math.floor(Math.random() * 400) : 0;\nlet loadWeight = 5 + Math.random() * 3; // 5-8 kg load\n\n// Door status\nlet doorStatus = (running || cyclePhase === \"completed\") ? \"locked\" : (Math.random() < 0.8 ? \"closed\" : \"open\");\n\n// Save state\nflow.set('laundry.phase', cyclePhase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('laundry.energy', energy);\nflow.set('laundry.waterUsed', waterUsed);\n\n// Output payload\nmsg.payload = {\n    device: \"laundry\",\n    power,\n    running,\n    mode,\n    cyclePhase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)),\n    doorStatus\n};\n\nreturn msg;",
+        "func": "// --- Washing machine telemetry simulator ---\n\n// Persist cycle state across ticks\nlet cyclePhase = flow.get('laundry.phase') || \"idle\";\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || false;\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\n\n// Simulation scale\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 60 * scale; // scale time in seconds\n\n// Randomly decide if machine is turned on\nlet powerStates = [\"ON\", \"OFF\", \"STANDBY\"];\nlet power = powerStates[Math.floor(Math.random() * powerStates.length)];\n\n// If machine is ON and idle, start a new cycle sometimes\nif (power === \"ON\" && !running && Math.random() < 0.05) {\n    running = true;\n    const modes = [\"eco\", \"normal\", \"quick\", \"heavy\", \"delicate\", \"wool\", \"rinse\", \"spin\", \"dry\"];\n    let mode = modes[Math.floor(Math.random() * modes.length)];\n    flow.set('laundry.mode', mode);\n\n    // Random cycle length based on mode\n    let cycleLengths = {\n        eco: 120,\n        normal: 90,\n        quick: 30,\n        heavy: 150,\n        delicate: 60,\n        wool: 70,\n        rinse: 20,\n        spin: 15,\n        dry: 80\n    };\n    remainingTime = cycleLengths[mode];\n    cyclePhase = \"filling\";\n}\n\n// Progress cycle if running\nif (running && power === \"ON\") {\n    remainingTime = Math.max(0, remainingTime - 1 * scale); // scaled progression\n\n    // Phase progression\n    if (remainingTime <= 0) {\n        running = false;\n        cyclePhase = \"completed\";\n    } else if (remainingTime > 60) {\n        cyclePhase = \"washing\";\n    } else if (remainingTime > 30) {\n        cyclePhase = \"rinsing\";\n    } else if (remainingTime > 10) {\n        cyclePhase = \"spinning\";\n    } else {\n        cyclePhase = \"drying\";\n    }\n\n    // Energy & water usage simulation\n    let powerWatts = 0;\n    if (cyclePhase === \"washing\") powerWatts = 500;\n    if (cyclePhase === \"rinsing\") powerWatts = 300;\n    if (cyclePhase === \"spinning\") powerWatts = 800;\n    if (cyclePhase === \"drying\") powerWatts = 2000;\n\n    function wattToKwh(powerWatts, seconds) {\n        return (powerWatts / 1000) * (seconds / 3600);\n    }\n\n    energy += wattToKwh(powerWatts, tickSeconds);\n    if ([\"filling\", \"washing\", \"rinsing\"].includes(cyclePhase)) {\n        waterUsed += Math.random() * 0.5 * scale; // scale water usage\n    }\n}\n\n// Simulated values\nlet mode = flow.get('laundry.mode') || \"idle\";\nlet waterTemp = (cyclePhase === \"washing\") ? 40 + Math.random() * 20 : 25;\nlet spinSpeed = (cyclePhase === \"spinning\") ? 800 + Math.floor(Math.random() * 400) : 0;\nlet loadWeight = 5 + Math.random() * 3; // 5-8 kg load\n\n// Door status\nlet doorStatus = (running || cyclePhase === \"completed\") ? \"locked\" : (Math.random() < 0.8 ? \"closed\" : \"open\");\n\n// Save state\nflow.set('laundry.phase', cyclePhase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('laundry.energy', energy);\nflow.set('laundry.waterUsed', waterUsed);\n\n// Output payload\nmsg.payload = {\n    device: \"laundry\",\n    power,\n    running,\n    mode,\n    cyclePhase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)),\n    doorStatus\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -7572,25 +7390,65 @@
         ]
     },
     {
-        "id": "ui_laundry",
-        "type": "ui_text",
+        "id": "cfd0c0cd3eef0619",
+        "type": "ui_template",
         "z": "4f4855f52107b72b",
-        "g": "launder_group",
-        "group": "",
-        "order": 1,
-        "width": "",
-        "height": "",
-        "name": "Laundry UI",
-        "label": "Laundry",
-        "format": "Power: {{msg.payload.power}} | Mode: {{msg.payload.mode}} | Phase: {{msg.payload.cyclePhase}} | Temp: {{msg.payload.waterTemp}}°C | Spin: {{msg.payload.spinSpeed}} RPM | Time Left: {{msg.payload.remainingTime}} min | Load: {{msg.payload.loadWeight}} kg | Water: {{msg.payload.waterUsed.toFixed(1)}} L | Energy: {{msg.payload.energyUsed.toFixed(2)}} kWh | Door: {{msg.payload.doorStatus}}",
-        "layout": "",
+        "g": "876a8dac7a94efab",
+        "group": "8c896da163d208f1",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    html,\n    body,\n    .nr-dashboard-template {\n        height: 100%;\n        margin: 0;\n        padding: 0;\n    \n    }\n    md-card{\n        height:100vh;\n    }\n        \n        .device-card {\n        flex: 0 0 250px;\n        background-color: #f4f4f4;\n        border-radius: 10px;\n        padding: 15px;\n        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n        font-family: Arial, sans-serif;\n        box-sizing: border-box;\n        height: 200px; /* fixed height */\n        min-height: 200px; /* ensures consistency */\n        }\n\n    .device-card {\n        flex: 0 0 250px;\n        /* fixed width for each card */\n        background-color: #f4f4f4;\n        border-radius: 10px;\n        padding: 15px;\n        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n        font-family: Arial, sans-serif;\n        box-sizing: border-box;\n        height: 100%;\n        /* stretch cards vertically */\n        min-height: 150px;\n    }\n\n    .device-card h3 {\n        margin-top: 0;\n        font-size: 1.1em;\n        margin-bottom: 10px;\n    }\n\n    .device-card p {\n        margin: 4px 0;\n        font-size: 0.9em;\n    }\n</style>\n\n<div class=\"device-card\" ng-repeat=\"(key, device) in msg.payload\" ng-if=\"device.device && device.device !== 'Undefined'\">\n    <h3>{{ device.device }}</h3>\n    <p ng-if=\"device.temperature !== undefined\">Temp: {{ device.temperature }} C</p>\n    <p ng-if=\"device.humidity !== undefined\">Humidity: {{ device.humidity }}%</p>\n    <p ng-if=\"device.mode !== undefined\">Mode: {{ device.mode }}</p>\n    <p ng-if=\"device.fanSpeed !== undefined\">Fan: {{ device.fanSpeed }}</p>\n    <p ng-if=\"device.energyUsed !== undefined\">Energy: {{ device.energyUsed }}</p>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": "",
-        "color": "#000000",
-        "x": 1430,
-        "y": 1180,
+        "x": 2260,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac3d20fc32eaea2e",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Merge all device payloads",
+        "func": "// Initialize merged payload in flow context if it doesn't exist\nlet merged = flow.get('mergedPayload') || {};\n\n// Use the device name from the incoming payload as the key\nmerged[msg.payload.device] = msg.payload;\n\n// Save updated merged payload back to flow context\nflow.set('mergedPayload', merged);\n\n// Optionally send the merged object as msg.payload to the UI template\nmsg.payload = merged;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2110,
+        "y": 580,
+        "wires": [
+            [
+                "cfd0c0cd3eef0619",
+                "edb33e26e7c57208"
+            ]
+        ]
+    },
+    {
+        "id": "edb33e26e7c57208",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Merged payloads",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2290,
+        "y": 480,
         "wires": []
     }
 ]
