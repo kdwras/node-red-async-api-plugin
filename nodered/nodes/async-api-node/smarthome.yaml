@@ -254,10 +254,6 @@ components:
             type: string
             description: Humidity control for vegetable/fruit drawers
             enum: [ low, medium, high ]
-          defrostMode:
-            type: string
-            description: Defrost cycle setting
-            enum: [ auto, manual, off ]
           alarms:
             type: array
             description: Active alarms or alerts
