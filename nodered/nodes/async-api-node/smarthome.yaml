@@ -272,9 +272,6 @@ components:
             type: string
             description: Power state of the machine
             enum: [ ON, OFF, STANDBY ]
-          running:
-            type: boolean
-            description: Whether a cycle is currently active
           mode:
             type: string
             description: Selected washing program
