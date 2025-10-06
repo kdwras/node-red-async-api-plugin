@@ -1,0 +1,106 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Smart Plug API",
+    "version": "1.0.0",
+    "description": "An OpenAPI definition for a simple smart plug that can be turned on or off and report energy usage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/smartplug": {
+      "get": {
+        "summary": "Get Smart Plug State",
+        "description": "Retrieve the current state and energy usage of the smart plug.",
+        "operationId": "getSmartPlugState",
+        "responses": {
+          "200": {
+            "description": "Current Smart Plug status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "enum": ["on", "off"],
+                      "description": "Current state of the plug"
+                    },
+                    "energyUsed": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Total energy used in kWh"
+                    },
+                    "unit": {
+                      "type": "string",
+                      "example": "kWh"
+                    }
+                  },
+                  "required": ["state", "energyUsed"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Set Smart Plug State",
+        "description": "Turn the Smart Plug on or off.",
+        "operationId": "setSmartPlugState",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Smart Plug state"
+                  }
+                },
+                "required": ["state"]
+              },
+              "example": {
+                "state": "on"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Smart Plug state successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Smart Plug turned on"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state specified"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "SmartPlug",
+      "description": "Endpoints for controlling and monitoring the Smart Plug"
+    }
+  ]
+}

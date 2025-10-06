@@ -104,6 +104,14 @@
         "env": []
     },
     {
+        "id": "438d596005491859",
+        "type": "tab",
+        "label": "smart plug test",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "eeca424b18026ca1",
         "type": "subflow",
         "name": "Subflow 1",
@@ -3079,6 +3087,52 @@
         "h": 102
     },
     {
+        "id": "69e040bd7aefbc5a",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "name": "Smart Plug Webhook",
+        "style": {
+            "stroke": "#999999",
+            "fill": "none",
+            "label": true,
+            "color": "#a4a4a4",
+            "label-position": "nw"
+        },
+        "nodes": [
+            "a66e24c97728775f",
+            "545ee36574c70399",
+            "ee4796901624497d",
+            "6ecfb3b6a246f6fb",
+            "6f1231a25af4d279"
+        ],
+        "x": 354,
+        "y": 1679,
+        "w": 1152,
+        "h": 162
+    },
+    {
+        "id": "7f7a81c81fb18909",
+        "type": "group",
+        "z": "438d596005491859",
+        "name": "Smart Plug Webhook",
+        "style": {
+            "stroke": "#999999",
+            "fill": "none",
+            "label": true,
+            "color": "#a4a4a4",
+            "label-position": "nw"
+        },
+        "nodes": [
+            "b0ab48e918905268",
+            "0623d3f2732f194c",
+            "474ac194c8bbc512"
+        ],
+        "x": 754,
+        "y": 339,
+        "w": 572,
+        "h": 162
+    },
+    {
         "id": "4fc15b76b4d55d7d",
         "type": "openApi-red-url",
         "name": "petstore openApi (v3)",
@@ -3395,6 +3449,28 @@
         "disp": true,
         "width": 6,
         "collapse": false
+    },
+    {
+        "id": "6d55c70992ff39a9",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "smart-plug.json.yaml",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": []
+    },
+    {
+        "id": "92fb21b02d9a57e6",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "smart-plug.json.yaml",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": []
     },
     {
         "id": "2c2826fa3fc78558",
@@ -10742,7 +10818,7 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -11097,6 +11173,144 @@
                 "env_gauge_temp",
                 "env_gauge_humidity",
                 "env_light"
+            ]
+        ]
+    },
+    {
+        "id": "a66e24c97728775f",
+        "type": "http in",
+        "z": "4f4855f52107b72b",
+        "g": "69e040bd7aefbc5a",
+        "name": "Webhook /smartplug",
+        "url": "/smartplug",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 470,
+        "y": 1720,
+        "wires": [
+            [
+                "6f1231a25af4d279"
+            ]
+        ]
+    },
+    {
+        "id": "545ee36574c70399",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "69e040bd7aefbc5a",
+        "name": "Handle Smart Plug State",
+        "func": "// Extract desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return [null, msg];\n}\n\n// Save state\nglobal.set('smartplug.state', newState);\n\n// Simulate energy usage tracking\nlet energy = global.get('smartplug.energy') || 0;\nif (newState === 'on') {\n    energy += 0.002; // small simulated increment per call\n}\nglobal.set('smartplug.energy', energy);\n\nmsg.statusCode = 200;\nmsg.payload = {\n    status: `Smart Plug is now ${newState}`,\n    state: newState,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: 'kWh'\n};\n\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1030,
+        "y": 1720,
+        "wires": [
+            [
+                "ee4796901624497d"
+            ],
+            [
+                "ee4796901624497d"
+            ]
+        ]
+    },
+    {
+        "id": "ee4796901624497d",
+        "type": "http response",
+        "z": "4f4855f52107b72b",
+        "g": "69e040bd7aefbc5a",
+        "name": "Respond to Client",
+        "statusCode": "",
+        "headers": {},
+        "x": 1390,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "6ecfb3b6a246f6fb",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "69e040bd7aefbc5a",
+        "name": "Invalid Request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1060,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "6f1231a25af4d279",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "69e040bd7aefbc5a",
+        "name": "",
+        "configUrlNode": "92fb21b02d9a57e6",
+        "apiTag": "default",
+        "keepAuth": false,
+        "operationData": {
+            "id": "setSmartPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug",
+            "method": "post"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "selectedSchema": {
+                    "name": "Request body"
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Smart Plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 730,
+        "y": 1720,
+        "wires": [
+            [
+                "545ee36574c70399"
+            ],
+            [
+                "6ecfb3b6a246f6fb"
             ]
         ]
     },
@@ -11942,7 +12156,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "7db00f702c02067a",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12410,7 +12624,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "b3493c382db8b25f",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12878,7 +13092,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "65b3fbe9a3140f5c",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -13346,7 +13560,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "3fbe6fc9eceb3834",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -13814,7 +14028,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "24be558fbaa900c1",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -14282,7 +14496,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "f3b23842e98bd52a",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -14750,7 +14964,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "9fbf388851f74602",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -15218,7 +15432,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "ec0d24c794e69dae",
         "name": "Thermostat Telemetry",
-        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = 24;\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature); // environment temperature\nlet envHumidity = msg.payload.humidity;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\n\n// Start at environment temperature\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() * 1 - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5; // heating effect\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5; // cooling effect\n}\n\n// Energy tracking\nlet energy = flow.get('energy.thermostat') || 0;\nconst heaterPower = 2000; // W\nconst acPower = 1200;     // W\n\n// Get simulation scale (default = 1)\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (mode === 'heat') {\n    energy += wattToKwh(heaterPower, tickDuration);\n} else if (mode === 'cool') {\n    energy += wattToKwh(acPower, tickDuration);\n}\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// Output telemetry\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -15685,5 +15899,160 @@
         "x": 6330,
         "y": 3280,
         "wires": []
+    },
+    {
+        "id": "b0ab48e918905268",
+        "type": "function",
+        "z": "438d596005491859",
+        "g": "7f7a81c81fb18909",
+        "name": "Handle Smart Plug State",
+        "func": "// Extract desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return [null, msg];\n}\n\n// Save state\nglobal.set('smartplug.state', newState);\n\n// Simulate energy usage tracking\nlet energy = global.get('smartplug.energy') || 0;\nif (newState === 'on') {\n    energy += 0.002; // small simulated increment per call\n}\nglobal.set('smartplug.energy', energy);\n\nmsg.statusCode = 200;\nmsg.payload = {\n    status: `Smart Plug is now ${newState}`,\n    state: newState,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: 'kWh'\n};\n\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1170,
+        "y": 380,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0623d3f2732f194c",
+        "type": "debug",
+        "z": "438d596005491859",
+        "g": "7f7a81c81fb18909",
+        "name": "Invalid Request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1200,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "474ac194c8bbc512",
+        "type": "openApi-red",
+        "z": "438d596005491859",
+        "g": "7f7a81c81fb18909",
+        "name": "",
+        "configUrlNode": "92fb21b02d9a57e6",
+        "apiTag": "default",
+        "keepAuth": false,
+        "operationData": {
+            "id": "getSmartPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug",
+            "method": "get"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {},
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 1,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Current Smart Plug status"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 870,
+        "y": 380,
+        "wires": [
+            [
+                "b0ab48e918905268"
+            ]
+        ]
+    },
+    {
+        "id": "22d0e8712e31bd54",
+        "type": "http in",
+        "z": "438d596005491859",
+        "name": "[get] smartplug status",
+        "url": "/smartplug",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 800,
+        "y": 780,
+        "wires": [
+            [
+                "b3ed43b745ce7463"
+            ]
+        ]
+    },
+    {
+        "id": "12c5de13e188ecf8",
+        "type": "http response",
+        "z": "438d596005491859",
+        "name": "get smartplug status response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 1210,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "b3ed43b745ce7463",
+        "type": "function",
+        "z": "438d596005491859",
+        "name": "function 6",
+        "func": "// Get current state from flow context (or default)\nlet state = flow.get(\"smartplug_state\") || \"off\";\n\n// Build JSON response\nmsg.payload = {\n    device: \"smartplug\",\n    state: state,\n    timestamp: new Date().toISOString()\n};\n\n// Set HTTP status code (optional)\nmsg.statusCode = 200;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 880,
+        "wires": [
+            [
+                "12c5de13e188ecf8"
+            ]
+        ]
+    },
+    {
+        "id": "6feeb7fc64230699",
+        "type": "inject",
+        "z": "438d596005491859",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 620,
+        "y": 360,
+        "wires": [
+            [
+                "474ac194c8bbc512"
+            ]
+        ]
     }
 ]
