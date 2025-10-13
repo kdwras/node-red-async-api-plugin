@@ -361,10 +361,6 @@ components:
             type: number
             description: Current oven temperature
             example: 180
-          timer:
-            type: integer
-            description: Minutes remaining in cooking cycle
-            example: 25
           energyUsed:
             type: number
             description: Cumulative energy used in kWh

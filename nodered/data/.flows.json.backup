@@ -3311,8 +3311,8 @@
             "f2a1daf9ebd965d6",
             "e756d17fce92b658"
         ],
-        "x": 294,
-        "y": 799,
+        "x": 354,
+        "y": 859,
         "w": 912,
         "h": 212
     },
@@ -10792,7 +10792,7 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights Telemetry",
-        "func": "// --- Environment info ---\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\nlet envLight = msg.payload.lightIntensity;\n\n// Threshold for turning on lights (0-100)\nconst lightThreshold = 30;\n\n// Determine light state based on room intensity\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// Random brightness if ON, otherwise 0\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50–100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Energy tracking (still store kWh for dashboard/history)\nlet energy = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0; // W\nenergy += (power / 1000) * (tickSeconds / 3600); // kWh\nenergy = parseFloat(energy.toFixed(3));\nflow.set('energy.light', energy);\n\n// --- Node status for visual feedback (show Watts) ---\nlet colorStatus = state === \"ON\" ? \"green\" : \"red\";\nlet shape = state === \"ON\" ? \"dot\" : \"ring\";\nlet text = `${state} | ${power.toFixed(1)} W`;\nnode.status({ fill: colorStatus, shape:shape, text: text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"light\",\n    state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energy,          // kWh for historical logging\n    voltage: 230,\n    power: parseFloat(power.toFixed(2)), // W\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// --- Environment info ---\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\nlet envLight = msg.payload.lightIntensity;\n\n// Threshold for turning on lights (0-100)\nconst lightThreshold = 30;\n\n// Determine light state based on room intensity\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// Random brightness if ON, otherwise 0\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50–100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Energy tracking (still store kWh for dashboard/history)\nlet energyW = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0; // W\nenergyW += (power / 1000) * (tickSeconds / 3600); // kWh\nenergyW = parseFloat(energyW.toFixed(3));\nflow.set('energy.light', energyW);\n\n// --- Node status for visual feedback (show Watts) ---\nlet colorStatus = state === \"ON\" ? \"green\" : \"red\";\nlet shape = state === \"ON\" ? \"dot\" : \"ring\";\nlet text = `${state} | ${power.toFixed(1)} W`;\nnode.status({ fill: colorStatus, shape:shape, text: text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"light\",\n    state: state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energyW,          // kWh for historical logging\n    voltage: 230,\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -11306,7 +11306,7 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "// Check Smart Plug state before running\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null; // stop execution\n}\n\n// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature || 22); // default 22°C\nlet envHumidity = msg.payload.humidity || 45;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nlet currentPower = 0; // W\n\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5;\n    currentPower = 2000; // heater power in W\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5;\n    currentPower = 1200; // AC power in W\n}\n\n// Energy tracking (cumulative kWh)\nlet energy = flow.get('energy.thermostat') || 0;\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale; // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\n// Add to cumulative energy\nenergy += wattToKwh(currentPower, tickDuration);\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// --- Node status for visual feedback ---\nlet color = 'grey';\nlet shape = 'ring';\nlet text = 'Idle';\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else {\n    text = `IDLE | ${current.toFixed(1)}°C | 0 W`;\n}\n\nnode.status({ fill: color, shape: shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    power: currentPower,       // instantaneous W\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// Check Smart Plug state before running\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null; // stop execution\n}\n\n// Read environment values from input\nlet envTemp = parseFloat(msg.payload.temperature || 22); // default 22°C\nlet envHumidity = msg.payload.humidity || 45;\n\n// Desired temperature\nconst desired = Math.floor(20 + Math.random() * 11);\nlet current = envTemp;\n\n// Random drift within ±0.5°C\ncurrent += (Math.random() - 0.5);\n\n// Determine HVAC mode\nlet mode = 'idle';\nlet currentPower = 0; // W\n\nif (current < desired - 2) {\n    mode = 'heat';\n    current += 0.5;\n    currentPower = 2000; // heater power in W\n} else if (current > desired + 2) {\n    mode = 'cool';\n    current -= 0.5;\n    currentPower = 1200; // AC power in W\n}\n\n// Energy tracking (cumulative kWh)\nlet energy = flow.get('energy.thermostat') || 0;\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale; // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\n// Add to cumulative energy\nenergy += wattToKwh(currentPower, tickDuration);\n\n// Save state\nflow.set('energy.thermostat', energy);\nflow.set('current_temp', current);\n\n// --- Node status for visual feedback ---\nlet color = 'grey';\nlet shape = 'ring';\nlet text = 'Idle';\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else {\n    text = `IDLE | ${current.toFixed(1)}°C | 0 W`;\n}\n\nnode.status({ fill: color, shape: shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    mode: mode,\n    power: plugState,       // instantaneous W\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\"\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -11711,8 +11711,8 @@
         "g": "45e26e30f704ad47",
         "name": "Smartplug for laundry",
         "info": "",
-        "x": 420,
-        "y": 840,
+        "x": 480,
+        "y": 900,
         "wires": []
     },
     {
@@ -11728,10 +11728,12 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 430,
-        "y": 900,
+        "x": 490,
+        "y": 960,
         "wires": [
-            []
+            [
+                "e756d17fce92b658"
+            ]
         ]
     },
     {
@@ -11747,10 +11749,12 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 420,
-        "y": 970,
+        "x": 480,
+        "y": 1030,
         "wires": [
-            []
+            [
+                "e756d17fce92b658"
+            ]
         ]
     },
     {
@@ -11766,8 +11770,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1020,
-        "y": 940,
+        "x": 1080,
+        "y": 1000,
         "wires": [
             [
                 "func_laundry_telemetry"
@@ -11788,8 +11792,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1070,
-        "y": 840,
+        "x": 1130,
+        "y": 900,
         "wires": []
     },
     {
@@ -11853,11 +11857,15 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 700,
-        "y": 920,
+        "x": 760,
+        "y": 980,
         "wires": [
-            [],
-            []
+            [
+                "f2a1daf9ebd965d6"
+            ],
+            [
+                "3474c5bf1ab29ecd"
+            ]
         ]
     },
     {
