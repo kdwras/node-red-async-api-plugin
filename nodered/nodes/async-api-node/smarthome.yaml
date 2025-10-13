@@ -162,10 +162,6 @@ components:
             type: number
             description: Current room humidity in percent
             example: 45
-          fanSpeed:
-            type: string
-            description: Fan speed setting
-            enum: [ low, medium, high ]
           unit:
             type: string
             description: Unit for temperature values
@@ -217,10 +213,7 @@ components:
             type: number
             description: Operating voltage in Volts
             example: 230
-          power:
-            type: number
-            description: Current power draw in Watts
-            example: 8.5
+
 
 
     FridgeState:
@@ -333,15 +326,11 @@ components:
             type: number
             description: Water tank fill level in %
             example: 45
-          humidityRemoved:
-            type: number
-            description: Amount of humidity removed from room (%RH)
-            example: 3.5
           energyUsed:
             type: number
             description: Cumulative energy used in kWh
             example: 0.12
-          environmentHumidity:
+          humidity:
             type: number
             description: Current room humidity %
             example: 55
