@@ -12,42 +12,7 @@
     }
   ],
   "paths": {
-    "/smartplug": {
-      "get": {
-        "summary": "Get Smart Plug State",
-        "description": "Retrieve the current state and energy usage of the smart plug.",
-        "operationId": "getSmartPlugState",
-        "tags": [
-          "SmartPlug"
-        ],
-        "responses": {
-          "200": {
-            "description": "Current Smart Plug status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "state": {
-                      "type": "string",
-                      "enum": [
-                        "on",
-                        "off"
-                      ],
-                      "description": "Current state of the plug"
-                    }
-                  },
-                  "required": [
-                    "state"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/smartplug/webhook": {
+    "/smartplug/thermostat/webhook": {
       "post": {
         "summary": "Smart Plug Webhook",
         "description": "Webhook endpoint to turn the Smart Plug on or off.",
