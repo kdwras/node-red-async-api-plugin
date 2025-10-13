@@ -128,7 +128,7 @@ components:
           temperature:
             type: number
           humidity:
-            type: integer
+            type: number
           mode:
             type: string
             enum: [ heat, cool, idle ]
