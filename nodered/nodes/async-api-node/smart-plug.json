@@ -17,7 +17,9 @@
         "summary": "Get Smart Plug State",
         "description": "Retrieve the current state and energy usage of the smart plug.",
         "operationId": "getSmartPlugState",
-        "tags": ["SmartPlug"],
+        "tags": [
+          "SmartPlug"
+        ],
         "responses": {
           "200": {
             "description": "Current Smart Plug status",
@@ -28,20 +30,16 @@
                   "properties": {
                     "state": {
                       "type": "string",
-                      "enum": ["on", "off"],
+                      "enum": [
+                        "on",
+                        "off"
+                      ],
                       "description": "Current state of the plug"
-                    },
-                    "energyUsed": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Total energy used in kWh"
-                    },
-                    "unit": {
-                      "type": "string",
-                      "example": "kWh"
                     }
                   },
-                  "required": ["state", "energyUsed"]
+                  "required": [
+                    "state"
+                  ]
                 }
               }
             }
@@ -54,7 +52,9 @@
         "summary": "Smart Plug Webhook",
         "description": "Webhook endpoint to turn the Smart Plug on or off.",
         "operationId": "setSmartPlugState",
-        "tags": ["SmartPlug"],
+        "tags": [
+          "SmartPlug"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -64,11 +64,16 @@
                 "properties": {
                   "state": {
                     "type": "string",
-                    "enum": ["on", "off"],
+                    "enum": [
+                      "on",
+                      "off"
+                    ],
                     "description": "Desired Smart Plug state"
                   }
                 },
-                "required": ["state"]
+                "required": [
+                  "state"
+                ]
               },
               "example": {
                 "state": "on"
@@ -90,16 +95,10 @@
                     },
                     "state": {
                       "type": "string",
-                      "enum": ["on", "off"]
-                    },
-                    "energyUsed": {
-                      "type": "number",
-                      "format": "float",
-                      "example": 0.002
-                    },
-                    "unit": {
-                      "type": "string",
-                      "example": "kWh"
+                      "enum": [
+                        "on",
+                        "off"
+                      ]
                     }
                   }
                 }

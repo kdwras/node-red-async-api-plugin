@@ -1286,10 +1286,10 @@
             "7f7a81c81fb18909",
             "3e5336b3c932e13c"
         ],
-        "x": 518,
+        "x": 528,
         "y": 233,
-        "w": 844,
-        "h": 614
+        "w": 814,
+        "h": 374
     },
     {
         "id": "7f7a81c81fb18909",
@@ -1308,8 +1308,8 @@
         ],
         "x": 594,
         "y": 259,
-        "w": 692,
-        "h": 202
+        "w": 672,
+        "h": 142
     },
     {
         "id": "c99ee48a54796f90",
@@ -3174,18 +3174,15 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "43bd1ce018a929be",
-            "fe53c2e8a1c0e796",
-            "6a0fa55465b1fbca",
             "1396224ee5de4b8d",
             "ac4c005192cf780a",
             "9e0c9391f9b4250a",
             "43333b017ce7e0ff"
         ],
-        "x": 544,
-        "y": 519,
-        "w": 792,
-        "h": 302
+        "x": 554,
+        "y": 439,
+        "w": 762,
+        "h": 142
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -3521,7 +3518,7 @@
         "id": "92fb21b02d9a57e6",
         "type": "openApi-red-url",
         "name": "",
-        "url": "smart-plug.json.yaml",
+        "url": "smart-plug.json",
         "urlType": "Files",
         "server": "http://localhost:1880",
         "serverType": "server",
@@ -15971,8 +15968,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1190,
-        "y": 420,
+        "x": 1170,
+        "y": 360,
         "wires": []
     },
     {
@@ -15982,12 +15979,12 @@
         "g": "7f7a81c81fb18909",
         "name": "",
         "configUrlNode": "92fb21b02d9a57e6",
-        "apiTag": "default",
+        "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setSmartPlugState",
             "hasOperationId": true,
-            "path": "/smartplug",
+            "path": "/smartplug/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -16013,9 +16010,6 @@
                         "value": "payload.state"
                     }
                 },
-                "selectedSchema": {
-                    "name": "Request body"
-                },
                 "collapsed": false
             }
         },
@@ -16037,67 +16031,13 @@
         "headers": [],
         "_version": "2.2.0",
         "x": 950,
-        "y": 420,
+        "y": 360,
         "wires": [
             [
                 "0623d3f2732f194c"
             ],
             []
         ]
-    },
-    {
-        "id": "43bd1ce018a929be",
-        "type": "http in",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "[GET] Smartplug Status",
-        "url": "/smartplug",
-        "method": "get",
-        "upload": false,
-        "skipBodyParsing": false,
-        "swaggerDoc": "",
-        "x": 720,
-        "y": 640,
-        "wires": [
-            [
-                "fe53c2e8a1c0e796"
-            ]
-        ]
-    },
-    {
-        "id": "fe53c2e8a1c0e796",
-        "type": "function",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "Get Smartplug State",
-        "func": "// Get current state and energy from context\nlet state = flow.get('smartplug_state') || 'off';\nlet energy = global.get('smartplug.energy') || 0;\n\nmsg.payload = {\n    device: 'smartplug',\n    state: state,\n    timestamp: new Date().toISOString()\n};\nmsg.statusCode = 200;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 970,
-        "y": 640,
-        "wires": [
-            [
-                "6a0fa55465b1fbca"
-            ]
-        ]
-    },
-    {
-        "id": "6a0fa55465b1fbca",
-        "type": "http response",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "Response (GET)",
-        "statusCode": "",
-        "headers": {
-            "content-type": "application/json"
-        },
-        "x": 1220,
-        "y": 640,
-        "wires": []
     },
     {
         "id": "1396224ee5de4b8d",
@@ -16110,8 +16050,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 720,
-        "y": 780,
+        "x": 700,
+        "y": 540,
         "wires": [
             [
                 "ac4c005192cf780a"
@@ -16131,8 +16071,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 980,
-        "y": 780,
+        "x": 960,
+        "y": 540,
         "wires": [
             [
                 "9e0c9391f9b4250a"
@@ -16149,8 +16089,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 1220,
-        "y": 780,
+        "x": 1200,
+        "y": 540,
         "wires": []
     },
     {
@@ -16158,14 +16098,10 @@
         "type": "inject",
         "z": "438d596005491859",
         "g": "7f7a81c81fb18909",
-        "name": "",
+        "name": "Trigger webhook",
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -16173,10 +16109,10 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 740,
-        "y": 420,
+        "payload": "{\"state\":\"on\"}",
+        "payloadType": "json",
+        "x": 720,
+        "y": 360,
         "wires": [
             [
                 "474ac194c8bbc512"
@@ -16188,10 +16124,10 @@
         "type": "comment",
         "z": "438d596005491859",
         "g": "3e5336b3c932e13c",
-        "name": "WEBHOOK REQUESTS INIT",
+        "name": "Init webhook endpoint",
         "info": "",
-        "x": 690,
-        "y": 560,
+        "x": 680,
+        "y": 480,
         "wires": []
     },
     {

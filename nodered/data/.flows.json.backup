@@ -1289,7 +1289,7 @@
         "x": 518,
         "y": 233,
         "w": 844,
-        "h": 614
+        "h": 654
     },
     {
         "id": "7f7a81c81fb18909",
@@ -3174,16 +3174,13 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "43bd1ce018a929be",
-            "fe53c2e8a1c0e796",
-            "6a0fa55465b1fbca",
             "1396224ee5de4b8d",
             "ac4c005192cf780a",
             "9e0c9391f9b4250a",
             "43333b017ce7e0ff"
         ],
         "x": 544,
-        "y": 519,
+        "y": 559,
         "w": 792,
         "h": 302
     },
@@ -3521,7 +3518,7 @@
         "id": "92fb21b02d9a57e6",
         "type": "openApi-red-url",
         "name": "",
-        "url": "smart-plug.json.yaml",
+        "url": "smart-plug.json",
         "urlType": "Files",
         "server": "http://localhost:1880",
         "serverType": "server",
@@ -15982,12 +15979,12 @@
         "g": "7f7a81c81fb18909",
         "name": "",
         "configUrlNode": "92fb21b02d9a57e6",
-        "apiTag": "default",
+        "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setSmartPlugState",
             "hasOperationId": true,
-            "path": "/smartplug",
+            "path": "/smartplug/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -16012,9 +16009,6 @@
                         "type": "msg",
                         "value": "payload.state"
                     }
-                },
-                "selectedSchema": {
-                    "name": "Request body"
                 },
                 "collapsed": false
             }
@@ -16046,60 +16040,6 @@
         ]
     },
     {
-        "id": "43bd1ce018a929be",
-        "type": "http in",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "[GET] Smartplug Status",
-        "url": "/smartplug",
-        "method": "get",
-        "upload": false,
-        "skipBodyParsing": false,
-        "swaggerDoc": "",
-        "x": 720,
-        "y": 640,
-        "wires": [
-            [
-                "fe53c2e8a1c0e796"
-            ]
-        ]
-    },
-    {
-        "id": "fe53c2e8a1c0e796",
-        "type": "function",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "Get Smartplug State",
-        "func": "// Get current state and energy from context\nlet state = flow.get('smartplug_state') || 'off';\nlet energy = global.get('smartplug.energy') || 0;\n\nmsg.payload = {\n    device: 'smartplug',\n    state: state,\n    timestamp: new Date().toISOString()\n};\nmsg.statusCode = 200;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 970,
-        "y": 640,
-        "wires": [
-            [
-                "6a0fa55465b1fbca"
-            ]
-        ]
-    },
-    {
-        "id": "6a0fa55465b1fbca",
-        "type": "http response",
-        "z": "438d596005491859",
-        "g": "3e5336b3c932e13c",
-        "name": "Response (GET)",
-        "statusCode": "",
-        "headers": {
-            "content-type": "application/json"
-        },
-        "x": 1220,
-        "y": 640,
-        "wires": []
-    },
-    {
         "id": "1396224ee5de4b8d",
         "type": "http in",
         "z": "438d596005491859",
@@ -16111,7 +16051,7 @@
         "skipBodyParsing": false,
         "swaggerDoc": "",
         "x": 720,
-        "y": 780,
+        "y": 820,
         "wires": [
             [
                 "ac4c005192cf780a"
@@ -16124,7 +16064,7 @@
         "z": "438d596005491859",
         "g": "3e5336b3c932e13c",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n// Simulate energy usage accumulation\nlet energy = global.get('smartplug.energy') || 0;\n\nglobal.set('smartplug.energy', energy);\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -16132,7 +16072,7 @@
         "finalize": "",
         "libs": [],
         "x": 980,
-        "y": 780,
+        "y": 820,
         "wires": [
             [
                 "9e0c9391f9b4250a"
@@ -16150,7 +16090,7 @@
             "content-type": "application/json"
         },
         "x": 1220,
-        "y": 780,
+        "y": 820,
         "wires": []
     },
     {
@@ -16158,14 +16098,10 @@
         "type": "inject",
         "z": "438d596005491859",
         "g": "7f7a81c81fb18909",
-        "name": "",
+        "name": "Trigger webhook",
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -16173,9 +16109,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 740,
+        "payload": "{\"state\":\"on\"}",
+        "payloadType": "json",
+        "x": 720,
         "y": 420,
         "wires": [
             [
@@ -16188,10 +16124,10 @@
         "type": "comment",
         "z": "438d596005491859",
         "g": "3e5336b3c932e13c",
-        "name": "WEBHOOK REQUESTS INIT",
+        "name": "Init webhook endpoint",
         "info": "",
-        "x": 690,
-        "y": 560,
+        "x": 670,
+        "y": 600,
         "wires": []
     },
     {
