@@ -17,6 +17,7 @@
         "summary": "Get Smart Plug State",
         "description": "Retrieve the current state and energy usage of the smart plug.",
         "operationId": "getSmartPlugState",
+        "tags": ["SmartPlug"],
         "responses": {
           "200": {
             "description": "Current Smart Plug status",
@@ -46,11 +47,14 @@
             }
           }
         }
-      },
+      }
+    },
+    "/smartplug/webhook": {
       "post": {
-        "summary": "Set Smart Plug State",
-        "description": "Turn the Smart Plug on or off.",
+        "summary": "Smart Plug Webhook",
+        "description": "Webhook endpoint to turn the Smart Plug on or off.",
         "operationId": "setSmartPlugState",
+        "tags": ["SmartPlug"],
         "requestBody": {
           "required": true,
           "content": {
@@ -83,6 +87,19 @@
                     "status": {
                       "type": "string",
                       "example": "Smart Plug turned on"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": ["on", "off"]
+                    },
+                    "energyUsed": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 0.002
+                    },
+                    "unit": {
+                      "type": "string",
+                      "example": "kWh"
                     }
                   }
                 }

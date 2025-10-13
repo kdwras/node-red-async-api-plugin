@@ -112,6 +112,13 @@
         "env": []
     },
     {
+        "id": "a1c0e100f11a4f9b",
+        "type": "tab",
+        "label": "Smart Plug Webhook",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "eeca424b18026ca1",
         "type": "subflow",
         "name": "Subflow 1",
@@ -1237,6 +1244,72 @@
         "y": 3239,
         "w": 452,
         "h": 162
+    },
+    {
+        "id": "69e040bd7aefbc5a",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "name": "Smart Plug Webhook",
+        "style": {
+            "stroke": "#999999",
+            "fill": "none",
+            "label": true,
+            "color": "#a4a4a4",
+            "label-position": "nw"
+        },
+        "nodes": [
+            "a66e24c97728775f",
+            "545ee36574c70399",
+            "ee4796901624497d",
+            "6ecfb3b6a246f6fb",
+            "6f1231a25af4d279"
+        ],
+        "x": 354,
+        "y": 1679,
+        "w": 1152,
+        "h": 162
+    },
+    {
+        "id": "f3a7b992615fd6e7",
+        "type": "group",
+        "z": "438d596005491859",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "7f7a81c81fb18909",
+            "3e5336b3c932e13c"
+        ],
+        "x": 518,
+        "y": 233,
+        "w": 844,
+        "h": 614
+    },
+    {
+        "id": "7f7a81c81fb18909",
+        "type": "group",
+        "z": "438d596005491859",
+        "g": "f3a7b992615fd6e7",
+        "name": "Smart Plug ",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "0623d3f2732f194c",
+            "474ac194c8bbc512",
+            "dc0d300ba5c12af3",
+            "a0774d5b5c031c59"
+        ],
+        "x": 594,
+        "y": 259,
+        "w": 692,
+        "h": 202
     },
     {
         "id": "c99ee48a54796f90",
@@ -3087,50 +3160,32 @@
         "h": 102
     },
     {
-        "id": "69e040bd7aefbc5a",
-        "type": "group",
-        "z": "4f4855f52107b72b",
-        "name": "Smart Plug Webhook",
-        "style": {
-            "stroke": "#999999",
-            "fill": "none",
-            "label": true,
-            "color": "#a4a4a4",
-            "label-position": "nw"
-        },
-        "nodes": [
-            "a66e24c97728775f",
-            "545ee36574c70399",
-            "ee4796901624497d",
-            "6ecfb3b6a246f6fb",
-            "6f1231a25af4d279"
-        ],
-        "x": 354,
-        "y": 1679,
-        "w": 1152,
-        "h": 162
-    },
-    {
-        "id": "7f7a81c81fb18909",
+        "id": "3e5336b3c932e13c",
         "type": "group",
         "z": "438d596005491859",
-        "name": "Smart Plug Webhook",
+        "g": "f3a7b992615fd6e7",
         "style": {
             "stroke": "#999999",
+            "stroke-opacity": "1",
             "fill": "none",
+            "fill-opacity": "1",
             "label": true,
-            "color": "#a4a4a4",
-            "label-position": "nw"
+            "label-position": "nw",
+            "color": "#a4a4a4"
         },
         "nodes": [
-            "b0ab48e918905268",
-            "0623d3f2732f194c",
-            "474ac194c8bbc512"
+            "43bd1ce018a929be",
+            "fe53c2e8a1c0e796",
+            "6a0fa55465b1fbca",
+            "1396224ee5de4b8d",
+            "ac4c005192cf780a",
+            "9e0c9391f9b4250a",
+            "43333b017ce7e0ff"
         ],
-        "x": 754,
-        "y": 339,
-        "w": 572,
-        "h": 162
+        "x": 544,
+        "y": 519,
+        "w": 792,
+        "h": 302
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -3459,7 +3514,8 @@
         "server": "http://localhost:1880",
         "serverType": "server",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "92fb21b02d9a57e6",
@@ -3470,7 +3526,8 @@
         "server": "http://localhost:1880",
         "serverType": "server",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "2c2826fa3fc78558",
@@ -15901,35 +15958,21 @@
         "wires": []
     },
     {
-        "id": "b0ab48e918905268",
-        "type": "function",
-        "z": "438d596005491859",
-        "g": "7f7a81c81fb18909",
-        "name": "Handle Smart Plug State",
-        "func": "// Extract desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return [null, msg];\n}\n\n// Save state\nglobal.set('smartplug.state', newState);\n\n// Simulate energy usage tracking\nlet energy = global.get('smartplug.energy') || 0;\nif (newState === 'on') {\n    energy += 0.002; // small simulated increment per call\n}\nglobal.set('smartplug.energy', energy);\n\nmsg.statusCode = 200;\nmsg.payload = {\n    status: `Smart Plug is now ${newState}`,\n    state: newState,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: 'kWh'\n};\n\nreturn [msg, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 1170,
-        "y": 380,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
         "id": "0623d3f2732f194c",
         "type": "debug",
         "z": "438d596005491859",
         "g": "7f7a81c81fb18909",
-        "name": "Invalid Request",
+        "name": "Debug",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 1200,
-        "y": 460,
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 420,
         "wires": []
     },
     {
@@ -15942,10 +15985,10 @@
         "apiTag": "default",
         "keepAuth": false,
         "operationData": {
-            "id": "getSmartPlugState",
+            "id": "setSmartPlugState",
             "hasOperationId": true,
             "path": "/smartplug",
-            "method": "get"
+            "method": "post"
         },
         "outputStyle": "each response",
         "errorHandling": "throw exception",
@@ -15953,84 +15996,168 @@
             "text": "",
             "source": ""
         },
-        "parameters": {},
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "selectedSchema": {
+                    "name": "Request body"
+                },
+                "collapsed": false
+            }
+        },
         "requestContentType": "application/json",
         "responseContentType": "application/json",
-        "outputs": 1,
+        "outputs": 2,
         "responseOutputLabels": [
             {
                 "code": "200",
-                "text": "Current Smart Plug status"
+                "text": "Smart Plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
             }
         ],
         "responseAsPayload": false,
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 870,
-        "y": 380,
+        "x": 950,
+        "y": 420,
         "wires": [
             [
-                "b0ab48e918905268",
                 "0623d3f2732f194c"
-            ]
+            ],
+            []
         ]
     },
     {
-        "id": "22d0e8712e31bd54",
+        "id": "43bd1ce018a929be",
         "type": "http in",
         "z": "438d596005491859",
-        "name": "[get] smartplug status",
+        "g": "3e5336b3c932e13c",
+        "name": "[GET] Smartplug Status",
         "url": "/smartplug",
         "method": "get",
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 800,
-        "y": 780,
+        "x": 720,
+        "y": 640,
         "wires": [
             [
-                "b3ed43b745ce7463"
+                "fe53c2e8a1c0e796"
             ]
         ]
     },
     {
-        "id": "12c5de13e188ecf8",
+        "id": "fe53c2e8a1c0e796",
+        "type": "function",
+        "z": "438d596005491859",
+        "g": "3e5336b3c932e13c",
+        "name": "Get Smartplug State",
+        "func": "// Get current state and energy from context\nlet state = flow.get('smartplug_state') || 'off';\nlet energy = global.get('smartplug.energy') || 0;\n\nmsg.payload = {\n    device: 'smartplug',\n    state: state,\n    timestamp: new Date().toISOString()\n};\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 640,
+        "wires": [
+            [
+                "6a0fa55465b1fbca"
+            ]
+        ]
+    },
+    {
+        "id": "6a0fa55465b1fbca",
         "type": "http response",
         "z": "438d596005491859",
-        "name": "get smartplug status response",
+        "g": "3e5336b3c932e13c",
+        "name": "Response (GET)",
         "statusCode": "",
         "headers": {
             "content-type": "application/json"
         },
-        "x": 1210,
-        "y": 780,
+        "x": 1220,
+        "y": 640,
         "wires": []
     },
     {
-        "id": "b3ed43b745ce7463",
+        "id": "1396224ee5de4b8d",
+        "type": "http in",
+        "z": "438d596005491859",
+        "g": "3e5336b3c932e13c",
+        "name": "[POST] Smartplug Webhook",
+        "url": "/smartplug/webhook",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 720,
+        "y": 780,
+        "wires": [
+            [
+                "ac4c005192cf780a"
+            ]
+        ]
+    },
+    {
+        "id": "ac4c005192cf780a",
         "type": "function",
         "z": "438d596005491859",
-        "name": "function 6",
-        "func": "// Get current state from flow context (or default)\nlet state = flow.get(\"smartplug_state\") || \"off\";\n\n// Build JSON response\nmsg.payload = {\n    device: \"smartplug\",\n    state: state,\n    timestamp: new Date().toISOString()\n};\n\n// Set HTTP status code (optional)\nmsg.statusCode = 200;\n\nreturn msg;\n",
+        "g": "3e5336b3c932e13c",
+        "name": "Handle Webhook State",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 980,
-        "y": 880,
+        "y": 780,
         "wires": [
             [
-                "12c5de13e188ecf8"
+                "9e0c9391f9b4250a"
             ]
         ]
     },
     {
-        "id": "6feeb7fc64230699",
+        "id": "9e0c9391f9b4250a",
+        "type": "http response",
+        "z": "438d596005491859",
+        "g": "3e5336b3c932e13c",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 1220,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "a0774d5b5c031c59",
         "type": "inject",
         "z": "438d596005491859",
+        "g": "7f7a81c81fb18909",
         "name": "",
         "props": [
             {
@@ -16048,12 +16175,133 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 620,
-        "y": 360,
+        "x": 740,
+        "y": 420,
         "wires": [
             [
                 "474ac194c8bbc512"
             ]
         ]
+    },
+    {
+        "id": "43333b017ce7e0ff",
+        "type": "comment",
+        "z": "438d596005491859",
+        "g": "3e5336b3c932e13c",
+        "name": "WEBHOOK REQUESTS INIT",
+        "info": "",
+        "x": 690,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "dc0d300ba5c12af3",
+        "type": "comment",
+        "z": "438d596005491859",
+        "g": "7f7a81c81fb18909",
+        "name": "Smartplug ",
+        "info": "",
+        "x": 680,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f1a2d740b68acbd5",
+        "type": "http in",
+        "z": "a1c0e100f11a4f9b",
+        "name": "[GET] Smartplug Status",
+        "url": "/smartplug",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "7d2e0ec5b51d7f25"
+            ]
+        ]
+    },
+    {
+        "id": "7d2e0ec5b51d7f25",
+        "type": "function",
+        "z": "a1c0e100f11a4f9b",
+        "name": "Get Smartplug State",
+        "func": "// Get current state and energy from context\nlet state = flow.get('smartplug_state') || 'off';\nlet energy = global.get('smartplug.energy') || 0;\n\nmsg.payload = {\n    device: 'smartplug',\n    state: state,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: 'kWh',\n    timestamp: new Date().toISOString()\n};\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "3a3c3e93e38c5a7f"
+            ]
+        ]
+    },
+    {
+        "id": "3a3c3e93e38c5a7f",
+        "type": "http response",
+        "z": "a1c0e100f11a4f9b",
+        "name": "Response (GET)",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 760,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b8d0e89f6baceb2c",
+        "type": "http in",
+        "z": "a1c0e100f11a4f9b",
+        "name": "[POST] Smartplug Webhook",
+        "url": "/smartplug/webhook",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 300,
+        "wires": [
+            [
+                "be8e188d1b45f6d8"
+            ]
+        ]
+    },
+    {
+        "id": "be8e188d1b45f6d8",
+        "type": "function",
+        "z": "a1c0e100f11a4f9b",
+        "name": "Handle Webhook State",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n// Simulate energy usage accumulation\nlet energy = global.get('smartplug.energy') || 0;\n\nglobal.set('smartplug.energy', energy);\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "de6eb1739f1ab3c9"
+            ]
+        ]
+    },
+    {
+        "id": "de6eb1739f1ab3c9",
+        "type": "http response",
+        "z": "a1c0e100f11a4f9b",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 760,
+        "y": 300,
+        "wires": []
     }
 ]
