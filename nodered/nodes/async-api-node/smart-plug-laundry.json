@@ -1,0 +1,68 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Laundry API",
+    "version": "1.0.0",
+    "description": "Control the washing machine plug state (on/off) and monitor energy usage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/smartplug/laundry/webhook": {
+      "post": {
+        "summary": "Laundry Plug Webhook",
+        "description": "Webhook endpoint to turn the laundry simulator on or off.",
+        "operationId": "setLaundryState",
+        "tags": ["Laundry"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on","off"],
+                    "description": "Desired laundry plug state"
+                  }
+                },
+                "required": ["state"]
+              },
+              "example": {"state": "on"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Laundry plug state successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string","example":"Laundry plug turned on"},
+                    "state": {"type": "string","enum":["on","off"]}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state specified"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Laundry",
+      "description": "Endpoints for controlling the laundry simulator"
+    }
+  ]
+}
