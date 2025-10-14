@@ -844,7 +844,7 @@
         "x": 114,
         "y": 79,
         "w": 3072,
-        "h": 1858
+        "h": 1698
     },
     {
         "id": "e4a1e5e130e19d38",
@@ -1283,8 +1283,8 @@
             "0dc74f1972d85f33",
             "792d16844e582310"
         ],
-        "x": 294,
-        "y": 2139,
+        "x": 134,
+        "y": 1919,
         "w": 762,
         "h": 142
     },
@@ -1308,8 +1308,8 @@
             "79b596b657bb6429",
             "1e8883acb1fd6cae"
         ],
-        "x": 1134,
-        "y": 2139,
+        "x": 974,
+        "y": 1919,
         "w": 762,
         "h": 142
     },
@@ -3253,7 +3253,7 @@
             "14fd1ecf6e17d3c3"
         ],
         "x": 434,
-        "y": 1699,
+        "y": 1539,
         "w": 912,
         "h": 212
     },
@@ -3277,7 +3277,7 @@
             "f7310e18baa39bd1"
         ],
         "x": 594,
-        "y": 859,
+        "y": 719,
         "w": 612,
         "h": 142
     },
@@ -3299,7 +3299,7 @@
             "3c3f82bfebc2ba37"
         ],
         "x": 434,
-        "y": 1419,
+        "y": 1279,
         "w": 912,
         "h": 212
     },
@@ -3323,8 +3323,8 @@
             "c6af873c12f6835f",
             "7277ba557dca3273"
         ],
-        "x": 1974,
-        "y": 2139,
+        "x": 1814,
+        "y": 1919,
         "w": 812,
         "h": 142
     },
@@ -3349,8 +3349,8 @@
             "abefde1276346b1c",
             "0d443770ff71eb54"
         ],
-        "x": 268,
-        "y": 2039,
+        "x": 108,
+        "y": 1819,
         "w": 2544,
         "h": 488
     },
@@ -3374,8 +3374,8 @@
             "4deeabc6a75aae45",
             "7cb36fb185a2217e"
         ],
-        "x": 294,
-        "y": 2359,
+        "x": 134,
+        "y": 2139,
         "w": 812,
         "h": 142
     },
@@ -3399,8 +3399,8 @@
             "883f36bae22e7492",
             "5fcd41c00a481bb9"
         ],
-        "x": 1214,
-        "y": 2359,
+        "x": 1054,
+        "y": 2139,
         "w": 832,
         "h": 142
     },
@@ -3422,7 +3422,7 @@
             "42a38b50701f7a16"
         ],
         "x": 434,
-        "y": 1139,
+        "y": 999,
         "w": 912,
         "h": 212
     },
@@ -3856,6 +3856,17 @@
         "urlType": "str",
         "server": "",
         "serverType": "custom",
+        "devMode": "",
+        "headers": []
+    },
+    {
+        "id": "d7b4d9ce6378ec33",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "smart-plug-ac.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
         "devMode": "",
         "headers": []
     },
@@ -11221,7 +11232,7 @@
         "onceDelay": "0.1",
         "topic": "",
         "x": 730,
-        "y": 960,
+        "y": 820,
         "wires": [
             [
                 "8084d0c60d963452"
@@ -11281,7 +11292,7 @@
         "finalize": "",
         "libs": [],
         "x": 1070,
-        "y": 960,
+        "y": 820,
         "wires": [
             [
                 "07d92834eb8e47f5",
@@ -11337,8 +11348,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 2240,
+        "x": 280,
+        "y": 2020,
         "wires": [
             [
                 "4e8d16b83fa2b771"
@@ -11358,8 +11369,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 700,
-        "y": 2240,
+        "x": 540,
+        "y": 2020,
         "wires": [
             [
                 "0dc74f1972d85f33"
@@ -11376,8 +11387,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 940,
-        "y": 2240,
+        "x": 780,
+        "y": 2020,
         "wires": []
     },
     {
@@ -11387,8 +11398,8 @@
         "g": "50d822b0af5cc61a",
         "name": "webhook endpoint for thermostat",
         "info": "",
-        "x": 450,
-        "y": 2180,
+        "x": 290,
+        "y": 1960,
         "wires": []
     },
     {
@@ -11575,7 +11586,7 @@
         "name": "Smartplug for cooker",
         "info": "",
         "x": 550,
-        "y": 1740,
+        "y": 1580,
         "wires": []
     },
     {
@@ -11592,7 +11603,7 @@
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 570,
-        "y": 1800,
+        "y": 1640,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11613,7 +11624,7 @@
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 560,
-        "y": 1870,
+        "y": 1710,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11634,7 +11645,7 @@
         "finalize": "",
         "libs": [],
         "x": 1160,
-        "y": 1840,
+        "y": 1680,
         "wires": [
             [
                 "func_cooker"
@@ -11656,7 +11667,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1210,
-        "y": 1740,
+        "y": 1580,
         "wires": []
     },
     {
@@ -11718,7 +11729,7 @@
         "headers": [],
         "_version": "2.2.0",
         "x": 850,
-        "y": 1840,
+        "y": 1680,
         "wires": [
             [
                 "43a4f2d07be30783"
@@ -11739,8 +11750,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 1280,
-        "y": 2240,
+        "x": 1120,
+        "y": 2020,
         "wires": [
             [
                 "c4e7455fb216592d"
@@ -11760,8 +11771,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1540,
-        "y": 2240,
+        "x": 1380,
+        "y": 2020,
         "wires": [
             [
                 "79b596b657bb6429"
@@ -11778,8 +11789,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 1780,
-        "y": 2240,
+        "x": 1620,
+        "y": 2020,
         "wires": []
     },
     {
@@ -11789,8 +11800,8 @@
         "g": "d2748fb7d73cced7",
         "name": "webhook endpoint for cooker",
         "info": "",
-        "x": 1280,
-        "y": 2180,
+        "x": 1120,
+        "y": 1960,
         "wires": []
     },
     {
@@ -11801,7 +11812,7 @@
         "name": "Enviroment variables",
         "info": "",
         "x": 720,
-        "y": 900,
+        "y": 760,
         "wires": []
     },
     {
@@ -11812,7 +11823,7 @@
         "name": "Smartplug for laundry",
         "info": "",
         "x": 560,
-        "y": 1460,
+        "y": 1320,
         "wires": []
     },
     {
@@ -11829,7 +11840,7 @@
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 570,
-        "y": 1520,
+        "y": 1380,
         "wires": [
             [
                 "3c3f82bfebc2ba37"
@@ -11850,7 +11861,7 @@
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 560,
-        "y": 1590,
+        "y": 1450,
         "wires": [
             [
                 "3c3f82bfebc2ba37"
@@ -11871,7 +11882,7 @@
         "finalize": "",
         "libs": [],
         "x": 1160,
-        "y": 1560,
+        "y": 1420,
         "wires": [
             [
                 "func_laundry_telemetry"
@@ -11893,7 +11904,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1210,
-        "y": 1460,
+        "y": 1320,
         "wires": []
     },
     {
@@ -11907,8 +11918,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 2110,
-        "y": 2240,
+        "x": 1950,
+        "y": 2020,
         "wires": [
             [
                 "e94a1310f11d28ae"
@@ -11928,8 +11939,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2390,
-        "y": 2240,
+        "x": 2230,
+        "y": 2020,
         "wires": [
             [
                 "c6af873c12f6835f"
@@ -11944,8 +11955,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 2670,
-        "y": 2240,
+        "x": 2510,
+        "y": 2020,
         "wires": []
     },
     {
@@ -11955,8 +11966,8 @@
         "g": "fe7c6d62782a61e9",
         "name": "",
         "info": "",
-        "x": 2060,
-        "y": 2180,
+        "x": 1900,
+        "y": 1960,
         "wires": []
     },
     {
@@ -12021,7 +12032,7 @@
         "headers": [],
         "_version": "2.2.0",
         "x": 820,
-        "y": 1520,
+        "y": 1380,
         "wires": [
             [
                 "3474c5bf1ab29ecd",
@@ -12037,8 +12048,8 @@
         "g": "9be3feeb419a7b53",
         "name": "Webhooks Init",
         "info": "",
-        "x": 390,
-        "y": 2080,
+        "x": 230,
+        "y": 1860,
         "wires": []
     },
     {
@@ -12052,8 +12063,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 2460,
+        "x": 280,
+        "y": 2240,
         "wires": [
             [
                 "4deeabc6a75aae45"
@@ -12068,8 +12079,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 990,
-        "y": 2460,
+        "x": 830,
+        "y": 2240,
         "wires": []
     },
     {
@@ -12085,8 +12096,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 730,
-        "y": 2460,
+        "x": 570,
+        "y": 2240,
         "wires": [
             [
                 "670d73bf79ea2a0d"
@@ -12100,8 +12111,8 @@
         "g": "abefde1276346b1c",
         "name": "webhook endpoint for thermostat",
         "info": "",
-        "x": 450,
-        "y": 2400,
+        "x": 290,
+        "y": 2180,
         "wires": []
     },
     {
@@ -12115,8 +12126,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 1360,
-        "y": 2460,
+        "x": 1200,
+        "y": 2240,
         "wires": [
             [
                 "883f36bae22e7492"
@@ -12131,8 +12142,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 1930,
-        "y": 2460,
+        "x": 1770,
+        "y": 2240,
         "wires": []
     },
     {
@@ -12148,8 +12159,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1650,
-        "y": 2460,
+        "x": 1490,
+        "y": 2240,
         "wires": [
             [
                 "e4d27f662a46cc39"
@@ -12163,8 +12174,8 @@
         "g": "0d443770ff71eb54",
         "name": "webhook endpoint for AC",
         "info": "",
-        "x": 1350,
-        "y": 2400,
+        "x": 1190,
+        "y": 2180,
         "wires": []
     },
     {
@@ -12252,7 +12263,7 @@
         "name": "Smartplug for laundry",
         "info": "",
         "x": 560,
-        "y": 1180,
+        "y": 1040,
         "wires": []
     },
     {
@@ -12269,7 +12280,7 @@
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 570,
-        "y": 1240,
+        "y": 1100,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12290,7 +12301,7 @@
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 560,
-        "y": 1310,
+        "y": 1170,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12311,7 +12322,7 @@
         "finalize": "",
         "libs": [],
         "x": 1160,
-        "y": 1280,
+        "y": 1140,
         "wires": [
             [
                 "func_lights"
@@ -12333,7 +12344,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1210,
-        "y": 1180,
+        "y": 1040,
         "wires": []
     },
     {
@@ -12398,7 +12409,7 @@
         "headers": [],
         "_version": "2.2.0",
         "x": 870,
-        "y": 1260,
+        "y": 1120,
         "wires": [
             [
                 "e6fe9b42f4d79edf",
@@ -12505,21 +12516,63 @@
         "z": "4f4855f52107b72b",
         "g": "d72e67c06e6e6132",
         "name": "",
-        "configUrlNode": "",
-        "apiTag": "",
+        "configUrlNode": "d7b4d9ce6378ec33",
+        "apiTag": "SmartPlug",
         "keepAuth": false,
-        "operationData": {},
+        "operationData": {
+            "id": "setACPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug/ac/webhook",
+            "method": "post"
+        },
         "outputStyle": "each response",
         "errorHandling": "throw exception",
-        "internalErrors": {},
-        "parameters": {},
-        "requestContentType": "",
-        "responseContentType": "",
-        "outputs": 1,
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    },
+                    "temperature": {
+                        "name": "temperature",
+                        "activeFilter": ""
+                    },
+                    "mode": {
+                        "name": "mode",
+                        "activeFilter": ""
+                    }
+                },
+                "selectedSchema": {
+                    "name": "Request body"
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
         "responseOutputLabels": [
             {
-                "code": "default",
-                "text": "default"
+                "code": "200",
+                "text": "Smart AC plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid parameters specified"
             }
         ],
         "responseAsPayload": false,
@@ -12531,7 +12584,8 @@
         "wires": [
             [
                 "a66a27203f3dea31"
-            ]
+            ],
+            []
         ]
     },
     {
