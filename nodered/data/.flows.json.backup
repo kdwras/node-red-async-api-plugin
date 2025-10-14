@@ -837,12 +837,14 @@
             "881db607590cd279",
             "e2e99964236f8675",
             "6578bf7b191c43b7",
-            "45e26e30f704ad47"
+            "45e26e30f704ad47",
+            "9c58429dd67aded0",
+            "d72e67c06e6e6132"
         ],
         "x": 114,
         "y": 79,
-        "w": 2772,
-        "h": 1248
+        "w": 3612,
+        "h": 1858
     },
     {
         "id": "e4a1e5e130e19d38",
@@ -1265,6 +1267,7 @@
         "id": "50d822b0af5cc61a",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -1280,8 +1283,8 @@
             "0dc74f1972d85f33",
             "792d16844e582310"
         ],
-        "x": 114,
-        "y": 1479,
+        "x": 294,
+        "y": 2139,
         "w": 762,
         "h": 142
     },
@@ -1289,6 +1292,7 @@
         "id": "d2748fb7d73cced7",
         "type": "group",
         "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -1304,32 +1308,8 @@
             "79b596b657bb6429",
             "1e8883acb1fd6cae"
         ],
-        "x": 954,
-        "y": 1479,
-        "w": 762,
-        "h": 142
-    },
-    {
-        "id": "67e83da989cf8e7e",
-        "type": "group",
-        "z": "4f4855f52107b72b",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "c1553554299f955f",
-            "cd86cb14fee0fb0b",
-            "6aa6c74f323de3a2",
-            "2649ca23c4883875"
-        ],
-        "x": 1794,
-        "y": 1479,
+        "x": 1134,
+        "y": 2139,
         "w": 762,
         "h": 142
     },
@@ -1370,12 +1350,13 @@
         "nodes": [
             "07d92834eb8e47f5",
             "598f2008fafaa0f4",
-            "fc5e972c26387247"
+            "fc5e972c26387247",
+            "c966bb323b7cb3b5"
         ],
-        "x": 1374,
-        "y": 419,
-        "w": 712,
-        "h": 102
+        "x": 2034,
+        "y": 319,
+        "w": 672,
+        "h": 142
     },
     {
         "id": "lights_group",
@@ -1394,12 +1375,13 @@
         "nodes": [
             "func_lights",
             "asyncapi_lights",
-            "debug_lights"
+            "debug_lights",
+            "750e70a11320f07b"
         ],
-        "x": 1374,
-        "y": 579,
+        "x": 2034,
+        "y": 499,
         "w": 712,
-        "h": 82
+        "h": 142
     },
     {
         "id": "fridge_group",
@@ -1418,12 +1400,13 @@
         "nodes": [
             "func_fridge",
             "asyncapi_fridge",
-            "debug_fridge"
+            "debug_fridge",
+            "047e02ede737fd4b"
         ],
-        "x": 1374,
-        "y": 739,
+        "x": 2034,
+        "y": 679,
         "w": 752,
-        "h": 82
+        "h": 162
     },
     {
         "id": "launder_group",
@@ -1442,12 +1425,13 @@
         "nodes": [
             "asyncapi_launder",
             "debug_launder",
-            "func_laundry_telemetry"
+            "func_laundry_telemetry",
+            "7acf5abf8245e211"
         ],
-        "x": 1374,
+        "x": 2034,
         "y": 899,
         "w": 732,
-        "h": 102
+        "h": 162
     },
     {
         "id": "dehumidifier_group",
@@ -1466,12 +1450,13 @@
         "nodes": [
             "func_dehumidifier",
             "asyncapi_dehumidifier",
-            "debug_dehumidifier"
+            "debug_dehumidifier",
+            "f34984d5e6f1804a"
         ],
-        "x": 1374,
-        "y": 1059,
+        "x": 2034,
+        "y": 1099,
         "w": 832,
-        "h": 102
+        "h": 142
     },
     {
         "id": "cooker_group",
@@ -1490,12 +1475,13 @@
         "nodes": [
             "func_cooker",
             "asyncapi_cooker",
-            "debug_cooker"
+            "debug_cooker",
+            "b8808b578daac992"
         ],
-        "x": 1354,
-        "y": 1219,
+        "x": 2034,
+        "y": 1299,
         "w": 832,
-        "h": 82
+        "h": 142
     },
     {
         "id": "19609f77c4ba5897",
@@ -1514,12 +1500,13 @@
         "nodes": [
             "1915adae0ac41c37",
             "dbd082096676a420",
-            "f8959e1f024fcb3c"
+            "f8959e1f024fcb3c",
+            "c4d08d0f89251bfb"
         ],
-        "x": 1374,
-        "y": 259,
-        "w": 972,
-        "h": 102
+        "x": 2034,
+        "y": 139,
+        "w": 772,
+        "h": 142
     },
     {
         "id": "895c7c19f3f0551f",
@@ -3243,9 +3230,9 @@
             "57eefc9f63239b74",
             "d19baf00cf51bded"
         ],
-        "x": 194,
-        "y": 179,
-        "w": 912,
+        "x": 434,
+        "y": 119,
+        "w": 932,
         "h": 212
     },
     {
@@ -3265,8 +3252,8 @@
             "58d6581bc5500dc9",
             "14fd1ecf6e17d3c3"
         ],
-        "x": 194,
-        "y": 1079,
+        "x": 434,
+        "y": 1699,
         "w": 912,
         "h": 212
     },
@@ -3289,8 +3276,8 @@
             "8084d0c60d963452",
             "f7310e18baa39bd1"
         ],
-        "x": 234,
-        "y": 519,
+        "x": 594,
+        "y": 859,
         "w": 612,
         "h": 142
     },
@@ -3309,11 +3296,156 @@
             "11e4fbb90c6f9d1a",
             "3474c5bf1ab29ecd",
             "f2a1daf9ebd965d6",
-            "e756d17fce92b658"
+            "3c3f82bfebc2ba37"
         ],
-        "x": 174,
-        "y": 799,
+        "x": 434,
+        "y": 1419,
         "w": 912,
+        "h": 212
+    },
+    {
+        "id": "fe7c6d62782a61e9",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "a3b4653f0cf6ae5d",
+            "e94a1310f11d28ae",
+            "c6af873c12f6835f",
+            "7277ba557dca3273"
+        ],
+        "x": 1974,
+        "y": 2139,
+        "w": 812,
+        "h": 142
+    },
+    {
+        "id": "9be3feeb419a7b53",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d2748fb7d73cced7",
+            "50d822b0af5cc61a",
+            "fe7c6d62782a61e9",
+            "6028a3ed46cca3d4",
+            "abefde1276346b1c",
+            "0d443770ff71eb54"
+        ],
+        "x": 268,
+        "y": 2039,
+        "w": 2544,
+        "h": 488
+    },
+    {
+        "id": "abefde1276346b1c",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "4003081ec19ca6d6",
+            "670d73bf79ea2a0d",
+            "4deeabc6a75aae45",
+            "7cb36fb185a2217e"
+        ],
+        "x": 294,
+        "y": 2359,
+        "w": 812,
+        "h": 142
+    },
+    {
+        "id": "0d443770ff71eb54",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "8fe7947781d8abaa",
+            "e4d27f662a46cc39",
+            "883f36bae22e7492",
+            "5fcd41c00a481bb9"
+        ],
+        "x": 1214,
+        "y": 2359,
+        "w": 832,
+        "h": 142
+    },
+    {
+        "id": "9c58429dd67aded0",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Smart Plug ",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "eed1f93db727e728",
+            "638a5cf47e62722e",
+            "8f8ef71dd8a15893",
+            "e6fe9b42f4d79edf",
+            "4434127a410944ad",
+            "42a38b50701f7a16"
+        ],
+        "x": 434,
+        "y": 1139,
+        "w": 912,
+        "h": 212
+    },
+    {
+        "id": "d72e67c06e6e6132",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Smart Plug ",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e6d51b72905c0448",
+            "a7e74769d12738d5",
+            "beea24a1850466d6",
+            "a66a27203f3dea31",
+            "4cc30fd54c279296",
+            "df8beacd24a634c0"
+        ],
+        "x": 414,
+        "y": 439,
+        "w": 932,
         "h": 212
     },
     {
@@ -3693,6 +3825,39 @@
         "devMode": "",
         "headers": [],
         "_version": "2.1.3"
+    },
+    {
+        "id": "a33f75c91933dc08",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "smart-plug-laundry.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": []
+    },
+    {
+        "id": "f63fb066d1c65936",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "smart-plug-lights.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": []
+    },
+    {
+        "id": "360efb94946efef5",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "",
+        "urlType": "str",
+        "server": "",
+        "serverType": "custom",
+        "devMode": "",
+        "headers": []
     },
     {
         "id": "2c2826fa3fc78558",
@@ -10743,15 +10908,15 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC Telemetry",
-        "func": "// Environment values\nlet envTemp = parseFloat(msg.payload.temperature || 25);\nlet envHumidity = msg.payload.humidity || 50;\n\n// Random setpoint between 16–30°C\nlet setpoint = Math.floor(16 + Math.random() * (30 - 16 + 1));\n\n// Random drift\nlet current = envTemp;\n\n// Determine AC/thermostat mode\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nif (current > setpoint + 1) {\n    mode = 'cool';\n    currentPower = 1200; // W\n    current -= 0.5;      // cooling effect\n} else if (current < setpoint - 1) {\n    mode = 'heat';\n    currentPower = 2000; // W\n    current += 0.5;      // heating effect\n}\n\n// Energy tracking (cumulative kWh)\nlet energy = flow.get('energy.ac') || 0;\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale;  // seconds per tick\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\n// Add to cumulative energy\nenergy += wattToKwh(currentPower, tickDuration);\n\n// Save state\nflow.set('energy.ac', energy);\nflow.set('current_ac_temp', current);\n\n// --- Node status for visual feedback ---\nlet color = \"grey\";\nlet shape = \"ring\";\nlet text = \"Idle\";\n\nif (mode === 'cool') {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else if (mode === 'heat') {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Heating | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else {\n    text = `Idle | ${current.toFixed(1)}°C | 0 W`;\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Output telemetry ---\nmsg.payload = {\n    device: \"ac\",\n    temperature: envTemp,\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    power: currentPower, // instantaneous power in W\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\"\n};\n\nreturn msg;\n",
+        "func": "// === Air Conditioner Telemetry Simulator (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state ---\nconst plugState = global.get('acState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null; // stop execution when AC plug is off\n}\n\n// --- Environment values ---\nlet envTemp = parseFloat(msg.payload.temperature || 25);\nlet envHumidity = msg.payload.humidity || 50;\n\n// --- Persistent setpoint (holds same for 1 hour) ---\nlet setpoint = flow.get('ac.setpoint');\nlet setpointTimer = flow.get('ac.setpointTimer') || 0;\n\n// Initialize or refresh setpoint every 3600 simulated seconds\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickDuration = 1 * scale; // seconds per tick\nsetpointTimer += tickDuration;\n\nif (!setpoint || setpointTimer >= 3600) {\n    setpoint = Math.floor(16 + Math.random() * 15); // 16–30°C\n    setpointTimer = 0;\n}\n\n// --- Current temperature drift ---\nlet current = flow.get('ac.currentTemp') || envTemp;\ncurrent += (Math.random() - 0.5) * 0.3; // small drift ±0.15°C\n\n// --- Determine AC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nif (current > setpoint + 1) {\n    mode = 'cool';\n    currentPower = 1200; // cooling\n    current -= 0.5;\n} else if (current < setpoint - 1) {\n    mode = 'heat';\n    currentPower = 2000; // heating\n    current += 0.5;\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.ac') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('ac.setpoint', setpoint);\nflow.set('ac.setpointTimer', setpointTimer);\nflow.set('ac.currentTemp', current);\nflow.set('energy.ac', energy);\n\n// --- Node status feedback ---\nlet color = \"grey\";\nlet shape = \"ring\";\nlet text = \"\";\n\nif (mode === 'cool') {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else if (mode === 'heat') {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Heating | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else {\n    color = \"green\";\n    shape = \"ring\";\n    text = `Idle | ${current.toFixed(1)}°C | 0 W`;\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"ac\",\n    power: plugState,             // on/off from smart plug\n    temperature: parseFloat(current.toFixed(1)),\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    currentPower: currentPower,   // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1480,
-        "y": 460,
+        "x": 2140,
+        "y": 420,
         "wires": [
             [
                 "598f2008fafaa0f4"
@@ -10764,8 +10929,8 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 1730,
-        "y": 460,
+        "x": 2390,
+        "y": 420,
         "wires": [
             [
                 "fc5e972c26387247",
@@ -10782,8 +10947,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1970,
-        "y": 480,
+        "x": 2590,
+        "y": 400,
         "wires": []
     },
     {
@@ -10792,15 +10957,15 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights Telemetry",
-        "func": "// --- Environment info ---\nlet envTemp = parseFloat(msg.payload.temperature);\nlet envHumidity = msg.payload.humidity;\nlet envLight = msg.payload.lightIntensity;\n\n// Threshold for turning on lights (0-100)\nconst lightThreshold = 30;\n\n// Determine light state based on room intensity\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// Random brightness if ON, otherwise 0\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50–100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Energy tracking (still store kWh for dashboard/history)\nlet energyW = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0; // W\nenergyW += (power / 1000) * (tickSeconds / 3600); // kWh\nenergyW = parseFloat(energyW.toFixed(3));\nflow.set('energy.light', energyW);\n\n// --- Node status for visual feedback (show Watts) ---\nlet colorStatus = state === \"ON\" ? \"green\" : \"red\";\nlet shape = state === \"ON\" ? \"dot\" : \"ring\";\nlet text = `${state} | ${power.toFixed(1)} W`;\nnode.status({ fill: colorStatus, shape:shape, text: text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"light\",\n    state: state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: energyW,          // kWh for historical logging\n    voltage: 230,\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// === Smart Light Telemetry Simulator (Controlled by Smart Plug) ===\n\n// --- Check Smart Plug state first ---\nconst plugState = global.get('lightState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null; // stop simulation when plug is off\n}\n\n// --- Environment info ---\nlet envTemp = parseFloat(msg.payload.temperature || 22);\nlet envHumidity = msg.payload.humidity || 45;\nlet envLight = msg.payload.lightIntensity || 50;\n\n// --- Threshold for turning lights ON/OFF (0–100) ---\nconst lightThreshold = 30;\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// --- Light behavior when ON ---\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0; // 50–100%\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\" ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)] : \"\";\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.light') || 0;\nconst power = state === \"ON\" ? 8 + Math.random() * 2 : 0; // W\nenergy += (power / 1000) * (tickSeconds / 3600); // convert to kWh\nflow.set('energy.light', parseFloat(energy.toFixed(3)));\n\n// --- Node status for dashboard ---\nlet colorStatus = state === \"ON\" ? \"green\" : \"red\";\nlet shape = state === \"ON\" ? \"dot\" : \"ring\";\nlet text = `${state} | ${power.toFixed(1)} W`;\n\nnode.status({ fill: colorStatus, shape: shape, text: text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"light\",\n    power: plugState, // shows if plug is ON/OFF\n    state: state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    voltage: 230,\n    environmentTemp: envTemp,\n    environmentHumidity: envHumidity,\n    environmentLight: envLight,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1480,
-        "y": 620,
+        "x": 2140,
+        "y": 600,
         "wires": [
             [
                 "asyncapi_lights"
@@ -10813,8 +10978,8 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 1740,
-        "y": 620,
+        "x": 2400,
+        "y": 600,
         "wires": [
             [
                 "debug_lights",
@@ -10831,8 +10996,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1970,
-        "y": 620,
+        "x": 2630,
+        "y": 560,
         "wires": []
     },
     {
@@ -10841,14 +11006,14 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge Telemetry",
-        "func": "// === Fridge Telemetry Simulation ===\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(\"fridge.setTemp\") || 4;     // °C\nconst freezerSet = flow.get(\"freezer.setTemp\") || -18; // °C\n\n// Current temps (with drift around setpoint)\nlet fridgeTemp = flow.get(\"fridge.currentTemp\") || fridgeSet + (Math.random() * 2 - 1);\nlet freezerTemp = flow.get(\"freezer.currentTemp\") || freezerSet + (Math.random() * 2 - 1);\n\n// Random drift\nfridgeTemp += (Math.random() * 0.4 - 0.2);\nfreezerTemp += (Math.random() * 0.6 - 0.3);\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;\n\n// Compressor state logic\nlet compressor = \"OFF\";\nlet currentPower = 0; // Watts\nif (fridgeTemp > fridgeSet + 1 || freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3 * scale;   // cooling effect scales\n    freezerTemp -= 0.5 * scale;\n    currentPower = 150;           // W\n} else {\n    currentPower = 5;             // idle W\n}\n\n// Energy usage tracking\nlet energy = flow.get(\"energy.fridge\") || 0;\n\nfunction wattToKwh(power, sec) {\n    return (power / 1000) * (sec / 3600);\n}\n\nenergy += wattToKwh(currentPower, tickSeconds);\nflow.set(\"energy.fridge\", energy);\n\n// Door status simulation (10% chance door is open)\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// Save temps for next tick\nflow.set(\"fridge.currentTemp\", fridgeTemp);\nflow.set(\"freezer.currentTemp\", freezerTemp);\n\n// --- Node status visual feedback ---\nlet color = \"grey\";\nlet shape = \"ring\";\nlet text = \"\";\n\nif (doorStatus !== \"closed\") {\n    color = \"red\";\n    shape = \"dot\";\n    text = `⚠️ Door Open (${doorStatus.replace(\"_\", \" \")}) | ${currentPower} W`;\n} else if (compressor === \"ON\") {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling ON | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n} else {\n    color = \"green\";\n    shape = \"ring\";\n    text = `Stable | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus: doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: currentPower, // instantaneous W\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// === Fridge & Freezer Telemetry Simulator (Safe Temperatures) ===\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(\"fridge.setTemp\") || 4;     // °C\nconst freezerSet = flow.get(\"freezer.setTemp\") || -18; // °C\n\n// Current temps (with drift around setpoint)\nlet fridgeTemp = flow.get(\"fridge.currentTemp\") ?? fridgeSet + (Math.random() * 2 - 1);\nlet freezerTemp = flow.get(\"freezer.currentTemp\") ?? freezerSet + (Math.random() * 2 - 1);\n\n// --- Simulation scaling ---\nconst scale = global.get(\"simulationScale\") || 1;\nconst tickSeconds = 1 * scale;  // seconds per tick\n\n// Random drift\nfridgeTemp += (Math.random() * 0.4 - 0.2);   // ±0.2°C\nfreezerTemp += (Math.random() * 0.6 - 0.3);  // ±0.3°C\n\n// Compressor state logic\nlet compressor = \"OFF\";\nlet currentPower = 5; // idle watts\n\nif (fridgeTemp > fridgeSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3;  // small decrement per tick\n    if (fridgeTemp < fridgeSet) fridgeTemp = fridgeSet; // prevent overcooling\n    currentPower = 150;\n}\n\nif (freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    freezerTemp -= 0.5;\n    if (freezerTemp < freezerSet) freezerTemp = freezerSet; // prevent overcooling\n    currentPower = 150;\n}\n\n// Energy usage tracking\nlet energy = flow.get(\"energy.fridge\") || 0;\nfunction wattToKwh(power, sec) {\n    return (power / 1000) * (sec / 3600);\n}\nenergy += wattToKwh(currentPower, tickSeconds);\nflow.set(\"energy.fridge\", energy);\n\n// Door status simulation (10% chance door is open)\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// Save temps for next tick\nflow.set(\"fridge.currentTemp\", fridgeTemp);\nflow.set(\"freezer.currentTemp\", freezerTemp);\n\n// --- Node status visual feedback ---\nlet color = \"grey\";\nlet shape = \"ring\";\nlet text = \"\";\n\nif (doorStatus !== \"closed\") {\n    color = \"red\";\n    shape = \"dot\";\n    text = `⚠️ Door Open (${doorStatus.replace(\"_\", \" \")}) | ${currentPower} W`;\n} else if (compressor === \"ON\") {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling ON | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n} else {\n    color = \"green\";\n    shape = \"ring\";\n    text = `Stable | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape: shape, text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus: doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: currentPower, // instantaneous W\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1490,
+        "x": 2150,
         "y": 780,
         "wires": [
             [
@@ -10862,7 +11027,7 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge AsyncAPI",
-        "x": 1740,
+        "x": 2400,
         "y": 780,
         "wires": [
             [
@@ -10880,8 +11045,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2000,
-        "y": 780,
+        "x": 2660,
+        "y": 800,
         "wires": []
     },
     {
@@ -10890,8 +11055,8 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Launder AsyncAPI",
-        "x": 1730,
-        "y": 940,
+        "x": 2390,
+        "y": 1000,
         "wires": [
             [
                 "debug_launder",
@@ -10908,8 +11073,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 1980,
-        "y": 960,
+        "x": 2640,
+        "y": 1020,
         "wires": []
     },
     {
@@ -10918,15 +11083,15 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier Telemetry",
-        "func": "// --- Dehumidifier Telemetry Simulator (Step-by-Step with Progress) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickMinutes = 1 * scale; // 1 tick = 1 minute\n\n// --- Persistent state ---\nlet running = flow.get('dehumidifier.running');\nif (running === undefined) running = true;\n\nlet tankLevel = flow.get('dehumidifier.tankLevel') || 0;\nlet elapsedMinutes = flow.get('dehumidifier.elapsedMinutes') || 0;\n\n// Fixed mode and fan speed\nconst mode = \"auto\";\nconst fanSpeed = \"medium\";\n\n// Random environment humidity\nconst environmentHumidity = 30 + Math.floor(Math.random() * 50); // current room humidity\n\n// Power settings\nconst powerWatts = running ? 200 : 0; // instantaneous Watts\n\n// --- Run logic ---\nif (running) {\n    // Increment elapsed time\n    elapsedMinutes += tickMinutes;\n\n    // Gradual tank filling step-by-step (small random increment per minute)\n    const humidityRemoved = parseFloat((Math.random() * 2 + 0.5).toFixed(2)); // 0.5–2.5% per tick\n    tankLevel = Math.min(100, tankLevel + humidityRemoved);\n\n    // Stop / restart if tank full or 60 minutes elapsed\n    if (tankLevel >= 100 || elapsedMinutes >= 60) {\n        tankLevel = 0;\n        elapsedMinutes = 0;\n    }\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.dehumidifier') || 0;\nfunction wattToKwh(powerWatts, minutes) {\n    return (powerWatts / 1000) * (minutes / 60);\n}\nif (powerWatts > 0) energy += wattToKwh(powerWatts, tickMinutes);\n\n// --- Save persistent state ---\nflow.set('dehumidifier.running', running);\nflow.set('dehumidifier.tankLevel', tankLevel);\nflow.set('dehumidifier.elapsedMinutes', elapsedMinutes);\nflow.set('energy.dehumidifier', energy);\n\n// --- Node status feedback ---\nlet color = \"blue\";\nlet shape = \"dot\";\n\n// Calculate progress as percentage of 60 min run\nconst progressPercent = Math.min(100, Math.round((elapsedMinutes / 60) * 100));\nlet text = `${environmentHumidity}% | ${mode.toUpperCase()} | ${powerWatts} W`;\n\n// Update node status\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"dehumidifier\",\n    power: running ? \"ON\" : \"OFF\",\n    mode: mode,\n    fanSpeed: fanSpeed,\n    tankLevel: parseFloat(tankLevel.toFixed(1)),\n    progressPercent: progressPercent,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: powerWatts,\n    humidity: environmentHumidity,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// --- Dehumidifier Telemetry Simulator (Auto Stop/Start by Humidity) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickMinutes = 1 * scale; // 1 tick = 1 minute\n\n// --- Persistent state ---\nlet running = flow.get('dehumidifier.running');\nif (running === undefined) running = true;\n\nlet tankLevel = flow.get('dehumidifier.tankLevel') || 0;\nlet elapsedMinutes = flow.get('dehumidifier.elapsedMinutes') || 0;\n\n// Fixed mode and fan speed\nconst mode = \"auto\";\nconst fanSpeed = \"medium\";\n\n// Random environment humidity\nlet environmentHumidity = 30 + Math.floor(Math.random() * 50); // current room humidity\n\n// --- Auto Stop/Start logic ---\nif (environmentHumidity <= 50) {\n    running = false; // stop dehumidifier\n} else if (environmentHumidity > 50) {\n    running = true;  // start dehumidifier\n}\n\n// Power settings\nconst powerWatts = running ? 200 : 0; // instantaneous Watts\n\n// --- Run logic ---\nif (running) {\n    // Increment elapsed time\n    elapsedMinutes += tickMinutes;\n\n    // Gradual tank filling step-by-step (small random increment per minute)\n    const humidityRemoved = parseFloat((Math.random() * 2 + 0.5).toFixed(2)); // 0.5–2.5% per tick\n    tankLevel = Math.min(100, tankLevel + humidityRemoved);\n\n    // Reset tank if full or after 60 min\n    if (tankLevel >= 100 || elapsedMinutes >= 60) {\n        tankLevel = 0;\n        elapsedMinutes = 0;\n    }\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.dehumidifier') || 0;\nfunction wattToKwh(powerWatts, minutes) {\n    return (powerWatts / 1000) * (minutes / 60);\n}\nif (powerWatts > 0) energy += wattToKwh(powerWatts, tickMinutes);\n\n// --- Save persistent state ---\nflow.set('dehumidifier.running', running);\nflow.set('dehumidifier.tankLevel', tankLevel);\nflow.set('dehumidifier.elapsedMinutes', elapsedMinutes);\nflow.set('energy.dehumidifier', energy);\n\n// --- Node status feedback ---\nlet color = running ? \"blue\" : \"grey\";\nlet shape = running ? \"dot\" : \"ring\";\n\n// Calculate progress as percentage of 60 min run\nconst progressPercent = Math.min(100, Math.round((elapsedMinutes / 60) * 100));\nlet text = running \n    ? `${environmentHumidity}% | ${mode.toUpperCase()} | ${powerWatts} W `\n    : `${environmentHumidity}% | OFF | 0 W `;\n\n// Update node status\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"dehumidifier\",\n    power: running ? \"ON\" : \"OFF\",\n    mode: mode,\n    fanSpeed: fanSpeed,\n    tankLevel: parseFloat(tankLevel.toFixed(1)),\n    progressPercent: progressPercent,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: powerWatts,\n    humidity: environmentHumidity,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1500,
-        "y": 1120,
+        "x": 2160,
+        "y": 1200,
         "wires": [
             [
                 "asyncapi_dehumidifier"
@@ -10939,8 +11104,8 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier AsyncAPI",
-        "x": 1750,
-        "y": 1120,
+        "x": 2410,
+        "y": 1200,
         "wires": [
             [
                 "debug_dehumidifier",
@@ -10957,8 +11122,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2060,
-        "y": 1100,
+        "x": 2720,
+        "y": 1180,
         "wires": []
     },
     {
@@ -10967,15 +11132,15 @@
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker Telemetry",
-        "func": "// --- Cooker/Oven Telemetry Simulator (30 min Standard Mode) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickSeconds = 1 * scale; // 1 tick = 1 real second\n\n// Check Smart Plug state\nconst plugState = global.get('cookerState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\nlet running = true;\n\n// Standard fixed mode\nconst mode = \"bake\"; // standard mode\n\n// Persistent timer in seconds\nlet remainingSeconds = flow.get('cooker.remainingSeconds');\nif (remainingSeconds === undefined) {\n    remainingSeconds = 30 * 60; // 30 minutes in seconds\n}\n\n// Update timer\nif (running) {\n    remainingSeconds = Math.max(0, remainingSeconds - tickSeconds);\n    if (remainingSeconds === 0) running = false;\n}\n\n// Temperatures\nconst currentTemp = running ? 180 : 25; // standard bake temp\nconst setTemp = running ? 200 : 0;\n\n// Instantaneous power in Watts\nconst powerWatts = running ? 1500 : 0;\n\n// Energy tracking in kWh\nlet energy = flow.get('energy.cooker') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (running) energy += wattToKwh(powerWatts, tickSeconds);\nflow.set('energy.cooker', energy);\n\n// Save persistent timer\nflow.set('cooker.remainingSeconds', remainingSeconds);\n\n// --- Node status feedback ---\nlet color = running ? \"orange\" : \"grey\";\nlet shape = running ? \"dot\" : \"ring\";\nlet minutesLeft = Math.ceil(remainingSeconds / 60); // only minutes, round up\n\nlet text = running \n    ? `${mode.toUpperCase()} | ${currentTemp}°C → ${setTemp}°C | ${minutesLeft} min left | ${powerWatts} W`\n    : `OFF | Temp: ${currentTemp}°C | 0 W`;\n\nnode.status({ fill: color, shape: shape, text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"cooker\",\n    power: running ? \"ON\" : \"OFF\",\n    mode,\n    setTemp,\n    currentTemp,\n    timerMinutes: minutesLeft,\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// --- Cooker/Oven Telemetry Simulator (30 min Standard Mode) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickSeconds = 1 * scale; // 1 tick = 1 real second\n\n// Check Smart Plug state\nconst plugState = global.get('cookerState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\nlet running = true;\n\n// Standard fixed mode\nconst mode = \"bake\"; // standard mode\n\n// Persistent timer in seconds\nlet remainingSeconds = flow.get('cooker.remainingSeconds');\nif (!remainingSeconds) {\n    remainingSeconds = 30 * 60; // 30 minutes in seconds\n}\n\n// Update timer\nif (running) {\n    remainingSeconds = Math.max(0, remainingSeconds - tickSeconds);\n    if (remainingSeconds === 0) running = false;\n}\n\n// Temperatures\nconst currentTemp = running ? 180 : 25; // standard bake temp\nconst setTemp = running ? 200 : 0;\n\n// Instantaneous power in Watts\nconst powerWatts = running ? 1500 : 0;\n\n// Energy tracking in kWh\nlet energy = flow.get('energy.cooker') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (running) energy += wattToKwh(powerWatts, tickSeconds);\nflow.set('energy.cooker', energy);\n\n// Save persistent timer\nflow.set('cooker.remainingSeconds', remainingSeconds);\n\n// --- Node status feedback ---\nlet color = running ? \"orange\" : \"grey\";\nlet shape = running ? \"dot\" : \"ring\";\nlet minutesLeft = Math.ceil(remainingSeconds / 60); // only minutes, round up\n\nlet text = running \n    ? `${mode.toUpperCase()} | ${currentTemp}°C → ${setTemp}°C | ${minutesLeft} min left | ${powerWatts} W`\n    : `OFF | Temp: ${currentTemp}°C | 0 W`;\n\nnode.status({ fill: color, shape: shape, text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"cooker\",\n    power: running ? \"ON\" : \"OFF\",\n    mode,\n    setTemp,\n    currentTemp,\n    timerMinutes: minutesLeft,\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1470,
-        "y": 1260,
+        "x": 2150,
+        "y": 1400,
         "wires": [
             [
                 "asyncapi_cooker"
@@ -10988,8 +11153,8 @@
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker AsyncAPI",
-        "x": 1810,
-        "y": 1260,
+        "x": 2490,
+        "y": 1400,
         "wires": [
             [
                 "debug_cooker",
@@ -11006,8 +11171,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2060,
-        "y": 1260,
+        "x": 2740,
+        "y": 1400,
         "wires": []
     },
     {
@@ -11024,8 +11189,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2210,
-        "y": 300,
+        "x": 2670,
+        "y": 180,
         "wires": []
     },
     {
@@ -11034,8 +11199,8 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": " Thermostat AsyncAPI",
-        "x": 1760,
-        "y": 320,
+        "x": 2420,
+        "y": 240,
         "wires": [
             [
                 "1915adae0ac41c37",
@@ -11055,8 +11220,8 @@
         "once": false,
         "onceDelay": "0.1",
         "topic": "",
-        "x": 370,
-        "y": 620,
+        "x": 730,
+        "y": 960,
         "wires": [
             [
                 "8084d0c60d963452"
@@ -11076,8 +11241,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2570,
-        "y": 680,
+        "x": 3390,
+        "y": 660,
         "wires": [
             [
                 "d7982dd2528420ba"
@@ -11098,8 +11263,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2750,
-        "y": 760,
+        "x": 3590,
+        "y": 1040,
         "wires": []
     },
     {
@@ -11115,8 +11280,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 620,
+        "x": 1070,
+        "y": 960,
         "wires": [
             [
                 "07d92834eb8e47f5",
@@ -11146,15 +11311,15 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Laundry Telemetry",
-        "func": "// --- Full Washing Machine Cycle Simulator ---\n\n// --- Simulation scale ---\nconst scale = global.get(\"simulationScale\") || 60; // seconds per tick\nconst tickSeconds = 60 * scale; // 1 tick = 1 minute\n\n// --- Check Smart Plug / power ---\nconst plugState = global.get('laundryState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – cycle paused' });\n    return null;\n}\n\n// --- Load persistent state ---\nlet phase = flow.get('laundry.phase') || 'idle';\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || false;\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\nlet mode = flow.get('laundry.mode') || 'normal';\n\n// --- Phase durations per mode (minutes) ---\nconst modeDurations = {\n    eco: { filling:5, washing:60, rinsing:15, spinning:10, drying:30 },\n    normal: { filling:5, washing:45, rinsing:15, spinning:10, drying:20 },\n    quick: { filling:3, washing:20, rinsing:10, spinning:5, drying:10 },\n    heavy: { filling:5, washing:75, rinsing:20, spinning:15, drying:40 },\n    delicate: { filling:5, washing:30, rinsing:15, spinning:5, drying:10 }\n};\n\n// --- Instantaneous power per phase (Watts) ---\nconst phasePower = { filling:50, washing:500, rinsing:300, spinning:800, drying:2000, completed:0 };\n\n// --- Start new cycle if idle ---\nif (!running && phase === 'idle') {\n    running = true;\n    const modes = Object.keys(modeDurations);\n    mode = modes[Math.floor(Math.random() * modes.length)];\n    phase = 'filling';\n    remainingTime = modeDurations[mode][phase];\n}\n\n// --- Progress cycle ---\nif (running) {\n    remainingTime -= 1 * scale;\n    if (remainingTime <= 0) {\n        const phases = ['filling','washing','rinsing','spinning','drying'];\n        let currentIndex = phases.indexOf(phase);\n        if (currentIndex < phases.length - 1) {\n            phase = phases[currentIndex + 1];\n            remainingTime = modeDurations[mode][phase];\n        } else {\n            phase = 'completed';\n            running = false;\n            remainingTime = 0;\n        }\n    }\n}\n\n// --- Energy usage ---\nlet currentPower = phasePower[phase] || 0;\nenergy += (currentPower / 1000) * (tickSeconds / 3600); // kWh\n\n// --- Water usage ---\nif (['filling','washing','rinsing'].includes(phase)) {\n    waterUsed += Math.random() * 0.5 * scale;\n}\n\n// --- Simulated values ---\nlet waterTemp = (phase === 'washing') ? 40 + Math.random()*10 : 25;\nlet spinSpeed = (phase === 'spinning') ? 800 + Math.floor(Math.random()*400) : 0;\nlet loadWeight = 5 + Math.random()*3;\n\n// --- Door status ---\nlet doorStatus = (running || phase === 'completed') ? 'locked' : 'closed';\n\n// --- Save state for next tick ---\nflow.set('laundry.phase', phase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('energy.laundry', energy);\nflow.set('laundry.waterUsed', waterUsed);\nflow.set('laundry.mode', mode);\n\n// --- Node status feedback ---\nlet color = \"grey\", shape = \"ring\", text = \"\";\n\n// Node status text with phase, remaining time, and instantaneous Watts\nif (!running) {\n    color = 'green';\n    text = `✅ Cycle Completed | ${currentPower} W`;\n} else {\n    color = 'blue';\n    shape = 'dot';\n    text = `${phase.toUpperCase()} | ${remainingTime} min left | ${currentPower} W`;\n}\n\nif (doorStatus === 'open') {\n    color = 'red';\n    text = '⚠️ Door Open';\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: 'laundry',\n    power: 'ON',\n    running,\n    mode,\n    phase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    currentPower: currentPower, // instantaneous Watts\n    doorStatus\n};\n\nreturn msg;\n",
+        "func": "// --- Full Washing Machine Cycle Simulator ---\n\n// --- Simulation scale ---\nconst scale = global.get(\"simulationScale\") || 60; // seconds per tick\nconst tickSeconds = 60 * scale; // 1 tick = 1 minute\n\n// --- Check Smart Plug / power ---\nconst plugState = global.get('laundryState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – cycle paused' });\n    return null;\n}\n\n// --- Load persistent state ---\nlet phase = flow.get('laundry.phase') || 'idle';\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || (plugState === 'on' ? true:false);\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\nlet mode = flow.get('laundry.mode') || 'normal';\n\n// --- Phase durations per mode (minutes) ---\nconst modeDurations = {\n    eco: { filling:5, washing:60, rinsing:15, spinning:10, drying:30 },\n    normal: { filling:5, washing:45, rinsing:15, spinning:10, drying:20 },\n    quick: { filling:3, washing:20, rinsing:10, spinning:5, drying:10 },\n    heavy: { filling:5, washing:75, rinsing:20, spinning:15, drying:40 },\n    delicate: { filling:5, washing:30, rinsing:15, spinning:5, drying:10 }\n};\n\n// --- Power per phase (Watts) ---\nconst phasePower = { filling:50, washing:500, rinsing:300, spinning:800, drying:2000, completed:0 };\n\n// --- Start new cycle if idle ---\nif (!running && phase === 'idle') {\n    running = true;\n    const modes = Object.keys(modeDurations);\n    mode = modes[Math.floor(Math.random() * modes.length)];\n    phase = 'filling';\n    remainingTime = modeDurations[mode][phase];\n}\n\n// --- Progress cycle ---\nif (running) {\n    remainingTime -= 1 * scale;\n\n    if (remainingTime <= 0) {\n        const phases = ['filling','washing','rinsing','spinning','drying'];\n        const currentIndex = phases.indexOf(phase);\n\n        if (currentIndex < phases.length - 1) {\n            phase = phases[currentIndex + 1];\n            remainingTime = modeDurations[mode][phase];\n        } else {\n            // Cycle completed\n            phase = 'completed';\n            running = false;\n            remainingTime = 0;\n        }\n    }\n}\n\n// --- Instantaneous power ---\nlet currentPower = running ? phasePower[phase] || 0 : 0;\n\n// --- Energy usage (kWh) ---\nenergy += (currentPower / 1000) * (tickSeconds / 3600);\n\n// --- Water usage ---\nif (['filling','washing','rinsing'].includes(phase)) {\n    waterUsed += Math.random() * 0.5 * scale;\n}\n\n// --- Simulated values ---\nlet waterTemp = (phase === 'washing') ? 40 + Math.random()*10 : 25;\nlet spinSpeed = (phase === 'spinning') ? 800 + Math.floor(Math.random()*400) : 0;\nlet loadWeight = 5 + Math.random()*3;\n\n// --- Door status ---\nlet doorStatus = (running || phase === 'completed') ? 'locked' : 'closed';\n\n// --- Save state ---\nflow.set('laundry.phase', phase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('laundry.energy', energy);\nflow.set('laundry.waterUsed', waterUsed);\nflow.set('laundry.mode', mode);\n\n// --- Node status feedback ---\nlet color = \"grey\", shape = \"ring\", text = \"\";\n\nif (!running && phase === 'completed') {\n    color = 'green';\n    shape = 'ring';\n    text = `✅ Cycle Completed | 0 W`;\n} else if (running) {\n    color = 'blue';\n    shape = 'dot';\n    text = `${phase.toUpperCase()} | ${remainingTime} min left | ${currentPower} W`;\n}\n\nif (doorStatus === 'open') {\n    color = 'red';\n    text = '⚠️ Door Open';\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: 'laundry',\n    power: 'ON',\n    running,\n    mode,\n    phase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    currentPower: currentPower, // instantaneous Watts\n    doorStatus\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1490,
-        "y": 940,
+        "x": 2150,
+        "y": 1000,
         "wires": [
             [
                 "asyncapi_launder"
@@ -11172,8 +11337,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 260,
-        "y": 1580,
+        "x": 440,
+        "y": 2240,
         "wires": [
             [
                 "4e8d16b83fa2b771"
@@ -11193,8 +11358,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 1580,
+        "x": 700,
+        "y": 2240,
         "wires": [
             [
                 "0dc74f1972d85f33"
@@ -11211,8 +11376,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 760,
-        "y": 1580,
+        "x": 940,
+        "y": 2240,
         "wires": []
     },
     {
@@ -11222,8 +11387,8 @@
         "g": "50d822b0af5cc61a",
         "name": "webhook endpoint for thermostat",
         "info": "",
-        "x": 270,
-        "y": 1520,
+        "x": 450,
+        "y": 2180,
         "wires": []
     },
     {
@@ -11233,8 +11398,8 @@
         "g": "881db607590cd279",
         "name": "Smartplug for thermostat",
         "info": "",
-        "x": 330,
-        "y": 220,
+        "x": 570,
+        "y": 160,
         "wires": []
     },
     {
@@ -11250,8 +11415,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 330,
-        "y": 280,
+        "x": 570,
+        "y": 220,
         "wires": [
             [
                 "d19baf00cf51bded"
@@ -11271,8 +11436,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 320,
-        "y": 350,
+        "x": 560,
+        "y": 290,
         "wires": [
             [
                 "d19baf00cf51bded"
@@ -11292,8 +11457,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 920,
-        "y": 320,
+        "x": 1160,
+        "y": 260,
         "wires": [
             [
                 "f8959e1f024fcb3c"
@@ -11313,8 +11478,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1500,
-        "y": 320,
+        "x": 2160,
+        "y": 240,
         "wires": [
             [
                 "dbd082096676a420"
@@ -11335,8 +11500,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 220,
+        "x": 1230,
+        "y": 180,
         "wires": []
     },
     {
@@ -11393,8 +11558,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 620,
-        "y": 320,
+        "x": 860,
+        "y": 260,
         "wires": [
             [
                 "91dad80f577e2b9f",
@@ -11409,8 +11574,8 @@
         "g": "e2e99964236f8675",
         "name": "Smartplug for cooker",
         "info": "",
-        "x": 310,
-        "y": 1120,
+        "x": 550,
+        "y": 1740,
         "wires": []
     },
     {
@@ -11426,8 +11591,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 330,
-        "y": 1180,
+        "x": 570,
+        "y": 1800,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11447,8 +11612,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 320,
-        "y": 1250,
+        "x": 560,
+        "y": 1870,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11468,8 +11633,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 920,
-        "y": 1220,
+        "x": 1160,
+        "y": 1840,
         "wires": [
             [
                 "func_cooker"
@@ -11490,8 +11655,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 1120,
+        "x": 1210,
+        "y": 1740,
         "wires": []
     },
     {
@@ -11552,8 +11717,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 610,
-        "y": 1220,
+        "x": 850,
+        "y": 1840,
         "wires": [
             [
                 "43a4f2d07be30783"
@@ -11574,8 +11739,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 1100,
-        "y": 1580,
+        "x": 1280,
+        "y": 2240,
         "wires": [
             [
                 "c4e7455fb216592d"
@@ -11595,8 +11760,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1360,
-        "y": 1580,
+        "x": 1540,
+        "y": 2240,
         "wires": [
             [
                 "79b596b657bb6429"
@@ -11613,8 +11778,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 1600,
-        "y": 1580,
+        "x": 1780,
+        "y": 2240,
         "wires": []
     },
     {
@@ -11624,8 +11789,8 @@
         "g": "d2748fb7d73cced7",
         "name": "webhook endpoint for cooker",
         "info": "",
-        "x": 1100,
-        "y": 1520,
+        "x": 1280,
+        "y": 2180,
         "wires": []
     },
     {
@@ -11635,73 +11800,8 @@
         "g": "6578bf7b191c43b7",
         "name": "Enviroment variables",
         "info": "",
-        "x": 360,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "c1553554299f955f",
-        "type": "http in",
-        "z": "4f4855f52107b72b",
-        "g": "67e83da989cf8e7e",
-        "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/laundry/webhook",
-        "method": "post",
-        "upload": false,
-        "skipBodyParsing": false,
-        "swaggerDoc": "",
-        "x": 1940,
-        "y": 1580,
-        "wires": [
-            [
-                "cd86cb14fee0fb0b"
-            ]
-        ]
-    },
-    {
-        "id": "cd86cb14fee0fb0b",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "67e83da989cf8e7e",
-        "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2200,
-        "y": 1580,
-        "wires": [
-            [
-                "6aa6c74f323de3a2"
-            ]
-        ]
-    },
-    {
-        "id": "6aa6c74f323de3a2",
-        "type": "http response",
-        "z": "4f4855f52107b72b",
-        "g": "67e83da989cf8e7e",
-        "name": "Response (POST)",
-        "statusCode": "",
-        "headers": {
-            "content-type": "application/json"
-        },
-        "x": 2440,
-        "y": 1580,
-        "wires": []
-    },
-    {
-        "id": "2649ca23c4883875",
-        "type": "comment",
-        "z": "4f4855f52107b72b",
-        "g": "67e83da989cf8e7e",
-        "name": "webhook endpoint for laundry",
-        "info": "",
-        "x": 1940,
-        "y": 1520,
+        "x": 720,
+        "y": 900,
         "wires": []
     },
     {
@@ -11711,8 +11811,8 @@
         "g": "45e26e30f704ad47",
         "name": "Smartplug for laundry",
         "info": "",
-        "x": 300,
-        "y": 840,
+        "x": 560,
+        "y": 1460,
         "wires": []
     },
     {
@@ -11728,11 +11828,11 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 310,
-        "y": 900,
+        "x": 570,
+        "y": 1520,
         "wires": [
             [
-                "e756d17fce92b658"
+                "3c3f82bfebc2ba37"
             ]
         ]
     },
@@ -11749,11 +11849,11 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 300,
-        "y": 970,
+        "x": 560,
+        "y": 1590,
         "wires": [
             [
-                "e756d17fce92b658"
+                "3c3f82bfebc2ba37"
             ]
         ]
     },
@@ -11770,8 +11870,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 900,
-        "y": 940,
+        "x": 1160,
+        "y": 1560,
         "wires": [
             [
                 "func_laundry_telemetry"
@@ -11792,23 +11892,86 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 950,
-        "y": 840,
+        "x": 1210,
+        "y": 1460,
         "wires": []
     },
     {
-        "id": "e756d17fce92b658",
+        "id": "a3b4653f0cf6ae5d",
+        "type": "http in",
+        "z": "4f4855f52107b72b",
+        "g": "fe7c6d62782a61e9",
+        "name": "[POST] Smartplug laundry",
+        "url": "/smartplug/laundry/webhook",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 2110,
+        "y": 2240,
+        "wires": [
+            [
+                "e94a1310f11d28ae"
+            ]
+        ]
+    },
+    {
+        "id": "e94a1310f11d28ae",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "fe7c6d62782a61e9",
+        "name": "Handle Webhook State",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2390,
+        "y": 2240,
+        "wires": [
+            [
+                "c6af873c12f6835f"
+            ]
+        ]
+    },
+    {
+        "id": "c6af873c12f6835f",
+        "type": "http response",
+        "z": "4f4855f52107b72b",
+        "g": "fe7c6d62782a61e9",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {},
+        "x": 2670,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "7277ba557dca3273",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "fe7c6d62782a61e9",
+        "name": "",
+        "info": "",
+        "x": 2060,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "3c3f82bfebc2ba37",
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "45e26e30f704ad47",
         "name": "",
-        "configUrlNode": "6d897e1ac1cd195a",
+        "configUrlNode": "a33f75c91933dc08",
         "apiTag": "Laundry",
         "keepAuth": false,
         "operationData": {
             "id": "setLaundryState",
             "hasOperationId": true,
-            "path": "/laundry/webhook",
+            "path": "/smartplug/laundry/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -11857,14 +12020,517 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 580,
-        "y": 920,
+        "x": 820,
+        "y": 1520,
         "wires": [
             [
+                "3474c5bf1ab29ecd",
                 "f2a1daf9ebd965d6"
             ],
+            []
+        ]
+    },
+    {
+        "id": "6028a3ed46cca3d4",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
+        "name": "Webhooks Init",
+        "info": "",
+        "x": 390,
+        "y": 2080,
+        "wires": []
+    },
+    {
+        "id": "4003081ec19ca6d6",
+        "type": "http in",
+        "z": "4f4855f52107b72b",
+        "g": "abefde1276346b1c",
+        "name": "[POST] Smartplug Webhook",
+        "url": "/smartplug/lights/webhook",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 440,
+        "y": 2460,
+        "wires": [
             [
-                "3474c5bf1ab29ecd"
+                "4deeabc6a75aae45"
+            ]
+        ]
+    },
+    {
+        "id": "670d73bf79ea2a0d",
+        "type": "http response",
+        "z": "4f4855f52107b72b",
+        "g": "abefde1276346b1c",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {},
+        "x": 990,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "4deeabc6a75aae45",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "abefde1276346b1c",
+        "name": "Handle Webhook State",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 2460,
+        "wires": [
+            [
+                "670d73bf79ea2a0d"
+            ]
+        ]
+    },
+    {
+        "id": "7cb36fb185a2217e",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "abefde1276346b1c",
+        "name": "webhook endpoint for thermostat",
+        "info": "",
+        "x": 450,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "8fe7947781d8abaa",
+        "type": "http in",
+        "z": "4f4855f52107b72b",
+        "g": "0d443770ff71eb54",
+        "name": "[POST] Smartplug Webhook",
+        "url": "/smartplug/ac/webhook",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 1360,
+        "y": 2460,
+        "wires": [
+            [
+                "883f36bae22e7492"
+            ]
+        ]
+    },
+    {
+        "id": "e4d27f662a46cc39",
+        "type": "http response",
+        "z": "4f4855f52107b72b",
+        "g": "0d443770ff71eb54",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {},
+        "x": 1930,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "883f36bae22e7492",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "0d443770ff71eb54",
+        "name": "Handle Webhook State",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1650,
+        "y": 2460,
+        "wires": [
+            [
+                "e4d27f662a46cc39"
+            ]
+        ]
+    },
+    {
+        "id": "5fcd41c00a481bb9",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "0d443770ff71eb54",
+        "name": "webhook endpoint for AC",
+        "info": "",
+        "x": 1350,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "c4d08d0f89251bfb",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "Thermostat Device",
+        "info": "",
+        "x": 2150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "c966bb323b7cb3b5",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "c99ee48a54796f90",
+        "name": "AC Device",
+        "info": "",
+        "x": 2120,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "750e70a11320f07b",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "lights_group",
+        "name": "Lights",
+        "info": "",
+        "x": 2110,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "047e02ede737fd4b",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "fridge_group",
+        "name": "Fridge Device",
+        "info": "",
+        "x": 2130,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "7acf5abf8245e211",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "launder_group",
+        "name": "Laundry Device",
+        "info": "",
+        "x": 2140,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "f34984d5e6f1804a",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "dehumidifier_group",
+        "name": "Dehimidifier Device",
+        "info": "",
+        "x": 2150,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "b8808b578daac992",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "cooker_group",
+        "name": "Cooker Device",
+        "info": "",
+        "x": 2140,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "eed1f93db727e728",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "Smartplug for laundry",
+        "info": "",
+        "x": 560,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "638a5cf47e62722e",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "State -> ON",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"on\"}",
+        "payloadType": "json",
+        "x": 570,
+        "y": 1240,
+        "wires": [
+            [
+                "42a38b50701f7a16"
+            ]
+        ]
+    },
+    {
+        "id": "8f8ef71dd8a15893",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "State -> OFF",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"off\"}",
+        "payloadType": "json",
+        "x": 560,
+        "y": 1310,
+        "wires": [
+            [
+                "42a38b50701f7a16"
+            ]
+        ]
+    },
+    {
+        "id": "e6fe9b42f4d79edf",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    global.set('lightState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 1280,
+        "wires": [
+            [
+                "func_lights"
+            ]
+        ]
+    },
+    {
+        "id": "4434127a410944ad",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "Smartplug debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "42a38b50701f7a16",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "9c58429dd67aded0",
+        "name": "",
+        "configUrlNode": "f63fb066d1c65936",
+        "apiTag": "SmartPlug",
+        "keepAuth": false,
+        "operationData": {
+            "id": "setLightsPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug/lights/webhook",
+            "method": "post"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "selectedSchema": {
+                    "name": "Request body"
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Smart Lights plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 870,
+        "y": 1260,
+        "wires": [
+            [
+                "e6fe9b42f4d79edf",
+                "4434127a410944ad"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e6d51b72905c0448",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "Smartplug for thermostat",
+        "info": "",
+        "x": 550,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a7e74769d12738d5",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "State -> ON",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"on\"}",
+        "payloadType": "json",
+        "x": 550,
+        "y": 540,
+        "wires": [
+            [
+                "df8beacd24a634c0"
+            ]
+        ]
+    },
+    {
+        "id": "beea24a1850466d6",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "State -> OFF",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"off\"}",
+        "payloadType": "json",
+        "x": 540,
+        "y": 610,
+        "wires": [
+            [
+                "df8beacd24a634c0"
+            ]
+        ]
+    },
+    {
+        "id": "a66a27203f3dea31",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    global.set('acState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 580,
+        "wires": [
+            [
+                "07d92834eb8e47f5"
+            ]
+        ]
+    },
+    {
+        "id": "4cc30fd54c279296",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "Smartplug debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "df8beacd24a634c0",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "d72e67c06e6e6132",
+        "name": "",
+        "configUrlNode": "",
+        "apiTag": "",
+        "keepAuth": false,
+        "operationData": {},
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {},
+        "parameters": {},
+        "requestContentType": "",
+        "responseContentType": "",
+        "outputs": 1,
+        "responseOutputLabels": [
+            {
+                "code": "default",
+                "text": "default"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 840,
+        "y": 540,
+        "wires": [
+            [
+                "a66a27203f3dea31"
             ]
         ]
     },

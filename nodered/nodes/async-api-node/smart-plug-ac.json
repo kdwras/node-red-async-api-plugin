@@ -1,0 +1,100 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Smart AC API",
+    "version": "1.0.0",
+    "description": "An OpenAPI definition for controlling a smart AC via a smart plug and monitoring its state, temperature, or energy usage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/smartplug/ac/webhook": {
+      "post": {
+        "summary": "Smart AC Webhook",
+        "description": "Webhook endpoint to turn the smart AC on or off and optionally set its temperature and mode.",
+        "operationId": "setACPlugState",
+        "tags": [
+          "SmartPlug"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Smart AC plug state"
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "minimum": 16,
+                    "maximum": 30,
+                    "description": "Target temperature in Celsius"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": ["cool", "heat", "fan", "auto"],
+                    "description": "AC operating mode"
+                  }
+                },
+                "required": ["state"]
+              },
+              "example": {
+                "state": "on",
+                "temperature": 24,
+                "mode": "cool"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Smart AC plug state successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Smart AC turned on, set to 24°C in cool mode"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": ["on", "off"]
+                    },
+                    "temperature": {
+                      "type": "number",
+                      "example": 24
+                    },
+                    "mode": {
+                      "type": "string",
+                      "example": "cool"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters specified"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "SmartPlug",
+      "description": "Endpoints for controlling and monitoring smart plugs (e.g., AC, lights, cooker, etc.)"
+    }
+  ]
+}

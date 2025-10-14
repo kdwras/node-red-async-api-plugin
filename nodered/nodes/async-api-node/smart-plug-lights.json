@@ -1,0 +1,87 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Smart Lights API",
+    "version": "1.0.0",
+    "description": "An OpenAPI definition for controlling smart lights via a smart plug and monitoring their state or energy usage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/smartplug/lights/webhook": {
+      "post": {
+        "summary": "Smart Lights Webhook",
+        "description": "Webhook endpoint to turn the smart lights on or off.",
+        "operationId": "setLightsPlugState",
+        "tags": [
+          "SmartPlug"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "on",
+                      "off"
+                    ],
+                    "description": "Desired Smart Lights plug state"
+                  }
+                },
+                "required": [
+                  "state"
+                ]
+              },
+              "example": {
+                "state": "on"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Smart Lights plug state successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Smart Lights plug turned on"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "on",
+                        "off"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state specified"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "SmartPlug",
+      "description": "Endpoints for controlling and monitoring smart plugs (e.g., lights, cooker, thermostat, etc.)"
+    }
+  ]
+}
