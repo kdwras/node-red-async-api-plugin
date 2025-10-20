@@ -841,13 +841,11 @@
             "d72e67c06e6e6132",
             "45e26e30f704ad47",
             "f47559f06abd3bf6",
-            "3176681a660261ae",
-            "e7c13b2b64d3e56a",
-            "e742fb4a13f8f90e"
+            "3176681a660261ae"
         ],
-        "x": 114,
-        "y": 79,
-        "w": 3072,
+        "x": 54,
+        "y": 59,
+        "w": 3138,
         "h": 1898
     },
     {
@@ -1405,8 +1403,8 @@
             "fc5e972c26387247",
             "c966bb323b7cb3b5"
         ],
-        "x": 1674,
-        "y": 339,
+        "x": 1614,
+        "y": 319,
         "w": 672,
         "h": 142
     },
@@ -1430,8 +1428,8 @@
             "debug_lights",
             "750e70a11320f07b"
         ],
-        "x": 1674,
-        "y": 559,
+        "x": 1614,
+        "y": 539,
         "w": 712,
         "h": 142
     },
@@ -1455,8 +1453,8 @@
             "debug_fridge",
             "047e02ede737fd4b"
         ],
-        "x": 1674,
-        "y": 779,
+        "x": 1614,
+        "y": 759,
         "w": 752,
         "h": 162
     },
@@ -1480,8 +1478,8 @@
             "func_laundry_telemetry",
             "7acf5abf8245e211"
         ],
-        "x": 1674,
-        "y": 1019,
+        "x": 1614,
+        "y": 999,
         "w": 732,
         "h": 162
     },
@@ -1505,8 +1503,8 @@
             "debug_dehumidifier",
             "f34984d5e6f1804a"
         ],
-        "x": 1674,
-        "y": 1279,
+        "x": 1614,
+        "y": 1259,
         "w": 832,
         "h": 142
     },
@@ -1530,8 +1528,8 @@
             "debug_cooker",
             "b8808b578daac992"
         ],
-        "x": 1674,
-        "y": 1499,
+        "x": 1614,
+        "y": 1479,
         "w": 832,
         "h": 142
     },
@@ -1555,8 +1553,8 @@
             "f8959e1f024fcb3c",
             "c4d08d0f89251bfb"
         ],
-        "x": 1674,
-        "y": 139,
+        "x": 1614,
+        "y": 119,
         "w": 772,
         "h": 142
     },
@@ -3282,8 +3280,8 @@
             "57eefc9f63239b74",
             "d19baf00cf51bded"
         ],
-        "x": 434,
-        "y": 119,
+        "x": 374,
+        "y": 99,
         "w": 932,
         "h": 212
     },
@@ -3304,8 +3302,8 @@
             "58d6581bc5500dc9",
             "14fd1ecf6e17d3c3"
         ],
-        "x": 414,
-        "y": 1739,
+        "x": 354,
+        "y": 1719,
         "w": 912,
         "h": 212
     },
@@ -3328,8 +3326,8 @@
             "8084d0c60d963452",
             "f7310e18baa39bd1"
         ],
-        "x": 594,
-        "y": 719,
+        "x": 534,
+        "y": 699,
         "w": 612,
         "h": 142
     },
@@ -3425,8 +3423,8 @@
             "4434127a410944ad",
             "42a38b50701f7a16"
         ],
-        "x": 414,
-        "y": 919,
+        "x": 354,
+        "y": 899,
         "w": 912,
         "h": 212
     },
@@ -3447,8 +3445,8 @@
             "4cc30fd54c279296",
             "df8beacd24a634c0"
         ],
-        "x": 414,
-        "y": 439,
+        "x": 354,
+        "y": 419,
         "w": 932,
         "h": 212
     },
@@ -3494,8 +3492,8 @@
             "f2a1daf9ebd965d6",
             "3c3f82bfebc2ba37"
         ],
-        "x": 394,
-        "y": 1159,
+        "x": 334,
+        "y": 1139,
         "w": 912,
         "h": 212
     },
@@ -3520,8 +3518,8 @@
             "6175e10e832537dd",
             "d2baa4f8658d3321"
         ],
-        "x": 394,
-        "y": 1459,
+        "x": 334,
+        "y": 1439,
         "w": 912,
         "h": 202
     },
@@ -3540,13 +3538,13 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "eee953aa37d7b5a2",
-            "7ffbdffb9fbd32e1",
-            "3b274ef1ae8f85ee"
+            "3b274ef1ae8f85ee",
+            "e742fb4a13f8f90e",
+            "e7c13b2b64d3e56a"
         ],
-        "x": 2694,
-        "y": 1079,
-        "w": 432,
+        "x": 2634,
+        "y": 1059,
+        "w": 532,
         "h": 142
     },
     {
@@ -3895,7 +3893,7 @@
         "id": "742282c109ee77de",
         "type": "openApi-red-url",
         "name": "",
-        "url": "dehimidifier-smart-plug.json",
+        "url": "smart-plug-cooker.json",
         "urlType": "Files",
         "server": "http://localhost:1880",
         "serverType": "server",
@@ -3921,8 +3919,8 @@
         "name": "",
         "url": "smart-plug-thermostat.json",
         "urlType": "Files",
-        "server": "",
-        "serverType": "custom",
+        "server": "http://localhost:1880",
+        "serverType": "server",
         "devMode": "",
         "headers": [],
         "_version": "2.1.3"
@@ -3992,7 +3990,19 @@
         "type": "openApi-red-url",
         "g": "4aafd0fb6b684f3d",
         "name": "",
-        "url": "smart-plug-dehumidifier.json",
+        "url": "dehimidifier-smart-plug.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": [],
+        "_version": "2.1.3"
+    },
+    {
+        "id": "7b3a2e9531bb364e",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "dehimidifier-smart-plug.json",
         "urlType": "Files",
         "server": "http://localhost:1880",
         "serverType": "server",
@@ -11056,8 +11066,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1780,
-        "y": 440,
+        "x": 1720,
+        "y": 420,
         "wires": [
             [
                 "598f2008fafaa0f4"
@@ -11070,8 +11080,8 @@
         "z": "4f4855f52107b72b",
         "g": "c99ee48a54796f90",
         "name": "AC AsyncAPI",
-        "x": 2030,
-        "y": 440,
+        "x": 1970,
+        "y": 420,
         "wires": [
             [
                 "fc5e972c26387247",
@@ -11088,8 +11098,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2230,
-        "y": 420,
+        "x": 2170,
+        "y": 400,
         "wires": []
     },
     {
@@ -11105,8 +11115,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1780,
-        "y": 660,
+        "x": 1720,
+        "y": 640,
         "wires": [
             [
                 "asyncapi_lights"
@@ -11119,8 +11129,8 @@
         "z": "4f4855f52107b72b",
         "g": "lights_group",
         "name": "Lights AsyncAPI",
-        "x": 2040,
-        "y": 660,
+        "x": 1980,
+        "y": 640,
         "wires": [
             [
                 "debug_lights",
@@ -11137,8 +11147,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2270,
-        "y": 620,
+        "x": 2210,
+        "y": 600,
         "wires": []
     },
     {
@@ -11154,8 +11164,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1790,
-        "y": 880,
+        "x": 1730,
+        "y": 860,
         "wires": [
             [
                 "asyncapi_fridge"
@@ -11168,8 +11178,8 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge AsyncAPI",
-        "x": 2040,
-        "y": 880,
+        "x": 1980,
+        "y": 860,
         "wires": [
             [
                 "debug_fridge",
@@ -11186,8 +11196,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2300,
-        "y": 900,
+        "x": 2240,
+        "y": 880,
         "wires": []
     },
     {
@@ -11196,8 +11206,8 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Launder AsyncAPI",
-        "x": 2030,
-        "y": 1120,
+        "x": 1970,
+        "y": 1100,
         "wires": [
             [
                 "debug_launder",
@@ -11214,8 +11224,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2280,
-        "y": 1140,
+        "x": 2220,
+        "y": 1120,
         "wires": []
     },
     {
@@ -11231,8 +11241,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1800,
-        "y": 1380,
+        "x": 1740,
+        "y": 1360,
         "wires": [
             [
                 "asyncapi_dehumidifier"
@@ -11245,8 +11255,8 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier AsyncAPI",
-        "x": 2050,
-        "y": 1380,
+        "x": 1990,
+        "y": 1360,
         "wires": [
             [
                 "debug_dehumidifier",
@@ -11263,8 +11273,8 @@
         "active": true,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2360,
-        "y": 1360,
+        "x": 2300,
+        "y": 1340,
         "wires": []
     },
     {
@@ -11280,8 +11290,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1790,
-        "y": 1600,
+        "x": 1730,
+        "y": 1580,
         "wires": [
             [
                 "asyncapi_cooker"
@@ -11294,8 +11304,8 @@
         "z": "4f4855f52107b72b",
         "g": "cooker_group",
         "name": "Cooker AsyncAPI",
-        "x": 2130,
-        "y": 1600,
+        "x": 2070,
+        "y": 1580,
         "wires": [
             [
                 "debug_cooker",
@@ -11312,8 +11322,8 @@
         "active": false,
         "tosidebar": true,
         "complete": "payload",
-        "x": 2380,
-        "y": 1600,
+        "x": 2320,
+        "y": 1580,
         "wires": []
     },
     {
@@ -11330,8 +11340,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2310,
-        "y": 180,
+        "x": 2250,
+        "y": 160,
         "wires": []
     },
     {
@@ -11340,8 +11350,8 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": " Thermostat AsyncAPI",
-        "x": 2060,
-        "y": 240,
+        "x": 2000,
+        "y": 220,
         "wires": [
             [
                 "1915adae0ac41c37",
@@ -11361,8 +11371,8 @@
         "once": false,
         "onceDelay": "0.1",
         "topic": "",
-        "x": 730,
-        "y": 820,
+        "x": 670,
+        "y": 800,
         "wires": [
             [
                 "8084d0c60d963452"
@@ -11382,8 +11392,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2930,
-        "y": 720,
+        "x": 2870,
+        "y": 700,
         "wires": [
             [
                 "d7982dd2528420ba"
@@ -11404,8 +11414,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3050,
-        "y": 860,
+        "x": 2990,
+        "y": 840,
         "wires": []
     },
     {
@@ -11421,8 +11431,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
-        "y": 820,
+        "x": 1010,
+        "y": 800,
         "wires": [
             [
                 "07d92834eb8e47f5",
@@ -11443,8 +11453,8 @@
         "g": "876a8dac7a94efab",
         "name": "SMARTHOME",
         "info": "",
-        "x": 220,
-        "y": 120,
+        "x": 160,
+        "y": 100,
         "wires": []
     },
     {
@@ -11460,8 +11470,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1790,
-        "y": 1120,
+        "x": 1730,
+        "y": 1100,
         "wires": [
             [
                 "asyncapi_launder"
@@ -11540,8 +11550,8 @@
         "g": "881db607590cd279",
         "name": "Smartplug for thermostat",
         "info": "",
-        "x": 570,
-        "y": 160,
+        "x": 510,
+        "y": 140,
         "wires": []
     },
     {
@@ -11557,8 +11567,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 570,
-        "y": 220,
+        "x": 510,
+        "y": 200,
         "wires": [
             [
                 "d19baf00cf51bded"
@@ -11578,8 +11588,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 560,
-        "y": 290,
+        "x": 500,
+        "y": 270,
         "wires": [
             [
                 "d19baf00cf51bded"
@@ -11599,8 +11609,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1160,
-        "y": 260,
+        "x": 1100,
+        "y": 240,
         "wires": [
             [
                 "f8959e1f024fcb3c"
@@ -11620,8 +11630,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1800,
-        "y": 240,
+        "x": 1740,
+        "y": 220,
         "wires": [
             [
                 "dbd082096676a420"
@@ -11642,8 +11652,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1230,
-        "y": 180,
+        "x": 1170,
+        "y": 160,
         "wires": []
     },
     {
@@ -11700,8 +11710,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 860,
-        "y": 260,
+        "x": 800,
+        "y": 240,
         "wires": [
             [
                 "91dad80f577e2b9f",
@@ -11716,8 +11726,8 @@
         "g": "e2e99964236f8675",
         "name": "Smartplug for cooker",
         "info": "",
-        "x": 530,
-        "y": 1780,
+        "x": 470,
+        "y": 1760,
         "wires": []
     },
     {
@@ -11733,8 +11743,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 550,
-        "y": 1840,
+        "x": 490,
+        "y": 1820,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11754,8 +11764,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 540,
-        "y": 1910,
+        "x": 480,
+        "y": 1890,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11775,8 +11785,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1140,
-        "y": 1880,
+        "x": 1080,
+        "y": 1860,
         "wires": [
             [
                 "func_cooker"
@@ -11797,8 +11807,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1190,
-        "y": 1780,
+        "x": 1130,
+        "y": 1760,
         "wires": []
     },
     {
@@ -11844,28 +11854,22 @@
         },
         "requestContentType": "application/json",
         "responseContentType": "application/json",
-        "outputs": 2,
+        "outputs": 1,
         "responseOutputLabels": [
             {
-                "code": "200",
-                "text": "Cooker Smart Plug state successfully changed"
-            },
-            {
-                "code": "400",
-                "text": "Invalid state specified"
+                "code": "successful",
+                "text": "all successful responses (2xx)"
             }
         ],
         "responseAsPayload": false,
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 830,
-        "y": 1880,
+        "x": 770,
+        "y": 1860,
         "wires": [
             [
-                "43a4f2d07be30783"
-            ],
-            [
+                "43a4f2d07be30783",
                 "58d6581bc5500dc9"
             ]
         ]
@@ -11942,8 +11946,8 @@
         "g": "6578bf7b191c43b7",
         "name": "Enviroment variables",
         "info": "",
-        "x": 720,
-        "y": 760,
+        "x": 660,
+        "y": 740,
         "wires": []
     },
     {
@@ -12153,8 +12157,8 @@
         "g": "19609f77c4ba5897",
         "name": "Thermostat Device",
         "info": "",
-        "x": 1790,
-        "y": 180,
+        "x": 1730,
+        "y": 160,
         "wires": []
     },
     {
@@ -12164,8 +12168,8 @@
         "g": "c99ee48a54796f90",
         "name": "AC Device",
         "info": "",
-        "x": 1760,
-        "y": 380,
+        "x": 1700,
+        "y": 360,
         "wires": []
     },
     {
@@ -12175,8 +12179,8 @@
         "g": "lights_group",
         "name": "Lights",
         "info": "",
-        "x": 1750,
-        "y": 600,
+        "x": 1690,
+        "y": 580,
         "wires": []
     },
     {
@@ -12186,8 +12190,8 @@
         "g": "fridge_group",
         "name": "Fridge Device",
         "info": "",
-        "x": 1770,
-        "y": 820,
+        "x": 1710,
+        "y": 800,
         "wires": []
     },
     {
@@ -12197,8 +12201,8 @@
         "g": "launder_group",
         "name": "Laundry Device",
         "info": "",
-        "x": 1780,
-        "y": 1060,
+        "x": 1720,
+        "y": 1040,
         "wires": []
     },
     {
@@ -12208,8 +12212,8 @@
         "g": "dehumidifier_group",
         "name": "Dehimidifier Device",
         "info": "",
-        "x": 1790,
-        "y": 1320,
+        "x": 1730,
+        "y": 1300,
         "wires": []
     },
     {
@@ -12219,8 +12223,8 @@
         "g": "cooker_group",
         "name": "Cooker Device",
         "info": "",
-        "x": 1780,
-        "y": 1540,
+        "x": 1720,
+        "y": 1520,
         "wires": []
     },
     {
@@ -12230,8 +12234,8 @@
         "g": "9c58429dd67aded0",
         "name": "Smartplug for laundry",
         "info": "",
-        "x": 540,
-        "y": 960,
+        "x": 480,
+        "y": 940,
         "wires": []
     },
     {
@@ -12247,8 +12251,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 550,
-        "y": 1020,
+        "x": 490,
+        "y": 1000,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12268,8 +12272,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 540,
-        "y": 1090,
+        "x": 480,
+        "y": 1070,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12289,8 +12293,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1140,
-        "y": 1060,
+        "x": 1080,
+        "y": 1040,
         "wires": [
             [
                 "func_lights"
@@ -12311,8 +12315,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1190,
-        "y": 960,
+        "x": 1130,
+        "y": 940,
         "wires": []
     },
     {
@@ -12353,9 +12357,6 @@
                         "value": "payload.state"
                     }
                 },
-                "selectedSchema": {
-                    "name": "Request body"
-                },
                 "collapsed": false
             }
         },
@@ -12376,8 +12377,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 850,
-        "y": 1040,
+        "x": 790,
+        "y": 1020,
         "wires": [
             [
                 "e6fe9b42f4d79edf",
@@ -12393,8 +12394,8 @@
         "g": "d72e67c06e6e6132",
         "name": "Smartplug for thermostat",
         "info": "",
-        "x": 550,
-        "y": 480,
+        "x": 490,
+        "y": 460,
         "wires": []
     },
     {
@@ -12410,8 +12411,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 550,
-        "y": 540,
+        "x": 490,
+        "y": 520,
         "wires": [
             [
                 "df8beacd24a634c0"
@@ -12431,8 +12432,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 540,
-        "y": 610,
+        "x": 480,
+        "y": 590,
         "wires": [
             [
                 "df8beacd24a634c0"
@@ -12452,8 +12453,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1140,
-        "y": 580,
+        "x": 1080,
+        "y": 560,
         "wires": [
             [
                 "07d92834eb8e47f5"
@@ -12474,8 +12475,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
-        "y": 500,
+        "x": 1150,
+        "y": 480,
         "wires": []
     },
     {
@@ -12524,9 +12525,6 @@
                         "activeFilter": ""
                     }
                 },
-                "selectedSchema": {
-                    "name": "Request body"
-                },
                 "collapsed": false
             }
         },
@@ -12547,13 +12545,15 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 840,
-        "y": 540,
+        "x": 780,
+        "y": 520,
         "wires": [
             [
                 "a66a27203f3dea31"
             ],
-            []
+            [
+                "4cc30fd54c279296"
+            ]
         ]
     },
     {
@@ -12607,8 +12607,8 @@
         "g": "45e26e30f704ad47",
         "name": "Smartplug for laundry",
         "info": "",
-        "x": 520,
-        "y": 1200,
+        "x": 460,
+        "y": 1180,
         "wires": []
     },
     {
@@ -12624,8 +12624,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 530,
-        "y": 1260,
+        "x": 470,
+        "y": 1240,
         "wires": [
             [
                 "3c3f82bfebc2ba37"
@@ -12645,8 +12645,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 520,
-        "y": 1330,
+        "x": 460,
+        "y": 1310,
         "wires": [
             [
                 "3c3f82bfebc2ba37"
@@ -12666,8 +12666,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1120,
-        "y": 1300,
+        "x": 1060,
+        "y": 1280,
         "wires": [
             [
                 "func_laundry_telemetry"
@@ -12688,8 +12688,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1170,
-        "y": 1200,
+        "x": 1110,
+        "y": 1180,
         "wires": []
     },
     {
@@ -12730,9 +12730,6 @@
                         "value": "payload.state"
                     }
                 },
-                "selectedSchema": {
-                    "name": "Request body"
-                },
                 "collapsed": false
             }
         },
@@ -12753,8 +12750,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 780,
-        "y": 1260,
+        "x": 720,
+        "y": 1240,
         "wires": [
             [
                 "3474c5bf1ab29ecd",
@@ -12916,7 +12913,7 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "Dehumidifier webhook",
-        "configUrlNode": "742282c109ee77de",
+        "configUrlNode": "7b3a2e9531bb364e",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -12968,8 +12965,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 880,
-        "y": 1580,
+        "x": 820,
+        "y": 1560,
         "wires": [
             [
                 "d37116182cd1018f"
@@ -12992,8 +12989,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
-        "y": 1600,
+        "x": 520,
+        "y": 1580,
         "wires": [
             [
                 "ef13bb4d03a55dae"
@@ -13014,8 +13011,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1150,
-        "y": 1500,
+        "x": 1090,
+        "y": 1480,
         "wires": []
     },
     {
@@ -13031,8 +13028,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1180,
-        "y": 1620,
+        "x": 1120,
+        "y": 1600,
         "wires": [
             [
                 "func_dehumidifier"
@@ -13046,8 +13043,8 @@
         "g": "f47559f06abd3bf6",
         "name": "Dehumidifier smartplug",
         "info": "",
-        "x": 520,
-        "y": 1500,
+        "x": 460,
+        "y": 1480,
         "wires": []
     },
     {
@@ -13070,70 +13067,21 @@
         ]
     },
     {
-        "id": "eee953aa37d7b5a2",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "3176681a660261ae",
-        "name": "function 6",
-        "func": "// Robust context-clear for a Function node\nconst node = this;\n\n// helper to clear a context (flow or global)\nfunction clearContext(ctxName, ctxObj) {\n  try {\n    if (!ctxObj) {\n      node.warn(`${ctxName} context not available`);\n      return `${ctxName} context not available`;\n    }\n\n    // Preferred: clear() if provided\n    if (typeof ctxObj.clear === 'function') {\n      ctxObj.clear();\n      return `${ctxName}.clear() called`;\n    }\n\n    // Fallback: keys() then set each to undefined\n    if (typeof ctxObj.keys === 'function') {\n      const keys = ctxObj.keys();\n      keys.forEach(k => ctxObj.set(k, undefined));\n      return `${ctxName}.keys() used (${keys.length} keys)`;\n    }\n\n    // Last fallback: try this.context().flow/global\n    const rawCtx = node.context()[ctxName];\n    if (rawCtx && typeof rawCtx.keys === 'function') {\n      const keys = rawCtx.keys();\n      keys.forEach(k => rawCtx.set(k, undefined));\n      return `this.context().${ctxName}.keys() used (${keys.length} keys)`;\n    }\n\n    node.warn(`No method to clear ${ctxName} context`);\n    return `No method to clear ${ctxName} context`;\n  } catch (err) {\n    node.error(`Error clearing ${ctxName}: ${err}`);\n    return `Error clearing ${ctxName}: ${err.message}`;\n  }\n}\n\nconst flowResult = clearContext('flow', typeof flow !== 'undefined' ? flow : null);\nconst globalResult = clearContext('global', typeof global !== 'undefined' ? global : null);\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"Context cleared\" });\nmsg.payload = { flowResult, globalResult };\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 5,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 3040,
-        "y": 1180,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "7ffbdffb9fbd32e1",
-        "type": "inject",
-        "z": "4f4855f52107b72b",
-        "g": "3176681a660261ae",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 2800,
-        "y": 1180,
-        "wires": [
-            [
-                "eee953aa37d7b5a2"
-            ]
-        ]
-    },
-    {
         "id": "3b274ef1ae8f85ee",
         "type": "comment",
         "z": "4f4855f52107b72b",
         "g": "3176681a660261ae",
         "name": "reset simulation",
         "info": "",
-        "x": 2800,
-        "y": 1120,
+        "x": 2740,
+        "y": 1100,
         "wires": []
     },
     {
         "id": "e7c13b2b64d3e56a",
         "type": "inject",
         "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
+        "g": "3176681a660261ae",
         "name": "🔄 Reset Energy Counters",
         "props": [
             {
@@ -13151,8 +13099,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 2750,
-        "y": 1380,
+        "x": 2790,
+        "y": 1160,
         "wires": [
             [
                 "e742fb4a13f8f90e"
@@ -13163,7 +13111,7 @@
         "id": "e742fb4a13f8f90e",
         "type": "function",
         "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
+        "g": "3176681a660261ae",
         "name": "Reset Energy Counter",
         "func": "// --- Reset all device energy values ---\nconst devices = ['ac', 'light', 'fridge', 'laundry', 'dehumidifier', 'cooker', 'thermostat'];\n\n// Reset each device’s energy to 0\ndevices.forEach(d => flow.set(`energy.${d}`, 0));\n\n// Reset time period\nflow.set('hours', 1);\n\nnode.status({ fill: \"yellow\", shape: \"ring\", text: \"Energy counters reset\" });\n\n// Output a confirmation message\nmsg.payload = {\n    reset: true,\n    message: \"All energy counters have been reset to 0\",\n    devices: devices\n};\nreturn msg;",
         "outputs": 1,
@@ -13172,8 +13120,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 3000,
-        "y": 1380,
+        "x": 3040,
+        "y": 1160,
         "wires": [
             []
         ]
