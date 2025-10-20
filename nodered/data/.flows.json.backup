@@ -837,14 +837,15 @@
             "881db607590cd279",
             "e2e99964236f8675",
             "6578bf7b191c43b7",
-            "45e26e30f704ad47",
             "9c58429dd67aded0",
-            "d72e67c06e6e6132"
+            "d72e67c06e6e6132",
+            "45e26e30f704ad47",
+            "f47559f06abd3bf6"
         ],
         "x": 114,
         "y": 79,
         "w": 3072,
-        "h": 1698
+        "h": 1898
     },
     {
         "id": "e4a1e5e130e19d38",
@@ -1264,6 +1265,54 @@
         "h": 374
     },
     {
+        "id": "9be3feeb419a7b53",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d2748fb7d73cced7",
+            "50d822b0af5cc61a",
+            "fe7c6d62782a61e9",
+            "6028a3ed46cca3d4",
+            "abefde1276346b1c",
+            "0d443770ff71eb54",
+            "2fd9a75bdb7f05d0"
+        ],
+        "x": 128,
+        "y": 2019,
+        "w": 2684,
+        "h": 488
+    },
+    {
+        "id": "4aafd0fb6b684f3d",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "name": "Dehumidifier Smart Plug Control (Auto)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "dbd48ae338af1e33",
+            "f854372c27773423",
+            "e7cf145042d4417e",
+            "7bab9229e663e4d6",
+            "a0490209d61cedef",
+            "8e4f42e423d53fbb"
+        ],
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null
+    },
+    {
         "id": "50d822b0af5cc61a",
         "type": "group",
         "z": "4f4855f52107b72b",
@@ -1283,8 +1332,8 @@
             "0dc74f1972d85f33",
             "792d16844e582310"
         ],
-        "x": 294,
-        "y": 2139,
+        "x": 154,
+        "y": 2119,
         "w": 762,
         "h": 142
     },
@@ -1308,8 +1357,8 @@
             "79b596b657bb6429",
             "1e8883acb1fd6cae"
         ],
-        "x": 1134,
-        "y": 2139,
+        "x": 994,
+        "y": 2119,
         "w": 762,
         "h": 142
     },
@@ -3252,8 +3301,8 @@
             "58d6581bc5500dc9",
             "14fd1ecf6e17d3c3"
         ],
-        "x": 434,
-        "y": 1539,
+        "x": 414,
+        "y": 1739,
         "w": 912,
         "h": 212
     },
@@ -3282,28 +3331,6 @@
         "h": 142
     },
     {
-        "id": "45e26e30f704ad47",
-        "type": "group",
-        "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
-        "name": "Smart Plug ",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "8a54f719f26ad8aa",
-            "67c5da6c604320b8",
-            "11e4fbb90c6f9d1a",
-            "3474c5bf1ab29ecd",
-            "f2a1daf9ebd965d6",
-            "3c3f82bfebc2ba37"
-        ],
-        "x": 434,
-        "y": 1279,
-        "w": 912,
-        "h": 212
-    },
-    {
         "id": "fe7c6d62782a61e9",
         "type": "group",
         "z": "4f4855f52107b72b",
@@ -3323,36 +3350,10 @@
             "c6af873c12f6835f",
             "7277ba557dca3273"
         ],
-        "x": 1974,
-        "y": 2139,
+        "x": 1834,
+        "y": 2119,
         "w": 812,
         "h": 142
-    },
-    {
-        "id": "9be3feeb419a7b53",
-        "type": "group",
-        "z": "4f4855f52107b72b",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d2748fb7d73cced7",
-            "50d822b0af5cc61a",
-            "fe7c6d62782a61e9",
-            "6028a3ed46cca3d4",
-            "abefde1276346b1c",
-            "0d443770ff71eb54"
-        ],
-        "x": 268,
-        "y": 2039,
-        "w": 2544,
-        "h": 488
     },
     {
         "id": "abefde1276346b1c",
@@ -3374,8 +3375,8 @@
             "4deeabc6a75aae45",
             "7cb36fb185a2217e"
         ],
-        "x": 294,
-        "y": 2359,
+        "x": 154,
+        "y": 2339,
         "w": 812,
         "h": 142
     },
@@ -3399,8 +3400,8 @@
             "883f36bae22e7492",
             "5fcd41c00a481bb9"
         ],
-        "x": 1214,
-        "y": 2359,
+        "x": 1074,
+        "y": 2339,
         "w": 832,
         "h": 142
     },
@@ -3421,8 +3422,8 @@
             "4434127a410944ad",
             "42a38b50701f7a16"
         ],
-        "x": 434,
-        "y": 999,
+        "x": 414,
+        "y": 919,
         "w": 912,
         "h": 212
     },
@@ -3447,6 +3448,79 @@
         "y": 439,
         "w": 932,
         "h": 212
+    },
+    {
+        "id": "2fd9a75bdb7f05d0",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "9be3feeb419a7b53",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "5567887ea0a363f7",
+            "4bdcc2e5def36e60",
+            "922e9857401b4999",
+            "3bfda26157dbdd74"
+        ],
+        "x": 1974,
+        "y": 2339,
+        "w": 812,
+        "h": 142
+    },
+    {
+        "id": "45e26e30f704ad47",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Smart Plug ",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "8a54f719f26ad8aa",
+            "67c5da6c604320b8",
+            "11e4fbb90c6f9d1a",
+            "3474c5bf1ab29ecd",
+            "f2a1daf9ebd965d6",
+            "3c3f82bfebc2ba37"
+        ],
+        "x": 394,
+        "y": 1159,
+        "w": 912,
+        "h": 212
+    },
+    {
+        "id": "f47559f06abd3bf6",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "ef13bb4d03a55dae",
+            "7c195bd85b16a570",
+            "d37116182cd1018f",
+            "6175e10e832537dd",
+            "d2baa4f8658d3321"
+        ],
+        "x": 394,
+        "y": 1459,
+        "w": 912,
+        "h": 202
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -3794,7 +3868,7 @@
         "id": "742282c109ee77de",
         "type": "openApi-red-url",
         "name": "",
-        "url": "smart-plug-cooker.json",
+        "url": "dehimidifier-smart-plug.json",
         "urlType": "Files",
         "server": "http://localhost:1880",
         "serverType": "server",
@@ -3835,7 +3909,8 @@
         "server": "http://localhost:1880",
         "serverType": "server",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "f63fb066d1c65936",
@@ -3846,7 +3921,8 @@
         "server": "http://localhost:1880",
         "serverType": "server",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "360efb94946efef5",
@@ -3857,7 +3933,8 @@
         "server": "",
         "serverType": "custom",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "d7b4d9ce6378ec33",
@@ -3868,7 +3945,33 @@
         "server": "http://localhost:1880",
         "serverType": "server",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
+    },
+    {
+        "id": "6056ff2b1cf95f99",
+        "type": "openApi-red-url",
+        "name": "",
+        "url": "dehimidifier-smart-plug.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": [],
+        "_version": "2.1.3"
+    },
+    {
+        "id": "8e4f42e423d53fbb",
+        "type": "openApi-red-url",
+        "g": "4aafd0fb6b684f3d",
+        "name": "",
+        "url": "smart-plug-dehumidifier.json",
+        "urlType": "Files",
+        "server": "http://localhost:1880",
+        "serverType": "server",
+        "devMode": "",
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "2c2826fa3fc78558",
@@ -11094,7 +11197,7 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier Telemetry",
-        "func": "// --- Dehumidifier Telemetry Simulator (Auto Stop/Start by Humidity) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickMinutes = 1 * scale; // 1 tick = 1 minute\n\n// --- Persistent state ---\nlet running = flow.get('dehumidifier.running');\nif (running === undefined) running = true;\n\nlet tankLevel = flow.get('dehumidifier.tankLevel') || 0;\nlet elapsedMinutes = flow.get('dehumidifier.elapsedMinutes') || 0;\n\n// Fixed mode and fan speed\nconst mode = \"auto\";\nconst fanSpeed = \"medium\";\n\n// Random environment humidity\nlet environmentHumidity = 30 + Math.floor(Math.random() * 50); // current room humidity\n\n// --- Auto Stop/Start logic ---\nif (environmentHumidity <= 50) {\n    running = false; // stop dehumidifier\n} else if (environmentHumidity > 50) {\n    running = true;  // start dehumidifier\n}\n\n// Power settings\nconst powerWatts = running ? 200 : 0; // instantaneous Watts\n\n// --- Run logic ---\nif (running) {\n    // Increment elapsed time\n    elapsedMinutes += tickMinutes;\n\n    // Gradual tank filling step-by-step (small random increment per minute)\n    const humidityRemoved = parseFloat((Math.random() * 2 + 0.5).toFixed(2)); // 0.5–2.5% per tick\n    tankLevel = Math.min(100, tankLevel + humidityRemoved);\n\n    // Reset tank if full or after 60 min\n    if (tankLevel >= 100 || elapsedMinutes >= 60) {\n        tankLevel = 0;\n        elapsedMinutes = 0;\n    }\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.dehumidifier') || 0;\nfunction wattToKwh(powerWatts, minutes) {\n    return (powerWatts / 1000) * (minutes / 60);\n}\nif (powerWatts > 0) energy += wattToKwh(powerWatts, tickMinutes);\n\n// --- Save persistent state ---\nflow.set('dehumidifier.running', running);\nflow.set('dehumidifier.tankLevel', tankLevel);\nflow.set('dehumidifier.elapsedMinutes', elapsedMinutes);\nflow.set('energy.dehumidifier', energy);\n\n// --- Node status feedback ---\nlet color = running ? \"blue\" : \"grey\";\nlet shape = running ? \"dot\" : \"ring\";\n\n// Calculate progress as percentage of 60 min run\nconst progressPercent = Math.min(100, Math.round((elapsedMinutes / 60) * 100));\nlet text = running \n    ? `${environmentHumidity}% | ${mode.toUpperCase()} | ${powerWatts} W `\n    : `${environmentHumidity}% | OFF | 0 W `;\n\n// Update node status\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"dehumidifier\",\n    power: running ? \"ON\" : \"OFF\",\n    mode: mode,\n    fanSpeed: fanSpeed,\n    tankLevel: parseFloat(tankLevel.toFixed(1)),\n    progressPercent: progressPercent,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: powerWatts,\n    humidity: environmentHumidity,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// --- Dehumidifier Telemetry Simulator (Auto Stop/Start by Humidity) ---\n\n// Simulation scale factor\nconst scale = global.get(\"simulationScale\") || 1; // seconds per tick\nconst tickMinutes = 1 * scale; // 1 tick = 1 minute\n\n// --- Persistent state ---\nlet running = flow.get('dehumidifier.running');\nif (running === undefined) running = true;\n\nlet tankLevel = flow.get('dehumidifier.tankLevel') || 0;\nlet elapsedMinutes = flow.get('dehumidifier.elapsedMinutes') || 0;\n\n// Fixed mode and fan speed\nconst mode = \"auto\";\nconst fanSpeed = \"medium\";\n\n// Random environment humidity\nlet environmentHumidity = msg.payload.humidity || 45; // current room humidity\n\n// --- Auto Stop/Start logic ---\nif (environmentHumidity <= 50) {\n    running = false; // stop dehumidifier\n} else if (environmentHumidity > 50) {\n    running = true;  // start dehumidifier\n}\n\n// Power settings\nconst powerWatts = running ? 200 : 0; // instantaneous Watts\n\n// --- Run logic ---\nif (running) {\n    // Increment elapsed time\n    elapsedMinutes += tickMinutes;\n\n    // Gradual tank filling step-by-step (small random increment per minute)\n    const humidityRemoved = parseFloat((Math.random() * 2 + 0.5).toFixed(2)); // 0.5–2.5% per tick\n    tankLevel = Math.min(100, tankLevel + humidityRemoved);\n\n    // Reset tank if full or after 60 min\n    if (tankLevel >= 100 || elapsedMinutes >= 60) {\n        tankLevel = 0;\n        elapsedMinutes = 0;\n    }\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.dehumidifier') || 0;\nfunction wattToKwh(powerWatts, minutes) {\n    return (powerWatts / 1000) * (minutes / 60);\n}\nif (powerWatts > 0) energy += wattToKwh(powerWatts, tickMinutes);\n\n// --- Save persistent state ---\nflow.set('dehumidifier.running', running);\nflow.set('dehumidifier.tankLevel', tankLevel);\nflow.set('dehumidifier.elapsedMinutes', elapsedMinutes);\nflow.set('energy.dehumidifier', energy);\n\n// --- Node status feedback ---\nlet color = running ? \"blue\" : \"grey\";\nlet shape = running ? \"dot\" : \"ring\";\n\n// Calculate progress as percentage of 60 min run\nconst progressPercent = Math.min(100, Math.round((elapsedMinutes / 60) * 100));\nlet text = running \n    ? `${environmentHumidity}% | ${mode.toUpperCase()} | ${powerWatts} W `\n    : `${environmentHumidity}% | OFF | 0 W `;\n\n// Update node status\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: \"dehumidifier\",\n    power: running ? \"ON\" : \"OFF\",\n    mode: mode,\n    fanSpeed: fanSpeed,\n    tankLevel: parseFloat(tankLevel.toFixed(1)),\n    progressPercent: progressPercent,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower: powerWatts,\n    humidity: environmentHumidity,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -11130,7 +11233,7 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier Debug",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "complete": "payload",
         "x": 2360,
@@ -11301,7 +11404,8 @@
                 "func_laundry_telemetry",
                 "func_dehumidifier",
                 "func_cooker",
-                "f8959e1f024fcb3c"
+                "f8959e1f024fcb3c",
+                "7c195bd85b16a570"
             ]
         ]
     },
@@ -11348,8 +11452,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 2240,
+        "x": 300,
+        "y": 2220,
         "wires": [
             [
                 "4e8d16b83fa2b771"
@@ -11362,15 +11466,15 @@
         "z": "4f4855f52107b72b",
         "g": "50d822b0af5cc61a",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('thermostat_smartplug.state', newState);\nflow.set('thermostat_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 700,
-        "y": 2240,
+        "x": 560,
+        "y": 2220,
         "wires": [
             [
                 "0dc74f1972d85f33"
@@ -11387,8 +11491,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 940,
-        "y": 2240,
+        "x": 800,
+        "y": 2220,
         "wires": []
     },
     {
@@ -11398,8 +11502,8 @@
         "g": "50d822b0af5cc61a",
         "name": "webhook endpoint for thermostat",
         "info": "",
-        "x": 450,
-        "y": 2180,
+        "x": 310,
+        "y": 2160,
         "wires": []
     },
     {
@@ -11585,8 +11689,8 @@
         "g": "e2e99964236f8675",
         "name": "Smartplug for cooker",
         "info": "",
-        "x": 550,
-        "y": 1580,
+        "x": 530,
+        "y": 1780,
         "wires": []
     },
     {
@@ -11602,8 +11706,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 570,
-        "y": 1640,
+        "x": 550,
+        "y": 1840,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11623,8 +11727,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 560,
-        "y": 1710,
+        "x": 540,
+        "y": 1910,
         "wires": [
             [
                 "14fd1ecf6e17d3c3"
@@ -11644,8 +11748,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1160,
-        "y": 1680,
+        "x": 1140,
+        "y": 1880,
         "wires": [
             [
                 "func_cooker"
@@ -11666,8 +11770,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
-        "y": 1580,
+        "x": 1190,
+        "y": 1780,
         "wires": []
     },
     {
@@ -11728,8 +11832,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 850,
-        "y": 1680,
+        "x": 830,
+        "y": 1880,
         "wires": [
             [
                 "43a4f2d07be30783"
@@ -11750,8 +11854,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 1280,
-        "y": 2240,
+        "x": 1140,
+        "y": 2220,
         "wires": [
             [
                 "c4e7455fb216592d"
@@ -11764,15 +11868,15 @@
         "z": "4f4855f52107b72b",
         "g": "d2748fb7d73cced7",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('cooker_smartplug.state', newState);\nflow.set('cooker_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1540,
-        "y": 2240,
+        "x": 1400,
+        "y": 2220,
         "wires": [
             [
                 "79b596b657bb6429"
@@ -11789,8 +11893,8 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 1780,
-        "y": 2240,
+        "x": 1640,
+        "y": 2220,
         "wires": []
     },
     {
@@ -11800,8 +11904,8 @@
         "g": "d2748fb7d73cced7",
         "name": "webhook endpoint for cooker",
         "info": "",
-        "x": 1280,
-        "y": 2180,
+        "x": 1140,
+        "y": 2160,
         "wires": []
     },
     {
@@ -11816,98 +11920,6 @@
         "wires": []
     },
     {
-        "id": "8a54f719f26ad8aa",
-        "type": "comment",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "Smartplug for laundry",
-        "info": "",
-        "x": 560,
-        "y": 1320,
-        "wires": []
-    },
-    {
-        "id": "67c5da6c604320b8",
-        "type": "inject",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "State -> ON",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "payload": "{\"state\":\"on\"}",
-        "payloadType": "json",
-        "x": 570,
-        "y": 1380,
-        "wires": [
-            [
-                "3c3f82bfebc2ba37"
-            ]
-        ]
-    },
-    {
-        "id": "11e4fbb90c6f9d1a",
-        "type": "inject",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "State -> OFF",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "payload": "{\"state\":\"off\"}",
-        "payloadType": "json",
-        "x": 560,
-        "y": 1450,
-        "wires": [
-            [
-                "3c3f82bfebc2ba37"
-            ]
-        ]
-    },
-    {
-        "id": "3474c5bf1ab29ecd",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "Save SmartPlug State",
-        "func": "if (msg.payload && msg.payload.state) {\n    global.set('laundryState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1160,
-        "y": 1420,
-        "wires": [
-            [
-                "func_laundry_telemetry"
-            ]
-        ]
-    },
-    {
-        "id": "f2a1daf9ebd965d6",
-        "type": "debug",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "Smartplug debug",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1210,
-        "y": 1320,
-        "wires": []
-    },
-    {
         "id": "a3b4653f0cf6ae5d",
         "type": "http in",
         "z": "4f4855f52107b72b",
@@ -11918,8 +11930,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 2110,
-        "y": 2240,
+        "x": 1970,
+        "y": 2220,
         "wires": [
             [
                 "e94a1310f11d28ae"
@@ -11932,15 +11944,15 @@
         "z": "4f4855f52107b72b",
         "g": "fe7c6d62782a61e9",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('laundry_smartplug.state', newState);\nflow.set('laundry_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2390,
-        "y": 2240,
+        "x": 2250,
+        "y": 2220,
         "wires": [
             [
                 "c6af873c12f6835f"
@@ -11955,8 +11967,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 2670,
-        "y": 2240,
+        "x": 2530,
+        "y": 2220,
         "wires": []
     },
     {
@@ -11966,80 +11978,9 @@
         "g": "fe7c6d62782a61e9",
         "name": "",
         "info": "",
-        "x": 2060,
-        "y": 2180,
+        "x": 1920,
+        "y": 2160,
         "wires": []
-    },
-    {
-        "id": "3c3f82bfebc2ba37",
-        "type": "openApi-red",
-        "z": "4f4855f52107b72b",
-        "g": "45e26e30f704ad47",
-        "name": "",
-        "configUrlNode": "a33f75c91933dc08",
-        "apiTag": "Laundry",
-        "keepAuth": false,
-        "operationData": {
-            "id": "setLaundryState",
-            "hasOperationId": true,
-            "path": "/smartplug/laundry/webhook",
-            "method": "post"
-        },
-        "outputStyle": "each response",
-        "errorHandling": "throw exception",
-        "internalErrors": {
-            "text": "",
-            "source": ""
-        },
-        "parameters": {
-            "requestBody": {
-                "name": "Request body",
-                "required": true,
-                "isActive": true,
-                "activeFilter": "",
-                "type": "editor:Request body",
-                "parameters": {
-                    "state": {
-                        "name": "state",
-                        "isActive": true,
-                        "activeFilter": "",
-                        "required": true,
-                        "type": "msg",
-                        "value": "payload.state"
-                    }
-                },
-                "selectedSchema": {
-                    "name": "Request body"
-                },
-                "collapsed": false
-            }
-        },
-        "requestContentType": "application/json",
-        "responseContentType": "application/json",
-        "outputs": 2,
-        "responseOutputLabels": [
-            {
-                "code": "200",
-                "text": "Laundry plug state successfully changed"
-            },
-            {
-                "code": "400",
-                "text": "Invalid state specified"
-            }
-        ],
-        "responseAsPayload": false,
-        "debugMode": false,
-        "headers": [],
-        "_version": "2.2.0",
-        "x": 820,
-        "y": 1380,
-        "wires": [
-            [
-                "3474c5bf1ab29ecd",
-                "f2a1daf9ebd965d6"
-            ],
-            []
-        ]
     },
     {
         "id": "6028a3ed46cca3d4",
@@ -12048,8 +11989,8 @@
         "g": "9be3feeb419a7b53",
         "name": "Webhooks Init",
         "info": "",
-        "x": 390,
-        "y": 2080,
+        "x": 250,
+        "y": 2060,
         "wires": []
     },
     {
@@ -12063,8 +12004,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 2460,
+        "x": 300,
+        "y": 2440,
         "wires": [
             [
                 "4deeabc6a75aae45"
@@ -12079,8 +12020,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 990,
-        "y": 2460,
+        "x": 850,
+        "y": 2440,
         "wires": []
     },
     {
@@ -12089,15 +12030,15 @@
         "z": "4f4855f52107b72b",
         "g": "abefde1276346b1c",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smart_lights_smartplug.state', newState);\nflow.set('smart_lights_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 730,
-        "y": 2460,
+        "x": 590,
+        "y": 2440,
         "wires": [
             [
                 "670d73bf79ea2a0d"
@@ -12109,10 +12050,10 @@
         "type": "comment",
         "z": "4f4855f52107b72b",
         "g": "abefde1276346b1c",
-        "name": "webhook endpoint for thermostat",
+        "name": "webhook endpoint for smartlights",
         "info": "",
-        "x": 450,
-        "y": 2400,
+        "x": 310,
+        "y": 2380,
         "wires": []
     },
     {
@@ -12126,8 +12067,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 1360,
-        "y": 2460,
+        "x": 1220,
+        "y": 2440,
         "wires": [
             [
                 "883f36bae22e7492"
@@ -12142,8 +12083,8 @@
         "name": "Response (POST)",
         "statusCode": "",
         "headers": {},
-        "x": 1930,
-        "y": 2460,
+        "x": 1790,
+        "y": 2440,
         "wires": []
     },
     {
@@ -12152,15 +12093,15 @@
         "z": "4f4855f52107b72b",
         "g": "0d443770ff71eb54",
         "name": "Handle Webhook State",
-        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('smartplug.state', newState);\nflow.set('smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('ac_smartplug.state', newState);\nflow.set('ac_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1650,
-        "y": 2460,
+        "x": 1510,
+        "y": 2440,
         "wires": [
             [
                 "e4d27f662a46cc39"
@@ -12174,8 +12115,8 @@
         "g": "0d443770ff71eb54",
         "name": "webhook endpoint for AC",
         "info": "",
-        "x": 1350,
-        "y": 2400,
+        "x": 1210,
+        "y": 2380,
         "wires": []
     },
     {
@@ -12262,8 +12203,8 @@
         "g": "9c58429dd67aded0",
         "name": "Smartplug for laundry",
         "info": "",
-        "x": 560,
-        "y": 1040,
+        "x": 540,
+        "y": 960,
         "wires": []
     },
     {
@@ -12279,8 +12220,8 @@
         ],
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
-        "x": 570,
-        "y": 1100,
+        "x": 550,
+        "y": 1020,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12300,8 +12241,8 @@
         ],
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
-        "x": 560,
-        "y": 1170,
+        "x": 540,
+        "y": 1090,
         "wires": [
             [
                 "42a38b50701f7a16"
@@ -12321,8 +12262,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1160,
-        "y": 1140,
+        "x": 1140,
+        "y": 1060,
         "wires": [
             [
                 "func_lights"
@@ -12343,8 +12284,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
-        "y": 1040,
+        "x": 1190,
+        "y": 960,
         "wires": []
     },
     {
@@ -12408,8 +12349,8 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 870,
-        "y": 1120,
+        "x": 850,
+        "y": 1040,
         "wires": [
             [
                 "e6fe9b42f4d79edf",
@@ -12586,6 +12527,521 @@
                 "a66a27203f3dea31"
             ],
             []
+        ]
+    },
+    {
+        "id": "5567887ea0a363f7",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "2fd9a75bdb7f05d0",
+        "name": "Handle webhook state",
+        "func": "// Parse desired state\nlet newState = (msg.payload.state || '').toLowerCase();\n\nif (!['on', 'off'].includes(newState)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid state. Use \"on\" or \"off\".' };\n    return msg;\n}\n\n// Save new state\nglobal.set('ac_smartplug.state', newState);\nflow.set('ac_smartplug_state', newState);\n\n\nmsg.statusCode = 200;\nmsg.payload = {\n    message: `Smart plug turned ${newState}`,\n    state: newState,\n    timestamp: new Date().toISOString()\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2400,
+        "y": 2440,
+        "wires": [
+            [
+                "4bdcc2e5def36e60"
+            ]
+        ]
+    },
+    {
+        "id": "4bdcc2e5def36e60",
+        "type": "http response",
+        "z": "4f4855f52107b72b",
+        "g": "2fd9a75bdb7f05d0",
+        "name": "Response (POST)",
+        "statusCode": "",
+        "headers": {},
+        "x": 2670,
+        "y": 2440,
+        "wires": []
+    },
+    {
+        "id": "922e9857401b4999",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "2fd9a75bdb7f05d0",
+        "name": "webhook endpoint for dehumidifier",
+        "info": "",
+        "x": 2140,
+        "y": 2380,
+        "wires": []
+    },
+    {
+        "id": "8a54f719f26ad8aa",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "Smartplug for laundry",
+        "info": "",
+        "x": 520,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "67c5da6c604320b8",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "State -> ON",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"on\"}",
+        "payloadType": "json",
+        "x": 530,
+        "y": 1260,
+        "wires": [
+            [
+                "3c3f82bfebc2ba37"
+            ]
+        ]
+    },
+    {
+        "id": "11e4fbb90c6f9d1a",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "State -> OFF",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "payload": "{\"state\":\"off\"}",
+        "payloadType": "json",
+        "x": 520,
+        "y": 1330,
+        "wires": [
+            [
+                "3c3f82bfebc2ba37"
+            ]
+        ]
+    },
+    {
+        "id": "3474c5bf1ab29ecd",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    global.set('laundryState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1300,
+        "wires": [
+            [
+                "func_laundry_telemetry"
+            ]
+        ]
+    },
+    {
+        "id": "f2a1daf9ebd965d6",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "Smartplug debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "3c3f82bfebc2ba37",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "45e26e30f704ad47",
+        "name": "",
+        "configUrlNode": "a33f75c91933dc08",
+        "apiTag": "Laundry",
+        "keepAuth": false,
+        "operationData": {
+            "id": "setLaundryState",
+            "hasOperationId": true,
+            "path": "/smartplug/laundry/webhook",
+            "method": "post"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "selectedSchema": {
+                    "name": "Request body"
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Laundry plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 780,
+        "y": 1260,
+        "wires": [
+            [
+                "3474c5bf1ab29ecd",
+                "f2a1daf9ebd965d6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dbd48ae338af1e33",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "4aafd0fb6b684f3d",
+        "name": "Environment Simulator",
+        "func": "// --- Simulation Scale ---\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 60); // 1s = 1 minute\n}\n\n// --- Realistic Environment Base ---\nconst baseTemp = 22; // °C\nconst baseHumidity = 45; // %\nconst hour = new Date().getHours(); // local time for light simulation\n\n// Get previous state\nlet currentTemp = flow.get('env.temperature') || baseTemp;\nlet currentHumidity = flow.get('env.humidity') || baseHumidity;\nlet currentLight = flow.get('env.lightIntensity') || 50;\n\n// --- Apply small drift ---\ncurrentTemp += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);  // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp realistic\n\n// Light based on time of day\nif (hour >= 6 && hour < 18) {\n    currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n    currentLight = 0 + Math.floor(Math.random() * 20);  // night\n}\n\n// Save state for next tick\nflow.set('env.temperature', currentTemp);\nflow.set('env.humidity', currentHumidity);\nflow.set('env.lightIntensity', currentLight);\nflow.set('current_temp', currentTemp);\n\n// --- Output payload ---\nmsg.payload = {\n    environment: true,\n    temperature: currentTemp.toFixed(1),\n    humidity: currentHumidity.toFixed(1),\n    lightIntensity: currentLight,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\")\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 0,
+        "y": 0,
+        "wires": [
+            [
+                "f854372c27773423"
+            ]
+        ]
+    },
+    {
+        "id": "f854372c27773423",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "4aafd0fb6b684f3d",
+        "name": "Trigger if humidity > 50% (state memory)",
+        "func": "let lastState = flow.get('dehumidifier.lastState') || 'off';\nconst humidity = Number(msg.payload?.humidity);\n\nif (!isNaN(humidity)) {\n    let newState = humidity > 50 ? 'on' : 'off';\n    if (newState !== lastState) {\n        flow.set('dehumidifier.lastState', newState);\n        msg.payload = { state: newState };\n        node.status({fill: newState === 'on' ? 'green' : 'red', shape: 'dot', text: `Humidity: ${humidity.toFixed(1)}% → ${newState}`});\n        return newState === 'on' ? [msg, null] : [null, msg];\n    }\n}\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 0,
+        "y": 0,
+        "wires": [
+            [
+                "e7cf145042d4417e"
+            ],
+            [
+                "e7cf145042d4417e"
+            ]
+        ]
+    },
+    {
+        "id": "e7cf145042d4417e",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "4aafd0fb6b684f3d",
+        "name": "Dehumidifier webhook",
+        "configUrlNode": "8e4f42e423d53fbb",
+        "apiTag": "SmartPlug",
+        "keepAuth": false,
+        "operationData": {
+            "id": "setDehumidifierPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug/dehumidifier/webhook",
+            "method": "post"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Dehumidifier Smart Plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 0,
+        "y": 0,
+        "wires": [
+            [
+                "7bab9229e663e4d6"
+            ],
+            [
+                "a0490209d61cedef"
+            ]
+        ]
+    },
+    {
+        "id": "7bab9229e663e4d6",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "4aafd0fb6b684f3d",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    global.set('dehumidifierState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 0,
+        "y": 0,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0490209d61cedef",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "4aafd0fb6b684f3d",
+        "name": "Dehumidifier debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 0,
+        "y": 0,
+        "wires": []
+    },
+    {
+        "id": "ef13bb4d03a55dae",
+        "type": "openApi-red",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "Dehumidifier webhook",
+        "configUrlNode": "742282c109ee77de",
+        "apiTag": "SmartPlug",
+        "keepAuth": false,
+        "operationData": {
+            "id": "setDehumidifierPlugState",
+            "hasOperationId": true,
+            "path": "/smartplug/dehumidifier/webhook",
+            "method": "post"
+        },
+        "outputStyle": "each response",
+        "errorHandling": "throw exception",
+        "internalErrors": {
+            "text": "",
+            "source": ""
+        },
+        "parameters": {
+            "requestBody": {
+                "name": "Request body",
+                "required": true,
+                "isActive": true,
+                "activeFilter": "",
+                "type": "editor:Request body",
+                "parameters": {
+                    "state": {
+                        "name": "state",
+                        "isActive": true,
+                        "activeFilter": "",
+                        "required": true,
+                        "type": "msg",
+                        "value": "payload.state"
+                    }
+                },
+                "collapsed": false
+            }
+        },
+        "requestContentType": "application/json",
+        "responseContentType": "application/json",
+        "outputs": 2,
+        "responseOutputLabels": [
+            {
+                "code": "200",
+                "text": "Dehumidifier Smart Plug state successfully changed"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
+            }
+        ],
+        "responseAsPayload": false,
+        "debugMode": false,
+        "headers": [],
+        "_version": "2.2.0",
+        "x": 880,
+        "y": 1580,
+        "wires": [
+            [
+                "d37116182cd1018f"
+            ],
+            [
+                "6175e10e832537dd"
+            ]
+        ]
+    },
+    {
+        "id": "7c195bd85b16a570",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "trigger humidifier webhook",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 60 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 1600,
+        "wires": [
+            [
+                "ef13bb4d03a55dae"
+            ]
+        ]
+    },
+    {
+        "id": "d37116182cd1018f",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "Smartplug debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "6175e10e832537dd",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    // Save the current state globally\n    global.set('dehumidifierState', msg.payload.state);\n\n    // Update the node status\n    const stateText = msg.payload.state === 'on' ? 'ON' : 'OFF';\n    const color = msg.payload.state === 'on' ? 'green' : 'red';\n\n    node.status({\n        fill: color,\n        shape: 'dot',\n        text: `Dehumidifier is ${stateText}`\n    });\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 1620,
+        "wires": [
+            [
+                "func_dehumidifier"
+            ]
+        ]
+    },
+    {
+        "id": "d2baa4f8658d3321",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "Dehumidifier smartplug",
+        "info": "",
+        "x": 520,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "3bfda26157dbdd74",
+        "type": "http in",
+        "z": "4f4855f52107b72b",
+        "g": "2fd9a75bdb7f05d0",
+        "name": "[POST] Smartplug Webhook",
+        "url": "/smartplug/dehumidifier/webhook",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 2120,
+        "y": 2440,
+        "wires": [
+            [
+                "5567887ea0a363f7"
+            ]
         ]
     },
     {

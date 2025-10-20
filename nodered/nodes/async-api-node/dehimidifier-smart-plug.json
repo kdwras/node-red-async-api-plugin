@@ -1,0 +1,87 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Dehumidifier Smart Plug API",
+    "version": "1.0.0",
+    "description": "An OpenAPI definition for controlling the dehumidifier's smart plug and monitoring its state or energy usage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/smartplug/dehumidifier/webhook": {
+      "post": {
+        "summary": "Dehumidifier Smart Plug Webhook",
+        "description": "Webhook endpoint to turn the dehumidifier's smart plug on or off.",
+        "operationId": "setDehumidifierPlugState",
+        "tags": [
+          "SmartPlug"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "on",
+                      "off"
+                    ],
+                    "description": "Desired Dehumidifier Smart Plug state"
+                  }
+                },
+                "required": [
+                  "state"
+                ]
+              },
+              "example": {
+                "state": "on"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dehumidifier Smart Plug state successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Dehumidifier Smart Plug turned on"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "on",
+                        "off"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state specified"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "SmartPlug",
+      "description": "Endpoints for controlling and monitoring smart plugs (e.g., cooker, dehumidifier, thermostat, etc.)"
+    }
+  ]
+}
