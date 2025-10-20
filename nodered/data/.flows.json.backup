@@ -840,7 +840,8 @@
             "9c58429dd67aded0",
             "d72e67c06e6e6132",
             "45e26e30f704ad47",
-            "f47559f06abd3bf6"
+            "f47559f06abd3bf6",
+            "3176681a660261ae"
         ],
         "x": 114,
         "y": 79,
@@ -3521,6 +3522,30 @@
         "y": 1459,
         "w": 912,
         "h": 202
+    },
+    {
+        "id": "3176681a660261ae",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "eee953aa37d7b5a2",
+            "7ffbdffb9fbd32e1",
+            "3b274ef1ae8f85ee"
+        ],
+        "x": 2674,
+        "y": 1079,
+        "w": 452,
+        "h": 142
     },
     {
         "id": "4fc15b76b4d55d7d",
@@ -11387,7 +11412,7 @@
         "z": "4f4855f52107b72b",
         "g": "6578bf7b191c43b7",
         "name": "Environment Generator",
-        "func": "// --- Simulation Scale ---\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 60); // 1s = 1 minute\n}\n\n// --- Realistic Environment Base ---\nconst baseTemp = 22; // °C\nconst baseHumidity = 45; // %\nconst hour = new Date().getHours(); // local time for light simulation\n\n// Get previous state\nlet currentTemp = flow.get('env.temperature') || baseTemp;\nlet currentHumidity = flow.get('env.humidity') || baseHumidity;\nlet currentLight = flow.get('env.lightIntensity') || 50;\n\n// --- Apply small drift ---\ncurrentTemp += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);  // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp realistic\n// Light based on time of day\nif (hour >= 6 && hour < 18) {\n    currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n    currentLight = 0 + Math.floor(Math.random() * 20);  // night\n}\n\n// Save state for next tick\nflow.set('env.temperature', currentTemp);\nflow.set('env.humidity', currentHumidity);\nflow.set('env.lightIntensity', currentLight);\nflow.set('current_temp', currentTemp);\n\n// --- Output payload ---\nmsg.payload = {\n    environment: true,\n    temperature: currentTemp.toFixed(1),\n    humidity: currentHumidity.toFixed(1),\n    lightIntensity: currentLight,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\")\n};\n\nreturn msg;\n",
+        "func": "// --- Simulation Scale ---\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 60); // 1s = 1 minute\n}\n\n// --- Realistic Environment Base ---\nconst baseTemp = 22; // °C\nconst baseHumidity = 70; // %\nconst hour = new Date().getHours(); // local time for light simulation\n\n// Get previous state\nlet currentTemp = flow.get('env.temperature') || baseTemp;\nlet currentHumidity = flow.get('env.humidity') || baseHumidity;\nlet currentLight = flow.get('env.lightIntensity') || 50;\n\n// --- Apply small drift ---\ncurrentTemp += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);  // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp realistic\n// Light based on time of day\nif (hour >= 6 && hour < 18) {\n    currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n    currentLight = 0 + Math.floor(Math.random() * 20);  // night\n}\n\n// Save state for next tick\nflow.set('env.temperature', currentTemp);\nflow.set('env.humidity', currentHumidity);\nflow.set('env.lightIntensity', currentLight);\nflow.set('current_temp', currentTemp);\n\n// --- Output payload ---\nmsg.payload = {\n    environment: true,\n    temperature: currentTemp.toFixed(1),\n    humidity: currentHumidity.toFixed(1),\n    lightIntensity: currentLight,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\")\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12843,9 +12868,7 @@
             [
                 "7bab9229e663e4d6"
             ],
-            [
-                "a0490209d61cedef"
-            ]
+            []
         ]
     },
     {
@@ -12960,7 +12983,7 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 60 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -13043,6 +13066,66 @@
                 "5567887ea0a363f7"
             ]
         ]
+    },
+    {
+        "id": "eee953aa37d7b5a2",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "3176681a660261ae",
+        "name": "function 6",
+        "func": "// Robust context-clear for a Function node\nconst node = this;\n\n// helper to clear a context (flow or global)\nfunction clearContext(ctxName, ctxObj) {\n  try {\n    if (!ctxObj) {\n      node.warn(`${ctxName} context not available`);\n      return `${ctxName} context not available`;\n    }\n\n    // Preferred: clear() if provided\n    if (typeof ctxObj.clear === 'function') {\n      ctxObj.clear();\n      return `${ctxName}.clear() called`;\n    }\n\n    // Fallback: keys() then set each to undefined\n    if (typeof ctxObj.keys === 'function') {\n      const keys = ctxObj.keys();\n      keys.forEach(k => ctxObj.set(k, undefined));\n      return `${ctxName}.keys() used (${keys.length} keys)`;\n    }\n\n    // Last fallback: try this.context().flow/global\n    const rawCtx = node.context()[ctxName];\n    if (rawCtx && typeof rawCtx.keys === 'function') {\n      const keys = rawCtx.keys();\n      keys.forEach(k => rawCtx.set(k, undefined));\n      return `this.context().${ctxName}.keys() used (${keys.length} keys)`;\n    }\n\n    node.warn(`No method to clear ${ctxName} context`);\n    return `No method to clear ${ctxName} context`;\n  } catch (err) {\n    node.error(`Error clearing ${ctxName}: ${err}`);\n    return `Error clearing ${ctxName}: ${err.message}`;\n  }\n}\n\nconst flowResult = clearContext('flow', typeof flow !== 'undefined' ? flow : null);\nconst globalResult = clearContext('global', typeof global !== 'undefined' ? global : null);\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"Context cleared\" });\nmsg.payload = { flowResult, globalResult };\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 5,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3040,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7ffbdffb9fbd32e1",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "3176681a660261ae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2800,
+        "y": 1180,
+        "wires": [
+            [
+                "eee953aa37d7b5a2"
+            ]
+        ]
+    },
+    {
+        "id": "3b274ef1ae8f85ee",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "3176681a660261ae",
+        "name": "reset simulation",
+        "info": "",
+        "x": 2780,
+        "y": 1120,
+        "wires": []
     },
     {
         "id": "home1",
