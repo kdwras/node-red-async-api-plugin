@@ -269,10 +269,6 @@ components:
             type: string
             description: Selected washing program
             enum: [ eco, normal, quick, heavy, delicate, wool, rinse, spin, dry ]
-          cyclePhase:
-            type: string
-            description: Current cycle phase
-            enum: [ filling, washing, rinsing, spinning, drying, completed, idle ]
           waterTemp:
             type: number
             description: Current water temperature in °C

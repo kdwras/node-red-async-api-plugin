@@ -841,7 +841,9 @@
             "d72e67c06e6e6132",
             "45e26e30f704ad47",
             "f47559f06abd3bf6",
-            "3176681a660261ae"
+            "3176681a660261ae",
+            "e7c13b2b64d3e56a",
+            "e742fb4a13f8f90e"
         ],
         "x": 114,
         "y": 79,
@@ -3542,9 +3544,9 @@
             "7ffbdffb9fbd32e1",
             "3b274ef1ae8f85ee"
         ],
-        "x": 2674,
+        "x": 2694,
         "y": 1079,
-        "w": 452,
+        "w": 432,
         "h": 142
     },
     {
@@ -13123,9 +13125,58 @@
         "g": "3176681a660261ae",
         "name": "reset simulation",
         "info": "",
-        "x": 2780,
+        "x": 2800,
         "y": 1120,
         "wires": []
+    },
+    {
+        "id": "e7c13b2b64d3e56a",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "🔄 Reset Energy Counters",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2750,
+        "y": 1380,
+        "wires": [
+            [
+                "e742fb4a13f8f90e"
+            ]
+        ]
+    },
+    {
+        "id": "e742fb4a13f8f90e",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "name": "Reset Energy Counter",
+        "func": "// --- Reset all device energy values ---\nconst devices = ['ac', 'light', 'fridge', 'laundry', 'dehumidifier', 'cooker', 'thermostat'];\n\n// Reset each device’s energy to 0\ndevices.forEach(d => flow.set(`energy.${d}`, 0));\n\n// Reset time period\nflow.set('hours', 1);\n\nnode.status({ fill: \"yellow\", shape: \"ring\", text: \"Energy counters reset\" });\n\n// Output a confirmation message\nmsg.payload = {\n    reset: true,\n    message: \"All energy counters have been reset to 0\",\n    devices: devices\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3000,
+        "y": 1380,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "home1",
