@@ -27,16 +27,6 @@ services:
       - ./mqtt/data:/mosquitto/data
       - ./mqtt/log:/mosquitto/log
 
-  php-apache:
-    build:
-      context: ./apache-root
-    container_name: php-apache-server
-    ports:
-      - "8080:80"
-    volumes:
-      - ./apache-root:/var/www/html
-    restart: unless-stopped
-
 
 networks:
   nodered_network:

@@ -1,0 +1,289 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Unified Smart Plug API",
+    "version": "1.1.0",
+    "description": "Combined API for AC, Cooker, Lights, Laundry, Thermostat, and Dehumidifier smart plugs, supporting home/device scoping via /home/{id}/ paths."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1880",
+      "description": "Local Node-RED instance"
+    }
+  ],
+  "paths": {
+    "/home/{id}/smartplug/ac/webhook": {
+      "post": {
+        "summary": "Smart AC Webhook",
+        "description": "Turn the smart AC on/off and optionally set temperature and mode.",
+        "operationId": "setACPlugState",
+        "tags": ["SmartPlug"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Smart AC plug state"
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "minimum": 16,
+                    "maximum": 30,
+                    "description": "Target temperature in Celsius"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": ["cool", "heat", "fan", "auto"],
+                    "description": "AC operating mode"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Smart AC state changed successfully"
+          },
+          "400": { "description": "Invalid parameters" }
+        }
+      }
+    },
+
+    "/home/{id}/smartplug/cooker/webhook": {
+      "post": {
+        "summary": "Cooker Smart Plug Webhook",
+        "description": "Turn the cooker smart plug on or off.",
+        "operationId": "setCookerPlugState",
+        "tags": ["SmartPlug"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Cooker Smart Plug state"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cooker plug state changed successfully"
+          },
+          "400": { "description": "Invalid state specified" }
+        }
+      }
+    },
+
+    "/home/{id}/smartplug/laundry/webhook": {
+      "post": {
+        "summary": "Laundry Plug Webhook",
+        "description": "Turn the laundry smart plug on or off.",
+        "operationId": "setLaundryState",
+        "tags": ["Laundry"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired laundry plug state"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Laundry plug state changed successfully"
+          },
+          "400": { "description": "Invalid state specified" }
+        }
+      }
+    },
+
+    "/home/{id}/smartplug/lights/webhook": {
+      "post": {
+        "summary": "Smart Lights Webhook",
+        "description": "Turn the smart lights on or off.",
+        "operationId": "setLightsPlugState",
+        "tags": ["SmartPlug"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Smart Lights plug state"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Smart lights state changed successfully"
+          },
+          "400": { "description": "Invalid state specified" }
+        }
+      }
+    },
+
+    "/home/{id}/smartplug/thermostat/webhook": {
+      "post": {
+        "summary": "Thermostat Smart Plug Webhook",
+        "description": "Turn the thermostat smart plug on or off.",
+        "operationId": "setThermostatPlugState",
+        "tags": ["SmartPlug"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Smart Plug state"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thermostat plug state changed successfully"
+          },
+          "400": { "description": "Invalid state specified" }
+        }
+      }
+    },
+
+    "/home/{id}/smartplug/dehumidifier/webhook": {
+      "post": {
+        "summary": "Dehumidifier Smart Plug Webhook",
+        "description": "Turn the dehumidifier smart plug on or off.",
+        "operationId": "setDehumidifierPlugState",
+        "tags": ["SmartPlug"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Home or device ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "enum": ["on", "off"],
+                    "description": "Desired Dehumidifier plug state"
+                  }
+                },
+                "required": ["state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dehumidifier plug state changed successfully"
+          },
+          "400": { "description": "Invalid state specified" }
+        }
+      }
+    }
+  },
+
+  "tags": [
+    {
+      "name": "SmartPlug",
+      "description": "Controls for AC, Cooker, Lights, Thermostat, Dehumidifier smart plugs"
+    },
+    {
+      "name": "Laundry",
+      "description": "Controls for the laundry simulator plug"
+    }
+  ]
+}
