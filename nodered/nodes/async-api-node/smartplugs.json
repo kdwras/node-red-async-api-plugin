@@ -112,7 +112,7 @@
         "summary": "Laundry Plug Webhook",
         "description": "Turn the laundry smart plug on or off.",
         "operationId": "setLaundryState",
-        "tags": ["Laundry"],
+        "tags": ["SmartPlug"],
         "parameters": [
           {
             "name": "id",
