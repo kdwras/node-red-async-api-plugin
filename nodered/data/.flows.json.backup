@@ -12145,7 +12145,7 @@
         "z": "4f4855f52107b72b",
         "g": "50d822b0af5cc61a",
         "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/thermostat/webhook",
+        "url": "/home/1/smartplug/thermostat/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -12224,8 +12224,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 510,
@@ -12245,8 +12255,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 500,
@@ -12327,9 +12347,9 @@
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
-            "id": "setSmartPlugState",
+            "id": "setThermostatPlugState",
             "hasOperationId": true,
-            "path": "/smartplug/webhook",
+            "path": "/home/{id}/smartplug/thermostat/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -12356,15 +12376,28 @@
                     }
                 },
                 "collapsed": false
+            },
+            "id path": {
+                "name": "id",
+                "isActive": true,
+                "activeFilter": "",
+                "required": true,
+                "type": "msg",
+                "value": "payload.id",
+                "in": "path"
             }
         },
         "requestContentType": "application/json",
-        "responseContentType": "application/json",
-        "outputs": 1,
+        "responseContentType": "",
+        "outputs": 2,
         "responseOutputLabels": [
             {
-                "code": "successful",
-                "text": "all successful responses (2xx)"
+                "code": "200",
+                "text": "Thermostat plug state changed successfully"
+            },
+            {
+                "code": "400",
+                "text": "Invalid state specified"
             }
         ],
         "responseAsPayload": false,
@@ -12377,7 +12410,8 @@
             [
                 "91dad80f577e2b9f",
                 "57eefc9f63239b74"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -12400,8 +12434,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 490,
@@ -12421,8 +12465,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 480,
@@ -12478,7 +12532,7 @@
         "z": "4f4855f52107b72b",
         "g": "e2e99964236f8675",
         "name": "Cooker webhook",
-        "configUrlNode": "742282c109ee77de",
+        "configUrlNode": "f2d3a14b35277c31",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -12541,7 +12595,7 @@
         "z": "4f4855f52107b72b",
         "g": "d2748fb7d73cced7",
         "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/cooker/webhook",
+        "url": "/home/1/smartplug/cooker/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -12617,7 +12671,7 @@
         "z": "4f4855f52107b72b",
         "g": "fe7c6d62782a61e9",
         "name": "[POST] Smartplug laundry",
-        "url": "/smartplug/laundry/webhook",
+        "url": "/home/1/smartplug/laundry/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -12691,7 +12745,7 @@
         "z": "4f4855f52107b72b",
         "g": "abefde1276346b1c",
         "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/lights/webhook",
+        "url": "/home/1/smartplug/lights/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -12754,7 +12808,7 @@
         "z": "4f4855f52107b72b",
         "g": "0d443770ff71eb54",
         "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/ac/webhook",
+        "url": "/home/1/smartplug/ac/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -12908,8 +12962,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 490,
@@ -12929,8 +12993,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 480,
@@ -12986,13 +13060,13 @@
         "z": "4f4855f52107b72b",
         "g": "9c58429dd67aded0",
         "name": "",
-        "configUrlNode": "f63fb066d1c65936",
+        "configUrlNode": "f2d3a14b35277c31",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setLightsPlugState",
             "hasOperationId": true,
-            "path": "/smartplug/lights/webhook",
+            "path": "/home/{id}/smartplug/lights/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -13019,15 +13093,24 @@
                     }
                 },
                 "collapsed": false
+            },
+            "id path": {
+                "name": "id",
+                "isActive": true,
+                "activeFilter": "",
+                "required": true,
+                "type": "msg",
+                "value": "payload.id",
+                "in": "path"
             }
         },
         "requestContentType": "application/json",
-        "responseContentType": "application/json",
+        "responseContentType": "",
         "outputs": 2,
         "responseOutputLabels": [
             {
                 "code": "200",
-                "text": "Smart Lights plug state successfully changed"
+                "text": "Smart lights state changed successfully"
             },
             {
                 "code": "400",
@@ -13068,8 +13151,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 490,
@@ -13089,8 +13182,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 480,
@@ -13146,13 +13249,13 @@
         "z": "4f4855f52107b72b",
         "g": "d72e67c06e6e6132",
         "name": "",
-        "configUrlNode": "d7b4d9ce6378ec33",
+        "configUrlNode": "f2d3a14b35277c31",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setACPlugState",
             "hasOperationId": true,
-            "path": "/smartplug/ac/webhook",
+            "path": "/home/{id}/smartplug/ac/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -13187,19 +13290,28 @@
                     }
                 },
                 "collapsed": false
+            },
+            "id path": {
+                "name": "id",
+                "isActive": true,
+                "activeFilter": "",
+                "required": true,
+                "type": "msg",
+                "value": "payload.id",
+                "in": "path"
             }
         },
         "requestContentType": "application/json",
-        "responseContentType": "application/json",
+        "responseContentType": "",
         "outputs": 2,
         "responseOutputLabels": [
             {
                 "code": "200",
-                "text": "Smart AC plug state successfully changed"
+                "text": "Smart AC state changed successfully"
             },
             {
                 "code": "400",
-                "text": "Invalid parameters specified"
+                "text": "Invalid parameters"
             }
         ],
         "responseAsPayload": false,
@@ -13281,8 +13393,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 470,
@@ -13302,8 +13424,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 460,
@@ -13359,13 +13491,13 @@
         "z": "4f4855f52107b72b",
         "g": "45e26e30f704ad47",
         "name": "",
-        "configUrlNode": "a33f75c91933dc08",
+        "configUrlNode": "f2d3a14b35277c31",
         "apiTag": "Laundry",
         "keepAuth": false,
         "operationData": {
             "id": "setLaundryState",
             "hasOperationId": true,
-            "path": "/smartplug/laundry/webhook",
+            "path": "/home/{id}/smartplug/laundry/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -13392,15 +13524,24 @@
                     }
                 },
                 "collapsed": false
+            },
+            "id path": {
+                "name": "id",
+                "isActive": true,
+                "activeFilter": "",
+                "required": true,
+                "type": "msg",
+                "value": "payload.id",
+                "in": "path"
             }
         },
         "requestContentType": "application/json",
-        "responseContentType": "application/json",
+        "responseContentType": "",
         "outputs": 2,
         "responseOutputLabels": [
             {
                 "code": "200",
-                "text": "Laundry plug state successfully changed"
+                "text": "Laundry plug state changed successfully"
             },
             {
                 "code": "400",
@@ -13427,13 +13568,13 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "Dehumidifier webhook",
-        "configUrlNode": "7b3a2e9531bb364e",
+        "configUrlNode": "f2d3a14b35277c31",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setDehumidifierPlugState",
             "hasOperationId": true,
-            "path": "/smartplug/dehumidifier/webhook",
+            "path": "/home/{id}/smartplug/dehumidifier/webhook",
             "method": "post"
         },
         "outputStyle": "each response",
@@ -13460,15 +13601,24 @@
                     }
                 },
                 "collapsed": false
+            },
+            "id path": {
+                "name": "id",
+                "isActive": true,
+                "activeFilter": "",
+                "required": true,
+                "type": "msg",
+                "value": "payload.id",
+                "in": "path"
             }
         },
         "requestContentType": "application/json",
-        "responseContentType": "application/json",
+        "responseContentType": "",
         "outputs": 2,
         "responseOutputLabels": [
             {
                 "code": "200",
-                "text": "Dehumidifier Smart Plug state successfully changed"
+                "text": "Dehumidifier plug state changed successfully"
             },
             {
                 "code": "400",
@@ -13496,7 +13646,7 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 1;\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -13567,7 +13717,7 @@
         "z": "4f4855f52107b72b",
         "g": "2fd9a75bdb7f05d0",
         "name": "[POST] Smartplug Webhook",
-        "url": "/smartplug/dehumidifier/webhook",
+        "url": "/home/1/smartplug/dehumidifier/webhook",
         "method": "post",
         "upload": false,
         "skipBodyParsing": false,
@@ -17733,7 +17883,7 @@
                 "p": "payload"
             },
             {
-                "p": "payoload.id",
+                "p": "payload.id",
                 "v": "2",
                 "vt": "str"
             }
@@ -18296,6 +18446,11 @@
                 "p": "payload"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
