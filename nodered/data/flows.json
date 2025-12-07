@@ -16361,8 +16361,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 950,
@@ -16382,8 +16392,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 940,
@@ -16516,8 +16536,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
@@ -16537,8 +16567,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -16730,8 +16770,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
@@ -16751,8 +16801,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -16890,8 +16950,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
@@ -16911,8 +16981,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -17059,8 +17139,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 910,
@@ -17080,8 +17170,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "1",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 900,
@@ -17274,7 +17374,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "36d214c8ee683881",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 1;\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -17926,6 +18026,11 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -18079,8 +18184,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
@@ -18100,8 +18215,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -18298,8 +18423,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 930,
@@ -18319,8 +18454,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -18458,6 +18603,11 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -18484,8 +18634,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 920,
@@ -18632,8 +18792,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 910,
@@ -18653,8 +18823,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "2",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 900,
@@ -18847,7 +19027,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "6fb2c52901fa6564",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 2;\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -19468,8 +19648,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4810,
@@ -19489,8 +19679,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4800,
@@ -19623,8 +19823,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4790,
@@ -19644,8 +19854,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4780,
@@ -19837,8 +20057,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4790,
@@ -19858,8 +20088,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4780,
@@ -19997,8 +20237,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4790,
@@ -20018,8 +20268,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4780,
@@ -20166,8 +20426,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4770,
@@ -20187,8 +20457,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "3",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4760,
@@ -20381,7 +20661,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "421452f3a4703c8e",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 3;\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -21002,8 +21282,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4770,
@@ -21023,8 +21313,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4760,
@@ -21157,8 +21457,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4750,
@@ -21178,8 +21488,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4740,
@@ -21371,8 +21691,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4750,
@@ -21392,8 +21722,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4740,
@@ -21531,8 +21871,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4750,
@@ -21552,8 +21902,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4740,
@@ -21700,8 +22060,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"on\"}",
         "payloadType": "json",
         "x": 4730,
@@ -21721,8 +22091,18 @@
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "payload.id",
+                "v": "4",
+                "vt": "str"
             }
         ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
         "payload": "{\"state\":\"off\"}",
         "payloadType": "json",
         "x": 4720,
@@ -21915,7 +22295,7 @@
         "z": "2a4e2856b37c3f19",
         "g": "80b1a2a950fbf3a4",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 4;\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
