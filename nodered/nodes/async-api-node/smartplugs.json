@@ -280,10 +280,6 @@
     {
       "name": "SmartPlug",
       "description": "Controls for AC, Cooker, Lights, Thermostat, Dehumidifier smart plugs"
-    },
-    {
-      "name": "Laundry",
-      "description": "Controls for the laundry simulator plug"
     }
   ]
 }
