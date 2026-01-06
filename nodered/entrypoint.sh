@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "👉 Starting Node-RED with custom entrypoint..."
+echo "Starting Node-RED with custom entrypoint..."
 
 # Switch to the Node-RED app directory where package.json with "start" exists
 cd /usr/src/node-red
