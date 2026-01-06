@@ -1,23 +1,29 @@
-const {Parser: Utils} = require('@asyncapi/parser');
+/**
+ * External dependencies
+ */
+const { Parser: Utils } = require('@asyncapi/parser');
 const fs = require('fs');
 const mqtt = require("mqtt");
 const path = require("path");
 const mime = require("mime-types");
 
+/**
+ * Node-RED module export
+ * @param {object} RED - Node-RED runtime object
+ */
 module.exports = (RED) => {
 
-
     /**
+     * Parse and validate an AsyncAPI document
      *
-     * @param data
+     * @param {string|object} data - AsyncAPI document (YAML or JSON)
+     * @returns {Promise<object|undefined>} Parsed AsyncAPI document or undefined on error
      */
     async function getParsedAsyncApiFile(data) {
-
-        // Read the AsyncAPI file
-
         try {
             const parser = new Utils();
 
+            // Validate AsyncAPI document
             const errors = await parser.validate(data);
 
             if (errors.length) {
@@ -28,11 +34,10 @@ module.exports = (RED) => {
                 return;
             }
 
+            // Parse AsyncAPI document
             const ret = await parser.parse(data);
 
             console.log('✅ AsyncAPI document is valid!');
-            //  console.log('Parsed Document:', ret);
-
             return ret;
 
         } catch (error) {
@@ -41,46 +46,61 @@ module.exports = (RED) => {
     }
 
     /**
+     * Connect to an MQTT broker and update Node-RED node status
      *
-     * @param node
+     * @param {object} node - Node-RED node instance
      */
     function connectToServer(node) {
+        // Validate required MQTT configuration
         if (!node.serverUrl) {
             node.error("MQTT Server URL or Topic is missing!");
-            node.status({fill: "red", shape: "ring", text: "Missing MQTT Config"});
+            node.status({ fill: "red", shape: "ring", text: "Missing MQTT Config" });
             return;
         }
 
-        node.status({fill: "yellow", shape: "ring", text: "Connecting..."});
+        // Update node status to connecting
+        node.status({ fill: "yellow", shape: "ring", text: "Connecting..." });
 
+        // MQTT connection options
         const options = {
             connectTimeout: 5000,
             reconnectPeriod: 2000
         };
 
+        // Create MQTT client
         node.mqttClient = mqtt.connect(node.serverUrl, options);
 
+        // Successful connection handler
         node.mqttClient.on("connect", function () {
             node.log(`Connected to MQTT Broker: ${node.serverUrl}`);
-            node.status({fill: "green", shape: "dot", text: "Connected"});
+            node.status({ fill: "green", shape: "dot", text: "Connected" });
         });
 
+        // Error handler
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
-            node.status({fill: "red", shape: "dot", text: "Error"});
+            node.status({ fill: "red", shape: "dot", text: "Error" });
         });
 
+        // Disconnection handler
         node.mqttClient.on("close", function () {
-            node.status({fill: "red", shape: "ring", text: "Disconnected"});
+            node.status({ fill: "red", shape: "ring", text: "Disconnected" });
         });
     }
 
-
+    /**
+     * Handle MQTT send/receive logic based on AsyncAPI operation
+     *
+     * @param {object} node - Node-RED node instance
+     */
     function handleMessage(node) {
         if (!node.mqttClient) {
             return;
         }
 
+        /**
+         * Subscribe to topic only once
+         */
         const subscribeIfNeeded = () => {
             if (!node.subscribed) {
                 node.mqttClient.subscribe(node.topic, {}, (err) => {
@@ -91,49 +111,64 @@ module.exports = (RED) => {
                         node.subscribed = true;
                     }
                 });
-                // Listen to messages
+
+                // Message listener
                 node.mqttClient.on("message", (topic, message) => {
                     let payload;
+
+                    // Try to parse JSON payload, fallback to string
                     try {
                         payload = JSON.parse(message.toString());
                     } catch (e) {
                         payload = message.toString();
                     }
-                    node.lastMessage = payload; // save last message
+
+                    // Store last received message
+                    node.lastMessage = payload;
+
                     node.log("Message received on " + topic + ": " + JSON.stringify(payload));
-                    node.send({payload});
+                    node.send({ payload });
                 });
             }
         };
 
+        // Receive operation: subscribe and listen
         if (node.operation?.action === 'receive') {
             subscribeIfNeeded();
         }
 
+        // Send operation: publish payload
         if (node.operation?.action === 'send') {
-            subscribeIfNeeded(); // ensure subscribed before sending
+            subscribeIfNeeded(); // ensure connection is ready
 
             const toPublish = node.payload || node.lastMessage;
+
             if (!toPublish) {
                 node.warn("Nothing to publish (no payload or last message available).");
                 return;
             }
 
-            node.mqttClient.publish(node.topic, JSON.stringify(toPublish), {}, (err) => {
-                if (err) {
-                    node.error("Failed to publish: " + err.message);
-                } else {
-                    node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
-                    node.send({payload: toPublish});
+            node.mqttClient.publish(
+                node.topic,
+                JSON.stringify(toPublish),
+                {},
+                (err) => {
+                    if (err) {
+                        node.error("Failed to publish: " + err.message);
+                    } else {
+                        node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
+                        node.send({ payload: toPublish });
+                    }
                 }
-            });
+            );
         }
     }
 
     /**
+     * Fetch the most recently uploaded file for a node
      *
-     * @param uri
-     * @returns {Promise<unknown>}
+     * @param {string} uri - Directory path
+     * @returns {Promise<{fileContent: string, fileName: string, fileType: string}>}
      */
     function fetchFile(uri) {
         return new Promise((resolve, reject) => {
@@ -143,18 +178,20 @@ module.exports = (RED) => {
                     return;
                 }
 
+                // Take the first file (assumed latest)
                 const latestFile = files[0];
-                const filePath = path.join(uri, latestFile); // Get the first file
-                const fileType = mime.lookup(latestFile); // Get MIME type
+                const filePath = path.join(uri, latestFile);
+                const fileType = mime.lookup(latestFile);
 
                 fs.readFile(filePath, "utf8", (err, data) => {
                     if (err) {
                         reject(new Error('Could not read file'));
                         return;
                     }
+
                     resolve({
                         fileContent: data,
-                        fileName: files[0],
+                        fileName: latestFile,
                         fileType: fileType
                     });
                 });
@@ -163,14 +200,16 @@ module.exports = (RED) => {
     }
 
     /**
+     * Build upload directory path for a Node-RED node
      *
-     * @param nodeId
-     * @returns {string}
+     * @param {string} nodeId - Node ID
+     * @returns {string} Absolute file path
      */
     function getFilePath(nodeId) {
         const userDir = RED.settings.userDir;
         const projects = RED.settings.get("projects");
 
+        // Determine project-aware upload directory
         const basePath = projects?.activeProject
             ? path.join(userDir, "projects", projects.activeProject, "uploads")
             : path.join(userDir, "uploads");
@@ -178,11 +217,14 @@ module.exports = (RED) => {
         return path.join(basePath, nodeId);
     }
 
+    /**
+     * Expose module functions
+     */
     return {
         getParsedAsyncApiFile,
         connectToServer,
         handleMessage,
         fetchFile,
         getFilePath
-    }
+    };
 };

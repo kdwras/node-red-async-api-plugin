@@ -1,23 +1,52 @@
 <script type="text/javascript">
+    /**
+     * Node-RED editor-side definition for the "async-api-red" node.
+     *
+     * This code runs in the Node-RED editor (browser), not in the runtime.
+     * It:
+     * - defines how the node appears in the palette
+     * - loads/parses AsyncAPI data to populate dropdowns
+     * - saves user selections back to the runtime via HTTP endpoints
+     * - subscribes to runtime events (payload update / validation errors) via RED.comms
+     */
     RED.nodes.registerType('async-api-red', {
         category: 'network',
         color: 'rgb(136 81 251)',
         defaults: {
-            name: {value: ""}
+            // Node configuration stored in the flow (only "name" here)
+            name: { value: "" }
         },
         inputs: 1,
         outputs: 1,
         icon: "white-globe.svg",
+
+        /**
+         * Label shown on the node in the workspace
+         */
         label: function () {
             return this.name || "AsyncApi-red";
         },
-        oneditprepare: function () {
 
+        /**
+         * Called when the edit dialog is opened.
+         * Use this hook to:
+         * - restore uploaded file (if any)
+         * - restore saved selections (server/topic/operation)
+         * - subscribe to runtime updates/errors to update UI live
+         */
+        oneditprepare: function () {
             const node = this;
 
+            // Only run if the node has been created and has an id
             if (node?.id) {
 
-                // Fetch saved file
+                /**
+                 * Load previously uploaded AsyncAPI file and user selections.
+                 * The chain is:
+                 * 1) getFile -> fetch the last uploaded file and prefill the file input
+                 * 2) getUserSelections -> load server/topic/operation saved on the runtime node
+                 * 3) prefillSelections -> select dropdown values accordingly
+                 */
                 getFile(node.id)
                     .then(() => getUserSelections(node.id))
                     .then((res) => {
@@ -26,7 +55,14 @@
                         }
                     });
 
-                // get the payload and update the messages
+                /**
+                 * Subscribe to runtime payload updates.
+                 * Runtime publishes updates via RED.comms.publish:
+                 *   async-api-red/payload-update/<nodeId>
+                 *
+                 * When payload is an object, attempt to fill inputs with IDs matching:
+                 *   #node-input-<key>
+                 */
                 RED.comms.subscribe(`async-api-red/payload-update/${node.id}`, function (topic, msg) {
                     if (msg && msg.payload && typeof msg.payload === "object") {
                         Object.entries(msg.payload).forEach(([key, value]) => {
@@ -38,13 +74,19 @@
                     }
                 });
 
+                /**
+                 * Subscribe to runtime validation errors.
+                 * These are shown as notifications in the editor.
+                 */
                 RED.comms.subscribe(`async-api-red/payload-error/${node.id}`, function (topic, msg) {
                     RED.notify(`❌ Validation Error: ${msg.error}`, "error");
                 });
-
             }
 
-            // Handle file input selection
+            /**
+             * Handle file selection from the file input.
+             * Uploads the file to the runtime so it can be stored and parsed.
+             */
             $("#node-input-file").on("change", (event) => {
                 const file = event.target.files[0];
                 if (file && node?.id) {
@@ -52,15 +94,31 @@
                 }
             });
         },
+
+        /**
+         * Called when the user clicks "Done" in the editor dialog.
+         *
+         * This saves the selected:
+         * - server URL
+         * - channel (topic address)
+         * - operation (publish/subscribe definition)
+         * - expectedPayload (flattened payload schema fields) used for runtime validation
+         *
+         * It then triggers runtime to connect & initialize messaging behavior.
+         */
         oneditsave: function () {
             const node = this;
-            if (node?.id) {
 
+            if (node?.id) {
+                // Read current UI selections
                 const selectedServer = $("#node-input-select-server").val();
                 const selectedChannelAddress = $("#node-input-channel").val();
                 const selectedOperationId = $("#node-input-operations").val();
 
-
+                /**
+                 * Reload parsed AsyncAPI data to resolve selected channel/operation objects.
+                 * (This ensures we persist the full operation definition, not just IDs.)
+                 */
                 getData(node.id).then((response) => {
                     const selectedChannel = response.channels.find(
                         ch => ch.address === selectedChannelAddress
@@ -70,14 +128,23 @@
                         op => op.id === selectedOperationId
                     );
 
-                    let data = {
+                    /**
+                     * Persist configuration back to runtime node
+                     */
+                    const data = {
                         serverUrl: selectedServer,
                         topic: selectedChannel.address,
                         operation: selectedOperation,
                         expectedPayload: getExpectedMessages()
-                    }
+                    };
 
                     saveUserSelections(node.id, data);
+
+                    /**
+                     * Ask runtime to connect to server and set up the topic/action.
+                     * connectToServer: creates MQTT client connection on runtime node
+                     * handleMessage: triggers subscribe/publish logic based on operation.action
+                     */
                     connectToServer(node.id).then(() => {
                         console.log('Connected to server, now creating topic...');
                         handleMessage(node.id);
@@ -85,6 +152,10 @@
                         console.error('Failed to connect to server:', err);
                     });
 
+                    /**
+                     * Build a flattened list of payload specs for validation.
+                     * expectedPayload is later used by the runtime to validate msg.payload.
+                     */
                     function getExpectedMessages() {
                         const messages = [];
                         selectedOperation.messages.forEach(item => {
@@ -96,11 +167,22 @@
                     }
                 });
             }
+
+            /**
+             * Cleanup subscriptions (at least for errors).
+             * NOTE: If you also subscribe to payload-update, consider unsubscribing it too
+             * to avoid duplicate subscriptions when reopening the dialog.
+             */
             RED.comms.unsubscribe(`async-api-red/payload-error/${node.id}`);
         },
     });
 
-    /** Function to fetch saved file */
+    /**
+     * Fetch previously uploaded AsyncAPI file from the runtime and
+     * prefill the editor file input.
+     *
+     * Also triggers getData() so the editor dropdowns can be populated.
+     */
     function getFile(nodeId) {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -110,18 +192,19 @@
                     try {
                         console.log("File loaded:", response.fileName);
 
-                        let fileContent = response.fileContent;
-                        let blob = new Blob([fileContent], {type: "text/plain"});
-                        let file = new File([blob], response.fileName, {type: response.fileType});
-                        let dataTransfer = new DataTransfer();
-                        dataTransfer.items.add(file);
+                        // Reconstruct a File object and set it on the file input
+                        const fileContent = response.fileContent;
+                        const blob = new Blob([fileContent], { type: "text/plain" });
+                        const file = new File([blob], response.fileName, { type: response.fileType });
 
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
                         $("#node-input-file")[0].files = dataTransfer.files;
 
-                        // Fetch related information
+                        // Fetch parsed AsyncAPI info (servers/channels/operations)
                         getData(nodeId).then((dataResponse) => {
                             updateDialogData(dataResponse);
-                            resolve({file: response, data: dataResponse});
+                            resolve({ file: response, data: dataResponse });
                         }).catch(err => {
                             console.error("Error fetching related data:", err);
                             reject(err);
@@ -138,10 +221,12 @@
         });
     }
 
-
-    /** Function to upload file */
+    /**
+     * Upload an AsyncAPI file to the runtime (Node-RED admin endpoint).
+     * After upload succeeds, fetch parsed data and refresh the editor UI.
+     */
     function uploadFile(nodeId, file) {
-
+        // Basic client-side file type check
         if (!file.name.endsWith('.yaml') && !file.name.endsWith('.json')) {
             alert("Please upload a .yaml or .json AsyncAPI file.");
             return;
@@ -154,11 +239,12 @@
             url: `/async-api-red/${nodeId}/file`,
             type: "POST",
             data: formData,
-            processData: false, // Prevent jQuery from processing data
-            contentType: false, // Let browser set correct Content-Type
+            processData: false, // Don't let jQuery transform FormData
+            contentType: false, // Let the browser set multipart boundaries
             success: function (response) {
                 console.log("File uploaded:", response);
-                // Fetch updated information after file upload
+
+                // Refresh dropdowns/messages after upload
                 getData(nodeId).then((response) => {
                     updateDialogData(response);
                 });
@@ -169,14 +255,16 @@
         });
     }
 
-    /** Function to fetch servers */
+    /**
+     * Fetch parsed AsyncAPI data (servers, channels, operations) from runtime.
+     */
     async function getData(nodeId) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
                 url: `/async-api-red/${nodeId}/data`,
                 success: function (response) {
-                    resolve(response)
+                    resolve(response);
                 },
                 error: function (err) {
                     console.error("Error fetching servers:", err);
@@ -186,20 +274,23 @@
         });
     }
 
-
+    /**
+     * Persist user selections (server/topic/operation/expectedPayload) on the runtime node.
+     */
     function saveUserSelections(nodeId, data) {
         $.ajax({
             url: `/async-api-red/${nodeId}/user-selections`,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (response) {
-            },
-            error: function (err) {
-            }
+            success: function () {},
+            error: function () {}
         });
     }
 
+    /**
+     * Retrieve previously saved selections from the runtime node.
+     */
     function getUserSelections(nodeId) {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -207,7 +298,7 @@
                 type: "GET",
                 contentType: "application/json",
                 success: function (response) {
-                    resolve(response); // Pass the response back
+                    resolve(response);
                 },
                 error: function (err) {
                     console.error("Error fetching user selections:", err);
@@ -217,7 +308,9 @@
         });
     }
 
-
+    /**
+     * Tell the runtime node to create/connect the MQTT client.
+     */
     function connectToServer(nodeId) {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -231,55 +324,69 @@
     }
 
     /**
-     *
-     * @param data
+     * Populate dropdowns and bind change handlers:
+     * - server dropdown from data.servers
+     * - channel dropdown from data.channels
+     * - operation dropdown derived from selected channel
+     * - message panel updates based on selected operation
      */
     function updateDialogData(data) {
-        let serverDropdown = $("#node-input-select-server");
-        let channelDropdown = $("#node-input-channel");
-        let operationDropdown = $("#node-input-operations");
+        const serverDropdown = $("#node-input-select-server");
+        const channelDropdown = $("#node-input-channel");
+        const operationDropdown = $("#node-input-operations");
 
         serverDropdown.empty();
         channelDropdown.empty();
         operationDropdown.empty();
 
-        // Populate servers
+        // Populate servers dropdown
         if (data.servers) {
             data.servers.forEach(server => {
-                serverDropdown.append(
-                    `<option value="${server.url}">${server.url}</option>`
-                );
+                serverDropdown.append(`<option value="${server.url}">${server.url}</option>`);
             });
         }
 
-        // Save channels for later use
+        // Cache channels for later lookups
         const channels = data.channels || [];
 
         // Populate channels dropdown
         channels.forEach(channel => {
-            channelDropdown.append(
-                `<option value="${channel.address}">${channel.address}</option>`
-            );
+            channelDropdown.append(`<option value="${channel.address}">${channel.address}</option>`);
         });
 
-        // Bind event to load operations based on selected channel
+        /**
+         * When channel changes:
+         * - rebuild operations dropdown
+         * - render message form for selected operation
+         */
         channelDropdown.off("change").on("change", function () {
             const selectedChannelAddress = $(this).val();
             updateOperationDropdown(operationDropdown, selectedChannelAddress, channels);
-            const selectedOperationId = operationDropdown.val();
-            updateMessagePanel(channels, selectedOperationId);
+            updateMessagePanel(channels, operationDropdown.val());
         });
-        //  trigger change event if you want to auto-load operations for the first channel
+
+        // Trigger initial load
         channelDropdown.trigger("change");
 
+        /**
+         * When operation changes:
+         * - re-render message panel
+         */
         operationDropdown.off("change").on("change", function () {
-            const selectedOperationId = $(this).val();
-            updateMessagePanel(channels, selectedOperationId);
+            updateMessagePanel(channels, $(this).val());
         });
-        operationDropdown.trigger("change");
 
+        // Trigger initial render
+        operationDropdown.trigger("change");
     }
 
+    /**
+     * Render message definition + input fields for a selected operation.
+     *
+     * For each message:
+     * - show metadata (name, summary, topic, action label, etc.)
+     * - render a form row for each payload field
+     */
     function renderMessages(selectedChannel, selectedOperation) {
         const messages = selectedOperation.messages;
 
@@ -292,63 +399,66 @@
         }
 
         messages.forEach((message, index) => {
-            // Start creating HTML for each message
+            // Build HTML for each message header
             let html = `
-        <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-            <strong>${index + 1}. ${message.name}</strong><br/>
-            <em>Summary:</em> ${selectedOperation.summary}<br/>
-            <em>Topic:</em> ${selectedChannel.address}<span style=" display: inline-block;
-                                                        color: #e1f5fe;
-                                                        background-color: #0277bd;
-                                                        border-radius: 10px;
-                                                        font-size: 11px;
-                                                        font-weight: bold;
-                                                        padding: 2px 8px;
-                                                        margin-left: 8px;
-                                                        text-transform: uppercase;">${selectedOperation.action === 'send' ? 'Publish' : 'Subscribe'}</span><br/>
-            <em>Operation:</em> ${selectedOperation.id}<br/>
-            <em>Content Type:</em> ${message.contentType}<br/>
-        `;
+                <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                    <strong>${index + 1}. ${message.name}</strong><br/>
+                    <em>Summary:</em> ${selectedOperation.summary}<br/>
+                    <em>Topic:</em> ${selectedChannel.address}
+                    <span style="display:inline-block;color:#e1f5fe;background-color:#0277bd;border-radius:10px;font-size:11px;font-weight:bold;padding:2px 8px;margin-left:8px;text-transform:uppercase;">
+                        ${selectedOperation.action === 'send' ? 'Publish' : 'Subscribe'}
+                    </span><br/>
+                    <em>Operation:</em> ${selectedOperation.id}<br/>
+                    <em>Content Type:</em> ${message.contentType}<br/>
+            `;
 
-            // Iterate through each property in the payload and create a form row
+            /**
+             * Render input fields for each payload property
+             * IDs follow Node-RED convention: node-input-<fieldName>
+             * Runtime payload updates use these IDs to fill values automatically.
+             */
             if (message.payload?.length) {
                 message.payload.forEach((item) => {
                     let inputHtml = '';
-                    // Determine the input type based on the value's type
+
+                    // Map schema type -> input type
                     if (item.type === "integer") {
                         inputHtml = `
-                    <div class="form-row" style="margin-top:.5em">
-                        <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
-                        <input type="number" id="node-input-${item.name}"  placeholder="${item.description}">
-                    </div>
-                    `;
+                            <div class="form-row" style="margin-top:.5em">
+                                <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
+                                <input type="number" id="node-input-${item.name}" placeholder="${item.description}">
+                            </div>
+                        `;
                     } else if (item.type === "string") {
                         inputHtml = `
-                    <div class="form-row" style="margin-top:.5em">
-                        <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
-                        <input type="text" id="node-input-${item.name}" " placeholder="${item.description}">
-                    </div>
-                    `;
+                            <div class="form-row" style="margin-top:.5em">
+                                <label for="node-input-${item.name}"><i class="fa fa-list"></i> ${item.name}</label>
+                                <input type="text" id="node-input-${item.name}" placeholder="${item.description}">
+                            </div>
+                        `;
                     } else if (item.type === "number") {
                         inputHtml = `
                             <div class="form-row" style="margin-top:.5em">
                                 <label for="node-input-${item.name}"><i class="fa fa-list-ol"></i> ${item.name}</label>
                                 <input type="number" step="any" id="node-input-${item.name}" placeholder="${item.description}">
                             </div>
-                            `;
+                        `;
                     }
-                    html += inputHtml; // Add the generated input field to the HTML
+
+                    html += inputHtml;
                 });
             }
 
-            // Close the message div
+            // Close wrapper and append
             html += `</div>`;
-
-            // Append the dynamically generated message HTML
             container.append(html);
         });
     }
 
+    /**
+     * Update message panel based on current dropdown selections.
+     * Resolves selected channel and operation objects from the cached AsyncAPI data.
+     */
     function updateMessagePanel(channels, selectedOperationId) {
         const selectedChannelAddress = $("#node-input-channel").val();
 
@@ -363,6 +473,9 @@
         renderMessages(selectedChannel, selectedOperation);
     }
 
+    /**
+     * Populate operation dropdown based on chosen channel.
+     */
     function updateOperationDropdown(operationDropdown, selectedChannelAddress, channels) {
         operationDropdown.empty();
 
@@ -379,12 +492,19 @@
         }
     }
 
+    /**
+     * Tell runtime node to start handling messaging (subscribe/publish),
+     * based on the stored operation.action (send/receive).
+     *
+     * NOTE: topicName param is not used server-side in your current implementation
+     * (server uses node.topic), but it doesn't break anything.
+     */
     function handleMessage(nodeId, topicName) {
         $.ajax({
             url: `/async-api-red/${nodeId}/message`,
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify({topic: topicName}),
+            data: JSON.stringify({ topic: topicName }),
             success: function (response) {
                 console.log('Topic created successfully:', response.topic);
             },
@@ -394,48 +514,54 @@
         });
     }
 
+    /**
+     * Prefill UI dropdowns based on previously saved selections.
+     * The timeout ensures operation dropdown is populated after channel selection.
+     */
     function prefillSelections(data) {
-        // Prefill form inputs
         $("#node-input-select-server").val(data.serverUrl);
         $("#node-input-channel").val(data.topic).trigger("change");
 
-        // Use a small timeout to ensure operations are populated first
         setTimeout(() => {
             $("#node-input-operations").val(data.operation?.id || "").trigger("change");
         }, 300);
     }
-
-
 </script>
 
 <script type="text/html" data-template-name="async-api-red">
-
+    <!-- Node edit dialog form -->
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 
+    <!-- AsyncAPI file upload -->
     <div class="form-row">
         <label for="node-input-file"><i class="fa fa-file"></i>AsyncAPI File</label>
         <input type="file" id="node-input-file">
+        <!-- Hidden field reserved for storing content if needed later -->
         <input type="hidden" id="node-input-fileContent"/>
     </div>
 
+    <!-- Server selection -->
     <div class="form-row">
         <label for="node-input-select-server"><i class="fa fa-server"></i>Server</label>
         <select id="node-input-select-server"></select>
     </div>
 
+    <!-- Channel/topic selection -->
     <div class="form-row">
         <label for="node-input-channel"><i class="fa fa-comments"></i>Topic</label>
         <select id="node-input-channel"></select>
     </div>
 
+    <!-- Operation selection -->
     <div class="form-row">
         <label><i class="fa fa-list"></i>Operations</label>
         <select id="node-input-operations"></select>
     </div>
 
+    <!-- Rendered message schema & dynamic payload inputs -->
     <div class="form-row">
         <label><i class="fa fa-envelope"></i>Message</label>
         <div id="node-messages-display"
@@ -447,10 +573,9 @@
              font-size: 12px;">
         </div>
     </div>
-
-
 </script>
 
 <script type="text/html" data-help-name="async-api-red">
+    <!-- Help text shown in the Node-RED info sidebar -->
     <p>Parse AsyncAPI descriptions to nodered-ui</p>
 </script>
