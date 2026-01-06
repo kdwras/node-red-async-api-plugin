@@ -1,6 +1,10 @@
+#include <stdint.h>
+
 #include <stdlib.h>
 
 #define SCH_STT_FRZ -1
+
+#define HAS_TIMESTAMP 0
 
 typedef enum {
   RS_STR,

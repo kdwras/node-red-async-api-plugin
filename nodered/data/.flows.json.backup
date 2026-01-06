@@ -12354,7 +12354,7 @@
         "z": "4f4855f52107b72b",
         "g": "881db607590cd279",
         "name": "Thermostat webhook",
-        "configUrlNode": "f2d3a14b35277c31",
+        "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -12543,7 +12543,7 @@
         "z": "4f4855f52107b72b",
         "g": "e2e99964236f8675",
         "name": "Cooker webhook",
-        "configUrlNode": "f2d3a14b35277c31",
+        "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -13085,7 +13085,7 @@
         "z": "4f4855f52107b72b",
         "g": "9c58429dd67aded0",
         "name": "",
-        "configUrlNode": "f2d3a14b35277c31",
+        "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -13274,7 +13274,7 @@
         "z": "4f4855f52107b72b",
         "g": "d72e67c06e6e6132",
         "name": "",
-        "configUrlNode": "f2d3a14b35277c31",
+        "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
@@ -13516,8 +13516,8 @@
         "z": "4f4855f52107b72b",
         "g": "45e26e30f704ad47",
         "name": "",
-        "configUrlNode": "f2d3a14b35277c31",
-        "apiTag": "Laundry",
+        "configUrlNode": "c1a1512b01b01ed4",
+        "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {
             "id": "setLaundryState",
@@ -13593,7 +13593,7 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "Dehumidifier webhook",
-        "configUrlNode": "f2d3a14b35277c31",
+        "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
         "operationData": {

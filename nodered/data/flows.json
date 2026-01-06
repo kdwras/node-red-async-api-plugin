@@ -4680,7 +4680,8 @@
         "server": "",
         "serverType": "custom",
         "devMode": "",
-        "headers": []
+        "headers": [],
+        "_version": "2.1.3"
     },
     {
         "id": "2c2826fa3fc78558",
