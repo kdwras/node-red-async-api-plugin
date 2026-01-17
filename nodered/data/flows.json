@@ -12097,7 +12097,7 @@
         "z": "4f4855f52107b72b",
         "g": "6578bf7b191c43b7",
         "name": "Environment Generator",
-        "func": "// --- Simulation Scale ---\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 60); // 1s = 1 minute\n}\n\n// --- Realistic Environment Base ---\nconst baseTemp = 22; // °C\nconst baseHumidity = 70; // %\nconst hour = new Date().getHours(); // local time for light simulation\n\n// Get previous state\nlet currentTemp = flow.get('env.temperature') || baseTemp;\nlet currentHumidity = flow.get('env.humidity') || baseHumidity;\nlet currentLight = flow.get('env.lightIntensity') || 50;\n\n// --- Apply small drift ---\ncurrentTemp += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);  // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp realistic\n// Light based on time of day\nif (hour >= 6 && hour < 18) {\n    currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n    currentLight = 0 + Math.floor(Math.random() * 20);  // night\n}\n\n// Save state for next tick\nflow.set('env.temperature', currentTemp);\nflow.set('env.humidity', currentHumidity);\nflow.set('env.lightIntensity', currentLight);\nflow.set('current_temp', currentTemp);\n\n// --- Output payload ---\nmsg.payload = {\n    environment: true,\n    temperature: currentTemp.toFixed(1),\n    humidity: currentHumidity.toFixed(1),\n    lightIntensity: currentLight,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\")\n};\n\nreturn msg;\n",
+        "func": "// --- Simulation Scale ---\nif (!global.get(\"simulationScale\")) {\n    global.set(\"simulationScale\", 180); // 1s = 1 minute\n}\n\n// --- Realistic Environment Base ---\nconst baseTemp = 22; // °C\nconst baseHumidity = 70; // %\nconst hour = new Date().getHours(); // local time for light simulation\n\n// Get previous state\nlet currentTemp = flow.get('env.temperature') || baseTemp;\nlet currentHumidity = flow.get('env.humidity') || baseHumidity;\nlet currentLight = flow.get('env.lightIntensity') || 50;\n\n// --- Apply small drift ---\ncurrentTemp += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);  // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp realistic\n// Light based on time of day\nif (hour >= 6 && hour < 18) {\n    currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n    currentLight = 0 + Math.floor(Math.random() * 20);  // night\n}\n\n// Save state for next tick\nflow.set('env.temperature', currentTemp);\nflow.set('env.humidity', currentHumidity);\nflow.set('env.lightIntensity', currentLight);\nflow.set('current_temp', currentTemp);\n\n// --- Output payload ---\nmsg.payload = {\n    environment: true,\n    temperature: currentTemp.toFixed(1),\n    humidity: currentHumidity.toFixed(1),\n    lightIntensity: currentLight,\n    unit: \"C\",\n    simulationScale: global.get(\"simulationScale\")\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12136,7 +12136,7 @@
         "z": "4f4855f52107b72b",
         "g": "launder_group",
         "name": "Laundry Telemetry",
-        "func": "// --- Full Washing Machine Cycle Simulator ---\n\n// --- Simulation scale ---\nconst scale = global.get(\"simulationScale\") || 60; // seconds per tick\nconst tickSeconds = 60 * scale; // 1 tick = 1 minute\n\n// --- Check Smart Plug / power ---\nconst plugState = global.get('laundryState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – cycle paused' });\n    return null;\n}\n\n// --- Load persistent state ---\nlet phase = flow.get('laundry.phase') || 'idle';\nlet remainingTime = flow.get('laundry.remainingTime') || 0;\nlet running = flow.get('laundry.running') || (plugState === 'on' ? true:false);\nlet energy = flow.get('laundry.energy') || 0;\nlet waterUsed = flow.get('laundry.waterUsed') || 0;\nlet mode = flow.get('laundry.mode') || 'normal';\n\n// --- Phase durations per mode (minutes) ---\nconst modeDurations = {\n    eco: { filling:5, washing:60, rinsing:15, spinning:10, drying:30 },\n    normal: { filling:5, washing:45, rinsing:15, spinning:10, drying:20 },\n    quick: { filling:3, washing:20, rinsing:10, spinning:5, drying:10 },\n    heavy: { filling:5, washing:75, rinsing:20, spinning:15, drying:40 },\n    delicate: { filling:5, washing:30, rinsing:15, spinning:5, drying:10 }\n};\n\n// --- Power per phase (Watts) ---\nconst phasePower = { filling:50, washing:500, rinsing:300, spinning:800, drying:2000, completed:0 };\n\n// --- Start new cycle if idle ---\nif (!running && phase === 'idle') {\n    running = true;\n    const modes = Object.keys(modeDurations);\n    mode = modes[Math.floor(Math.random() * modes.length)];\n    phase = 'filling';\n    remainingTime = modeDurations[mode][phase];\n}\n\n// --- Progress cycle ---\nif (running) {\n    remainingTime -= 1 * scale;\n\n    if (remainingTime <= 0) {\n        const phases = ['filling','washing','rinsing','spinning','drying'];\n        const currentIndex = phases.indexOf(phase);\n\n        if (currentIndex < phases.length - 1) {\n            phase = phases[currentIndex + 1];\n            remainingTime = modeDurations[mode][phase];\n        } else {\n            // Cycle completed\n            phase = 'completed';\n            running = false;\n            remainingTime = 0;\n        }\n    }\n}\n\n// --- Instantaneous power ---\nlet currentPower = running ? phasePower[phase] || 0 : 0;\n\n// --- Energy usage (kWh) ---\nenergy += (currentPower / 1000) * (tickSeconds / 3600);\n\n// --- Water usage ---\nif (['filling','washing','rinsing'].includes(phase)) {\n    waterUsed += Math.random() * 0.5 * scale;\n}\n\n// --- Simulated values ---\nlet waterTemp = (phase === 'washing') ? 40 + Math.random()*10 : 25;\nlet spinSpeed = (phase === 'spinning') ? 800 + Math.floor(Math.random()*400) : 0;\nlet loadWeight = 5 + Math.random()*3;\n\n// --- Door status ---\nlet doorStatus = (running || phase === 'completed') ? 'locked' : 'closed';\n\n// --- Save state ---\nflow.set('laundry.phase', phase);\nflow.set('laundry.remainingTime', remainingTime);\nflow.set('laundry.running', running);\nflow.set('laundry.energy', energy);\nflow.set('laundry.waterUsed', waterUsed);\nflow.set('laundry.mode', mode);\n\n// --- Node status feedback ---\nlet color = \"grey\", shape = \"ring\", text = \"\";\n\nif (!running && phase === 'completed') {\n    color = 'green';\n    shape = 'ring';\n    text = `✅ Cycle Completed | 0 W`;\n} else if (running) {\n    color = 'blue';\n    shape = 'dot';\n    text = `${phase.toUpperCase()} | ${remainingTime} min left | ${currentPower} W`;\n}\n\nif (doorStatus === 'open') {\n    color = 'red';\n    text = '⚠️ Door Open';\n}\n\nnode.status({ fill: color, shape: shape, text: text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n    device: 'laundry',\n    power: 'ON',\n    running,\n    mode,\n    phase,\n    waterTemp: parseFloat(waterTemp.toFixed(1)),\n    spinSpeed,\n    remainingTime,\n    loadWeight: parseFloat(loadWeight.toFixed(1)),\n    waterUsed: parseFloat(waterUsed.toFixed(2)),\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    currentPower: currentPower, // instantaneous Watts\n    doorStatus\n};\n\nreturn msg;\n",
+        "func": "// --- Washing Machine Cycle Simulator (restart when remainingTime hits 0) ---\n// What it does:\n// - Runs a normal multi-phase washing cycle\n// - Publishes AsyncAPI-compatible payload fields\n// - Shows TOTAL remaining time for the whole cycle (minutes)\n// - When TOTAL remaining time reaches 0 (cycle completed), it automatically starts a new cycle\n\n// ----------------------------\n// Simulation scale (seconds per tick)\n// ----------------------------\nconst scale = global.get(\"simulationScale\") || 60;   // seconds per tick\nconst tickSeconds = 1 * scale;\n\n// ----------------------------\n// Smart plug / power gate\n// ----------------------------\nconst plugState = global.get(\"laundryState\") || \"off\";\nif (plugState !== \"on\") {\n  node.status({ fill: \"grey\", shape: \"ring\", text: \"Plug OFF – cycle paused\" });\n  return null;\n}\n\n// ----------------------------\n// Config\n// ----------------------------\nconst modeDurationsMin = {\n  eco:      { filling: 5, washing: 60, rinsing: 15, spinning: 10, drying: 30 },\n  normal:   { filling: 5, washing: 45, rinsing: 15, spinning: 10, drying: 20 },\n  quick:    { filling: 3, washing: 20, rinsing: 10, spinning: 5,  drying: 10 },\n  heavy:    { filling: 5, washing: 75, rinsing: 20, spinning: 15, drying: 40 },\n  delicate: { filling: 5, washing: 30, rinsing: 15, spinning: 5,  drying: 10 }\n};\n\nconst phasePower = {\n  filling: 50,\n  washing: 500,\n  rinsing: 300,\n  spinning: 800,\n  drying: 2000\n};\n\nconst phases = [\"filling\", \"washing\", \"rinsing\", \"spinning\", \"drying\"];\n\n// Helpers\nfunction minToSec(min) { return Math.round(min * 60); }\nfunction clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }\nfunction secondsToCeilMinutes(sec) { return Math.ceil(sec / 60); }\n\n// TOTAL remaining time for whole cycle (seconds)\nfunction totalRemainingSeconds(mode, phase, remainingSeconds) {\n  let total = remainingSeconds;\n  const idx = phases.indexOf(phase);\n  if (idx === -1) return total;\n  for (let i = idx + 1; i < phases.length; i++) {\n    total += minToSec(modeDurationsMin[mode][phases[i]]);\n  }\n  return total;\n}\n\n// Pick random mode\nfunction pickRandomMode() {\n  const modes = Object.keys(modeDurationsMin);\n  return modes[Math.floor(Math.random() * modes.length)];\n}\n\n// Start cycle helper\nfunction startNewCycle() {\n  const newMode = pickRandomMode();\n  const newPhase = \"filling\";\n  const newRemainingSeconds = minToSec(modeDurationsMin[newMode][newPhase]);\n\n  flow.set(\"laundry.mode\", newMode);\n  flow.set(\"laundry.phase\", newPhase);\n  flow.set(\"laundry.remainingSeconds\", newRemainingSeconds);\n  flow.set(\"laundry.running\", true);\n\n  // reset counters for each cycle (comment out if you want cumulative across cycles)\n  flow.set(\"laundry.energyKwh\", 0);\n  flow.set(\"laundry.waterLiters\", 0);\n\n  return { newMode, newPhase, newRemainingSeconds };\n}\n\n// ----------------------------\n// Load persistent state\n// ----------------------------\nlet mode = flow.get(\"laundry.mode\") || \"normal\";\nlet phase = flow.get(\"laundry.phase\") || \"idle\";\nlet remainingSeconds = flow.get(\"laundry.remainingSeconds\") || 0;\n\nlet running = flow.get(\"laundry.running\");\nif (typeof running !== \"boolean\") running = true;\n\nlet energyKwh = flow.get(\"laundry.energyKwh\") || 0;\nlet waterLiters = flow.get(\"laundry.waterLiters\") || 0;\n\n// ----------------------------\n// Initialize if first run / idle\n// ----------------------------\nif (phase === \"idle\" || !phases.includes(phase) || remainingSeconds <= 0) {\n  const started = startNewCycle();\n  mode = started.newMode;\n  phase = started.newPhase;\n  remainingSeconds = started.newRemainingSeconds;\n\n  energyKwh = 0;\n  waterLiters = 0;\n}\n\n// ----------------------------\n// Progress current phase timer\n// ----------------------------\nif (running) {\n  remainingSeconds = clamp(remainingSeconds - tickSeconds, 0, 10 ** 12);\n\n  // When current phase ends, move to next phase\n  if (remainingSeconds === 0) {\n    const idx = phases.indexOf(phase);\n\n    if (idx >= 0 && idx < phases.length - 1) {\n      phase = phases[idx + 1];\n      remainingSeconds = minToSec(modeDurationsMin[mode][phase]);\n    } else {\n      // End of last phase -> cycle completed\n      phase = \"completed\";\n      running = false;\n      remainingSeconds = 0;\n    }\n  }\n}\n\n// ----------------------------\n// If TOTAL remaining time is 0 => restart immediately\n// ----------------------------\nconst totalRemaining = (phase === \"completed\")\n  ? 0\n  : totalRemainingSeconds(mode, phase, remainingSeconds);\n\nif (totalRemaining === 0) {\n  const restarted = startNewCycle();\n  mode = restarted.newMode;\n  phase = restarted.newPhase;\n  remainingSeconds = restarted.newRemainingSeconds;\n\n  energyKwh = 0;\n  waterLiters = 0;\n}\n\n// ----------------------------\n// Power, energy, water\n// ----------------------------\nconst currentPowerW = (running && phases.includes(phase)) ? (phasePower[phase] || 0) : 0;\n\nenergyKwh += (currentPowerW / 1000) * (tickSeconds / 3600);\n\nif (running && [\"filling\", \"washing\", \"rinsing\"].includes(phase)) {\n  waterLiters += (Math.random() * 0.5) * (tickSeconds / 60);\n}\n\n// ----------------------------\n// Simulated values\n// ----------------------------\nconst waterTemp = (phase === \"washing\" && running) ? 40 + Math.random() * 10 : 25;\nconst spinSpeed = (phase === \"spinning\" && running) ? 800 + Math.floor(Math.random() * 400) : 0;\nconst loadWeight = 5 + Math.random() * 3;\nconst doorStatus = (running || phase === \"completed\") ? \"locked\" : \"closed\";\n\n// ----------------------------\n// Persist state\n// ----------------------------\nflow.set(\"laundry.mode\", mode);\nflow.set(\"laundry.phase\", phase);\nflow.set(\"laundry.remainingSeconds\", remainingSeconds);\nflow.set(\"laundry.running\", running);\nflow.set(\"laundry.energyKwh\", energyKwh);\nflow.set(\"laundry.waterLiters\", waterLiters);\n\n// ----------------------------\n// Remaining time (minutes) for AsyncAPI\n// ----------------------------\nconst minutesLeft = secondsToCeilMinutes(totalRemainingSeconds(mode, phase, remainingSeconds));\n\n// ----------------------------\n// Node status\n// ----------------------------\nnode.status({\n  fill: \"blue\",\n  shape: \"dot\",\n  text: `${phase.toUpperCase()} | ${minutesLeft} min left | ${currentPowerW} W`\n});\n\n// ----------------------------\n// Map internal vars to AsyncAPI-required names\n// ----------------------------\nconst remainingTime = minutesLeft;    // minutes\nconst waterUsed = waterLiters;        // liters\nconst energy = energyKwh;             // kWh\nconst currentPower = currentPowerW;   // Watts\n\n// --- Telemetry payload (as your AsyncAPI expects) ---\nmsg.payload = {\n  device: 'laundry',\n  power: 'ON',\n  running,\n  mode,\n  phase,\n  waterTemp: parseFloat(waterTemp.toFixed(1)),\n  spinSpeed,\n  remainingTime,\n  loadWeight: parseFloat(loadWeight.toFixed(1)),\n  waterUsed: parseFloat(waterUsed.toFixed(2)),\n  energyUsed: parseFloat(energy.toFixed(3)),\n  currentPower: currentPower,\n  doorStatus\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12354,7 +12354,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "881db607590cd279",
-        "name": "Thermostat webhook",
+        "name": "Thermostat plug openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -12416,7 +12416,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 800,
+        "x": 810,
         "y": 240,
         "wires": [
             [
@@ -12543,7 +12543,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "e2e99964236f8675",
-        "name": "Cooker webhook",
+        "name": "cooker smartplug openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -12605,7 +12605,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 770,
+        "x": 800,
         "y": 1860,
         "wires": [
             [
@@ -13085,7 +13085,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "9c58429dd67aded0",
-        "name": "",
+        "name": "Smartlights plug openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -13147,7 +13147,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 790,
+        "x": 810,
         "y": 1020,
         "wires": [
             [
@@ -13274,7 +13274,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "d72e67c06e6e6132",
-        "name": "",
+        "name": "AC plug openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -13344,7 +13344,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 780,
+        "x": 790,
         "y": 520,
         "wires": [
             [
@@ -13516,7 +13516,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "45e26e30f704ad47",
-        "name": "",
+        "name": "Laundry plug openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -13578,7 +13578,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 720,
+        "x": 740,
         "y": 1240,
         "wires": [
             [
@@ -13593,7 +13593,7 @@
         "type": "openApi-red",
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
-        "name": "Dehumidifier webhook",
+        "name": "Dehumidifier webhook openAPI",
         "configUrlNode": "c1a1512b01b01ed4",
         "apiTag": "SmartPlug",
         "keepAuth": false,
@@ -13655,7 +13655,7 @@
         "debugMode": false,
         "headers": [],
         "_version": "2.2.0",
-        "x": 820,
+        "x": 850,
         "y": 1560,
         "wires": [
             [

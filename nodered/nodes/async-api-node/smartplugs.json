@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Unified Smart Plug API",
+    "title": "Smart Plug API",
     "version": "1.1.0",
     "description": "Combined API for AC, Cooker, Lights, Laundry, Thermostat, and Dehumidifier smart plugs, supporting home/device scoping via /home/{id}/ paths."
   },
