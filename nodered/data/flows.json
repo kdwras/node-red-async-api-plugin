@@ -841,7 +841,8 @@
             "d72e67c06e6e6132",
             "45e26e30f704ad47",
             "f47559f06abd3bf6",
-            "3176681a660261ae"
+            "3176681a660261ae",
+            "13bfab6bd971d197"
         ],
         "x": 54,
         "y": 59,
@@ -2028,13 +2029,13 @@
             "ef13bb4d03a55dae",
             "7c195bd85b16a570",
             "d37116182cd1018f",
-            "6175e10e832537dd",
-            "d2baa4f8658d3321"
+            "d2baa4f8658d3321",
+            "7f23dd877827bc65"
         ],
         "x": 334,
         "y": 1439,
         "w": 912,
-        "h": 202
+        "h": 182
     },
     {
         "id": "3176681a660261ae",
@@ -4206,6 +4207,30 @@
         "x": 5214,
         "y": 5779,
         "w": 812,
+        "h": 142
+    },
+    {
+        "id": "13bfab6bd971d197",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d69d8b60113ebeb7",
+            "d19a28511cf956d4",
+            "afa09922fb4ff367"
+        ],
+        "x": 114,
+        "y": 699,
+        "w": 352,
         "h": 142
     },
     {
@@ -13659,11 +13684,10 @@
         "y": 1560,
         "wires": [
             [
-                "d37116182cd1018f"
+                "d37116182cd1018f",
+                "7f23dd877827bc65"
             ],
-            [
-                "6175e10e832537dd"
-            ]
+            []
         ]
     },
     {
@@ -13672,7 +13696,7 @@
         "z": "4f4855f52107b72b",
         "g": "f47559f06abd3bf6",
         "name": "trigger humidifier webhook",
-        "func": "// Default values\nlet state = \"off\";\nlet humidity = 0;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 1;\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
+        "func": "// Default values\nlet state = \"off\";\nlet humidity ;\n\n// Check if humidity exists in the incoming payload\nif (msg.payload && msg.payload.humidity !== undefined) {\n    humidity = Number(msg.payload.humidity);\n\n    // Determine the state based on humidity\n    state = humidity > 30 ? \"on\" : \"off\";\n}\n\n// Update payload\nmsg.payload = { state: state };\nmsg.payload.id = 1;\n\n// Update Node-RED status bubble\nnode.status({\n    fill: state === \"on\" ? \"green\" : \"red\",\n    shape: \"dot\",\n    text: `Humidity: ${humidity.toFixed(1)}% → ${state.toUpperCase()}`\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -13704,27 +13728,6 @@
         "x": 1090,
         "y": 1480,
         "wires": []
-    },
-    {
-        "id": "6175e10e832537dd",
-        "type": "function",
-        "z": "4f4855f52107b72b",
-        "g": "f47559f06abd3bf6",
-        "name": "Save SmartPlug State",
-        "func": "// Save SmartPlug State (Dehumidifier)\n\nif (msg.payload && typeof msg.payload.state === \"string\") {\n    const state = msg.payload.state.trim().toLowerCase(); // IMPORTANT\n\n    if (state === \"on\" || state === \"off\") {\n        global.set(\"dehumidifierState\", state);\n\n        node.status({\n            fill: state === \"on\" ? \"green\" : \"red\",\n            shape: \"dot\",\n            text: `Dehumidifier ${state.toUpperCase()}`\n        });\n    } else {\n        node.status({ fill: \"yellow\", shape: \"ring\", text: `Invalid state: ${msg.payload.state}` });\n    }\n}\n\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1120,
-        "y": 1600,
-        "wires": [
-            [
-                "func_dehumidifier"
-            ]
-        ]
     },
     {
         "id": "d2baa4f8658d3321",
@@ -13815,6 +13818,77 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "7f23dd877827bc65",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "f47559f06abd3bf6",
+        "name": "Save SmartPlug State",
+        "func": "if (msg.payload && msg.payload.state) {\n    global.set('dehumidifierState', msg.payload.state);\n    node.status({fill: msg.payload.state === 'on' ? 'green' : 'red', shape: 'dot', text: `Plug ${msg.payload.state}`});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1580,
+        "wires": [
+            [
+                "func_dehumidifier"
+            ]
+        ]
+    },
+    {
+        "id": "d69d8b60113ebeb7",
+        "type": "inject",
+        "z": "4f4855f52107b72b",
+        "g": "13bfab6bd971d197",
+        "name": "trigger",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 800,
+        "wires": [
+            [
+                "d19a28511cf956d4"
+            ]
+        ]
+    },
+    {
+        "id": "d19a28511cf956d4",
+        "type": "function",
+        "z": "4f4855f52107b72b",
+        "g": "13bfab6bd971d197",
+        "name": "reset",
+        "func": "// Reset simulation clock + (optional) energy counters\n\nflow.set(\"simulationMinutes\", 0);\n\n// Optional: also reset environment state\nflow.set(\"env.temperature\", null);\nflow.set(\"env.humidity\", null);\nflow.set(\"env.lightIntensity\", null);\nflow.set(\"current_temp\", null);\n\n// Optional: reset device energy totals (uncomment if you want)\nconst devices = ['ac','light','fridge','laundry','dehumidifier','cooker','thermostat'];\n// devices.forEach(d => flow.set(`energy.${d}`, 0));\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Simulation reset\" });\n\nmsg.payload = { reset: true, simulationMinutesTotal: 0 };\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "afa09922fb4ff367",
+        "type": "comment",
+        "z": "4f4855f52107b72b",
+        "g": "13bfab6bd971d197",
+        "name": "Reset sim",
+        "info": "",
+        "x": 200,
+        "y": 740,
+        "wires": []
     },
     {
         "id": "home1",
