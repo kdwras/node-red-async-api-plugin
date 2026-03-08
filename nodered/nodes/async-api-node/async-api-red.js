@@ -73,7 +73,6 @@ module.exports = function (RED) {
         node.on("input", function (msg, send, done) {
             // Load utils on demand (keeps module boundaries; also ensures RED-bound utilities)
             const Utils = require("./utils/utils")(RED);
-
             try {
                 // Store the incoming payload on the node instance
                 // (used later by MQTT send/publish logic and editor UI updates)
@@ -91,7 +90,8 @@ module.exports = function (RED) {
                  * Frontend can subscribe to this channel to update UI state.
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
-                    payload: node.payload
+                    payload: node.payload,
+                    parameters: node.parameters
                 });
 
                 // Signal message processing is complete
@@ -156,6 +156,7 @@ module.exports = function (RED) {
             }
         }
     }
+
 
     /**
      * Expose nodesMap on RED for other modules/debugging

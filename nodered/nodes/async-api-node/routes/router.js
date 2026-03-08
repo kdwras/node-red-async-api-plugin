@@ -210,6 +210,7 @@ module.exports = (RED) => {
         try {
             node.serverUrl = payload.serverUrl;
             node.topic = payload.topic;
+            node.parameters = payload.parameters;
             node.operation = payload.operation;
             node.expectedPayload = payload.expectedPayload;
 

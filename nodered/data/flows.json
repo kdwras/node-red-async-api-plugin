@@ -1409,7 +1409,8 @@
             "1915adae0ac41c37",
             "dbd082096676a420",
             "f8959e1f024fcb3c",
-            "c4d08d0f89251bfb"
+            "c4d08d0f89251bfb",
+            "721f790e11fda3c8"
         ],
         "x": 1614,
         "y": 119,
@@ -3610,6 +3611,30 @@
         "h": 142
     },
     {
+        "id": "13bfab6bd971d197",
+        "type": "group",
+        "z": "4f4855f52107b72b",
+        "g": "876a8dac7a94efab",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d69d8b60113ebeb7",
+            "d19a28511cf956d4",
+            "afa09922fb4ff367"
+        ],
+        "x": 114,
+        "y": 699,
+        "w": 352,
+        "h": 142
+    },
+    {
         "id": "642bdcd7a497cdf6",
         "type": "group",
         "z": "2a4e2856b37c3f19",
@@ -4207,30 +4232,6 @@
         "x": 5214,
         "y": 5779,
         "w": 812,
-        "h": 142
-    },
-    {
-        "id": "13bfab6bd971d197",
-        "type": "group",
-        "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d69d8b60113ebeb7",
-            "d19a28511cf956d4",
-            "afa09922fb4ff367"
-        ],
-        "x": 114,
-        "y": 699,
-        "w": 352,
         "h": 142
     },
     {
@@ -11932,7 +11933,7 @@
         "z": "4f4855f52107b72b",
         "g": "dehumidifier_group",
         "name": "Dehumidifier Telemetry",
-        "func": "// === Dehumidifier Telemetry Simulator (Smart Plug Controlled) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Constants / helpers\n// ----------------------------\nconst TICK_SECONDS = 60;\n\nconst clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));\nconst toNum = (v, fallback) => {\n  const n = parseFloat(v);\n  return Number.isFinite(n) ? n : fallback;\n};\n\n// ----------------------------\n// Smart plug gate (normalize!)\n// ----------------------------\nconst plugState = String(global.get(\"dehumidifierState\") ?? \"off\").trim().toLowerCase();\nif (plugState !== \"on\") {\n  node.status({ fill: \"grey\", shape: \"ring\", text: `Plug OFF – telemetry paused (${plugState})` });\n  return null;\n}\n\n// ----------------------------\n// Inputs (environment)\n// ----------------------------\nconst envHumidity = clamp(toNum(msg.payload?.humidity, 70), 0, 100); // %\nconst envTemp = toNum(msg.payload?.temperature, 22);                 // °C\n\n// ----------------------------\n// Control settings (persistable)\n// ----------------------------\nconst targetHumidity = clamp(toNum(flow.get(\"dehumidifier.targetHumidity\"), 50), 20, 80);\nconst hysteresis = clamp(toNum(flow.get(\"dehumidifier.hysteresis\"), 3), 1, 10);\n\nconst startThreshold = targetHumidity + hysteresis;\nconst stopThreshold  = targetHumidity - hysteresis;\n\nconst tankCapacity = clamp(toNum(flow.get(\"dehumidifier.tankCapacity\"), 2.0), 0.5, 10.0);\n\n// ----------------------------\n// Persistent state\n// ----------------------------\nlet running = flow.get(\"dehumidifier.running\");\nif (typeof running !== \"boolean\") running = false; // better default\n\nlet tankLevel = clamp(toNum(flow.get(\"dehumidifier.tankLevel\"), 0), 0, tankCapacity);\nlet energyKwh = Math.max(0, toNum(flow.get(\"energy.dehumidifier\"), 0));\n\n// ----------------------------\n// Tank full logic\n// ----------------------------\nlet tankFull = tankLevel >= tankCapacity;\nif (tankFull) running = false;\n\n// ----------------------------\n// Auto start/stop (humidity hysteresis)\n// ----------------------------\nif (!tankFull) {\n  if (!running && envHumidity >= startThreshold) running = true;\n  else if (running && envHumidity <= stopThreshold) running = false;\n}\n\n// ----------------------------\n// Fan speed + power model\n// ----------------------------\nlet fanSpeed = \"off\";\nlet currentPowerW = 0;\n\nif (running) {\n  const delta = envHumidity - targetHumidity;\n\n  fanSpeed = delta >= 10 ? \"high\"\n           : delta >= 5  ? \"medium\"\n           : \"low\";\n\n  currentPowerW = fanSpeed === \"high\" ? 260\n               : fanSpeed === \"medium\" ? 220\n               : 180;\n}\n\n// ----------------------------\n// Moisture removal & tank fill (liters per minute)\n// ----------------------------\nif (running) {\n  const delta = Math.max(0, envHumidity - targetHumidity);\n\n  // liters/min between 0.01 and 0.05 depending on delta\n  const litersPerMin = clamp(0.01 + (delta / 50) * 0.04, 0.01, 0.05);\n\n  tankLevel = clamp(tankLevel + litersPerMin, 0, tankCapacity);\n\n  if (tankLevel >= tankCapacity) {\n    tankFull = true;\n    running = false;\n    fanSpeed = \"off\";\n    currentPowerW = 0;\n  }\n}\n\n// ----------------------------\n// Energy integration (kWh) - only when power > 0\n// ----------------------------\nif (currentPowerW > 0) {\n  energyKwh += (currentPowerW / 1000) * (TICK_SECONDS / 3600);\n}\n\n// ----------------------------\n// Persist state\n// ----------------------------\nflow.set(\"dehumidifier.running\", running);\nflow.set(\"dehumidifier.tankLevel\", tankLevel);\nflow.set(\"energy.dehumidifier\", energyKwh);\n\n// ----------------------------\n// Status\n// ----------------------------\nconst statusText = tankFull\n  ? `TANK FULL | ${tankLevel.toFixed(2)}/${tankCapacity} L | 0 W`\n  : running\n    ? `RUNNING (${fanSpeed}) | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | ${currentPowerW} W`\n    : `IDLE | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | 0 W`;\n\nnode.status({\n  fill: tankFull ? \"red\" : (running ? \"blue\" : \"green\"),\n  shape: running ? \"dot\" : \"ring\",\n  text: statusText\n});\n\n// ----------------------------\n// Telemetry payload\n// ----------------------------\nmsg.payload = {\n  device: \"dehumidifier\",\n  power: plugState, // smart plug on/off\n  running,\n  mode: \"auto\",\n  targetHumidity: parseFloat(targetHumidity.toFixed(1)),\n  humidity: parseFloat(envHumidity.toFixed(1)),\n  temperature: parseFloat(envTemp.toFixed(1)),\n  fanSpeed,\n  currentPower: currentPowerW,\n  tankLevel: parseFloat(tankLevel.toFixed(2)),\n  tankCapacity,\n  tankFull,\n  energyUsed: parseFloat(energyKwh.toFixed(3)),\n  unit: \"%\",\n  timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// === Dehumidifier Telemetry Simulator (Smart Plug Controlled) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Constants / helpers\n// ----------------------------\nconst TICK_SECONDS = 60;\n\nconst clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));\nconst toNum = (v, fallback) => {\n  const n = parseFloat(v);\n  return Number.isFinite(n) ? n : fallback;\n};\n\n// ----------------------------\n// Smart plug gate (normalize!)\n// ----------------------------\nconst plugState = String(global.get(\"dehumidifierState\") ?? \"off\").trim().toLowerCase();\nif (plugState !== \"on\") {\n  node.status({ fill: \"grey\", shape: \"ring\", text: `Plug OFF – telemetry paused (${plugState})` });\n  return null;\n}\n\n// ----------------------------\n// Inputs (environment)\n// ----------------------------\nconst envHumidity = clamp(toNum(msg.payload?.humidity, 70), 0, 100); // %\nconst envTemp = toNum(msg.payload?.temperature, 22);                 // °C\n\n// ----------------------------\n// Control settings (persistable)\n// ----------------------------\nconst targetHumidity = clamp(toNum(flow.get(\"dehumidifier.targetHumidity\"), 50), 20, 80);\nconst hysteresis = clamp(toNum(flow.get(\"dehumidifier.hysteresis\"), 3), 1, 10);\n\nconst startThreshold = targetHumidity + hysteresis;\nconst stopThreshold  = targetHumidity - hysteresis;\n\nconst tankCapacity = clamp(toNum(flow.get(\"dehumidifier.tankCapacity\"), 2.0), 0.5, 10.0);\n\n// ----------------------------\n// Persistent state\n// ----------------------------\nlet running = flow.get(\"dehumidifier.running\");\nif (typeof running !== \"boolean\") running = false; // better default\n\nlet tankLevel = clamp(toNum(flow.get(\"dehumidifier.tankLevel\"), 0), 0, tankCapacity);\nlet energyKwh = Math.max(0, toNum(flow.get(\"energy.dehumidifier\"), 0));\n// ----------------------------\n// Tank full logic\n// ----------------------------\nlet tankFull = tankLevel >= tankCapacity;\n\nif (tankFull) {\n  running = false;\n}\n\n// ----------------------------\n// Auto start/stop (humidity hysteresis)\n// ----------------------------\nif (!tankFull) {\n  if (!running && envHumidity >= startThreshold) {\n    running = true;\n  } else if (running && envHumidity <= stopThreshold) {\n    running = false;\n  }\n}\n\n\n// ----------------------------\n// Fan speed + power model\n// ----------------------------\nlet fanSpeed = \"off\";\nlet currentPowerW = 0;\n\nif (running) {\n  const delta = envHumidity - targetHumidity;\n\n  fanSpeed = delta >= 10 ? \"high\"\n           : delta >= 5  ? \"medium\"\n           : \"low\";\n\n  currentPowerW = fanSpeed === \"high\" ? 260\n               : fanSpeed === \"medium\" ? 220\n               : 180;\n}\n\n// ----------------------------\n// Moisture removal & tank fill (liters per minute)\n// ----------------------------\nif (running) {\n  const delta = Math.max(0, envHumidity - targetHumidity);\n\n  // liters/min between 0.01 and 0.05 depending on delta\n  const litersPerMin = clamp(0.01 + (delta / 50) * 0.04, 0.01, 0.05);\n\n  tankLevel = clamp(tankLevel + litersPerMin, 0, tankCapacity);\n\n  if (tankLevel >= tankCapacity) {\n    tankFull = true;\n    running = false;\n    fanSpeed = \"off\";\n    currentPowerW = 0;\n  }\n}\n\n// ----------------------------\n// Energy integration (kWh) - only when power > 0\n// ----------------------------\nif (currentPowerW > 0) {\n  energyKwh += (currentPowerW / 1000) * (TICK_SECONDS / 3600);\n}\n\n// ----------------------------\n// Persist state\n// ----------------------------\nflow.set(\"dehumidifier.running\", running);\nflow.set(\"dehumidifier.tankLevel\", tankLevel);\nflow.set(\"energy.dehumidifier\", energyKwh);\n\n// ----------------------------\n// Status\n// ----------------------------\nconst statusText = tankFull\n  ? `TANK FULL | ${tankLevel.toFixed(2)}/${tankCapacity} L | 0 W`\n  : running\n    ? `RUNNING (${fanSpeed}) | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | ${currentPowerW} W`\n    : `IDLE | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | 0 W`;\n\nnode.status({\n  fill: tankFull ? \"red\" : (running ? \"blue\" : \"green\"),\n  shape: running ? \"dot\" : \"ring\",\n  text: statusText\n});\n\n// ----------------------------\n// Telemetry payload\n// ----------------------------\nmsg.payload = {\n  device: \"dehumidifier\",\n  power: plugState, // smart plug on/off\n  running,\n  mode: \"auto\",\n  targetHumidity: parseFloat(targetHumidity.toFixed(1)),\n  humidity: parseFloat(envHumidity.toFixed(1)),\n  temperature: parseFloat(envTemp.toFixed(1)),\n  fanSpeed,\n  currentPower: currentPowerW,\n  tankLevel: parseFloat(tankLevel.toFixed(2)),\n  tankCapacity,\n  tankFull,\n  energyUsed: parseFloat(energyKwh.toFixed(3)),\n  unit: \"%\",\n  timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12064,7 +12065,7 @@
         "g": "6578bf7b191c43b7",
         "name": "Sim Clock Trigger",
         "props": [],
-        "repeat": "5",
+        "repeat": "30",
         "crontab": "",
         "once": false,
         "onceDelay": "0.1",
@@ -12083,10 +12084,10 @@
         "z": "4f4855f52107b72b",
         "g": "876a8dac7a94efab",
         "name": "Total Energy Calculator",
-        "func": "let devices = ['ac', 'light', 'fridge', 'laundry', 'dehumidifier', 'cooker', 'thermostat'];\n\n\n// ---------------- ENERGY ----------------\n// Sum cumulative kWh from devices\nlet totalKWh = devices.reduce(\n    (sum, d) => sum + (flow.get(`energy.${d}`) || 0),\n    0\n);\n\n// ---------------- OUTPUT ----------------\nmsg.totalEnergy = `${totalKWh.toFixed(3)} kWh`;\n\n// Optional: numeric outputs for charts / gauges\n\nmsg.totalEnergyKWh = parseFloat(totalKWh.toFixed(3));\n\n// ---------------- NODE STATUS ----------------\nlet color = totalKWh === 0 ? \"grey\" : \"green\";\nlet shape = totalKWh === 0 ? \"ring\" : \"dot\";\nlet text = `Energy: ${totalKWh.toFixed(3)} kWh | Runtime: ${runtimeText}`;\n\nnode.status({ fill: color, shape, text });\n\nreturn msg;\n",
+        "func": "let devices = ['ac', 'light', 'fridge', 'laundry', 'dehumidifier', 'cooker', 'thermostat'];\n\n\n// ---------------- ENERGY ----------------\n// Sum cumulative kWh from devices\nlet totalKWh = devices.reduce(\n    (sum, d) => sum + (flow.get(`energy.${d}`) || 0),\n    0\n);\n\n// ---------------- OUTPUT ----------------\nmsg.totalEnergy = `${totalKWh.toFixed(3)} kWh`;\n\n// Optional: numeric outputs for charts / gauges\n\nmsg.totalEnergyKWh = parseFloat(totalKWh.toFixed(3));\n\n// ---------------- NODE STATUS ----------------\nlet color = totalKWh === 0 ? \"grey\" : \"green\";\nlet shape = totalKWh === 0 ? \"ring\" : \"dot\";\nlet text = `Energy: ${totalKWh.toFixed(3)} kWh`;\n\nnode.status({ fill: color, shape, text });\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
-        "noerr": 1,
+        "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
@@ -12104,7 +12105,7 @@
         "z": "4f4855f52107b72b",
         "g": "876a8dac7a94efab",
         "name": "Total Energy Debug",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -12122,7 +12123,7 @@
         "z": "4f4855f52107b72b",
         "g": "6578bf7b191c43b7",
         "name": "Environment Generator",
-        "func": "// === Environment Generator (tick-based simulated time) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Simulated time counter\n// ----------------------------\nlet simMinutesTotal = flow.get(\"simulationMinutes\") || 0;\nsimMinutesTotal += 1;                      // +1 simulated minute per tick\nflow.set(\"simulationMinutes\", simMinutesTotal);\n\nconst simHours = Math.floor(simMinutesTotal / 60) % 24;\nconst simMinutes = simMinutesTotal % 60;\n\nconst simTimeText =\n  `${String(simHours).padStart(2, \"0\")}:${String(simMinutes).padStart(2, \"0\")}`;\n\n// Node status shows simulated clock\nnode.status({\n  fill: \"green\",\n  shape: \"dot\",\n  text: `Sim Time ${simTimeText}`\n});\n\n// ----------------------------\n// Realistic Environment Base\n// ----------------------------\nconst baseTemp = 10;       // °C\nconst baseHumidity = 70;   // %\nconst hour = simHours;     // use simulated hour for lighting\n\n// Get previous state\nlet currentTemp = flow.get(\"env.temperature\");\nlet currentHumidity = flow.get(\"env.humidity\");\nlet currentLight = flow.get(\"env.lightIntensity\");\n\nif (currentTemp === undefined || currentTemp === null) currentTemp = baseTemp;\nif (currentHumidity === undefined || currentHumidity === null) currentHumidity = baseHumidity;\nif (currentLight === undefined || currentLight === null) currentLight = 50;\n\n// ----------------------------\n// Apply small drift\n// ----------------------------\ncurrentTemp += (Math.random() * 0.4 - 0.2);       // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);       // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp\n\n// Light based on simulated time\nif (hour >= 6 && hour < 18) {\n  currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n  currentLight = Math.floor(Math.random() * 20);      // night\n}\n\n// Save state\nflow.set(\"env.temperature\", currentTemp);\nflow.set(\"env.humidity\", currentHumidity);\nflow.set(\"env.lightIntensity\", currentLight);\nflow.set(\"current_temp\", currentTemp);\n\n// ----------------------------\n// Output payload\n// ----------------------------\nmsg.payload = {\n  environment: true,\n  temperature: parseFloat(currentTemp.toFixed(1)),\n  humidity: parseFloat(currentHumidity.toFixed(1)),\n  lightIntensity: currentLight,\n  unit: \"C\",\n  simulatedTime: simTimeText,        // HH:MM\n  simMinutesTotal: simMinutesTotal   // optional (useful for graphs)\n};\n\nreturn msg;\n",
+        "func": "// === Environment Generator (tick-based simulated time) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Simulated time counter\n// ----------------------------\nlet simMinutesTotal = flow.get(\"simulationMinutes\") || 0;\nsimMinutesTotal += 1;                      // +1 simulated minute per tick\nflow.set(\"simulationMinutes\", simMinutesTotal);\n\nconst simHours = Math.floor(simMinutesTotal / 60) % 24;\nconst simMinutes = simMinutesTotal % 60;\n\nconst simTimeText =\n  `${String(simHours).padStart(2, \"0\")}:${String(simMinutes).padStart(2, \"0\")}`;\n\n// Node status shows simulated clock\nnode.status({\n  fill: \"green\",\n  shape: \"dot\",\n  text: `Sim Time ${simTimeText}`\n});\n\n// ----------------------------\n// Realistic Environment Base\n// ----------------------------\nconst baseTemp = 33;       // °C\nconst baseHumidity = 20;   // %\nconst hour = simHours;     // use simulated hour for lighting\n\n// Get previous state\nlet currentTemp = flow.get(\"env.temperature\");\nlet currentHumidity = flow.get(\"env.humidity\");\nlet currentLight = flow.get(\"env.lightIntensity\");\n\nif (currentTemp === undefined || currentTemp === null) currentTemp = baseTemp;\nif (currentHumidity === undefined || currentHumidity === null) currentHumidity = baseHumidity;\nif (currentLight === undefined || currentLight === null) currentLight = 50;\n\n// ----------------------------\n// Apply small drift\n// ----------------------------\ncurrentTemp += (Math.random() * 0.4 - 0.2);       // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);       // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp\n\n// Light based on simulated time\nif (hour >= 6 && hour < 18) {\n  currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n  currentLight = Math.floor(Math.random() * 20);      // night\n}\n\n// Save state\nflow.set(\"env.temperature\", currentTemp);\nflow.set(\"env.humidity\", currentHumidity);\nflow.set(\"env.lightIntensity\", currentLight);\nflow.set(\"current_temp\", currentTemp);\n\n// ----------------------------\n// Output payload\n// ----------------------------\nmsg.payload = {\n  environment: true,\n  temperature: parseFloat(currentTemp.toFixed(1)),\n  humidity: parseFloat(currentHumidity.toFixed(1)),\n  lightIntensity: currentLight,\n  unit: \"C\",\n  simulatedTime: simTimeText,        // HH:MM\n  simMinutesTotal: simMinutesTotal   // optional (useful for graphs)\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12341,7 +12342,7 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "// === Thermostat / HVAC Telemetry (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state before running ---\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Read environment values from input ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\n\n// --- Desired temperature (fixed setpoint) ---\nlet desired = flow.get('thermostat.setpoint') ?? 23;\nflow.set('thermostat.setpoint', desired);\n\n// --- Persistent current temperature (don’t reset every tick) ---\nlet current = flow.get('thermostat.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Small natural drift toward environment ---\ncurrent += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrent += (envTemp - current) * 0.05;  // gently pull toward env\n\n// --- Determine HVAC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nconst deadband = 1; // ±1°C deadband around setpoint\n\nif (current < desired - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n} else if (current > desired + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n}\n\n// --- Energy tracking (cumulative kWh) ---\nlet energy = flow.get('energy.thermostat') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('energy.thermostat', energy);\nflow.set('thermostat.currentTemp', current);\nflow.set('current_temp', current); // if you use it elsewhere\n\n// --- Node status for visual feedback ---\nlet color = 'green';\nlet shape = 'ring';\nlet text = `IDLE | ${current.toFixed(1)}°C → ${desired}°C | 0 W`;\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    power: plugState, // on/off (smart plug)\n    temperature: parseFloat(current.toFixed(1)), // simulated current temp\n    humidity: envHumidity,\n    setpoint: desired,\n    mode,\n    currentPower, // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "func": "// === Thermostat / HVAC Telemetry (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state before running ---\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Read environment values from input ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\n\n// --- Desired temperature (fixed setpoint) ---\nlet desired = flow.get('thermostat.setpoint') ?? 23;\nflow.set('thermostat.setpoint', desired);\n\n// --- Persistent current temperature (don’t reset every tick) ---\nlet current = flow.get('thermostat.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Small natural drift toward environment ---\ncurrent += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrent += (envTemp - current) * 0.05;  // gently pull toward env\n\n// --- Determine HVAC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nconst deadband = 1; // ±1°C deadband around setpoint\n\nif (current < desired - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n} else if (current > desired + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n}\n\n// --- Energy tracking (cumulative kWh) ---\nlet energy = flow.get('energy.thermostat') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('energy.thermostat', energy);\nflow.set('thermostat.currentTemp', current);\nflow.set('current_temp', current); // if you use it elsewhere\n\n// --- Node status for visual feedback ---\nlet color = 'green';\nlet shape = 'ring';\nlet text = `IDLE | ${current.toFixed(1)}°C → ${desired}°C | 0 W`;\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    power: plugState, // on/off (smart plug)\n    temperature: parseFloat(current.toFixed(1)), // simulated current temp\n    humidity: envHumidity,\n    setpoint: desired,\n    mode,\n    currentPower, // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\n\nmsg.parameters = {homeId : 1};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -12352,7 +12353,8 @@
         "y": 220,
         "wires": [
             [
-                "dbd082096676a420"
+                "dbd082096676a420",
+                "721f790e11fda3c8"
             ]
         ]
     },
@@ -13888,6 +13890,23 @@
         "info": "",
         "x": 200,
         "y": 740,
+        "wires": []
+    },
+    {
+        "id": "721f790e11fda3c8",
+        "type": "debug",
+        "z": "4f4855f52107b72b",
+        "g": "19609f77c4ba5897",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1920,
+        "y": 160,
         "wires": []
     },
     {

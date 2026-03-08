@@ -103,7 +103,8 @@ module.exports = (RED) => {
          */
         const subscribeIfNeeded = () => {
             if (!node.subscribed) {
-                node.mqttClient.subscribe(node.topic, {}, (err) => {
+                const resolvedTopic = resolveTopic(node);
+                node.mqttClient.subscribe(resolvedTopic, {}, (err) => {
                     if (err) {
                         node.error("Failed to subscribe: " + err.message);
                     } else {
@@ -148,8 +149,10 @@ module.exports = (RED) => {
                 return;
             }
 
+            const resolvedTopic = resolveTopic(node);
+
             node.mqttClient.publish(
-                node.topic,
+                resolvedTopic,
                 JSON.stringify(toPublish),
                 {},
                 (err) => {
@@ -164,6 +167,58 @@ module.exports = (RED) => {
         }
     }
 
+
+    /**
+     * Resolves topic parameters defined in the AsyncAPI channel address.
+     *
+     * Priority:
+     *   1. value set in node dialog (node.parameterValues)
+     *   2. msg.<parameter>
+     *   3. msg.payload.<parameter>
+     *
+     * Example:
+     *   topic template: home/{homeId}/ac/state
+     *   dialog value:   homeId = 1
+     *   result:         home/1/ac/state
+     */
+    function resolveTopic(node) {
+
+        // Topic template from AsyncAPI
+        let topic = node.topic || "";
+
+        // If no parameters are defined, return topic unchanged
+        if (!Array.isArray(node.parameters) || node.parameters.length === 0) {
+            return topic;
+        }
+
+
+        // Parameter values configured in the editor dialog
+        const dialogValues = node.parameters;
+
+        // Resolve each AsyncAPI channel parameter
+        for (const param of node.parameters) {
+
+            const name = param.id || param.name;
+
+            // Priority:
+            // 1. dialog parameter
+            // 2. msg.<parameter>
+            const value = dialogValues[name];
+
+            // If still missing, topic cannot be resolved
+            if (value === undefined || value === null || value === "") {
+                throw new Error(`Cannot resolve topic parameter "${name}"`);
+            }
+
+            // Replace placeholder in topic
+            topic = topic.replace(
+                new RegExp(`\\{${name}\\}`, "g"),
+                String(value)
+            );
+        }
+
+        return topic;
+    }
     /**
      * Fetch the most recently uploaded file for a node
      *

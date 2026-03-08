@@ -17,46 +17,64 @@ servers:
 channels:
 
   thermostatState:
-    address: home/thermostat/state
+    address: home/{homeId}/thermostat/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       thermostatStateMessage:
         $ref: '#/components/messages/ThermostatState'
 
   acState:
-    address: home/ac/state
+    address: home/{homeId}/ac/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       acStateMessage:
         $ref: '#/components/messages/ACState'
 
   lightsState:
-    address: home/lights/state
+    address: home/{homeId}/lights/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       lightStateMessage:
         $ref: '#/components/messages/LightState'
 
   fridgeState:
-    address: home/fridge/state
+    address: home/{homeId}/fridge/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       fridgeStateMessage:
         $ref: '#/components/messages/FridgeState'
 
-
   launderState:
-    address: home/launder/state
+    address: home/{homeId}/launder/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       launderStateMessage:
         $ref: '#/components/messages/LaunderState'
 
-
   dehumidifierState:
-    address: home/dehumidifier/state
+    address: home/{homeId}/dehumidifier/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       dehumidifierStateMessage:
         $ref: '#/components/messages/DehumidifierState'
 
-
   cookerState:
-    address: home/cooker/state
+    address: home/{homeId}/cooker/state
+    parameters:
+      homeId:
+        description: Unique identifier of the smart home instance
     messages:
       cookerStateMessage:
         $ref: '#/components/messages/CookerState'
