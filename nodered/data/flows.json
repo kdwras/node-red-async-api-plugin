@@ -13000,9 +13000,9 @@
         "type": "comment",
         "z": "4f4855f52107b72b",
         "g": "9c58429dd67aded0",
-        "name": "Smartplug for laundry",
+        "name": "Smartplug for smartlights",
         "info": "",
-        "x": 480,
+        "x": 490,
         "y": 940,
         "wires": []
     },
