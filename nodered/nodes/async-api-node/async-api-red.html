@@ -175,34 +175,35 @@
                  */
                 RED.comms.subscribe(`async-api-red/payload-update/${node.id}`, function (topic, msg) {
 
-                    if (!msg) return;
-
-                    if (msg.payload && typeof msg.payload === "object") {
-
-                        Object.entries(msg.payload).forEach(([key, value]) => {
-
-                            const input = $(`#node-input-${key}`);
-
-                            if (input.length) {
-                                input.val(value);
-                            }
-
-                        });
+                    if (!msg || !msg.payload || typeof msg.payload !== "object") {
+                        return;
                     }
 
-                    if (msg.parameters && typeof msg.parameters === "object") {
+                    // Prefill normal payload fields
+                    Object.entries(msg.payload).forEach(([key, value]) => {
 
-                        Object.entries(msg.parameters).forEach(([key, value]) => {
-                            const input = $(`#node-input-param-${key}`);
+                        // Skip nested parameters object
+                        if (key === "parameters") return;
 
-                            if (input.length) {
-                                input.val(value);
+                        const input = $(`#node-input-${key}`);
+
+                        if (input.length) {
+                            input.val(value);
+                        }
+                    });
+
+                    // Prefill AsyncAPI channel parameters from msg.payload.parameters
+                    if (msg.payload.parameters && typeof msg.payload.parameters === "object") {
+
+                        Object.entries(msg.payload.parameters).forEach(([key, value]) => {
+
+                            const paramInput = $(`#node-input-param-${key}`);
+
+                            if (paramInput.length) {
+                                paramInput.val(value);
                             }
-
                         });
-
                     }
-
                 });
 
                 /**

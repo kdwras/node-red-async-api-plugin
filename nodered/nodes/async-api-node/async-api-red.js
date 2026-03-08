@@ -90,8 +90,7 @@ module.exports = function (RED) {
                  * Frontend can subscribe to this channel to update UI state.
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
-                    payload: node.payload,
-                    parameters: node.parameters
+                    payload: node.payload
                 });
 
                 // Signal message processing is complete

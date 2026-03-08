@@ -182,35 +182,30 @@ module.exports = (RED) => {
      *   result:         home/1/ac/state
      */
     function resolveTopic(node) {
-
-        // Topic template from AsyncAPI
         let topic = node.topic || "";
 
-        // If no parameters are defined, return topic unchanged
         if (!Array.isArray(node.parameters) || node.parameters.length === 0) {
             return topic;
         }
 
+        const msg = node.msg || {};
+        const payload = msg.payload || {};
+        const payloadParameters = payload.parameters || {};
+        const dialogValues = node.parameterValues || {};
 
-        // Parameter values configured in the editor dialog
-        const dialogValues = node.parameters;
-
-        // Resolve each AsyncAPI channel parameter
         for (const param of node.parameters) {
-
             const name = param.id || param.name;
 
-            // Priority:
-            // 1. dialog parameter
-            // 2. msg.<parameter>
-            const value = dialogValues[name];
+            const value =
+                dialogValues[name] ??
+                payloadParameters[name] ??
+                msg[name] ??
+                payload[name];
 
-            // If still missing, topic cannot be resolved
             if (value === undefined || value === null || value === "") {
                 throw new Error(`Cannot resolve topic parameter "${name}"`);
             }
 
-            // Replace placeholder in topic
             topic = topic.replace(
                 new RegExp(`\\{${name}\\}`, "g"),
                 String(value)
