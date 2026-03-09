@@ -182,8 +182,6 @@
                     // Prefill normal payload fields
                     Object.entries(msg.payload).forEach(([key, value]) => {
 
-                        // Skip nested parameters object
-                        if (key === "parameters") return;
 
                         const input = $(`#node-input-${key}`);
 
@@ -193,9 +191,9 @@
                     });
 
                     // Prefill AsyncAPI channel parameters from msg.payload.parameters
-                    if (msg.payload.parameters && typeof msg.payload.parameters === "object") {
+                    if (msg.parameters && typeof msg.parameters === "object") {
 
-                        Object.entries(msg.payload.parameters).forEach(([key, value]) => {
+                        Object.entries(msg.parameters).forEach(([key, value]) => {
 
                             const paramInput = $(`#node-input-param-${key}`);
 

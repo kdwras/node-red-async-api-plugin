@@ -184,22 +184,18 @@ module.exports = (RED) => {
     function resolveTopic(node) {
         let topic = node.topic || "";
 
-        if (!Array.isArray(node.parameters) || node.parameters.length === 0) {
-            return topic;
-        }
-
         const msg = node.msg || {};
         const payload = msg.payload || {};
-        const payloadParameters = payload.parameters || {};
+        const msgParameters = msg.parameters || {};
         const dialogValues = node.parameterValues || {};
 
-        for (const param of node.parameters) {
+        for (const param of node.parameters || []) {
             const name = param.id || param.name;
 
             const value =
                 dialogValues[name] ??
-                payloadParameters[name] ??
                 msg[name] ??
+                msgParameters[name] ??
                 payload[name];
 
             if (value === undefined || value === null || value === "") {

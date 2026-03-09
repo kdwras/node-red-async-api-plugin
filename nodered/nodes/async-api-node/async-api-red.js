@@ -76,7 +76,12 @@ module.exports = function (RED) {
             try {
                 // Store the incoming payload on the node instance
                 // (used later by MQTT send/publish logic and editor UI updates)
+                node.msg = msg;
                 node.payload = msg.payload;
+
+                console.log("FULL MSG:", JSON.stringify(msg, null, 2));
+                console.log("MSG KEYS:", Object.keys(msg));
+                console.log("MSG.PARAMETERS:", msg.parameters);
 
                 // Validate payload against expected schema (if configured)
                 validatePayload(node);
@@ -90,8 +95,9 @@ module.exports = function (RED) {
                  * Frontend can subscribe to this channel to update UI state.
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
-                    payload: node.payload
-                });
+                    payload: node.payload,
+                    parameters: node.parameters
+                })
 
                 // Signal message processing is complete
                 done();
