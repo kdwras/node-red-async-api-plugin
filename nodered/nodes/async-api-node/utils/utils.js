@@ -187,14 +187,11 @@ module.exports = (RED) => {
         const msg = node.msg || {};
         const payload = msg.payload || {};
         const msgParameters = msg.parameters || {};
-        const dialogValues = node.parameterValues || {};
 
         for (const param of node.parameters || []) {
             const name = param.id || param.name;
 
             const value =
-                dialogValues[name] ??
-                msg[name] ??
                 msgParameters[name] ??
                 payload[name];
 

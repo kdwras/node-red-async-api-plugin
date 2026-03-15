@@ -147,14 +147,12 @@
                 getFile(node.id)
                     .then(() => getUserSelections(node.id))
                     .then((res) => {
-
                         /**
                          * Only prefill if enough previous configuration exists
                          */
                         if (res.serverUrl && res.topic && res.operation) {
                             prefillSelections(res);
                         }
-
                     });
 
                 /**
@@ -615,7 +613,6 @@
     function saveUserSelections(nodeId, data) {
 
         $.ajax({
-
             url: `/async-api-red/${nodeId}/user-selections`,
             type: "POST",
             contentType: "application/json",
@@ -812,33 +809,21 @@
      * These parameters are separate from payload fields because they
      * belong to the channel address, not the message body.
      */
-    function renderParameters(selectedChannel) {
-
+    function renderParameters(selectedChannel, parameterValues = {}) {
         const container = $("#node-parameters-display");
         container.empty();
 
-        /**
-         * Parameters are retrieved from the selected channel object
-         */
         const parameters = selectedChannel?.parameters || [];
 
-        /**
-         * If no parameters exist, show informative placeholder text
-         */
         if (!parameters.length) {
-
             container.append("<div>No parameters available for this channel.</div>");
             return;
-
         }
 
-        /**
-         * Render one input per channel parameter
-         */
         parameters.forEach((param) => {
-
             const name = param.id || param.name;
             const description = param.description || "";
+            const value = parameterValues[name] || "";
 
             container.append(`
             <div class="form-row" style="margin-top:.5em">
@@ -847,12 +832,11 @@
                 </label>
                 <input type="text"
                        id="node-input-param-${name}"
+                       value="${value}"
                        placeholder="${description}">
             </div>
         `);
-
         });
-
     }
 
 
@@ -939,8 +923,7 @@
      * 2. the selected operation from that channel
      * and then renders both sections.
      */
-    function updateMessagePanel(channels, selectedOperationId) {
-
+    function updateMessagePanel(channels, selectedOperationId, parameterValues = {}) {
         const selectedChannelAddress = $("#node-input-channel").val();
 
         const selectedChannel = channels.find(
@@ -951,7 +934,7 @@
             op => op.id === selectedOperationId
         );
 
-        renderParameters(selectedChannel);
+        renderParameters(selectedChannel, parameterValues);
         renderMessages(selectedChannel, selectedOperation);
     }
 
@@ -1064,19 +1047,19 @@
     function prefillSelections(data) {
 
         $("#node-input-select-server").val(data.serverUrl);
-        $("#node-input-channel").val(data.topic).trigger("change");
 
-        setTimeout(() => {
+        $("#node-input-channel")
+            .val(data.topic)
+            .trigger("change");
 
-            $("#node-input-operations")
-                .val(data.operation?.id || "")
-                .trigger("change");
+        // Wait until operations dropdown changes
+        $("#node-input-operations").one("change", () => {
+            prefillParameterValues(data);
+        });
 
-            setTimeout(() => {
-                prefillParameterValues(data);
-            }, 100);
-
-        }, 300);
+        $("#node-input-operations")
+            .val(data.operation?.id || "")
+            .trigger("change");
     }
 
     /**
@@ -1085,19 +1068,14 @@
      * It simply finds parameter input fields and fills them with the
      * values stored in node.parameterValues.
      */
-    function prefillParameterValues(node) {
-        if (!node.parameterValues) {
-            return;
-        }
+    function prefillParameterValues(data) {
+        const values = data.parameterValues || {};
 
-        Object.entries(node.parameterValues).forEach(([name, value]) => {
-
+        Object.entries(values).forEach(([name, value]) => {
             const input = $(`#node-input-param-${name}`);
-
             if (input.length) {
                 input.val(value);
             }
-
         });
     }
 
@@ -1128,22 +1106,12 @@
      * @returns {Object} Parameter name → value map.
      */
     function getParameterValues(selectedChannel) {
-
         const values = {};
         const parameters = selectedChannel?.parameters || [];
 
-        parameters.forEach(param => {
-
+        parameters.forEach((param) => {
             const name = param.id || param.name;
-
-            const input = $(`#node-input-param-${name}`);
-
-            const value = input.val();
-
-            console.log("input", input,"Parameter:", name, "Value:", value);
-
-            values[name] = value;
-
+            values[name] = $(`#node-input-param-${name}`).val() || "";
         });
 
         return values;

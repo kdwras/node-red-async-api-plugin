@@ -79,10 +79,6 @@ module.exports = function (RED) {
                 node.msg = msg;
                 node.payload = msg.payload;
 
-                console.log("FULL MSG:", JSON.stringify(msg, null, 2));
-                console.log("MSG KEYS:", Object.keys(msg));
-                console.log("MSG.PARAMETERS:", msg.parameters);
-
                 // Validate payload against expected schema (if configured)
                 validatePayload(node);
 

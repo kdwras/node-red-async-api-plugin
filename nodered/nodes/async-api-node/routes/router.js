@@ -210,10 +210,10 @@ module.exports = (RED) => {
         try {
             node.serverUrl = payload.serverUrl;
             node.topic = payload.topic;
-            node.parameters = payload.parameters;
             node.operation = payload.operation;
             node.expectedPayload = payload.expectedPayload;
-
+            node.parameters = payload.parameters || [];
+            node.parameterValues = payload.parameterValues || {};
             res.status(204).send();
         } catch (error) {
             res.status(500).json({ error });
@@ -238,7 +238,8 @@ module.exports = (RED) => {
             serverUrl: node.serverUrl,
             topic: node.topic,
             payload: node.payload,
-            operation: node.operation
+            operation: node.operation,
+            parameters: node.parameters || []
         });
     }
 
