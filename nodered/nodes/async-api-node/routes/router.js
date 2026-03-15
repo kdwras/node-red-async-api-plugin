@@ -239,7 +239,8 @@ module.exports = (RED) => {
             topic: node.topic,
             payload: node.payload,
             operation: node.operation,
-            parameters: node.parameters || []
+            parameters: node.parameters || [],
+            parameterValues: node.parameterValues || {}
         });
     }
 

@@ -1068,10 +1068,12 @@
      * It simply finds parameter input fields and fills them with the
      * values stored in node.parameterValues.
      */
-    function prefillParameterValues(data) {
-        const values = data.parameterValues || {};
+    function prefillParameterValues(node) {
+        if (!node.parameters) {
+            return;
+        }
 
-        Object.entries(values).forEach(([name, value]) => {
+        Object.entries(node.parameters).forEach(([name, value]) => {
             const input = $(`#node-input-param-${name}`);
             if (input.length) {
                 input.val(value);

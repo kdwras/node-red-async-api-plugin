@@ -185,15 +185,12 @@ module.exports = (RED) => {
         let topic = node.topic || "";
 
         const msg = node.msg || {};
-        const payload = msg.payload || {};
         const msgParameters = msg.parameters || {};
 
         for (const param of node.parameters || []) {
             const name = param.id || param.name;
 
-            const value =
-                msgParameters[name] ??
-                payload[name];
+            const value = msgParameters[name];
 
             if (value === undefined || value === null || value === "") {
                 throw new Error(`Cannot resolve topic parameter "${name}"`);
