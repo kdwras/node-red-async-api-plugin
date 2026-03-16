@@ -842,8 +842,7 @@
             "45e26e30f704ad47",
             "f47559f06abd3bf6",
             "3176681a660261ae",
-            "13bfab6bd971d197",
-            "f7c79d69f53cda3b"
+            "13bfab6bd971d197"
         ],
         "x": 54,
         "y": 59,
@@ -12343,7 +12342,7 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Telemetry",
-        "func": "// === Thermostat / HVAC Telemetry (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state before running ---\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Read environment values from input ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\n\n// --- Desired temperature (fixed setpoint) ---\nlet desired = flow.get('thermostat.setpoint') ?? 23;\nflow.set('thermostat.setpoint', desired);\n\n// --- Persistent current temperature (don’t reset every tick) ---\nlet current = flow.get('thermostat.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Small natural drift toward environment ---\ncurrent += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrent += (envTemp - current) * 0.05;  // gently pull toward env\n\n// --- Determine HVAC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nconst deadband = 1; // ±1°C deadband around setpoint\n\nif (current < desired - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n} else if (current > desired + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n}\n\n// --- Energy tracking (cumulative kWh) ---\nlet energy = flow.get('energy.thermostat') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('energy.thermostat', energy);\nflow.set('thermostat.currentTemp', current);\nflow.set('current_temp', current); // if you use it elsewhere\n\n// --- Node status for visual feedback ---\nlet color = 'green';\nlet shape = 'ring';\nlet text = `IDLE | ${current.toFixed(1)}°C → ${desired}°C | 0 W`;\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    power: plugState, // on/off (smart plug)\n    temperature: parseFloat(current.toFixed(1)), // simulated current temp\n    humidity: envHumidity,\n    setpoint: desired,\n    mode,\n    currentPower, // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString(),\n};\nmsg.parameters = {homeId: 1};\n\nreturn msg;\n",
+        "func": "// === Thermostat / HVAC Telemetry (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state before running ---\nconst plugState = global.get('thermostatState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Read environment values from input ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\n\n// --- Desired temperature (fixed setpoint) ---\nlet desired = flow.get('thermostat.setpoint') ?? 23;\nflow.set('thermostat.setpoint', desired);\n\n// --- Persistent current temperature (don’t reset every tick) ---\nlet current = flow.get('thermostat.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Small natural drift toward environment ---\ncurrent += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrent += (envTemp - current) * 0.05;  // gently pull toward env\n\n// --- Determine HVAC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nconst deadband = 1; // ±1°C deadband around setpoint\n\nif (current < desired - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n} else if (current > desired + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n}\n\n// --- Energy tracking (cumulative kWh) ---\nlet energy = flow.get('energy.thermostat') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('energy.thermostat', energy);\nflow.set('thermostat.currentTemp', current);\nflow.set('current_temp', current); // if you use it elsewhere\n\n// --- Node status for visual feedback ---\nlet color = 'green';\nlet shape = 'ring';\nlet text = `IDLE | ${current.toFixed(1)}°C → ${desired}°C | 0 W`;\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"thermostat\",\n    power: plugState, // on/off (smart plug)\n    temperature: parseFloat(current.toFixed(1)), // simulated current temp\n    humidity: envHumidity,\n    setpoint: desired,\n    mode,\n    currentPower, //Numberinstantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString(),\n};\nmsg.parameters = {homeId: 1};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -13910,18 +13909,6 @@
         "x": 1910,
         "y": 180,
         "wires": []
-    },
-    {
-        "id": "f7c79d69f53cda3b",
-        "type": "async-api-red",
-        "z": "4f4855f52107b72b",
-        "g": "876a8dac7a94efab",
-        "name": "",
-        "x": 230,
-        "y": 560,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "home1",

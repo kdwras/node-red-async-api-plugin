@@ -178,19 +178,22 @@ module.exports = function (RED) {
                 throw new Error(`Missing required key: "${spec.name}"`);
             }
 
-            // Type validation
+            // String validation
             if (spec.type === "string" && typeof value !== "string") {
                 throw new Error(`Key "${spec.name}" must be a string.`);
             }
 
-            if (spec.type === "integer" && typeof value !== "number") {
+            // Integer validation
+            if (spec.type === "integer" && !Number.isInteger(value)) {
                 throw new Error(`Key "${spec.name}" must be an integer.`);
             }
 
-            if (spec.type === "number" && typeof value !== "number") {
+            // Number (float allowed)
+            if (spec.type === "number" && (typeof value !== "number")) {
                 throw new Error(`Key "${spec.name}" must be a number.`);
             }
 
+            // Boolean validation
             if (spec.type === "boolean" && typeof value !== "boolean") {
                 throw new Error(`Key "${spec.name}" must be a boolean.`);
             }
