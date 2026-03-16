@@ -12065,7 +12065,7 @@
         "g": "6578bf7b191c43b7",
         "name": "Sim Clock Trigger",
         "props": [],
-        "repeat": "20",
+        "repeat": "5",
         "crontab": "",
         "once": false,
         "onceDelay": "0.1",

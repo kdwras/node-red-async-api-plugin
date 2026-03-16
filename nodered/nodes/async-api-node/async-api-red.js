@@ -188,11 +188,6 @@ module.exports = function (RED) {
                 throw new Error(`Key "${spec.name}" must be an integer.`);
             }
 
-            // Number (float allowed)
-            if (spec.type === "number" && (typeof value !== "number")) {
-                throw new Error(`Key "${spec.name}" must be a number.`);
-            }
-
             // Boolean validation
             if (spec.type === "boolean" && typeof value !== "boolean") {
                 throw new Error(`Key "${spec.name}" must be a boolean.`);
