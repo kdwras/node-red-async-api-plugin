@@ -1,153 +1,184 @@
 /**
- * Main Node-RED node module entry
+ * Main Node-RED runtime entry for the custom "async-api-red" node.
  *
  * Responsibilities:
- * - Register the Node-RED node type ("async-api-red")
- * - Mount HTTP admin routes (Express router) for editor UI / REST calls
- * - Handle incoming Node-RED messages (msg) and perform:
- *   - payload validation
- *   - MQTT connection
- *   - send/receive handling
- *   - editor notifications via RED.comms.publish
+ * - Register the node type in Node-RED
+ * - Mount editor/backend HTTP routes
+ * - Handle incoming runtime messages
+ * - Validate payloads against the selected AsyncAPI schema
+ * - Connect to MQTT and publish/subscribe based on selected operation
+ * - Notify the editor UI about payload updates and validation errors
  */
-const express = require("express");
-
 module.exports = function (RED) {
 
     /**
-     * Admin HTTP routes for this node (file upload, AsyncAPI parsing, user selections, etc.)
+     * Runtime HTTP routes used by the editor UI.
      */
     const router = require("./routes/router")(RED);
 
     /**
-     * Express app instance (note: created but not mounted directly; routes are mounted on RED.httpAdmin)
-     */
-    const app = express();
-
-    /**
-     * Mount router on Node-RED admin HTTP server
-     * (this exposes the endpoints under Node-RED's /admin context)
+     * Mount custom admin routes into Node-RED.
      */
     RED.httpAdmin.use(router);
 
     /**
-     * In-memory map of active node instances, keyed by node.id
-     * Useful for debugging or external modules needing access to node runtime objects.
+     * Keep references to active runtime node instances.
+     * Useful for route handlers that need access to a live node.
      */
-    const nodesMap = {}; // Store node instances
+    const nodesMap = {};
 
     /**
-     * Node constructor / factory function
+     * Node constructor.
      *
-     * Called by Node-RED when a node instance is created from the editor configuration.
+     * Called whenever a new instance of this node is created.
      *
-     * @param {object} config - Node configuration from the editor
+     * @param {object} config - Editor-side node configuration
      */
-    function getNode(config) {
-        // Initialize Node-RED node instance (sets this.id, this.name, wiring, etc.)
+    function AsyncApiRedNode(config) {
         RED.nodes.createNode(this, config);
 
         const node = this;
 
-        // Track node instance by id
+        // Store runtime node reference
         nodesMap[node.id] = node;
 
         /**
-         * close event
-         * Called just before the node is stopped/removed (e.g., flows re-deploy, node deleted).
-         * Use it to clean up resources (connections, timers, etc.)
+         * Cleanup when node is stopped / redeployed / removed.
          */
-        node.on("close", () => {
-            console.log(`Close node ${node.id}`);
-            delete nodesMap[node.id]; // Cleanup on node deletion
+        node.on("close", function () {
+            node.log(`Closing node ${node.id}`);
+            delete nodesMap[node.id];
         });
 
         /**
-         * input event
-         * Called whenever a message arrives at this node.
+         * Handle incoming runtime messages.
          *
-         * @param {object} msg - Node-RED message
-         * @param {function} send - send function (Node-RED v1+)
-         * @param {function} done - completion callback
+         * Priority rules:
+         * - payload: saved editor payload first, otherwise msg.payload
+         * - parameters: msg.parameters first, otherwise saved editor parameters
          */
         node.on("input", function (msg, send, done) {
-            // Load utils on demand (keeps module boundaries; also ensures RED-bound utilities)
             const Utils = require("./utils/utils")(RED);
-            try {
-                // Store the incoming payload on the node instance
-                // (used later by MQTT send/publish logic and editor UI updates)
-                node.msg = msg;
-                node.payload = msg.payload;
 
-                // Validate payload against expected schema (if configured)
+            try {
+                /**
+                 * Store full incoming message for later use.
+                 */
+                node.msg = msg;
+
+                /**
+                 * Resolve final payload and parameters.
+                 */
+                node.payload = resolvePayload(node, msg);
+                node.parameters = resolveParameters(node, msg);
+
+                /**
+                 * Validate resolved payload against expected schema.
+                 */
                 validatePayload(node);
 
-                // If validation passes, connect to broker and perform send/receive action
+                /**
+                 * Connect to MQTT server and process send/receive logic.
+                 */
                 Utils.connectToServer(node);
                 Utils.handleMessage(node);
 
                 /**
-                 * Notify the editor UI about the latest payload
-                 * Frontend can subscribe to this channel to update UI state.
+                 * Notify editor UI with latest resolved runtime values.
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
                     payload: node.payload,
                     parameters: node.parameters
-                })
+                });
 
-                // Signal message processing is complete
-                done();
+                if (done) {
+                    done();
+                }
 
             } catch (err) {
                 /**
-                 * Notify the editor UI about validation/runtime error
-                 * Frontend can display it near node configuration UI.
+                 * Notify editor UI and Node-RED runtime about the error.
                  */
                 RED.comms.publish(`async-api-red/payload-error/${node.id}`, {
                     error: err.message
                 });
 
-                // Log error in Node-RED runtime and stop execution
                 node.error(err.message, msg);
-            }
 
+                if (done) {
+                    done(err);
+                }
+            }
         });
     }
 
     /**
-     * Validate node.payload against node.expectedPayload spec.
+     * Resolve final payload.
      *
-     * expectedPayload is assumed to be an array of objects like:
-     * [{ name: "field", type: "string" }, ...]
+     * Priority:
+     * 1. saved payload from editor
+     * 2. incoming msg.payload
      *
-     * Behavior:
-     * - Only validates when payload is a plain object
-     * - Only validates when expectedPayload is an array
-     * - Throws Error if required keys are missing or type mismatches are found
+     * @param {object} node
+     * @param {object} msg
+     * @returns {*}
+     */
+    function resolvePayload(node, msg) {
+        return node.savedPayload ?? msg.payload;
+    }
+
+    /**
+     * Resolve final parameter values.
      *
-     * @param {object} node - Node-RED node instance
+     * Priority:
+     * 1. msg.parameters
+     * 2. saved parameters from editor
+     *
+     * @param {object} node
+     * @param {object} msg
+     * @returns {object}
+     */
+    function resolveParameters(node, msg) {
+        return msg.parameters ?? node.parameterValues ?? {};
+    }
+
+    /**
+     * Validate node.payload against expected AsyncAPI payload schema.
+     *
+     * expectedPayload example:
+     * [
+     *   { name: "temperature", type: "number" },
+     *   { name: "device", type: "string" }
+     * ]
+     *
+     * Validation runs only when:
+     * - payload is a plain object
+     * - expectedPayload is an array
+     *
+     * @param {object} node
      */
     function validatePayload(node) {
-        // Only validate plain objects (ignore null, arrays, primitives)
-        if (typeof node.payload !== 'object' || Array.isArray(node.payload) || node.payload === null) {
+        const payload = node.payload;
+
+        // Validate only plain objects
+        if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
             return;
         }
 
-        // If no expected schema is configured, skip validation
+        // Skip validation if schema is not configured
         if (!Array.isArray(node.expectedPayload)) {
             return;
         }
 
-        const expectedPayload = node.expectedPayload || [];
+        for (const spec of node.expectedPayload) {
+            const value = payload[spec.name];
 
-        // Validate required fields and their expected types
-        for (const spec of expectedPayload) {
-            const value = node.payload[spec.name];
-
+            // Required field check
             if (value === undefined) {
                 throw new Error(`Missing required key: "${spec.name}"`);
             }
 
+            // Type validation
             if (spec.type === "string" && typeof value !== "string") {
                 throw new Error(`Key "${spec.name}" must be a string.`);
             }
@@ -155,18 +186,24 @@ module.exports = function (RED) {
             if (spec.type === "integer" && typeof value !== "number") {
                 throw new Error(`Key "${spec.name}" must be an integer.`);
             }
+
+            if (spec.type === "number" && typeof value !== "number") {
+                throw new Error(`Key "${spec.name}" must be a number.`);
+            }
+
+            if (spec.type === "boolean" && typeof value !== "boolean") {
+                throw new Error(`Key "${spec.name}" must be a boolean.`);
+            }
         }
     }
 
-
     /**
-     * Expose nodesMap on RED for other modules/debugging
+     * Expose active node instances for routes/debugging.
      */
     RED.nodesMap = nodesMap;
 
     /**
-     * Register this module as a Node-RED node type
-     * Type name must match the one used in the HTML editor file.
+     * Register node type in Node-RED runtime.
      */
-    RED.nodes.registerType("async-api-red", getNode);
+    RED.nodes.registerType("async-api-red", AsyncApiRedNode);
 };

@@ -1,113 +1,117 @@
 /**
  * Multer file upload provider for Node-RED AsyncAPI integration
  *
- * Responsible for:
- * - Handling file uploads via multipart/form-data
- * - Creating per-node upload directories
- * - Ensuring only one file exists per node (old files removed)
+ * Responsibilities:
+ * - Handle multipart file uploads
+ * - Store uploaded AsyncAPI documents per node
+ * - Ensure only one file exists per node
  */
+
 module.exports = (RED) => {
 
-    /**
-     * Dependencies
-     */
     const fs = require("fs");
     const multer = require("multer");
     const path = require("path");
 
-    // Utility helpers bound to Node-RED runtime
     const Utils = require("../utils/utils")(RED);
 
     /**
-     * Configure and return Multer middleware for file uploads
-     *
-     * Upload behavior:
-     * - Destination folder is based on Node-RED nodeId
-     * - Folder is created if it does not exist
-     * - Existing files in the folder are removed before saving new file
-     *
-     * @returns {object} Multer middleware instance
+     * Allowed AsyncAPI file types
+     */
+    const ALLOWED_EXTENSIONS = [".yaml", ".yml", ".json"];
+
+    /**
+     * Create Multer upload middleware
      */
     function getFile() {
 
-        /**
-         * Configure Multer disk storage
-         */
         const storage = multer.diskStorage({
 
             /**
-             * Determine upload destination directory
-             *
-             * @param {object} req
-             * @param {object} file
-             * @param {function} cb
+             * Determine destination folder
              */
             destination: (req, file, cb) => {
-                const { nodeId } = req.params;
+                try {
 
-                // Validate nodeId presence
-                if (!nodeId) {
-                    return cb(new Error("Missing nodeId"), null);
+                    const { nodeId } = req.params;
+
+                    if (!nodeId) {
+                        return cb(new Error("Missing nodeId"));
+                    }
+
+                    const uploadDir = Utils.getFilePath(nodeId);
+
+                    // Ensure upload directory exists
+                    fs.mkdirSync(uploadDir, { recursive: true });
+
+                    cb(null, uploadDir);
+
+                } catch (err) {
+                    cb(err);
                 }
-
-                // Resolve upload directory for this node
-                const projectFolder = Utils.getFilePath(nodeId);
-
-                // Ensure directory exists
-                if (!fs.existsSync(projectFolder)) {
-                    fs.mkdirSync(projectFolder, { recursive: true });
-                }
-
-                cb(null, projectFolder);
             },
 
             /**
-             * Define uploaded file name
-             *
-             * Also removes previously uploaded files to ensure
-             * only one AsyncAPI file exists per node.
-             *
-             * @param {object} req
-             * @param {object} file
-             * @param {function} cb
+             * Save file and remove previous uploads
              */
             filename: (req, file, cb) => {
-                const { nodeId } = req.params;
-                const projectFolder = Utils.getFilePath(nodeId);
-                const originalName = file.originalname;
 
                 try {
-                    // Remove existing files in upload directory
-                    const files = fs.readdirSync(projectFolder);
+
+                    const { nodeId } = req.params;
+                    const uploadDir = Utils.getFilePath(nodeId);
+
+                    /**
+                     * Remove existing files so only one AsyncAPI file exists
+                     */
+                    const files = fs.readdirSync(uploadDir);
+
                     for (const f of files) {
-                        const filePath = path.join(projectFolder, f);
+                        const filePath = path.join(uploadDir, f);
+
                         if (fs.statSync(filePath).isFile()) {
                             fs.unlinkSync(filePath);
                         }
                     }
-                } catch (err) {
-                    return cb(err);
-                }
 
-                // Preserve original filename
-                cb(null, originalName);
-            },
+                    cb(null, file.originalname);
+
+                } catch (err) {
+                    cb(err);
+                }
+            }
         });
 
         /**
-         * Return Multer middleware
-         *
-         * upload.single("file") will:
-         * - Extract file from multipart request
-         * - Store it using configured disk storage
-         * - Attach metadata to req.file
+         * Validate uploaded file type
          */
-        return multer({ storage });
+        function fileFilter(req, file, cb) {
+
+            const ext = path.extname(file.originalname).toLowerCase();
+
+            if (!ALLOWED_EXTENSIONS.includes(ext)) {
+                return cb(new Error("Only .yaml, .yml or .json AsyncAPI files are allowed"));
+            }
+
+            cb(null, true);
+        }
+
+        /**
+         * Create multer instance
+         */
+        return multer({
+            storage,
+            fileFilter,
+
+            /**
+             * Optional safety limits
+             */
+            limits: {
+                fileSize: 5 * 1024 * 1024 // 5MB
+            }
+        });
     }
 
-    /**
-     * Public provider API
-     */
     return {
         getFile
     };

@@ -306,7 +306,8 @@
                     operation: selectedOperation,
                     expectedPayload: getExpectedMessages(selectedOperation),
                     parameters: selectedChannel.parameters || [],
-                    parameterValues: getParameterValuesFromUi()
+                    parameterValues: getParameterValuesFromUi(),
+                    payload: getPayloadValuesFromUi()
                 };
 
                 console.log("Saving selections:", data);
@@ -925,6 +926,25 @@
             });
 
             return messages;
+        }
+
+        /**
+         * Collect payload values from message input fields in the editor
+         */
+        function getPayloadValuesFromUi() {
+
+            const values = {};
+
+            $("#node-messages-display")
+                .find("input[id^='node-input-']")
+                .each(function () {
+
+                    const name = this.id.replace("node-input-", "");
+
+                    values[name] = $(this).val() || "";
+                });
+
+            return values;
         }
 
 
