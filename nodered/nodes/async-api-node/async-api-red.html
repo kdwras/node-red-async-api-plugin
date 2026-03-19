@@ -286,7 +286,6 @@
                 const node = this;
                 if (!node?.id) return;
 
-                // Read latest values from UI
                 syncStateFromUi();
 
                 const selectedChannel = getSelectedChannel();
@@ -297,40 +296,31 @@
                     return;
                 }
 
-                /**
-                 * Data sent to backend for persistence.
-                 */
                 const data = {
                     serverUrl: state.selections.serverUrl,
                     topic: selectedChannel.address,
                     operation: selectedOperation,
-                    expectedPayload: getExpectedMessages(selectedOperation),
-                    parameters: selectedChannel.parameters || [],
+                    expectedPayload: getExpectedPayloadFromOperation(selectedOperation),
+                    parameters: Array.isArray(selectedChannel.parameters) ? selectedChannel.parameters : [],
                     parameterValues: getParameterValuesFromUi(),
                     payload: getPayloadValuesFromUi()
                 };
 
-                console.log("Saving selections:", data);
 
-                // Store configuration in runtime node
-                saveUserSelections(node.id, data);
-
-                /**
-                 * After saving configuration:
-                 * 1. connect to MQTT server
-                 * 2. initialize topic handling
-                 */
-                connectToServer(node.id)
+                return saveUserSelections(node.id, data)
                     .then(() => {
-                        console.log("Connected to server, now initializing message handling...");
+                        return connectToServer(node.id);
+                    })
+                    .then(() => {
                         return handleMessage(node.id, selectedChannel.address);
                     })
+                    .then(() => {
+                        unsubscribeRuntimeEvents(node.id);
+                    })
                     .catch((err) => {
-                        console.error("Failed to connect to server:", err);
-                        RED.notify("Failed to connect to MQTT server", "error");
+                        console.error("Failed during save/connect flow:", err);
+                        RED.notify("Failed to save selections or connect to MQTT server", "error");
                     });
-
-                unsubscribeRuntimeEvents(node.id);
             },
 
             /**
@@ -405,6 +395,7 @@
                     getData(nodeId).then((data) => {
 
                         state.asyncApiData = normalizeAsyncApiData(data);
+                        ensureValidSelection
                         renderAll();
 
                     });
@@ -503,7 +494,6 @@
                     data: JSON.stringify({topic: topicName}),
 
                     success: function (response) {
-                        console.log("Topic initialized:", response);
                         resolve(response);
                     },
 
@@ -820,15 +810,15 @@
         function renderOperations() {
 
             const operationDropdown = $("#node-input-operations");
-
             operationDropdown.empty();
 
             const selectedChannel = getSelectedChannel();
 
-            if (!selectedChannel?.operations?.length) return;
+            if (!selectedChannel || !Array.isArray(selectedChannel.operations) || !selectedChannel.operations.length) {
+                return;
+            }
 
-            selectedChannel.operations.forEach(operation => {
-
+            selectedChannel.operations.forEach((operation) => {
                 operationDropdown.append(
                     `<option value="${operation.id}">${operation.id}</option>`
                 );
@@ -876,24 +866,31 @@
         function renderMessages() {
 
             const container = $("#node-messages-display");
-
             container.empty();
 
-            const selectedChannel = getSelectedChannel();
             const selectedOperation = getSelectedOperation();
 
-            if (!selectedChannel || !selectedOperation) return;
+            if (!selectedOperation || !Array.isArray(selectedOperation.messages) || !selectedOperation.messages.length) {
+                container.append("<div>No message payload fields available for this operation.</div>");
+                return;
+            }
 
             selectedOperation.messages.forEach((message) => {
+                if (!Array.isArray(message.payload) || !message.payload.length) {
+                    return;
+                }
 
-                (message.payload || []).forEach(field => {
+                message.payload.forEach((field) => {
+                    if (!field || !field.name) {
+                        return;
+                    }
 
                     container.append(`
-                    <div class="form-row">
-                        <label>${field.name}</label>
-                        <input id="node-input-${field.name}">
-                    </div>
-                `);
+                <div class="form-row">
+                    <label>${field.name}</label>
+                    <input id="node-input-${field.name}">
+                </div>
+            `);
                 });
             });
         }
@@ -913,19 +910,31 @@
         /**
          * Extract expected payload fields from AsyncAPI message schema
          */
-        function getExpectedMessages(selectedOperation) {
+        function getExpectedPayloadFromOperation(operation) {
+            const fields = [];
 
-            const messages = [];
+            if (!operation || !operation.messages) {
+                return fields;
+            }
 
-            (selectedOperation?.messages || []).forEach(item => {
+            const messages = Array.isArray(operation.messages)
+                ? operation.messages
+                : Object.values(operation.messages);
 
-                (item.payload || []).forEach(field => {
 
-                    messages.push(field);
-                });
-            });
+            for (const message of messages) {
 
-            return messages;
+                const payload =
+                    Array.isArray(message?.payload) ? message.payload :
+                        Array.isArray(message?.message?.payload) ? message.message.payload :
+                            [];
+
+                for (const field of payload) {
+                    fields.push(field);
+                }
+            }
+
+            return fields;
         }
 
         /**

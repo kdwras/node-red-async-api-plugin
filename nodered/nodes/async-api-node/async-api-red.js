@@ -72,6 +72,11 @@ module.exports = function (RED) {
                 node.payload = resolvePayload(node, msg);
                 node.parameters = resolveParameters(node, msg);
 
+
+                if (!Array.isArray(node.expectedPayload) || node.expectedPayload.length === 0) {
+                    node.expectedPayload = getExpectedPayloadFromOperation(node.operation);
+                }
+
                 /**
                  * Validate resolved payload against expected schema.
                  */
@@ -160,39 +165,63 @@ module.exports = function (RED) {
     function validatePayload(node) {
         const payload = node.payload;
 
-        // Validate only plain objects
         if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
             return;
         }
 
-        // Skip validation if schema is not configured
-        if (!Array.isArray(node.expectedPayload)) {
+        if (!Array.isArray(node.expectedPayload) || node.expectedPayload?.length === 0) {
+            node.warn("No expected payload schema found; skipping payload validation.");
             return;
         }
 
         for (const spec of node.expectedPayload) {
             const value = payload[spec.name];
 
-            // Required field check
             if (value === undefined) {
                 throw new Error(`Missing required key: "${spec.name}"`);
             }
 
-            // String validation
             if (spec.type === "string" && typeof value !== "string") {
                 throw new Error(`Key "${spec.name}" must be a string.`);
             }
 
-            // Integer validation
-            if (spec.type === "integer" && !Number.isInteger(value)) {
-                throw new Error(`Key "${spec.name}" must be an integer.`);
+            if (spec.type === "integer") {
+                const parsed = Number(value);
+                if (!Number.isInteger(parsed)) {
+                    throw new Error(`Key "${spec.name}" must be an integer.`);
+                }
             }
 
-            // Boolean validation
+            if (spec.type === "number") {
+                const parsed = Number(value);
+                if (Number.isNaN(parsed)) {
+                    throw new Error(`Key "${spec.name}" must be a number.`);
+                }
+            }
+
             if (spec.type === "boolean" && typeof value !== "boolean") {
                 throw new Error(`Key "${spec.name}" must be a boolean.`);
             }
         }
+
+    }
+
+    function getExpectedPayloadFromOperation(operation) {
+        const fields = [];
+
+        if (!operation || !Array.isArray(operation.messages)) {
+            return fields;
+        }
+
+        for (const message of operation.messages) {
+            if (Array.isArray(message.payload)) {
+                for (const field of message.payload) {
+                    fields.push(field);
+                }
+            }
+        }
+
+        return fields;
     }
 
     /**

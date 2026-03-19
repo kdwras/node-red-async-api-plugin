@@ -32,7 +32,7 @@ module.exports = (RED) => {
      * @returns {object|null}
      */
     function getRuntimeNode(nodeId) {
-        return RED.nodes.getNode(nodeId);
+        return RED.nodesMap?.[nodeId] || null;
     }
 
     /**
@@ -272,6 +272,7 @@ module.exports = (RED) => {
             payload: node.savedPayload || null,
             operation: node.operation || null,
             parameters: node.parameters || [],
+            expectedPayload: node.expectedPayload || [],
             parameterValues: node.parameterValues || {}
         });
     }
