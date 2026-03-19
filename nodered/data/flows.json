@@ -1414,7 +1414,7 @@
         ],
         "x": 1614,
         "y": 119,
-        "w": 772,
+        "w": 792,
         "h": 142
     },
     {
@@ -12031,15 +12031,15 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": "Thermostat Debug",
-        "active": false,
+        "active": true,
         "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
         "statusType": "auto",
-        "x": 2250,
+        "x": 2260,
         "y": 160,
         "wires": []
     },
@@ -12049,6 +12049,80 @@
         "z": "4f4855f52107b72b",
         "g": "19609f77c4ba5897",
         "name": " Thermostat AsyncAPI",
+        "serverUrl": "mqtt://172.17.0.1:1883/",
+        "topic": "home/{homeId}/thermostat/state",
+        "operation": {
+            "id": "thermostatTelemetry",
+            "action": "send",
+            "messages": [
+                {
+                    "name": "ThermostatState",
+                    "payload": [
+                        {
+                            "name": "temperature",
+                            "type": "number"
+                        },
+                        {
+                            "name": "humidity",
+                            "type": "number"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "string"
+                        },
+                        {
+                            "name": "energyUsed",
+                            "type": "number",
+                            "description": "Cumulative energy used in kWh"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "string"
+                        }
+                    ],
+                    "contentType": "application/json"
+                }
+            ]
+        },
+        "expectedPayload": [
+            {
+                "name": "temperature",
+                "type": "number"
+            },
+            {
+                "name": "humidity",
+                "type": "number"
+            },
+            {
+                "name": "mode",
+                "type": "string"
+            },
+            {
+                "name": "energyUsed",
+                "type": "number",
+                "description": "Cumulative energy used in kWh"
+            },
+            {
+                "name": "unit",
+                "type": "string"
+            }
+        ],
+        "parameters": [
+            {
+                "id": "homeId",
+                "description": "Unique identifier of the smart home instance"
+            }
+        ],
+        "parameterValues": {
+            "homeId": "1"
+        },
+        "payload": {
+            "temperature": "24.1",
+            "humidity": "20",
+            "mode": "cool",
+            "energyUsed": "0.353",
+            "unit": "C"
+        },
         "x": 2000,
         "y": 220,
         "wires": [

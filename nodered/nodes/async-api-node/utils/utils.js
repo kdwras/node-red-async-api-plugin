@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-const { Parser: AsyncApiParser } = require("@asyncapi/parser");
+const {Parser: AsyncApiParser} = require("@asyncapi/parser");
 const fs = require("fs");
 const mqtt = require("mqtt");
 const path = require("path");
@@ -48,7 +48,7 @@ module.exports = (RED) => {
     function connectToServer(node) {
         if (!node.serverUrl) {
             node.error("MQTT server URL is missing.");
-            node.status({ fill: "red", shape: "ring", text: "Missing MQTT server" });
+            node.status({fill: "red", shape: "ring", text: "Missing MQTT server"});
             return;
         }
 
@@ -57,7 +57,7 @@ module.exports = (RED) => {
             return;
         }
 
-        node.status({ fill: "yellow", shape: "ring", text: "Connecting..." });
+        node.status({fill: "yellow", shape: "ring", text: "Connecting..."});
 
         const options = {
             connectTimeout: 5000,
@@ -69,16 +69,16 @@ module.exports = (RED) => {
         node.messageHandlerAttached = false;
 
         node.mqttClient.on("connect", function () {
-            node.status({ fill: "green", shape: "dot", text: "Connected" });
+            node.status({fill: "green", shape: "dot", text: "Connected"});
         });
 
         node.mqttClient.on("error", function (error) {
             node.error(`MQTT connection error: ${error.message}`);
-            node.status({ fill: "red", shape: "dot", text: "Error" });
+            node.status({fill: "red", shape: "dot", text: "Error"});
         });
 
         node.mqttClient.on("close", function () {
-            node.status({ fill: "red", shape: "ring", text: "Disconnected" });
+            node.status({fill: "red", shape: "ring", text: "Disconnected"});
         });
     }
 
@@ -211,7 +211,7 @@ module.exports = (RED) => {
         const msgParameters = msg.parameters || {};
         const nodeParameterValues = node.parameterValues || {};
 
-        for (const param of node.parameters || []) {
+        for (const param of Array.isArray(node.parameters) ? node.parameters : []) {
             const name = param.id || param.name;
 
             const value =

@@ -190,7 +190,7 @@
                 topic: "",
                 operationId: "",
                 parameterValues: {}
-            }
+            },
         };
 
         /**
@@ -205,7 +205,18 @@
             color: "rgb(136 81 251)",
 
             defaults: {
-                name: {value: ""}
+                name: { value: "" },
+
+                serverUrl: { value: "" },
+                topic: { value: "" },
+
+                operation: { value: null },
+                expectedPayload: { value: [] },
+
+                parameters: { value: [] },
+                parameterValues: { value: {} },
+
+                payload: { value: {} }
             },
 
             inputs: 1,
@@ -306,17 +317,18 @@
                     payload: getPayloadValuesFromUi()
                 };
 
+                node.serverUrl = data.serverUrl;
+                node.topic = data.topic;
+                node.operation = data.operation;
+                node.expectedPayload = data.expectedPayload;
+                node.parameters = data.parameters;
+                node.parameterValues = data.parameterValues;
+                node.payload = data.payload;
 
                 return saveUserSelections(node.id, data)
-                    .then(() => {
-                        return connectToServer(node.id);
-                    })
-                    .then(() => {
-                        return handleMessage(node.id, selectedChannel.address);
-                    })
-                    .then(() => {
-                        unsubscribeRuntimeEvents(node.id);
-                    })
+                    .then(() => connectToServer(node.id))
+                    .then(() => handleMessage(node.id, selectedChannel.address))
+                    .then(() => unsubscribeRuntimeEvents(node.id))
                     .catch((err) => {
                         console.error("Failed during save/connect flow:", err);
                         RED.notify("Failed to save selections or connect to MQTT server", "error");
@@ -395,7 +407,7 @@
                     getData(nodeId).then((data) => {
 
                         state.asyncApiData = normalizeAsyncApiData(data);
-                        ensureValidSelection
+                        ensureValidSelections()
                         renderAll();
 
                     });

@@ -39,6 +39,14 @@ module.exports = function (RED) {
 
         const node = this;
 
+        node.serverUrl = config.serverUrl || "";
+        node.topic = config.topic || "";
+        node.operation = config.operation || null;
+        node.expectedPayload = Array.isArray(config.expectedPayload) ? config.expectedPayload : [];
+        node.parameterValues = config.parameterValues || {};
+        node.savedPayload = config.payload || {};
+        node.parameters = Array.isArray(config.parameters) ? config.parameters : [];
+
         // Store runtime node reference
         nodesMap[node.id] = node;
 
@@ -129,7 +137,7 @@ module.exports = function (RED) {
      * @returns {*}
      */
     function resolvePayload(node, msg) {
-        return node.savedPayload ?? msg.payload;
+        return msg.payload ?? node.savedPayload ?? {};
     }
 
     /**
@@ -163,18 +171,19 @@ module.exports = function (RED) {
      * @param {object} node
      */
     function validatePayload(node) {
+
         const payload = node.payload;
 
         if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
             return;
         }
 
-        if (!Array.isArray(node.expectedPayload) || node.expectedPayload?.length === 0) {
+        if (!Array.isArray(node.expectedPayload) || node.expectedPayload.length === 0) {
             node.warn("No expected payload schema found; skipping payload validation.");
             return;
         }
 
-        for (const spec of node.expectedPayload) {
+        for (const spec of Array.isArray(node.expectedPayload) ? node.expectedPayload : []) {
             const value = payload[spec.name];
 
             if (value === undefined) {
@@ -199,12 +208,20 @@ module.exports = function (RED) {
                 }
             }
 
-            if (spec.type === "boolean" && typeof value !== "boolean") {
-                throw new Error(`Key "${spec.name}" must be a boolean.`);
+            if (spec.type === "boolean") {
+                const isBoolean =
+                    value === true ||
+                    value === false ||
+                    value === "true" ||
+                    value === "false";
+
+                if (!isBoolean) {
+                    throw new Error(`Key "${spec.name}" must be a boolean.`);
+                }
             }
         }
-
     }
+
 
     function getExpectedPayloadFromOperation(operation) {
         const fields = [];
