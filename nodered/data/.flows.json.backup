@@ -119,6 +119,14 @@
         "info": ""
     },
     {
+        "id": "91b3d9d13b8f272a",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "eeca424b18026ca1",
         "type": "subflow",
         "name": "Subflow 1",
@@ -989,8 +997,8 @@
         "nodes": [
             "8e4f42e423d53fbb"
         ],
-        "x": null,
-        "y": null,
+        "x": 0,
+        "y": 0,
         "w": null,
         "h": null
     },
@@ -1414,7 +1422,7 @@
         ],
         "x": 1614,
         "y": 119,
-        "w": 772,
+        "w": 792,
         "h": 142
     },
     {
@@ -11877,6 +11885,103 @@
         "z": "4f4855f52107b72b",
         "g": "fridge_group",
         "name": "Fridge AsyncAPI",
+        "serverUrl": "mqtt://172.17.0.1:1883/",
+        "topic": "home/fridge/state",
+        "operation": {
+            "id": "fridgeTelemetry",
+            "action": "send",
+            "messages": [
+                {
+                    "name": "FridgeState",
+                    "payload": [
+                        {
+                            "name": "power",
+                            "type": "string",
+                            "description": "Power state of the fridge"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "string",
+                            "description": "Operating mode"
+                        },
+                        {
+                            "name": "fridgeTemp",
+                            "type": "number",
+                            "description": "Target temperature for fridge compartment in °C"
+                        },
+                        {
+                            "name": "freezerTemp",
+                            "type": "number",
+                            "description": "Target temperature for freezer compartment in °C"
+                        },
+                        {
+                            "name": "doorStatus",
+                            "type": "string",
+                            "description": "Whether fridge or freezer door is open"
+                        },
+                        {
+                            "name": "humidityControl",
+                            "type": "string",
+                            "description": "Humidity control for vegetable/fruit drawers"
+                        },
+                        {
+                            "name": "alarms",
+                            "type": "array",
+                            "description": "Active alarms or alerts"
+                        }
+                    ],
+                    "contentType": "application/json"
+                }
+            ]
+        },
+        "expectedPayload": [
+            {
+                "name": "power",
+                "type": "string",
+                "description": "Power state of the fridge"
+            },
+            {
+                "name": "mode",
+                "type": "string",
+                "description": "Operating mode"
+            },
+            {
+                "name": "fridgeTemp",
+                "type": "number",
+                "description": "Target temperature for fridge compartment in °C"
+            },
+            {
+                "name": "freezerTemp",
+                "type": "number",
+                "description": "Target temperature for freezer compartment in °C"
+            },
+            {
+                "name": "doorStatus",
+                "type": "string",
+                "description": "Whether fridge or freezer door is open"
+            },
+            {
+                "name": "humidityControl",
+                "type": "string",
+                "description": "Humidity control for vegetable/fruit drawers"
+            },
+            {
+                "name": "alarms",
+                "type": "array",
+                "description": "Active alarms or alerts"
+            }
+        ],
+        "parameters": [],
+        "parameterValues": {},
+        "payload": {
+            "power": "OFF",
+            "mode": "normal",
+            "fridgeTemp": "4.8",
+            "freezerTemp": "-18.1",
+            "doorStatus": "closed",
+            "humidityControl": "high",
+            "alarms": ""
+        },
         "x": 1980,
         "y": 860,
         "wires": [
@@ -12033,13 +12138,13 @@
         "name": "Thermostat Debug",
         "active": true,
         "tosidebar": true,
-        "console": false,
-        "tostatus": false,
+        "console": true,
+        "tostatus": true,
         "complete": "payload",
         "targetType": "msg",
-        "statusVal": "",
+        "statusVal": "payload",
         "statusType": "auto",
-        "x": 2250,
+        "x": 2260,
         "y": 160,
         "wires": []
     },
@@ -23174,5 +23279,90 @@
         "x": 760,
         "y": 300,
         "wires": []
+    },
+    {
+        "id": "c3492f964ede81da",
+        "type": "async-api-red",
+        "z": "91b3d9d13b8f272a",
+        "name": "",
+        "serverUrl": "mqtt://172.17.0.1:1883/",
+        "topic": "home/{homeId}/thermostat/state",
+        "operation": {
+            "id": "thermostatTelemetry",
+            "action": "send",
+            "messages": [
+                {
+                    "name": "ThermostatState",
+                    "payload": [
+                        {
+                            "name": "temperature",
+                            "type": "number"
+                        },
+                        {
+                            "name": "humidity",
+                            "type": "number"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "string"
+                        },
+                        {
+                            "name": "energyUsed",
+                            "type": "number",
+                            "description": "Cumulative energy used in kWh"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "string"
+                        }
+                    ],
+                    "contentType": "application/json"
+                }
+            ]
+        },
+        "expectedPayload": [
+            {
+                "name": "temperature",
+                "type": "number"
+            },
+            {
+                "name": "humidity",
+                "type": "number"
+            },
+            {
+                "name": "mode",
+                "type": "string"
+            },
+            {
+                "name": "energyUsed",
+                "type": "number",
+                "description": "Cumulative energy used in kWh"
+            },
+            {
+                "name": "unit",
+                "type": "string"
+            }
+        ],
+        "parameters": [
+            {
+                "id": "homeId",
+                "description": "Unique identifier of the smart home instance"
+            }
+        ],
+        "parameterValues": {
+            "homeId": "2"
+        },
+        "payload": {
+            "temperature": "",
+            "humidity": "",
+            "mode": "",
+            "energyUsed": "",
+            "unit": ""
+        },
+        "x": 710,
+        "y": 400,
+        "wires": [
+            []
+        ]
     }
 ]

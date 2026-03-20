@@ -1,0 +1,148 @@
+/**
+ * =====================================================================
+ * HOW THE EDITOR FILE AND THE RUNTIME FILE WORK IN NODE-RED
+ * =====================================================================
+ *
+ * This custom node is split into two separate execution environments:
+ *
+ * 1. EDITOR-SIDE FILE
+ *    - Runs in the browser inside the Node-RED editor UI
+ *    - Responsible for rendering the node dialog
+ *    - Handles dropdowns, file upload, form inputs, and UI events
+ *    - Sends HTTP requests to backend routes when extra runtime data is needed
+ *    - Saves node properties through Node-RED's editor mechanism
+ *
+ * 2. RUNTIME FILE
+ *    - Runs in the Node-RED server process
+ *    - Registers the custom node type
+ *    - Creates live node instances when flows are deployed
+ *    - Handles incoming messages through node.on("input")
+ *    - Executes MQTT communication, payload validation, and topic resolution
+ *
+ * ---------------------------------------------------------------------
+ * EDITOR-SIDE LIFECYCLE
+ * ---------------------------------------------------------------------
+ *
+ * The editor script is loaded only when the node appears in the Node-RED
+ * palette/editor environment.
+ *
+ * Main responsibilities:
+ * - define the configuration dialog HTML template
+ * - register the node in the editor with RED.nodes.registerType(...)
+ * - define editable properties with "defaults"
+ * - populate the UI from backend data
+ * - react to user changes in selects and inputs
+ * - collect data when the user presses "Done"
+ *
+ * Important:
+ * - this code does NOT process runtime messages
+ * - this code does NOT directly publish MQTT messages
+ * - this code runs only in the browser, not in the Node-RED runtime
+ *
+ * ---------------------------------------------------------------------
+ * RUNTIME LIFECYCLE
+ * ---------------------------------------------------------------------
+ *
+ * The runtime file is loaded by Node-RED on startup / deploy.
+ *
+ * Main responsibilities:
+ * - register the runtime node with RED.nodes.registerType(...)
+ * - create one live node instance per node in the flow
+ * - read configuration values from the "config" object
+ * - handle incoming flow messages in node.on("input")
+ * - execute business logic (validation, MQTT connect, publish/subscribe)
+ *
+ * Important:
+ * - runtime code cannot access editor DOM elements
+ * - runtime code works only with deployed node configuration and live messages
+ *
+ * ---------------------------------------------------------------------
+ * HOW DATA FLOWS FROM EDITOR TO RUNTIME
+ * ---------------------------------------------------------------------
+ *
+ * There are two communication paths:
+ *
+ * A. STANDARD NODE-RED CONFIGURATION FLOW
+ *    Editor field values -> defaults -> Done -> Deploy -> runtime config
+ *
+ *    This is the normal and persistent way Node-RED stores node settings.
+ *    Any property that must survive deploy/restart must be declared in
+ *    "defaults" in the editor file.
+ *
+ * B. CUSTOM HTTP ROUTES
+ *    Editor AJAX request -> Express router -> live runtime node
+ *
+ *    This is useful for dynamic actions such as:
+ *    - file upload
+ *    - parsing AsyncAPI files
+ *    - fetching runtime information
+ *    - temporarily updating a live node
+ *
+ *    However, route updates alone are not enough for persistence.
+ *    If a value must still exist after deploy, it must also be part of
+ *    the normal Node-RED config via "defaults".
+ *
+ * ---------------------------------------------------------------------
+ * WHAT "config" CONTAINS IN THE RUNTIME FILE
+ * ---------------------------------------------------------------------
+ *
+ * In the runtime constructor:
+ *
+ *     function MyNode(config) {
+ *         RED.nodes.createNode(this, config);
+ *     }
+ *
+ * the "config" object contains the node properties saved by the editor.
+ *
+ * Example:
+ * - if "topic" is declared in defaults
+ * - and the user saves a topic value in the editor
+ * - then after deploy, config.topic will contain that value
+ *
+ * If a property is NOT declared in defaults, it will usually not be
+ * available in config after deploy.
+ *
+ * ---------------------------------------------------------------------
+ * WHY EDITOR AND RUNTIME MUST BE KEPT SEPARATE
+ * ---------------------------------------------------------------------
+ *
+ * The editor and runtime serve different purposes:
+ *
+ * - Editor:
+ *   user interaction, UI rendering, temporary browser state
+ *
+ * - Runtime:
+ *   message processing, external communication, flow execution
+ *
+ * Because of this separation:
+ * - editor variables are not automatically available in runtime
+ * - runtime variables are not automatically available in the browser
+ * - explicit persistence or route communication is required
+ *
+ * ---------------------------------------------------------------------
+ * SIMPLE EXAMPLE OF THE FULL FLOW
+ * ---------------------------------------------------------------------
+ *
+ * 1. User opens the node dialog
+ * 2. Editor script runs oneditprepare()
+ * 3. Editor fetches AsyncAPI data through custom backend routes
+ * 4. User selects server, channel, operation, parameters, payload values
+ * 5. User presses "Done"
+ * 6. Editor stores configured values in node properties
+ * 7. User presses "Deploy"
+ * 8. Node-RED creates/recreates runtime node instances
+ * 9. Runtime constructor receives config with saved properties
+ * 10. node.on("input") processes incoming messages using those properties
+ *
+ * ---------------------------------------------------------------------
+ * KEY RULE FOR CUSTOM NODES
+ * ---------------------------------------------------------------------
+ *
+ * If a property is needed during runtime execution, it should usually:
+ * 1. be declared in editor defaults
+ * 2. be saved by the editor
+ * 3. be read from config in the runtime constructor
+ *
+ * Otherwise the runtime node may not have the expected value.
+ * =====================================================================
+ */

@@ -239,35 +239,24 @@
             oneditprepare: function () {
 
                 const node = this;
+
+                resetEditorState();
+                resetUi();
+                clearFileInput();
+
                 state.nodeId = node.id || null;
 
-                // Attach UI event listeners
                 bindStaticEvents();
 
-                /**
-                 * New nodes do not yet exist in the runtime.
-                 * Therefore backend endpoints that depend on nodeId
-                 * cannot be called until the flow is deployed.
-                 */
                 if (!node?.id) {
-                    resetUi();
                     $("#node-messages-display").html(
                         "<div style='color:#666'>Deploy the flow once, then reopen this node to upload and configure the AsyncAPI file.</div>"
                     );
                     return;
                 }
 
-                // Subscribe to runtime events (payload updates / validation errors)
                 subscribeRuntimeEvents(node.id);
 
-                /**
-                 * Initialization pipeline
-                 *
-                 * 1. Try loading previously uploaded AsyncAPI file
-                 * 2. Request parsed AsyncAPI data (servers/channels/operations)
-                 * 3. Load previously saved user selections
-                 * 4. Render editor UI
-                 */
                 Promise.resolve()
                     .then(() => getFile(node.id).catch(() => null))
                     .then(() => getData(node.id))
@@ -342,6 +331,9 @@
                 if (state.nodeId) {
                     unsubscribeRuntimeEvents(state.nodeId);
                 }
+                resetEditorState();
+                resetUi();
+                clearFileInput();
             }
         });
 
@@ -986,6 +978,25 @@
                 });
 
             return values;
+        }
+
+        function resetEditorState() {
+            state.nodeId = null;
+            state.asyncApiData = {
+                servers: [],
+                channels: []
+            };
+            state.selections = {
+                serverUrl: "",
+                topic: "",
+                operationId: "",
+                parameterValues: {}
+            };
+        }
+
+        function clearFileInput() {
+            const fileInput = $("#node-input-file");
+            fileInput.val("");
         }
 
     })();
