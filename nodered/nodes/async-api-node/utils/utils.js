@@ -209,6 +209,7 @@ module.exports = (RED) => {
 
         const msg = node.msg || {};
         const msgParameters = msg.parameters || {};
+        const resolvedParameters = node.resolvedParameters || {};
         const nodeParameterValues = node.parameterValues || {};
 
         for (const param of Array.isArray(node.parameters) ? node.parameters : []) {
@@ -216,6 +217,7 @@ module.exports = (RED) => {
 
             const value =
                 msgParameters[name] ??
+                resolvedParameters[name] ??
                 nodeParameterValues[name] ??
                 param.value;
 

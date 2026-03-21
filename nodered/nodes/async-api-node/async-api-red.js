@@ -48,6 +48,7 @@ module.exports = function (RED) {
         node.parameterValues = config.parameterValues || {};
         node.savedPayload = config.payload || {};
         node.parameters = Array.isArray(config.parameters) ? config.parameters : [];
+        node.resolvedParameters = {};
 
         // Store runtime node reference
         nodesMap[node.id] = node;
@@ -56,7 +57,9 @@ module.exports = function (RED) {
          * Cleanup when node is stopped / redeployed / removed.
          */
         node.on("close", function () {
-            node.log(`Closing node ${node.id}`);
+            if (node.mqttClient) {
+                node.mqttClient.end(true);
+            }
             delete nodesMap[node.id];
         });
 
@@ -80,8 +83,7 @@ module.exports = function (RED) {
                  * Resolve final payload and parameters.
                  */
                 node.payload = resolvePayload(node, msg);
-                node.parameters = resolveParameters(node, msg);
-
+                node.resolvedParameters = resolveParameters(node, msg);
                 /**
                  * Fallback: if expectedPayload is missing, rebuild it from the selected operation.
                  */
@@ -93,6 +95,7 @@ module.exports = function (RED) {
                  * Validate resolved payload against expected schema.
                  */
                 validatePayload(node);
+                validateParameters(node);
 
                 /**
                  * Connect to MQTT server and process send/receive logic.
@@ -105,7 +108,7 @@ module.exports = function (RED) {
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
                     payload: node.payload,
-                    parameters: node.parameters
+                    parameters: node.resolvedParameters
                 });
 
                 if (done) {
@@ -268,7 +271,9 @@ module.exports = function (RED) {
                 }
 
                 properties[field.name] = mapFieldToJsonSchema(field);
-                required.push(field.name);
+                if (field.required === true) {
+                    required.push(field.name);
+                }
             }
         }
 
@@ -360,6 +365,19 @@ module.exports = function (RED) {
         }
 
         return fields;
+    }
+
+    function validateParameters(node) {
+        const params = Array.isArray(node.parameters) ? node.parameters : [];
+        const values = node.resolvedParameters || {};
+
+        for (const param of params) {
+            const name = param.id || param.name;
+
+            if (values[name] === undefined || values[name] === null || values[name] === "") {
+                throw new Error(`Missing required parameter "${name}"`);
+            }
+        }
     }
 
     /**
