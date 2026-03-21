@@ -252,7 +252,9 @@ module.exports = function (RED) {
                  * For now, fields extracted into expectedPayload are treated as required.
                  * Later we can improve this with explicit AsyncAPI "required" support.
                  */
-                required.push(field.name);
+                if (field.required === true) {
+                    required.push(field.name);
+                }
             }
         }
 
