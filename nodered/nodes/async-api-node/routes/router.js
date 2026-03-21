@@ -80,6 +80,8 @@ module.exports = (RED) => {
                     const payload = [];
                     const payloadJson = msg.payload()?.json?.();
 
+                    const requiredFields = Array.isArray(payloadJson?.required) ? payloadJson.required : [];
+
                     if (payloadJson?.properties) {
                         Object.entries(payloadJson.properties).forEach(([propName, propSchema]) => {
                             payload.push({
@@ -89,7 +91,8 @@ module.exports = (RED) => {
                                 enum: Array.isArray(propSchema.enum) ? propSchema.enum : undefined,
                                 minimum: propSchema.minimum,
                                 maximum: propSchema.maximum,
-                                items: propSchema.items || undefined
+                                items: propSchema.items || undefined,
+                                required: requiredFields.includes(propName)
                             });
                         });
                     }
