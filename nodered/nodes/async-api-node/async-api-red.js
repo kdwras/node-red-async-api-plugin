@@ -92,10 +92,14 @@ module.exports = function (RED) {
                 }
 
                 /**
+                 * Validate parameters BEFORE using them in topic resolution
+                 */
+                validateParameters(node);
+
+                /**
                  * Validate resolved payload against expected schema.
                  */
                 validatePayload(node);
-                validateParameters(node);
 
                 /**
                  * Connect to MQTT server and process send/receive logic.
