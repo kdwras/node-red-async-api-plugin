@@ -142,6 +142,12 @@ components:
       contentType: application/json
       payload:
         type: object
+        required:
+          - temperature
+          - humidity
+          - mode
+          - energyUsed
+          - unit
         properties:
           temperature:
             type: number
@@ -163,6 +169,12 @@ components:
       contentType: application/json
       payload:
         type: object
+        required:
+          - mode
+          - temperature
+          - setpoint
+          - humidity
+          - energyUsed
         properties:
           mode:
             type: string
@@ -195,6 +207,12 @@ components:
       contentType: application/json
       payload:
         type: object
+        required:
+          - state
+          - brightness
+          - mode
+          - energyUsed
+          - voltage
         properties:
           state:
             type: string
@@ -232,14 +250,18 @@ components:
             description: Operating voltage in Volts
             example: 230
 
-
-
     FridgeState:
       name: FridgeState
       summary: Fridge telemetry
       contentType: application/json
       payload:
         type: object
+        required:
+          - power
+          - mode
+          - fridgeTemp
+          - freezerTemp
+          - doorStatus
         properties:
           power:
             type: string
@@ -278,6 +300,16 @@ components:
       contentType: application/json
       payload:
         type: object
+        required:
+          - power
+          - mode
+          - waterTemp
+          - spinSpeed
+          - remainingTime
+          - loadWeight
+          - waterUsed
+          - energyUsed
+          - doorStatus
         properties:
           power:
             type: string
@@ -316,13 +348,20 @@ components:
             description: Current door state
             enum: [ open, closed, locked ]
 
-
     DehumidifierState:
       name: DehumidifierState
       summary: Smart dehumidifier telemetry
       contentType: application/json
       payload:
         type: object
+        required:
+          - device
+          - power
+          - mode
+          - fanSpeed
+          - tankLevel
+          - energyUsed
+          - humidity
         properties:
           device:
             type: string
@@ -349,14 +388,19 @@ components:
             description: Current room humidity %
             example: 55
 
-
-
     CookerState:
       name: CookerState
       summary: Smart cooker/oven telemetry
       contentType: application/json
       payload:
         type: object
+        required:
+          - device
+          - power
+          - mode
+          - setTemp
+          - currentTemp
+          - energyUsed
         properties:
           device:
             type: string
@@ -379,4 +423,3 @@ components:
             type: number
             description: Cumulative energy used in kWh
             example: 0.45
-
