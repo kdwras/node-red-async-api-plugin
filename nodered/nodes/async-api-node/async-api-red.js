@@ -11,6 +11,8 @@
  */
 module.exports = function (RED) {
 
+    const Ajv = require("ajv");
+
     /**
      * Runtime HTTP routes used by the editor UI.
      */
@@ -62,7 +64,7 @@ module.exports = function (RED) {
          * Handle incoming runtime messages.
          *
          * Priority rules:
-         * - payload: saved editor payload first, otherwise msg.payload
+         * - payload: incoming msg.payload first, otherwise saved editor payload
          * - parameters: msg.parameters first, otherwise saved editor parameters
          */
         node.on("input", function (msg, send, done) {
@@ -80,7 +82,9 @@ module.exports = function (RED) {
                 node.payload = resolvePayload(node, msg);
                 node.parameters = resolveParameters(node, msg);
 
-
+                /**
+                 * Fallback: if expectedPayload is missing, rebuild it from the selected operation.
+                 */
                 if (!Array.isArray(node.expectedPayload) || node.expectedPayload.length === 0) {
                     node.expectedPayload = getExpectedPayloadFromOperation(node.operation);
                 }
@@ -129,8 +133,8 @@ module.exports = function (RED) {
      * Resolve final payload.
      *
      * Priority:
-     * 1. saved payload from editor
-     * 2. incoming msg.payload
+     * 1. incoming msg.payload
+     * 2. saved payload from editor
      *
      * @param {object} node
      * @param {object} msg
@@ -156,73 +160,188 @@ module.exports = function (RED) {
     }
 
     /**
-     * Validate node.payload against expected AsyncAPI payload schema.
+     * Validate node.payload against a JSON Schema built from the selected AsyncAPI operation.
      *
-     * expectedPayload example:
-     * [
-     *   { name: "temperature", type: "number" },
-     *   { name: "device", type: "string" }
-     * ]
-     *
-     * Validation runs only when:
-     * - payload is a plain object
-     * - expectedPayload is an array
+     * Current scope:
+     * - object payloads
+     * - flat properties extracted from AsyncAPI
+     * - required fields inferred from expectedPayload entries
+     * - string / number / integer / boolean / array types supported by AJV
      *
      * @param {object} node
      */
     function validatePayload(node) {
-
         const payload = node.payload;
 
-        if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
-            return;
+        if (payload === undefined || payload === null) {
+            throw new Error("Payload is missing.");
         }
 
-        if (!Array.isArray(node.expectedPayload) || node.expectedPayload.length === 0) {
+        if (typeof payload !== "object" || Array.isArray(payload)) {
+            throw new Error("Payload must be a JSON object.");
+        }
+
+        const schema = buildJsonSchemaFromOperation(node.operation, node.expectedPayload);
+
+        if (!schema || !schema.properties || Object.keys(schema.properties).length === 0) {
             node.warn("No expected payload schema found; skipping payload validation.");
             return;
         }
 
-        for (const spec of Array.isArray(node.expectedPayload) ? node.expectedPayload : []) {
-            const value = payload[spec.name];
+        const ajv = new Ajv({
+            allErrors: true,
+            strict: false
+        });
 
-            if (value === undefined) {
-                throw new Error(`Missing required key: "${spec.name}"`);
-            }
+        const validate = ajv.compile(schema);
+        const valid = validate(payload);
 
-            if (spec.type === "string" && typeof value !== "string") {
-                throw new Error(`Key "${spec.name}" must be a string.`);
-            }
+        if (!valid) {
+            const message = (validate.errors || [])
+                .map((err) => {
+                    const where = err.instancePath || err.schemaPath || "";
+                    return where ? `${where} ${err.message}` : `${err.message}`;
+                })
+                .join("; ");
 
-            if (spec.type === "integer") {
-                const parsed = Number(value);
-                if (!Number.isInteger(parsed)) {
-                    throw new Error(`Key "${spec.name}" must be an integer.`);
-                }
-            }
-
-            if (spec.type === "number") {
-                const parsed = Number(value);
-                if (Number.isNaN(parsed)) {
-                    throw new Error(`Key "${spec.name}" must be a number.`);
-                }
-            }
-
-            if (spec.type === "boolean") {
-                const isBoolean =
-                    value === true ||
-                    value === false ||
-                    value === "true" ||
-                    value === "false";
-
-                if (!isBoolean) {
-                    throw new Error(`Key "${spec.name}" must be a boolean.`);
-                }
-            }
+            throw new Error(`Payload validation failed: ${message}`);
         }
     }
 
+    /**
+     * Build JSON Schema from selected AsyncAPI operation.
+     *
+     * First choice:
+     * - operation.messages[].payload[]
+     *
+     * Fallback:
+     * - expectedPayload[]
+     *
+     * Output example:
+     * {
+     *   type: "object",
+     *   properties: {
+     *     temperature: { type: "number" },
+     *     mode: { type: "string" }
+     *   },
+     *   required: ["temperature", "mode"],
+     *   additionalProperties: true
+     * }
+     *
+     * @param {object|null} operation
+     * @param {Array} expectedPayload
+     * @returns {object}
+     */
+    function buildJsonSchemaFromOperation(operation, expectedPayload = []) {
+        const properties = {};
+        const required = [];
 
+        const messages = Array.isArray(operation?.messages) ? operation.messages : [];
+
+        for (const message of messages) {
+            const fields = Array.isArray(message?.payload) ? message.payload : [];
+
+            for (const field of fields) {
+                if (!field?.name) {
+                    continue;
+                }
+
+                properties[field.name] = mapFieldToJsonSchema(field);
+
+                /**
+                 * For now, fields extracted into expectedPayload are treated as required.
+                 * Later we can improve this with explicit AsyncAPI "required" support.
+                 */
+                required.push(field.name);
+            }
+        }
+
+        /**
+         * Fallback if operation payload is missing but expectedPayload exists
+         */
+        if (Object.keys(properties).length === 0 && Array.isArray(expectedPayload)) {
+            for (const field of expectedPayload) {
+                if (!field?.name) {
+                    continue;
+                }
+
+                properties[field.name] = mapFieldToJsonSchema(field);
+                required.push(field.name);
+            }
+        }
+
+        return {
+            type: "object",
+            properties,
+            required: [...new Set(required)],
+            additionalProperties: true
+        };
+    }
+
+    /**
+     * Convert a payload field extracted from AsyncAPI into a JSON Schema property.
+     *
+     * This function maps the simplified field structure (produced in router.js)
+     * into a valid JSON Schema fragment used by AJV for runtime validation.
+     *
+     * Current supported mappings:
+     * - type → JSON Schema type (string, number, integer, boolean, array, etc.)
+     * - enum → restricts value to a predefined set of allowed values
+     * - minimum → numeric lower bound (inclusive)
+     * - maximum → numeric upper bound (inclusive)
+     * - items → schema definition for array elements
+     *
+     * Notes:
+     * - enum validation works only if router.js includes `enum` from AsyncAPI
+     * - items should ideally be a valid JSON Schema object (not raw AsyncAPI)
+     *
+     * Limitations (to be extended in future steps):
+     * - No support yet for:
+     *   - required fields (handled at parent schema level)
+     *   - nested object properties
+     *   - oneOf / anyOf / allOf
+     *   - string formats (e.g. date-time, email)
+     *   - pattern validation (regex)
+     *   - array constraints (minItems, maxItems)
+     *
+     * @param {object} field - Field metadata extracted from AsyncAPI payload
+     * @returns {object} JSON Schema property definition
+     */
+    function mapFieldToJsonSchema(field) {
+        const schema = {};
+
+        // Map primitive type (string, number, integer, boolean, array, etc.)
+        if (field.type) {
+            schema.type = field.type;
+        }
+
+        // Apply enum constraint if defined
+        if (Array.isArray(field.enum) && field.enum.length > 0) {
+            schema.enum = field.enum;
+        }
+
+        // Numeric constraints
+        if (typeof field.minimum === "number") {
+            schema.minimum = field.minimum;
+        }
+
+        if (typeof field.maximum === "number") {
+            schema.maximum = field.maximum;
+        }
+
+        // Array item schema
+        if (field.type === "array" && field.items) {
+            schema.items = field.items;
+        }
+
+        return schema;
+    }
+    /**
+     * Fallback helper to extract payload field metadata from operation.
+     *
+     * @param {object} operation
+     * @returns {Array}
+     */
     function getExpectedPayloadFromOperation(operation) {
         const fields = [];
 

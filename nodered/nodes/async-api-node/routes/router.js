@@ -85,7 +85,11 @@ module.exports = (RED) => {
                             payload.push({
                                 name: propName,
                                 type: propSchema.type,
-                                description: propSchema.description
+                                description: propSchema.description,
+                                enum: Array.isArray(propSchema.enum) ? propSchema.enum : undefined,
+                                minimum: propSchema.minimum,
+                                maximum: propSchema.maximum,
+                                items: propSchema.items || undefined
                             });
                         });
                     }
