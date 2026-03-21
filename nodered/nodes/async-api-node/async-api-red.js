@@ -367,6 +367,23 @@ module.exports = function (RED) {
         return fields;
     }
 
+    /**
+     * Validate channel parameters before topic resolution.
+     *
+     * In AsyncAPI, channel parameters (e.g. {homeId}) are part of the topic template,
+     * so they must always be resolved into concrete values before publishing/subscribing.
+     *
+     * Validation rules:
+     * - Every declared parameter in node.parameters MUST have a value
+     * - Value can come from:
+     *   1. msg.parameters (highest priority)
+     *   2. node.parameterValues (saved from editor UI)
+     *
+     * If any parameter is missing or empty, an error is thrown and
+     * message processing is stopped.
+     *
+     * @param {object} node - Node-RED node instance
+     */
     function validateParameters(node) {
         const params = Array.isArray(node.parameters) ? node.parameters : [];
         const values = node.resolvedParameters || {};
