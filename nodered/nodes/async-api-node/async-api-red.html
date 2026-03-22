@@ -189,7 +189,8 @@
                 serverUrl: "",
                 topic: "",
                 operationId: "",
-                parameterValues: {}
+                parameterValues: {},
+                payloadValues: {}
             },
         };
 
@@ -531,6 +532,7 @@
             state.selections.topic = saved.topic || "";
             state.selections.operationId = saved.operation?.id || "";
             state.selections.parameterValues = saved.parameterValues || {};
+            state.selections.payloadValues = saved.payload || {};
         }
 
 
@@ -654,6 +656,14 @@
 
                     const name = this.id.replace("node-input-param-", "");
                     state.selections.parameterValues[name] = $(this).val() || "";
+                });
+
+            /** payload values **/
+            $("#node-messages-display")
+                .off("input.asyncapi")
+                .on("input.asyncapi", "input[id^='node-input-']:not([id^='node-input-param-'])", function () {
+                    const name = this.id.replace("node-input-", "");
+                    state.selections.payloadValues[name] = $(this).val() || "";
                 });
         }
 
@@ -834,41 +844,42 @@
          * Render channel parameters
          */
         function renderParameters() {
-
             const container = $("#node-parameters-display");
-
             container.empty();
 
             const selectedChannel = getSelectedChannel();
-
             const parameters = selectedChannel?.parameters || [];
 
             if (!parameters.length) {
-
                 container.append("<div>No parameters available for this channel.</div>");
-
                 return;
             }
 
             parameters.forEach((param) => {
-
                 const name = param.id || param.name;
+                const savedValue = state.selections.parameterValues?.[name] ?? "";
 
                 container.append(`
-                <div class="form-row">
-                    <label>${name}</label>
-                    <input id="node-input-param-${name}">
-                </div>
-            `);
+            <div class="form-row">
+                <label>${name}</label>
+                <input id="node-input-param-${name}" value="${escapeHtml(String(savedValue))}">
+            </div>
+        `);
             });
         }
 
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
 
         /**
          * Render payload fields based on AsyncAPI message schema
          */
         function renderMessages() {
-
             const container = $("#node-messages-display");
             container.empty();
 
@@ -889,10 +900,12 @@
                         return;
                     }
 
+                    const savedValue = state.selections.payloadValues?.[field.name] ?? "";
+
                     container.append(`
                 <div class="form-row">
                     <label>${field.name}</label>
-                    <input id="node-input-${field.name}">
+                    <input id="node-input-${field.name}" value="${escapeHtml(String(savedValue))}">
                 </div>
             `);
                 });
@@ -990,7 +1003,8 @@
                 serverUrl: "",
                 topic: "",
                 operationId: "",
-                parameterValues: {}
+                parameterValues: {},
+                payloadValues: {}
             };
         }
 

@@ -997,8 +997,8 @@
         "nodes": [
             "8e4f42e423d53fbb"
         ],
-        "x": null,
-        "y": null,
+        "x": 0,
+        "y": 0,
         "w": null,
         "h": null
     },
@@ -12248,14 +12248,14 @@
             }
         ],
         "parameterValues": {
-            "homeId": ""
+            "homeId": "1"
         },
         "payload": {
-            "temperature": "",
-            "humidity": "",
-            "mode": "",
-            "energyUsed": "",
-            "unit": ""
+            "temperature": "22.8",
+            "humidity": "20.9",
+            "mode": "idle",
+            "energyUsed": "0",
+            "unit": "C"
         },
         "x": 2000,
         "y": 220,
@@ -23337,24 +23337,38 @@
                     "payload": [
                         {
                             "name": "temperature",
-                            "type": "number"
+                            "type": "number",
+                            "required": false
                         },
                         {
                             "name": "humidity",
-                            "type": "number"
+                            "type": "number",
+                            "required": false
                         },
                         {
                             "name": "mode",
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "heat",
+                                "cool",
+                                "idle"
+                            ],
+                            "required": false
                         },
                         {
                             "name": "energyUsed",
                             "type": "number",
-                            "description": "Cumulative energy used in kWh"
+                            "description": "Cumulative energy used in kWh",
+                            "required": false
                         },
                         {
                             "name": "unit",
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "C",
+                                "F"
+                            ],
+                            "required": false
                         }
                     ],
                     "contentType": "application/json"
@@ -23364,24 +23378,38 @@
         "expectedPayload": [
             {
                 "name": "temperature",
-                "type": "number"
+                "type": "number",
+                "required": false
             },
             {
                 "name": "humidity",
-                "type": "number"
+                "type": "number",
+                "required": false
             },
             {
                 "name": "mode",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                    "heat",
+                    "cool",
+                    "idle"
+                ],
+                "required": false
             },
             {
                 "name": "energyUsed",
                 "type": "number",
-                "description": "Cumulative energy used in kWh"
+                "description": "Cumulative energy used in kWh",
+                "required": false
             },
             {
                 "name": "unit",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                    "C",
+                    "F"
+                ],
+                "required": false
             }
         ],
         "parameters": [
@@ -23391,19 +23419,21 @@
             }
         ],
         "parameterValues": {
-            "homeId": "2"
+            "homeId": "3"
         },
         "payload": {
-            "temperature": "2",
-            "humidity": "3",
-            "mode": "4",
-            "energyUsed": "5",
-            "unit": "4"
+            "temperature": "1",
+            "humidity": "2",
+            "mode": "lol",
+            "energyUsed": "2",
+            "unit": "C"
         },
         "x": 710,
         "y": 400,
         "wires": [
-            []
+            [
+                "aea2975fd9033a84"
+            ]
         ]
     },
     {
@@ -23423,5 +23453,21 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "aea2975fd9033a84",
+        "type": "debug",
+        "z": "91b3d9d13b8f272a",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 360,
+        "wires": []
     }
 ]
