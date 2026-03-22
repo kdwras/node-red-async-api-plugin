@@ -20,7 +20,10 @@ module.exports = (RED) => {
     const fs = require("fs");
 
     const Providers = require("../providers/providers")(RED);
-    const Utils = require("../utils/utils")(RED);
+    const fileUtils = require("../utils/file-utils")(RED);
+    const asyncapiService = require("../services/asyncapi-service")();
+    const nodeConfigService = require("../services/node-config-service")();
+    const mqttService = require("../services/mqtt-service")(RED);
 
     const router = express.Router();
 
@@ -207,25 +210,17 @@ module.exports = (RED) => {
         }
 
         try {
-            const filePath = Utils.getFilePath(nodeId);
-            const file = await Utils.fetchFile(filePath);
+            const filePath = fileUtils.getFilePath(nodeId);
+            const file = await fileUtils.fetchFile(filePath);
             const fileContent = file?.fileContent;
 
             if (!fileContent) {
-                return res.status(400).json({
-                    error: "No file content provided"
-                });
+                return res.status(400).json({ error: "No file content provided" });
             }
 
-            const parsed = await Utils.getParsedAsyncApiFile(fileContent);
+            const parsed = await asyncapiService.parse(fileContent);
+            const data = asyncapiService.extract(parsed.document);
 
-            if (!parsed?.document) {
-                return res.status(400).json({
-                    error: "Failed to parse AsyncAPI document"
-                });
-            }
-
-            const data = extractAsyncApiData(parsed.document);
             return res.json(data);
 
         } catch (error) {
@@ -284,7 +279,7 @@ module.exports = (RED) => {
             return sendNodeNotFound(res);
         }
 
-        const fileDir = Utils.getFilePath(nodeId);
+        const fileDir = fileUtils.getFilePath(nodeId);
 
         if (!fs.existsSync(fileDir)) {
             return res.status(404).json({
@@ -293,7 +288,7 @@ module.exports = (RED) => {
         }
 
         try {
-            const file = await Utils.fetchFile(fileDir);
+            const file = await fileUtils.fetchFile(fileDir);
             return res.json(file);
         } catch (error) {
             return res.status(500).json({
@@ -329,33 +324,8 @@ module.exports = (RED) => {
         }
 
         try {
-            /**
-             * ---------------------------------------------------------
-             * Core selections
-             * ---------------------------------------------------------
-             */
-            node.serverUrl = payload.serverUrl;
-            node.topic = payload.topic;
-            node.operation = payload.operation;
-
-            /**
-             * ---------------------------------------------------------
-             * Schema / metadata
-             * ---------------------------------------------------------
-             */
-            node.expectedPayload = payload.expectedPayload || [];
-            node.parameters = payload.parameters || [];
-
-            /**
-             * ---------------------------------------------------------
-             * User-entered runtime values
-             * ---------------------------------------------------------
-             */
-            node.parameterValues = payload.parameterValues || {};
-            node.savedPayload = payload.payload || null;
-
+            nodeConfigService.save(node, req.body);
             return res.status(204).send();
-
         } catch (error) {
             return res.status(500).json({
                 error: error.message || error
@@ -380,16 +350,7 @@ module.exports = (RED) => {
         if (!node) {
             return sendNodeNotFound(res);
         }
-
-        return res.status(200).json({
-            serverUrl: node.serverUrl || "",
-            topic: node.topic || "",
-            payload: node.savedPayload || null,
-            operation: node.operation || null,
-            parameters: node.parameters || [],
-            expectedPayload: node.expectedPayload || [],
-            parameterValues: node.parameterValues || {}
-        });
+        return res.status(200).json(nodeConfigService.load(node));
     }
 
     /**
@@ -412,7 +373,7 @@ module.exports = (RED) => {
         }
 
         try {
-            Utils.connectToServer(node);
+            mqttService.connect(node);
             return res.status(204).send();
         } catch (err) {
             return res.status(500).json({
@@ -443,8 +404,7 @@ module.exports = (RED) => {
         }
 
         try {
-            Utils.handleMessage(node);
-
+            mqttService.handle(node);
             return res.status(200).json({
                 message: "Message handling initialized successfully"
             });

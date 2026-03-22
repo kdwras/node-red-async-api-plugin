@@ -997,8 +997,8 @@
         "nodes": [
             "8e4f42e423d53fbb"
         ],
-        "x": null,
-        "y": null,
+        "x": 0,
+        "y": 0,
         "w": null,
         "h": null
     },
@@ -23334,6 +23334,7 @@
             "messages": [
                 {
                     "name": "ThermostatState",
+                    "contentType": "application/json",
                     "payload": [
                         {
                             "name": "temperature",
@@ -23370,8 +23371,7 @@
                             ],
                             "required": false
                         }
-                    ],
-                    "contentType": "application/json"
+                    ]
                 }
             ]
         },
@@ -23470,5 +23470,23 @@
         "x": 1110,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "192da547c6bee0c6",
+        "type": "async-api-red",
+        "z": "91b3d9d13b8f272a",
+        "name": "",
+        "serverUrl": "",
+        "topic": "",
+        "operation": null,
+        "expectedPayload": [],
+        "parameters": [],
+        "parameterValues": {},
+        "payload": {},
+        "x": 730,
+        "y": 720,
+        "wires": [
+            []
+        ]
     }
 ]

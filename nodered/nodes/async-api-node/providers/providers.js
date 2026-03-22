@@ -13,7 +13,7 @@ module.exports = (RED) => {
     const multer = require("multer");
     const path = require("path");
 
-    const Utils = require("../utils/utils")(RED);
+    const fileUtils = require("../utils/file-utils")(RED);
 
     /**
      * Allowed AsyncAPI file types
@@ -39,7 +39,7 @@ module.exports = (RED) => {
                         return cb(new Error("Missing nodeId"));
                     }
 
-                    const uploadDir = Utils.getFilePath(nodeId);
+                    const uploadDir = fileUtils.getFilePath(nodeId);
 
                     // Ensure upload directory exists
                     fs.mkdirSync(uploadDir, { recursive: true });
@@ -59,7 +59,7 @@ module.exports = (RED) => {
                 try {
 
                     const { nodeId } = req.params;
-                    const uploadDir = Utils.getFilePath(nodeId);
+                    const uploadDir = fileUtils.getFilePath(nodeId);
 
                     /**
                      * Remove existing files so only one AsyncAPI file exists

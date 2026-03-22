@@ -23472,32 +23472,21 @@
         "wires": []
     },
     {
-        "id": "758871ac7a34bb82",
-        "type": "inject",
+        "id": "192da547c6bee0c6",
+        "type": "async-api-red",
         "z": "91b3d9d13b8f272a",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
+        "serverUrl": "",
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 320,
-        "y": 400,
+        "operation": null,
+        "expectedPayload": [],
+        "parameters": [],
+        "parameterValues": {},
+        "payload": {},
+        "x": 730,
+        "y": 720,
         "wires": [
-            [
-                "c3492f964ede81da"
-            ]
+            []
         ]
     }
 ]
