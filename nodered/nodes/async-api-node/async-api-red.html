@@ -43,7 +43,7 @@
         <input type="text" id="node-input-name">
     </div>
 
-    <!-- AsyncAPI File -->
+    <!-- AsyncAPI File Upload -->
     <div class="asyncapi-section">
         <div class="asyncapi-section-title">
             AsyncAPI Specification
@@ -61,7 +61,6 @@
 
     <!-- Server Selection -->
     <div class="asyncapi-section">
-
         <div class="asyncapi-section-title">
             Server Configuration
         </div>
@@ -70,17 +69,12 @@
             <label for="node-input-select-server">
                 <i class="fa fa-server"></i> Server
             </label>
-
-            <select id="node-input-select-server"
-                    style="width:100%">
-            </select>
+            <select id="node-input-select-server" style="width:100%"></select>
         </div>
-
     </div>
 
-    <!-- Channel -->
+    <!-- Channel Selection -->
     <div class="asyncapi-section">
-
         <div class="asyncapi-section-title">
             Channel
         </div>
@@ -89,17 +83,12 @@
             <label for="node-input-channel">
                 <i class="fa fa-exchange"></i> Channel
             </label>
-
-            <select id="node-input-channel"
-                    style="width:100%">
-            </select>
+            <select id="node-input-channel" style="width:100%"></select>
         </div>
-
     </div>
 
-    <!-- Operation -->
+    <!-- Operation Selection -->
     <div class="asyncapi-section">
-
         <div class="asyncapi-section-title">
             Operation
         </div>
@@ -108,17 +97,12 @@
             <label for="node-input-operations">
                 <i class="fa fa-cogs"></i> Operation
             </label>
-
-            <select id="node-input-operations"
-                    style="width:100%">
-            </select>
+            <select id="node-input-operations" style="width:100%"></select>
         </div>
-
     </div>
 
-    <!-- Parameters -->
+    <!-- Channel Parameters -->
     <div class="asyncapi-section">
-
         <div class="asyncapi-section-title">
             Channel Parameters
         </div>
@@ -126,12 +110,10 @@
         <div id="node-parameters-display">
             <i style="color:#888">Parameters will appear here</i>
         </div>
-
     </div>
 
-    <!-- Messages -->
+    <!-- Message Payload Fields -->
     <div class="asyncapi-section">
-
         <div class="asyncapi-section-title">
             Message Payload
         </div>
@@ -139,7 +121,6 @@
         <div id="node-messages-display">
             <i style="color:#888">Message schema fields will appear here</i>
         </div>
-
     </div>
 
 </script>
@@ -150,18 +131,16 @@
 <!-- ========================================================= -->
 
 <script type="text/html" data-help-name="async-api-red">
-
     <p>
         This node loads an <b>AsyncAPI specification</b>, allows the user to select
-        a server, channel and operation, and dynamically generates message input
-        fields based on the schema defined in the AsyncAPI document.
+        a server, channel and operation, and dynamically generates parameter and
+        payload input fields based on the AsyncAPI document.
     </p>
 
     <p>
-        The node validates message payloads using JSON Schema and publishes them
-        to the configured MQTT broker.
+        The selected configuration is saved in the node and is reused when the
+        node is reopened.
     </p>
-
 </script>
 
 
@@ -172,51 +151,53 @@
          * =====================================================================
          * GLOBAL EDITOR STATE
          * =====================================================================
-         * This object keeps all temporary state used by the Node-RED editor UI.
-         * It does NOT exist in the Node-RED runtime, only in the browser editor.
+         * This object exists only inside the browser editor.
+         * It stores:
+         * - the current node id
+         * - the parsed AsyncAPI data returned by the backend
+         * - the user's current selections and input values
+         *
+         * It is reset every time the editor dialog opens or closes.
          */
         const state = {
-            nodeId: null,   // runtime node id (available only after deploy)
+            nodeId: null,
 
-            // Parsed AsyncAPI content returned by backend
             asyncApiData: {
                 servers: [],
                 channels: []
             },
 
-            // User selections inside the editor UI
             selections: {
                 serverUrl: "",
                 topic: "",
                 operationId: "",
                 parameterValues: {},
                 payloadValues: {}
-            },
+            }
         };
 
         /**
          * =====================================================================
          * NODE REGISTRATION
          * =====================================================================
-         * Registers the node so it appears inside the Node-RED palette.
+         * Register the custom node in the Node-RED editor palette.
          */
         RED.nodes.registerType("async-api-red", {
-
             category: "network",
             color: "rgb(136 81 251)",
 
+            /**
+             * These fields are persisted by Node-RED in the flow JSON.
+             * They are also passed to the runtime file on deploy.
+             */
             defaults: {
                 name: { value: "" },
-
                 serverUrl: { value: "" },
                 topic: { value: "" },
-
                 operation: { value: null },
                 expectedPayload: { value: [] },
-
                 parameters: { value: [] },
                 parameterValues: { value: {} },
-
                 payload: { value: {} }
             },
 
@@ -225,7 +206,7 @@
             icon: "white-globe.svg",
 
             /**
-             * Label shown in the flow workspace
+             * Label shown on the workspace node.
              */
             label: function () {
                 return this.name || "AsyncApi-red";
@@ -233,12 +214,20 @@
 
             /**
              * =================================================================
-             * EDITOR INITIALIZATION
+             * oneditprepare
              * =================================================================
-             * Runs when the user opens the node configuration dialog.
+             * Called when the user opens the node edit dialog.
+             *
+             * Main flow:
+             * 1. Reset local editor state
+             * 2. Bind UI event handlers
+             * 3. If node has not been deployed yet, stop here
+             * 4. Load uploaded AsyncAPI file
+             * 5. Load parsed AsyncAPI data from backend
+             * 6. Load saved user selections
+             * 7. Render all UI fields
              */
             oneditprepare: function () {
-
                 const node = this;
 
                 resetEditorState();
@@ -249,6 +238,11 @@
 
                 bindStaticEvents();
 
+                /**
+                 * New nodes do not have a stable runtime id before first deploy.
+                 * Since uploads and backend routes depend on node id,
+                 * the user must deploy once before using the file upload.
+                 */
                 if (!node?.id) {
                     $("#node-messages-display").html(
                         "<div style='color:#666'>Deploy the flow once, then reopen this node to upload and configure the AsyncAPI file.</div>"
@@ -278,14 +272,22 @@
 
             /**
              * =================================================================
-             * SAVE HANDLER
+             * oneditsave
              * =================================================================
-             * Executed when the user presses the "Done" button.
+             * Called when the user presses the "Done" button.
+             *
+             * Main flow:
+             * 1. Read latest values from UI
+             * 2. Build the final node configuration
+             * 3. Save the configuration to the runtime/backend
+             * 4. Trigger MQTT connect and message initialization
              */
             oneditsave: function () {
-
                 const node = this;
-                if (!node?.id) return;
+
+                if (!node?.id) {
+                    return;
+                }
 
                 syncStateFromUi();
 
@@ -297,6 +299,10 @@
                     return;
                 }
 
+                /**
+                 * Build the complete configuration object that will be saved
+                 * in both the editor-side node instance and the backend runtime node.
+                 */
                 const data = {
                     serverUrl: state.selections.serverUrl,
                     topic: selectedChannel.address,
@@ -307,6 +313,9 @@
                     payload: getPayloadValuesFromUi()
                 };
 
+                /**
+                 * Update the editor-side node object so Node-RED persists these values.
+                 */
                 node.serverUrl = data.serverUrl;
                 node.topic = data.topic;
                 node.operation = data.operation;
@@ -315,6 +324,11 @@
                 node.parameterValues = data.parameterValues;
                 node.payload = data.payload;
 
+                /**
+                 * Save configuration to backend, connect runtime node to MQTT,
+                 * initialize topic/message handling, then unsubscribe from
+                 * temporary editor runtime events.
+                 */
                 return saveUserSelections(node.id, data)
                     .then(() => connectToServer(node.id))
                     .then(() => handleMessage(node.id, selectedChannel.address))
@@ -326,12 +340,14 @@
             },
 
             /**
-             * Called when user cancels editing.
+             * Called when the user closes the dialog without saving.
+             * Clean up editor-only subscriptions and state.
              */
             oneditcancel: function () {
                 if (state.nodeId) {
                     unsubscribeRuntimeEvents(state.nodeId);
                 }
+
                 resetEditorState();
                 resetUi();
                 clearFileInput();
@@ -342,24 +358,26 @@
          * =====================================================================
          * BACKEND API CALLS
          * =====================================================================
-         * These functions communicate with the Node-RED backend (router.js).
+         * These functions call routes exposed from router.js.
+         * The editor never parses AsyncAPI directly. It always asks the backend.
          */
 
         /**
-         * Load previously uploaded AsyncAPI file
+         * Load the uploaded AsyncAPI file from the backend and
+         * repopulate the file input in the editor.
+         *
+         * @param {string} nodeId
+         * @returns {Promise<object>}
          */
         function getFile(nodeId) {
             return new Promise((resolve, reject) => {
-
                 $.ajax({
                     url: `/async-api-red/${nodeId}/file`,
                     type: "GET",
                     success: function (response) {
-
                         try {
-
-                            const blob = new Blob([response.fileContent], {type: "text/plain"});
-                            const file = new File([blob], response.fileName, {type: response.fileType});
+                            const blob = new Blob([response.fileContent], { type: "text/plain" });
+                            const file = new File([blob], response.fileName, { type: response.fileType });
 
                             const dataTransfer = new DataTransfer();
                             dataTransfer.items.add(file);
@@ -367,24 +385,23 @@
                             $("#node-input-file")[0].files = dataTransfer.files;
 
                             resolve(response);
-
                         } catch (e) {
                             reject(e);
                         }
-
                     },
                     error: reject
                 });
-
             });
         }
 
-
         /**
-         * Upload AsyncAPI file to backend
+         * Upload a new AsyncAPI file to the backend for the current node.
+         * After upload succeeds, reload AsyncAPI metadata and rerender the UI.
+         *
+         * @param {string} nodeId
+         * @param {File} file
          */
         function uploadFile(nodeId, file) {
-
             const formData = new FormData();
             formData.append("file", file);
 
@@ -396,125 +413,118 @@
                 contentType: false,
 
                 success: function () {
-
                     getData(nodeId).then((data) => {
-
                         state.asyncApiData = normalizeAsyncApiData(data);
-                        ensureValidSelections()
+                        ensureValidSelections();
                         renderAll();
-
                     });
-
                 },
 
                 error: function () {
                     RED.notify("File upload failed", "error");
                 }
-
             });
         }
 
-
         /**
-         * Request parsed AsyncAPI data (servers, channels, operations)
+         * Request parsed AsyncAPI data from backend.
+         * Expected response: servers, channels, operations, parameters, messages.
+         *
+         * @param {string} nodeId
+         * @returns {Promise<object>}
          */
         function getData(nodeId) {
-
             return new Promise((resolve, reject) => {
-
                 $.ajax({
                     type: "GET",
                     url: `/async-api-red/${nodeId}/data`,
                     success: resolve,
                     error: reject
                 });
-
             });
         }
 
-
         /**
-         * Save user selections into runtime node
+         * Save the user's selected values to the backend/runtime node.
+         *
+         * @param {string} nodeId
+         * @param {object} data
+         * @returns {jqXHR}
          */
         function saveUserSelections(nodeId, data) {
-
             return $.ajax({
                 url: `/async-api-red/${nodeId}/user-selections`,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(data)
             });
-
         }
 
-
         /**
-         * Retrieve previously saved selections
+         * Read previously saved selections from backend/runtime node.
+         *
+         * @param {string} nodeId
+         * @returns {Promise<object>}
          */
         function getUserSelections(nodeId) {
-
             return new Promise((resolve, reject) => {
-
                 $.ajax({
                     url: `/async-api-red/${nodeId}/user-selections`,
                     type: "GET",
                     success: resolve,
                     error: reject
                 });
-
             });
         }
 
-
         /**
-         * Connect runtime node to MQTT server
+         * Ask backend/runtime node to connect to MQTT server.
+         *
+         * @param {string} nodeId
+         * @returns {Promise<object>}
          */
         function connectToServer(nodeId) {
-
             return new Promise((resolve, reject) => {
-
                 $.ajax({
                     url: `/async-api-red/${nodeId}/server-connect`,
                     type: "GET",
                     success: resolve,
                     error: reject
                 });
-
             });
-
         }
 
-
         /**
-         * Initialize topic / message handling
+         * Ask backend/runtime node to initialize topic/message logic.
+         *
+         * @param {string} nodeId
+         * @param {string} topicName
+         * @returns {Promise<object>}
          */
         function handleMessage(nodeId, topicName) {
-
             return new Promise((resolve, reject) => {
-
                 $.ajax({
                     url: `/async-api-red/${nodeId}/message`,
                     type: "POST",
                     contentType: "application/json",
-                    data: JSON.stringify({topic: topicName}),
-
-                    success: function (response) {
-                        resolve(response);
-                    },
-
+                    data: JSON.stringify({ topic: topicName }),
+                    success: resolve,
                     error: reject
                 });
-
             });
-
         }
-
 
         /**
          * =====================================================================
-         * DATA NORMALIZATION
+         * DATA NORMALIZATION / STATE RESTORE
          * =====================================================================
-         * Ensures the AsyncAPI data returned from backend is valid.
+         */
+
+        /**
+         * Normalize backend response to avoid undefined values.
+         *
+         * @param {object} data
+         * @returns {{servers: Array, channels: Array}}
          */
         function normalizeAsyncApiData(data) {
             return {
@@ -523,9 +533,10 @@
             };
         }
 
-
         /**
-         * Load previously saved selections from runtime node
+         * Restore previously saved selections into local editor state.
+         *
+         * @param {object} saved
          */
         function applySavedSelections(saved) {
             state.selections.serverUrl = saved.serverUrl || "";
@@ -535,19 +546,17 @@
             state.selections.payloadValues = saved.payload || {};
         }
 
-
         /**
-         * Ensures the saved selections still exist in the AsyncAPI document.
-         * If not, fallback values are chosen automatically.
+         * Ensure restored selections still exist in the loaded AsyncAPI document.
+         * If not, fallback to the first available server/channel/operation.
          */
         function ensureValidSelections() {
-
             if (!state.asyncApiData.servers.length || !state.asyncApiData.channels.length) {
                 return;
             }
 
             const serverExists = state.asyncApiData.servers.some(
-                s => s.url === state.selections.serverUrl
+                (server) => server.url === state.selections.serverUrl
             );
 
             if (!serverExists) {
@@ -555,7 +564,7 @@
             }
 
             const channelExists = state.asyncApiData.channels.some(
-                c => c.address === state.selections.topic
+                (channel) => channel.address === state.selections.topic
             );
 
             if (!channelExists) {
@@ -564,18 +573,17 @@
 
             const channel = getSelectedChannel();
 
-            const opExists = channel?.operations?.some(
-                op => op.id === state.selections.operationId
+            const operationExists = channel?.operations?.some(
+                (operation) => operation.id === state.selections.operationId
             );
 
-            if (!opExists) {
+            if (!operationExists) {
                 state.selections.operationId = channel?.operations?.[0]?.id || "";
             }
         }
 
-
         /**
-         * Clears editor UI
+         * Reset all visible UI containers.
          */
         function resetUi() {
             $("#node-input-select-server").empty();
@@ -585,22 +593,21 @@
             $("#node-messages-display").empty();
         }
 
-
         /**
          * =====================================================================
          * UI EVENT BINDINGS
          * =====================================================================
-         * Attach listeners to all editor controls.
+         * Attach all editor-side event listeners.
+         * We use .off(...).on(...) to avoid duplicated handlers when dialog reopens.
          */
         function bindStaticEvents() {
 
             /**
-             * File upload
+             * File input change -> upload selected file to backend.
              */
             $("#node-input-file")
                 .off("change.asyncapi")
                 .on("change.asyncapi", function (event) {
-
                     const file = event.target.files[0];
 
                     if (file && state.nodeId) {
@@ -609,7 +616,7 @@
                 });
 
             /**
-             * Server selection
+             * Server dropdown change -> store selected server URL in state.
              */
             $("#node-input-select-server")
                 .off("change.asyncapi")
@@ -618,16 +625,17 @@
                 });
 
             /**
-             * Channel selection
+             * Channel dropdown change:
+             * - update selected topic
+             * - reset selected operation to first available one in that channel
+             * - rerender operation/parameter/message sections
              */
             $("#node-input-channel")
                 .off("change.asyncapi")
                 .on("change.asyncapi", function () {
-
                     state.selections.topic = $(this).val() || "";
 
                     const channel = getSelectedChannel();
-
                     state.selections.operationId = channel?.operations?.[0]?.id || "";
 
                     renderOperations();
@@ -637,28 +645,28 @@
                 });
 
             /**
-             * Operation selection
+             * Operation dropdown change -> rerender payload fields.
              */
             $("#node-input-operations")
                 .off("change.asyncapi")
                 .on("change.asyncapi", function () {
-
                     state.selections.operationId = $(this).val() || "";
                     renderMessages();
                 });
 
             /**
-             * Parameter value change
+             * Parameter input typing -> update state immediately.
              */
             $("#node-parameters-display")
                 .off("input.asyncapi")
                 .on("input.asyncapi", "input[id^='node-input-param-']", function () {
-
                     const name = this.id.replace("node-input-param-", "");
                     state.selections.parameterValues[name] = $(this).val() || "";
                 });
 
-            /** payload values **/
+            /**
+             * Payload input typing -> update state immediately.
+             */
             $("#node-messages-display")
                 .off("input.asyncapi")
                 .on("input.asyncapi", "input[id^='node-input-']:not([id^='node-input-param-'])", function () {
@@ -667,24 +675,30 @@
                 });
         }
 
-
         /**
          * =====================================================================
          * RUNTIME COMMUNICATION
          * =====================================================================
-         * The editor subscribes to runtime events sent by the Node-RED backend.
+         * The editor listens to runtime events published from async-api-red.js.
+         */
+
+        /**
+         * Subscribe to runtime events for the current node.
+         *
+         * Events:
+         * - payload-update: runtime resolved payload/parameters
+         * - payload-error: validation/runtime errors
+         *
+         * @param {string} nodeId
          */
         function subscribeRuntimeEvents(nodeId) {
-
-            /**
-             * Payload update event
-             */
             RED.comms.subscribe(`async-api-red/payload-update/${nodeId}`, function (topic, msg) {
 
+                /**
+                 * Update payload inputs in the dialog with runtime values.
+                 */
                 if (msg?.payload && typeof msg.payload === "object") {
-
                     Object.entries(msg.payload).forEach(([key, value]) => {
-
                         const input = $(`#node-input-${key}`);
 
                         if (input.length) {
@@ -694,85 +708,81 @@
                 }
 
                 /**
-                 * Parameter update event
+                 * Update parameter inputs in the dialog with runtime values.
                  */
                 if (msg?.parameters && typeof msg.parameters === "object") {
-
                     Object.entries(msg.parameters).forEach(([key, value]) => {
+                        const input = $(`#node-input-param-${key}`);
 
-                        const paramInput = $(`#node-input-param-${key}`);
-
-                        if (paramInput.length) {
-                            paramInput.val(value);
+                        if (input.length) {
+                            input.val(value);
                         }
                     });
                 }
             });
 
-
-            /**
-             * Validation error notification
-             */
             RED.comms.subscribe(`async-api-red/payload-error/${nodeId}`, function (topic, msg) {
-
                 RED.notify(`❌ Validation Error: ${msg.error}`, "error");
             });
         }
 
-
         /**
-         * Remove runtime subscriptions
+         * Remove runtime subscriptions when dialog closes.
+         *
+         * @param {string} nodeId
          */
         function unsubscribeRuntimeEvents(nodeId) {
-
             if (RED.comms && typeof RED.comms.unsubscribe === "function") {
-
                 RED.comms.unsubscribe(`async-api-red/payload-update/${nodeId}`);
                 RED.comms.unsubscribe(`async-api-red/payload-error/${nodeId}`);
             }
         }
 
+        /**
+         * =====================================================================
+         * STATE / SELECTION HELPERS
+         * =====================================================================
+         */
 
         /**
-         * Synchronize UI values with internal state
+         * Read the latest selected values from the UI into state.
          */
         function syncStateFromUi() {
-
             state.selections.serverUrl = $("#node-input-select-server").val() || "";
             state.selections.topic = $("#node-input-channel").val() || "";
             state.selections.operationId = $("#node-input-operations").val() || "";
             state.selections.parameterValues = getParameterValuesFromUi();
+            state.selections.payloadValues = getPayloadValuesFromUi();
         }
 
-
         /**
-         * Return selected channel object
+         * Return the currently selected channel object from loaded AsyncAPI data.
+         *
+         * @returns {object|undefined}
          */
         function getSelectedChannel() {
             return state.asyncApiData.channels.find(
-                ch => ch.address === state.selections.topic
+                (channel) => channel.address === state.selections.topic
             );
         }
 
-
         /**
-         * Return selected operation
+         * Return the currently selected operation object from the selected channel.
+         *
+         * @returns {object|undefined}
          */
         function getSelectedOperation() {
-
             const channel = getSelectedChannel();
 
             return channel?.operations?.find(
-                op => op.id === state.selections.operationId
+                (operation) => operation.id === state.selections.operationId
             );
         }
 
-
         /**
-         * Render all editor UI components
+         * Render every dynamic UI section.
          */
         function renderAll() {
-
             renderServers();
             renderChannels();
             renderOperations();
@@ -781,48 +791,44 @@
             applySelectionsToUi();
         }
 
+        /**
+         * =====================================================================
+         * RENDERING FUNCTIONS
+         * =====================================================================
+         */
 
         /**
-         * Render server dropdown
+         * Render MQTT server dropdown from AsyncAPI servers.
          */
         function renderServers() {
-
             const serverDropdown = $("#node-input-select-server");
-
             serverDropdown.empty();
 
-            state.asyncApiData.servers.forEach(server => {
-
+            state.asyncApiData.servers.forEach((server) => {
                 serverDropdown.append(
-                    `<option value="${server.url}">${server.url}</option>`
+                    `<option value="${escapeHtml(server.url)}">${escapeHtml(server.url)}</option>`
                 );
             });
         }
 
-
         /**
-         * Render channel dropdown
+         * Render channel dropdown from AsyncAPI channels.
          */
         function renderChannels() {
-
             const channelDropdown = $("#node-input-channel");
-
             channelDropdown.empty();
 
-            state.asyncApiData.channels.forEach(channel => {
-
+            state.asyncApiData.channels.forEach((channel) => {
                 channelDropdown.append(
-                    `<option value="${channel.address}">${channel.address}</option>`
+                    `<option value="${escapeHtml(channel.address)}">${escapeHtml(channel.address)}</option>`
                 );
             });
         }
 
-
         /**
-         * Render operations dropdown
+         * Render operation dropdown for the selected channel.
          */
         function renderOperations() {
-
             const operationDropdown = $("#node-input-operations");
             operationDropdown.empty();
 
@@ -834,14 +840,14 @@
 
             selectedChannel.operations.forEach((operation) => {
                 operationDropdown.append(
-                    `<option value="${operation.id}">${operation.id}</option>`
+                    `<option value="${escapeHtml(operation.id)}">${escapeHtml(operation.id)}</option>`
                 );
             });
         }
 
-
         /**
-         * Render channel parameters
+         * Render channel parameter input fields for the selected channel.
+         * Prefill them from saved state if values already exist.
          */
         function renderParameters() {
             const container = $("#node-parameters-display");
@@ -860,24 +866,17 @@
                 const savedValue = state.selections.parameterValues?.[name] ?? "";
 
                 container.append(`
-            <div class="form-row">
-                <label>${name}</label>
-                <input id="node-input-param-${name}" value="${escapeHtml(String(savedValue))}">
-            </div>
-        `);
+                    <div class="form-row">
+                        <label>${escapeHtml(name)}</label>
+                        <input id="node-input-param-${escapeHtml(name)}" value="${escapeHtml(String(savedValue))}">
+                    </div>
+                `);
             });
         }
 
-        function escapeHtml(value) {
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/"/g, "&quot;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;");
-        }
-
         /**
-         * Render payload fields based on AsyncAPI message schema
+         * Render payload fields for the selected AsyncAPI operation.
+         * Prefill them from saved state if values already exist.
          */
         function renderMessages() {
             const container = $("#node-messages-display");
@@ -903,29 +902,36 @@
                     const savedValue = state.selections.payloadValues?.[field.name] ?? "";
 
                     container.append(`
-                <div class="form-row">
-                    <label>${field.name}</label>
-                    <input id="node-input-${field.name}" value="${escapeHtml(String(savedValue))}">
-                </div>
-            `);
+                        <div class="form-row">
+                            <label>${escapeHtml(field.name)}</label>
+                            <input id="node-input-${escapeHtml(field.name)}" value="${escapeHtml(String(savedValue))}">
+                        </div>
+                    `);
                 });
             });
         }
 
-
         /**
-         * Restore previously saved values into UI
+         * Restore selected dropdown values to the UI after rendering.
          */
         function applySelectionsToUi() {
-
             $("#node-input-select-server").val(state.selections.serverUrl);
             $("#node-input-channel").val(state.selections.topic);
             $("#node-input-operations").val(state.selections.operationId);
         }
 
+        /**
+         * =====================================================================
+         * PAYLOAD / PARAMETER EXTRACTION
+         * =====================================================================
+         */
 
         /**
-         * Extract expected payload fields from AsyncAPI message schema
+         * Extract expected payload field definitions from the selected operation.
+         * This metadata is later saved in the node configuration and used by runtime validation.
+         *
+         * @param {object} operation
+         * @returns {Array}
          */
         function getExpectedPayloadFromOperation(operation) {
             const fields = [];
@@ -938,9 +944,7 @@
                 ? operation.messages
                 : Object.values(operation.messages);
 
-
             for (const message of messages) {
-
                 const payload =
                     Array.isArray(message?.payload) ? message.payload :
                         Array.isArray(message?.message?.payload) ? message.message.payload :
@@ -955,44 +959,51 @@
         }
 
         /**
-         * Collect payload values from message input fields in the editor
+         * Collect payload values from payload inputs currently shown in the UI.
+         *
+         * @returns {object}
          */
         function getPayloadValuesFromUi() {
-
             const values = {};
 
             $("#node-messages-display")
                 .find("input[id^='node-input-']")
                 .each(function () {
-
                     const name = this.id.replace("node-input-", "");
-
                     values[name] = $(this).val() || "";
                 });
 
             return values;
         }
 
-
         /**
-         * Collect parameter values from UI
+         * Collect parameter values from parameter inputs currently shown in the UI.
+         *
+         * @returns {object}
          */
         function getParameterValuesFromUi() {
-
             const values = {};
 
             $("#node-parameters-display")
                 .find("input[id^='node-input-param-']")
                 .each(function () {
-
                     const name = this.id.replace("node-input-param-", "");
-
                     values[name] = $(this).val() || "";
                 });
 
             return values;
         }
 
+        /**
+         * =====================================================================
+         * UTILITY FUNCTIONS
+         * =====================================================================
+         */
+
+        /**
+         * Reset local editor state so a new node does not inherit data
+         * from a previously opened node dialog.
+         */
         function resetEditorState() {
             state.nodeId = null;
             state.asyncApiData = {
@@ -1008,9 +1019,27 @@
             };
         }
 
+        /**
+         * Clear file input value.
+         * Useful when dialog closes or is reopened.
+         */
         function clearFileInput() {
-            const fileInput = $("#node-input-file");
-            fileInput.val("");
+            $("#node-input-file").val("");
+        }
+
+        /**
+         * Escape text before placing it inside HTML.
+         * Prevents broken markup and avoids simple HTML injection issues.
+         *
+         * @param {string} value
+         * @returns {string}
+         */
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
         }
 
     })();
