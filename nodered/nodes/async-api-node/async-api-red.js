@@ -5,6 +5,7 @@
  * - Register the node type in Node-RED
  * - Mount editor/backend HTTP routes
  * - Handle incoming runtime messages
+ * - Resolve payload and parameters from input or saved editor state
  * - Validate payloads against the selected AsyncAPI schema
  * - Connect to MQTT and publish/subscribe based on selected operation
  * - Notify the editor UI about payload updates and validation errors
@@ -25,7 +26,7 @@ module.exports = function (RED) {
 
     /**
      * Keep references to active runtime node instances.
-     * Useful for route handlers that need access to a live node.
+     * Useful for route handlers or debugging.
      */
     const nodesMap = {};
 
@@ -42,6 +43,9 @@ module.exports = function (RED) {
         const node = this;
         const Utils = require("./utils/utils")(RED);
 
+        /**
+         * Persisted configuration from the editor dialog.
+         */
         node.serverUrl = config.serverUrl || "";
         node.topic = config.topic || "";
         node.operation = config.operation || null;
@@ -51,9 +55,18 @@ module.exports = function (RED) {
         node.parameters = Array.isArray(config.parameters) ? config.parameters : [];
         node.resolvedParameters = {};
 
-        // Store runtime node reference
+        /**
+         * Store active runtime node.
+         */
         nodesMap[node.id] = node;
 
+        /**
+         * Connect immediately when the node is created,
+         * if enough configuration already exists.
+         *
+         * This prevents the node from staying disconnected after deploy
+         * until the first input message arrives.
+         */
         if (node.serverUrl && node.topic && node.operation) {
             Utils.connectToServer(node);
         }
@@ -65,6 +78,7 @@ module.exports = function (RED) {
             if (node.mqttClient) {
                 node.mqttClient.end(true);
             }
+
             delete nodesMap[node.id];
         });
 
@@ -74,46 +88,57 @@ module.exports = function (RED) {
          * Priority rules:
          * - payload: incoming msg.payload first, otherwise saved editor payload
          * - parameters: msg.parameters first, otherwise saved editor parameters
+         *
+         * Important:
+         * - The input does NOT directly go to node output
+         * - It is only used to publish through MQTT
+         * - Output happens later only when MQTT sends back a real message
          */
         node.on("input", function (msg, send, done) {
-            const Utils = require("./utils/utils")(RED);
-
             try {
                 /**
-                 * Store full incoming message for later use.
+                 * Store the full incoming message for later use
+                 * (for example during topic parameter resolution).
                  */
-                node.msg = msg;
+                node.msg = msg || {};
 
                 /**
                  * Resolve final payload and parameters.
+                 * These values will be used by MQTT publish logic.
                  */
                 node.payload = resolvePayload(node, msg);
                 node.resolvedParameters = resolveParameters(node, msg);
+
                 /**
-                 * Fallback: if expectedPayload is missing, rebuild it from the selected operation.
+                 * If expectedPayload is missing, rebuild it from the selected operation.
+                 * This helps when a node instance was loaded without full schema data.
                  */
                 if (!Array.isArray(node.expectedPayload) || node.expectedPayload.length === 0) {
                     node.expectedPayload = getExpectedPayloadFromOperation(node.operation);
                 }
 
                 /**
-                 * Validate parameters BEFORE using them in topic resolution
+                 * Validate topic parameters before they are injected into the topic template.
                  */
                 validateParameters(node);
 
                 /**
-                 * Validate resolved payload against expected schema.
+                 * Validate payload only if one exists.
+                 * This avoids publishing invalid data and avoids validating null payloads.
                  */
-                validatePayload(node);
+                if (node.payload !== undefined && node.payload !== null) {
+                    validatePayload(node);
+                }
 
                 /**
-                 * Connect to MQTT server and process send/receive logic.
+                 * Ensure MQTT connection exists and then handle send/receive logic.
                  */
                 Utils.connectToServer(node);
                 Utils.handleMessage(node);
 
                 /**
                  * Notify editor UI with latest resolved runtime values.
+                 * Useful for showing current runtime state inside the dialog.
                  */
                 RED.comms.publish(`async-api-red/payload-update/${node.id}`, {
                     payload: node.payload,
@@ -148,12 +173,23 @@ module.exports = function (RED) {
      * 1. incoming msg.payload
      * 2. saved payload from editor
      *
+     * Returns null if nothing exists.
+     * This is safer than returning {} because an empty object could be published by mistake.
+     *
      * @param {object} node
      * @param {object} msg
      * @returns {*}
      */
     function resolvePayload(node, msg) {
-        return msg.payload ?? node.savedPayload ?? {};
+        if (msg && msg.payload !== undefined && msg.payload !== null) {
+            return msg.payload;
+        }
+
+        if (node.savedPayload !== undefined && node.savedPayload !== null) {
+            return node.savedPayload;
+        }
+
+        return null;
     }
 
     /**
@@ -168,7 +204,40 @@ module.exports = function (RED) {
      * @returns {object}
      */
     function resolveParameters(node, msg) {
-        return msg.parameters ?? node.parameterValues ?? {};
+        if (msg && msg.parameters && typeof msg.parameters === "object") {
+            return msg.parameters;
+        }
+
+        if (node.parameterValues && typeof node.parameterValues === "object") {
+            return node.parameterValues;
+        }
+
+        return {};
+    }
+
+    /**
+     * Validate topic parameters before topic resolution.
+     *
+     * Ensures all declared topic parameters have a resolved value.
+     *
+     * @param {object} node
+     */
+    function validateParameters(node) {
+        const params = Array.isArray(node.parameters) ? node.parameters : [];
+        const values = node.resolvedParameters || {};
+
+        for (const param of params) {
+            const name = param.id || param.name;
+
+            const value =
+                values[name] ??
+                node.parameterValues?.[name] ??
+                param.value;
+
+            if (value === undefined || value === null || value === "") {
+                throw new Error(`Missing required parameter: "${name}"`);
+            }
+        }
     }
 
     /**
@@ -229,17 +298,6 @@ module.exports = function (RED) {
      * Fallback:
      * - expectedPayload[]
      *
-     * Output example:
-     * {
-     *   type: "object",
-     *   properties: {
-     *     temperature: { type: "number" },
-     *     mode: { type: "string" }
-     *   },
-     *   required: ["temperature", "mode"],
-     *   additionalProperties: true
-     * }
-     *
      * @param {object|null} operation
      * @param {Array} expectedPayload
      * @returns {object}
@@ -259,30 +317,21 @@ module.exports = function (RED) {
                 }
 
                 properties[field.name] = mapFieldToJsonSchema(field);
-
-                /**
-                 * For now, fields extracted into expectedPayload are treated as required.
-                 * Later we can improve this with explicit AsyncAPI "required" support.
-                 */
-                if (field.required === true) {
-                    required.push(field.name);
-                }
+                required.push(field.name);
             }
         }
 
         /**
-         * Fallback if operation payload is missing but expectedPayload exists
+         * Fallback to expectedPayload if operation.messages did not provide schema info.
          */
-        if (Object.keys(properties).length === 0 && Array.isArray(expectedPayload)) {
-            for (const field of expectedPayload) {
+        if (Object.keys(properties).length === 0) {
+            for (const field of Array.isArray(expectedPayload) ? expectedPayload : []) {
                 if (!field?.name) {
                     continue;
                 }
 
                 properties[field.name] = mapFieldToJsonSchema(field);
-                if (field.required === true) {
-                    required.push(field.name);
-                }
+                required.push(field.name);
             }
         }
 
@@ -295,124 +344,72 @@ module.exports = function (RED) {
     }
 
     /**
-     * Convert a payload field extracted from AsyncAPI into a JSON Schema property.
+     * Convert AsyncAPI field metadata into a JSON Schema property definition.
      *
-     * This function maps the simplified field structure (produced in router.js)
-     * into a valid JSON Schema fragment used by AJV for runtime validation.
-     *
-     * Current supported mappings:
-     * - type → JSON Schema type (string, number, integer, boolean, array, etc.)
-     * - enum → restricts value to a predefined set of allowed values
-     * - minimum → numeric lower bound (inclusive)
-     * - maximum → numeric upper bound (inclusive)
-     * - items → schema definition for array elements
-     *
-     * Notes:
-     * - enum validation works only if router.js includes `enum` from AsyncAPI
-     * - items should ideally be a valid JSON Schema object (not raw AsyncAPI)
-     *
-     * Limitations (to be extended in future steps):
-     * - No support yet for:
-     *   - required fields (handled at parent schema level)
-     *   - nested object properties
-     *   - oneOf / anyOf / allOf
-     *   - string formats (e.g. date-time, email)
-     *   - pattern validation (regex)
-     *   - array constraints (minItems, maxItems)
-     *
-     * @param {object} field - Field metadata extracted from AsyncAPI payload
-     * @returns {object} JSON Schema property definition
+     * @param {object} field
+     * @returns {object}
      */
     function mapFieldToJsonSchema(field) {
-        const schema = {};
+        const fieldType = (field?.type || "string").toLowerCase();
 
-        // Map primitive type (string, number, integer, boolean, array, etc.)
-        if (field.type) {
-            schema.type = field.type;
+        switch (fieldType) {
+            case "number":
+                return {type: "number"};
+
+            case "integer":
+                return {type: "integer"};
+
+            case "boolean":
+                return {type: "boolean"};
+
+            case "array":
+                return {type: "array"};
+
+            case "object":
+                return {type: "object"};
+
+            case "string":
+            default:
+                return {type: "string"};
         }
-
-        // Apply enum constraint if defined
-        if (Array.isArray(field.enum) && field.enum.length > 0) {
-            schema.enum = field.enum;
-        }
-
-        // Numeric constraints
-        if (typeof field.minimum === "number") {
-            schema.minimum = field.minimum;
-        }
-
-        if (typeof field.maximum === "number") {
-            schema.maximum = field.maximum;
-        }
-
-        // Array item schema
-        if (field.type === "array" && field.items) {
-            schema.items = field.items;
-        }
-
-        return schema;
     }
+
     /**
-     * Fallback helper to extract payload field metadata from operation.
+     * Extract expected payload fields directly from the selected AsyncAPI operation.
      *
-     * @param {object} operation
+     * @param {object|null} operation
      * @returns {Array}
      */
     function getExpectedPayloadFromOperation(operation) {
-        const fields = [];
+        const result = [];
+        const messages = Array.isArray(operation?.messages) ? operation.messages : [];
 
-        if (!operation || !Array.isArray(operation.messages)) {
-            return fields;
-        }
+        for (const message of messages) {
+            const fields = Array.isArray(message?.payload) ? message.payload : [];
 
-        for (const message of operation.messages) {
-            if (Array.isArray(message.payload)) {
-                for (const field of message.payload) {
-                    fields.push(field);
+            for (const field of fields) {
+                if (!field?.name) {
+                    continue;
                 }
+
+                result.push({
+                    name: field.name,
+                    type: field.type || "string"
+                });
             }
         }
 
-        return fields;
+        return result;
     }
 
     /**
-     * Validate channel parameters before topic resolution.
-     *
-     * In AsyncAPI, channel parameters (e.g. {homeId}) are part of the topic template,
-     * so they must always be resolved into concrete values before publishing/subscribing.
-     *
-     * Validation rules:
-     * - Every declared parameter in node.parameters MUST have a value
-     * - Value can come from:
-     *   1. msg.parameters (highest priority)
-     *   2. node.parameterValues (saved from editor UI)
-     *
-     * If any parameter is missing or empty, an error is thrown and
-     * message processing is stopped.
-     *
-     * @param {object} node - Node-RED node instance
-     */
-    function validateParameters(node) {
-        const params = Array.isArray(node.parameters) ? node.parameters : [];
-        const values = node.resolvedParameters || {};
-
-        for (const param of params) {
-            const name = param.id || param.name;
-
-            if (values[name] === undefined || values[name] === null || values[name] === "") {
-                throw new Error(`Missing required parameter "${name}"`);
-            }
-        }
-    }
-
-    /**
-     * Expose active node instances for routes/debugging.
+     * Expose nodesMap on RED for other modules/debugging.
      */
     RED.nodesMap = nodesMap;
 
     /**
-     * Register node type in Node-RED runtime.
+     * Register the node type.
+     * Type name must match the one used in the HTML editor file.
      */
     RED.nodes.registerType("async-api-red", AsyncApiRedNode);
 };

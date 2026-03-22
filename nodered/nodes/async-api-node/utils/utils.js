@@ -23,7 +23,6 @@ module.exports = (RED) => {
     async function getParsedAsyncApiFile(data) {
         try {
             const parser = new AsyncApiParser();
-
             const errors = await parser.validate(data);
 
             if (errors.length) {
@@ -43,20 +42,28 @@ module.exports = (RED) => {
     /**
      * Create MQTT connection once per node.
      *
+     * Important:
+     * - A node should not create a new MQTT client on every input message
+     * - The connection should be reused while the node instance is alive
+     *
      * @param {object} node - Node-RED node instance
      */
     function connectToServer(node) {
         if (!node.serverUrl) {
-            node.error("MQTT Server URL or Topic is missing!");
-            node.status({ fill: "red", shape: "ring", text: "Missing MQTT Config" });
+            node.error("MQTT server URL is missing.");
+            node.status({fill: "red", shape: "ring", text: "Missing MQTT server"});
             return;
         }
 
+        /**
+         * Reuse the existing client if it is already created and alive.
+         * This avoids duplicate connections/listeners after multiple inputs.
+         */
         if (node.mqttClient && !node.mqttClient.disconnected) {
             return;
         }
 
-        node.status({ fill: "yellow", shape: "ring", text: "Connecting..." });
+        node.status({fill: "yellow", shape: "ring", text: "Connecting..."});
 
         const options = {
             connectTimeout: 5000,
@@ -64,18 +71,28 @@ module.exports = (RED) => {
         };
 
         node.mqttClient = mqtt.connect(node.serverUrl, options);
+
+        /**
+         * Runtime flags used to avoid duplicate listeners/subscriptions.
+         */
         node.subscribed = false;
+        node.subscribedTopic = null;
+        node.messageHandlerAttached = false;
 
         node.mqttClient.on("connect", function () {
             node.log(`Connected to MQTT Broker: ${node.serverUrl}`);
-            node.status({ fill: "green", shape: "dot", text: "Connected" });
+            node.status({fill: "green", shape: "dot", text: "Connected"});
 
-            if (node.operation?.action === "receive" && node.topic && !node.subscribed) {
-                node.mqttClient.subscribe(node.topic, {}, (err) => {
+            /**
+             * If the node already knows which topic it should listen to,
+             * restore the subscription automatically after reconnect.
+             */
+            if (node.subscribedTopic) {
+                node.mqttClient.subscribe(node.subscribedTopic, {}, (err) => {
                     if (err) {
-                        node.error("Failed to subscribe: " + err.message);
+                        node.error("Failed to resubscribe: " + err.message);
                     } else {
-                        node.log("Subscribed to topic: " + node.topic);
+                        node.log("Resubscribed to topic: " + node.subscribedTopic);
                         node.subscribed = true;
                     }
                 });
@@ -84,87 +101,31 @@ module.exports = (RED) => {
 
         node.mqttClient.on("error", function (error) {
             node.error("MQTT Connection Error: " + error.message);
-            node.status({ fill: "red", shape: "dot", text: "Error" });
+            node.status({fill: "red", shape: "dot", text: "Error"});
         });
 
         node.mqttClient.on("close", function () {
-            node.status({ fill: "red", shape: "ring", text: "Disconnected" });
+            node.status({fill: "red", shape: "ring", text: "Disconnected"});
+
+            /**
+             * The client is closed, so active subscription state is no longer valid.
+             * Keep subscribedTopic so reconnect can use it again.
+             */
             node.subscribed = false;
-        });
-
-        node.mqttClient.on("message", (topic, message) => {
-            let payload;
-            try {
-                payload = JSON.parse(message.toString());
-            } catch (e) {
-                payload = message.toString();
-            }
-
-            node.lastMessage = payload;
-            node.log("Message received on " + topic + ": " + JSON.stringify(payload));
-            node.send({ payload });
+            node.messageHandlerAttached = false;
         });
     }
-
-    /**
-     * Handle MQTT send/receive behavior.
-     *
-     * @param {object} node - Node-RED node instance
-     */
-    function handleMessage(node) {
-        if (!node.mqttClient) {
-            return;
-        }
-
-        const subscribeIfNeeded = () => {
-            if (!node.subscribed && node.topic) {
-                node.mqttClient.subscribe(node.topic, {}, (err) => {
-                    if (err) {
-                        node.error("Failed to subscribe: " + err.message);
-                    } else {
-                        node.log("Subscribed to topic: " + node.topic);
-                        node.subscribed = true;
-                    }
-                });
-            }
-        };
-
-        if (node.operation?.action === "receive") {
-            subscribeIfNeeded();
-        }
-
-        if (node.operation?.action === "send") {
-            const toPublish = node.payload || node.lastMessage;
-
-            if (!toPublish) {
-                node.warn("Nothing to publish (no payload or last message available).");
-                return;
-            }
-
-            node.mqttClient.publish(
-                node.topic,
-                JSON.stringify(toPublish),
-                {},
-                (err) => {
-                    if (err) {
-                        node.error("Failed to publish: " + err.message);
-                    } else {
-                        node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
-                        node.send({ payload: toPublish });
-                    }
-                }
-            );
-        }
-    }
-
 
     /**
      * Attach MQTT message listener only once.
      *
+     * This is the ONLY place where the node sends output downstream.
+     * So every output message truly comes from MQTT.
+     *
      * @param {object} node
      */
     function attachMessageListenerIfNeeded(node) {
-        if (node.messageHandlerAttached) {
+        if (node.messageHandlerAttached || !node.mqttClient) {
             return;
         }
 
@@ -177,11 +138,20 @@ module.exports = (RED) => {
                 payload = message.toString();
             }
 
+            /**
+             * Store last received MQTT message for debugging or fallback behavior.
+             */
             node.lastMessage = payload;
 
+            node.log("Message received on " + topic + ": " + JSON.stringify(payload));
+
+            /**
+             * Forward ONLY MQTT-received messages to node output.
+             */
             node.send({
                 payload,
-                topic
+                topic,
+                parameters: node.resolvedParameters || {}
             });
         });
 
@@ -189,12 +159,70 @@ module.exports = (RED) => {
     }
 
     /**
-     * Resolve AsyncAPI channel topic parameters.
+     * Subscribe only when needed.
+     *
+     * Behavior:
+     * - If already subscribed to the same topic, do nothing
+     * - If topic changed, unsubscribe from previous topic and subscribe to the new one
+     *
+     * @param {object} node
+     * @param {string} topic
+     */
+    function subscribeIfNeeded(node, topic) {
+        if (!node.mqttClient) {
+            node.warn("Cannot subscribe: MQTT client is not initialized.");
+            return;
+        }
+
+        if (!topic) {
+            node.warn("Cannot subscribe: topic is empty.");
+            return;
+        }
+
+        /**
+         * Already subscribed to the same topic.
+         */
+        if (node.subscribed && node.subscribedTopic === topic) {
+            return;
+        }
+
+        /**
+         * If there was an old topic, unsubscribe first.
+         */
+        if (node.subscribedTopic && node.subscribedTopic !== topic) {
+            node.mqttClient.unsubscribe(node.subscribedTopic, (err) => {
+                if (err) {
+                    node.warn(`Failed to unsubscribe from ${node.subscribedTopic}: ${err.message}`);
+                }
+            });
+
+            node.subscribed = false;
+        }
+
+        node.mqttClient.subscribe(topic, {}, (err) => {
+            if (err) {
+                node.error(`Failed to subscribe to ${topic}: ${err.message}`);
+            } else {
+                node.log("Subscribed to topic: " + topic);
+                node.subscribed = true;
+                node.subscribedTopic = topic;
+            }
+        });
+    }
+
+    /**
+     * Resolve AsyncAPI topic parameters inside channel topics.
+     *
+     * Example:
+     * topic template: "devices/{deviceId}/status"
+     * parameters: { deviceId: "lamp1" }
+     * resolved topic: "devices/lamp1/status"
      *
      * Priority:
      * 1. msg.parameters[name]
-     * 2. node.parameterValues[name]
-     * 3. param.value
+     * 2. node.resolvedParameters[name]
+     * 3. node.parameterValues[name]
+     * 4. parameter default value from schema
      *
      * @param {object} node
      * @returns {string}
@@ -227,7 +255,92 @@ module.exports = (RED) => {
     }
 
     /**
-     * Fetch uploaded AsyncAPI file for a node.
+     * Handle MQTT send/receive behavior.
+     *
+     * Flow:
+     * 1. Resolve final topic
+     * 2. Attach MQTT message listener
+     * 3. Subscribe to topic
+     * 4. If operation is "receive", wait for messages only
+     * 5. If operation is "send", publish the resolved payload
+     *
+     * IMPORTANT:
+     * - Output is NOT sent after publish
+     * - Output happens only when MQTT emits a real "message" event
+     *
+     * @param {object} node - Node-RED node instance
+     */
+    function handleMessage(node) {
+        if (!node.mqttClient) {
+            node.warn("MQTT client is not initialized.");
+            return;
+        }
+
+        const resolvedTopic = resolveTopic(node);
+
+        if (!resolvedTopic) {
+            node.warn("Resolved topic is empty.");
+            return;
+        }
+
+        /**
+         * Ensure the node can actually receive MQTT messages.
+         */
+        attachMessageListenerIfNeeded(node);
+
+        /**
+         * Subscribe first, so any returned MQTT message can be captured.
+         */
+        subscribeIfNeeded(node, resolvedTopic);
+
+        /**
+         * Receive-only operation:
+         * do not publish anything, just wait for MQTT traffic.
+         */
+        if (node.operation?.action === "receive") {
+            return;
+        }
+
+        /**
+         * Send operation:
+         * publish the resolved payload.
+         *
+         * Priority:
+         * 1. payload resolved from msg.payload
+         * 2. saved payload from editor
+         * 3. last received MQTT payload
+         */
+        if (node.operation?.action === "send") {
+            const toPublish = node.payload ?? node.savedPayload ?? node.lastMessage;
+
+            if (toPublish === undefined || toPublish === null) {
+                node.warn("Nothing to publish.");
+                return;
+            }
+
+            node.mqttClient.publish(
+                resolvedTopic,
+                JSON.stringify(toPublish),
+                {},
+                (err) => {
+                    if (err) {
+                        node.error("Failed to publish: " + err.message);
+                    } else {
+                        /**
+                         * Important:
+                         * We do NOT call node.send() here.
+                         * The message must go through MQTT first and then return
+                         * from the broker in order to appear at the node output.
+                         */
+                        node.log("Message published to " + resolvedTopic + ": " + JSON.stringify(toPublish));
+                    }
+                }
+            );
+        }
+    }
+
+    /**
+     * Fetch uploaded AsyncAPI file for a specific node.
      *
      * @param {string} uri - Directory path
      * @returns {Promise<{fileContent: string, fileName: string, fileType: string | false}>}
@@ -253,7 +366,7 @@ module.exports = (RED) => {
                     resolve({
                         fileContent: data,
                         fileName: latestFile,
-                        fileType
+                        fileType: fileType
                     });
                 });
             });
@@ -261,9 +374,9 @@ module.exports = (RED) => {
     }
 
     /**
-     * Build upload directory path for a Node-RED node.
+     * Build upload directory path for a node.
      *
-     * @param {string} nodeId
+     * @param {string} nodeId - Node-RED node id
      * @returns {string}
      */
     function getFilePath(nodeId) {
@@ -278,7 +391,7 @@ module.exports = (RED) => {
     }
 
     /**
-     * Public API
+     * Expose utility functions.
      */
     return {
         getParsedAsyncApiFile,
