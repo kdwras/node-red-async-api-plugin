@@ -18,6 +18,7 @@
 module.exports = (RED) => {
     const express = require("express");
     const fs = require("fs");
+    const path = require("path");
 
     const Providers = require("../providers/providers")(RED);
     const fileUtils = require("../utils/file-utils")(RED);
@@ -181,7 +182,7 @@ module.exports = (RED) => {
             });
         });
 
-        return { servers, channels };
+        return {servers, channels};
     }
 
     /**
@@ -202,7 +203,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     async function getData(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -215,7 +216,7 @@ module.exports = (RED) => {
             const fileContent = file?.fileContent;
 
             if (!fileContent) {
-                return res.status(400).json({ error: "No file content provided" });
+                return res.status(400).json({error: "No file content provided"});
             }
 
             const parsed = await asyncapiService.parse(fileContent);
@@ -244,7 +245,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function uploadFile(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -272,7 +273,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     async function getFile(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -315,7 +316,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function saveUserSelections(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const payload = req.body;
         const node = getRuntimeNode(nodeId);
 
@@ -344,7 +345,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function getUserSelections(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -365,7 +366,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function connectToServer(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -396,7 +397,7 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function handleMessage(req, res) {
-        const { nodeId } = req.params;
+        const {nodeId} = req.params;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {
@@ -458,6 +459,18 @@ module.exports = (RED) => {
          * Trigger MQTT message handling logic.
          */
         router.post("/async-api-red/:nodeId/message", handleMessage);
+
+        /** This route makes the editor bundle accessible to the browser. **/
+        /**
+         * Serve editor static assets from editor/dist.
+         *
+         * Example:
+         * /async-api-red/assets/editor.bundle.js
+         */
+        router.use(
+            "/async-api-red/assets",
+            express.static(path.join(__dirname, "..", "editor", "dist"))
+        );
     }
 
     return router;
