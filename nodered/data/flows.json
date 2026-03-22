@@ -23422,7 +23422,7 @@
             "homeId": "3"
         },
         "payload": {
-            "temperature": "1",
+            "temperature": "2",
             "humidity": "2",
             "mode": "lol",
             "energyUsed": "2",

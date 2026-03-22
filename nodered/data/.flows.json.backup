@@ -23422,7 +23422,7 @@
             "homeId": "3"
         },
         "payload": {
-            "temperature": "1",
+            "temperature": "2",
             "humidity": "2",
             "mode": "lol",
             "energyUsed": "2",
@@ -23461,13 +23461,43 @@
         "name": "debug 8",
         "active": true,
         "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
         "statusType": "auto",
-        "x": 1100,
+        "x": 1110,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "09d8c65b97b51385",
+        "type": "inject",
+        "z": "91b3d9d13b8f272a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 400,
+        "wires": [
+            [
+                "c3492f964ede81da"
+            ]
+        ]
     }
 ]

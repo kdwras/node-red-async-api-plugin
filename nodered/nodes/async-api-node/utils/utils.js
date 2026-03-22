@@ -47,17 +47,16 @@ module.exports = (RED) => {
      */
     function connectToServer(node) {
         if (!node.serverUrl) {
-            node.error("MQTT server URL is missing.");
-            node.status({fill: "red", shape: "ring", text: "Missing MQTT server"});
+            node.error("MQTT Server URL or Topic is missing!");
+            node.status({ fill: "red", shape: "ring", text: "Missing MQTT Config" });
             return;
         }
 
-        // Reuse existing client
-        if (node.mqttClient) {
+        if (node.mqttClient && !node.mqttClient.disconnected) {
             return;
         }
 
-        node.status({fill: "yellow", shape: "ring", text: "Connecting..."});
+        node.status({ fill: "yellow", shape: "ring", text: "Connecting..." });
 
         const options = {
             connectTimeout: 5000,
@@ -65,20 +64,45 @@ module.exports = (RED) => {
         };
 
         node.mqttClient = mqtt.connect(node.serverUrl, options);
-        node.currentTopic = null;
-        node.messageHandlerAttached = false;
+        node.subscribed = false;
 
         node.mqttClient.on("connect", function () {
-            node.status({fill: "green", shape: "dot", text: "Connected"});
+            node.log(`Connected to MQTT Broker: ${node.serverUrl}`);
+            node.status({ fill: "green", shape: "dot", text: "Connected" });
+
+            if (node.operation?.action === "receive" && node.topic && !node.subscribed) {
+                node.mqttClient.subscribe(node.topic, {}, (err) => {
+                    if (err) {
+                        node.error("Failed to subscribe: " + err.message);
+                    } else {
+                        node.log("Subscribed to topic: " + node.topic);
+                        node.subscribed = true;
+                    }
+                });
+            }
         });
 
         node.mqttClient.on("error", function (error) {
-            node.error(`MQTT connection error: ${error.message}`);
-            node.status({fill: "red", shape: "dot", text: "Error"});
+            node.error("MQTT Connection Error: " + error.message);
+            node.status({ fill: "red", shape: "dot", text: "Error" });
         });
 
         node.mqttClient.on("close", function () {
-            node.status({fill: "red", shape: "ring", text: "Disconnected"});
+            node.status({ fill: "red", shape: "ring", text: "Disconnected" });
+            node.subscribed = false;
+        });
+
+        node.mqttClient.on("message", (topic, message) => {
+            let payload;
+            try {
+                payload = JSON.parse(message.toString());
+            } catch (e) {
+                payload = message.toString();
+            }
+
+            node.lastMessage = payload;
+            node.log("Message received on " + topic + ": " + JSON.stringify(payload));
+            node.send({ payload });
         });
     }
 
@@ -89,79 +113,50 @@ module.exports = (RED) => {
      */
     function handleMessage(node) {
         if (!node.mqttClient) {
-            node.warn("MQTT client is not initialized.");
             return;
         }
 
-        const resolvedTopic = resolveTopic(node);
-
-        attachMessageListenerIfNeeded(node);
+        const subscribeIfNeeded = () => {
+            if (!node.subscribed && node.topic) {
+                node.mqttClient.subscribe(node.topic, {}, (err) => {
+                    if (err) {
+                        node.error("Failed to subscribe: " + err.message);
+                    } else {
+                        node.log("Subscribed to topic: " + node.topic);
+                        node.subscribed = true;
+                    }
+                });
+            }
+        };
 
         if (node.operation?.action === "receive") {
-            subscribeIfNeeded(node, resolvedTopic);
-            return;
+            subscribeIfNeeded();
         }
 
         if (node.operation?.action === "send") {
-            const toPublish = node.payload ?? node.lastMessage;
+            const toPublish = node.payload || node.lastMessage;
 
-            if (toPublish === undefined || toPublish === null) {
-                node.warn("Nothing to publish.");
+            if (!toPublish) {
+                node.warn("Nothing to publish (no payload or last message available).");
                 return;
             }
 
             node.mqttClient.publish(
-                resolvedTopic,
+                node.topic,
                 JSON.stringify(toPublish),
                 {},
                 (err) => {
                     if (err) {
-                        node.error(`Failed to publish: ${err.message}`);
+                        node.error("Failed to publish: " + err.message);
                     } else {
-                        node.send({
-                            payload: toPublish,
-                            topic: resolvedTopic
-                        });
+                        node.log("Message published to " + node.topic + ": " + JSON.stringify(toPublish));
+                        node.send({ payload: toPublish });
                     }
                 }
             );
         }
     }
 
-    /**
-     * Subscribe only if needed.
-     *
-     * @param {object} node
-     * @param {string} topic
-     */
-    function subscribeIfNeeded(node, topic) {
-        if (!topic) {
-            node.warn("Cannot subscribe: topic is empty.");
-            return;
-        }
-
-        // Already subscribed to same topic
-        if (node.currentTopic === topic) {
-            return;
-        }
-
-        // Unsubscribe previous topic if needed
-        if (node.currentTopic) {
-            node.mqttClient.unsubscribe(node.currentTopic, (err) => {
-                if (err) {
-                    node.warn(`Failed to unsubscribe from ${node.currentTopic}: ${err.message}`);
-                }
-            });
-        }
-
-        node.mqttClient.subscribe(topic, {}, (err) => {
-            if (err) {
-                node.error(`Failed to subscribe to ${topic}: ${err.message}`);
-            } else {
-                node.currentTopic = topic;
-            }
-        });
-    }
 
     /**
      * Attach MQTT message listener only once.

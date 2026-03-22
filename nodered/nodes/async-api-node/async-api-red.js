@@ -40,6 +40,7 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
 
         const node = this;
+        const Utils = require("./utils/utils")(RED);
 
         node.serverUrl = config.serverUrl || "";
         node.topic = config.topic || "";
@@ -52,6 +53,10 @@ module.exports = function (RED) {
 
         // Store runtime node reference
         nodesMap[node.id] = node;
+
+        if (node.serverUrl && node.topic && node.operation) {
+            Utils.connectToServer(node);
+        }
 
         /**
          * Cleanup when node is stopped / redeployed / removed.
