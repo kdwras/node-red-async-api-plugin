@@ -997,8 +997,8 @@
         "nodes": [
             "8e4f42e423d53fbb"
         ],
-        "x": null,
-        "y": null,
+        "x": 0,
+        "y": 0,
         "w": null,
         "h": null
     },
@@ -23334,6 +23334,7 @@
             "messages": [
                 {
                     "name": "ThermostatState",
+                    "contentType": "application/json",
                     "payload": [
                         {
                             "name": "temperature",
@@ -23370,8 +23371,7 @@
                             ],
                             "required": false
                         }
-                    ],
-                    "contentType": "application/json"
+                    ]
                 }
             ]
         },
