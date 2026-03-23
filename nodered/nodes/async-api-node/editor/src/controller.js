@@ -51,9 +51,28 @@ import {
  * @param {object} node
  */
 export function oneditprepare(node) {
+    const isDuplicatedNode = !!(node.savedNodeId && node.savedNodeId !== node.id);
+
     resetEditorState();
     resetUi();
     clearFileInput();
+
+    if (isDuplicatedNode) {
+        node.serverUrl = "";
+        node.topic = "";
+        node.operation = null;
+        node.expectedPayload = [];
+        node.parameters = [];
+        node.parameterValues = {};
+        node.payload = {};
+        node.savedNodeId = "";
+
+        state.selections.serverUrl = "";
+        state.selections.topic = "";
+        state.selections.operationId = "";
+        state.selections.parameterValues = {};
+        state.selections.payloadValues = {};
+    }
 
     state.nodeId = node.id || null;
 
@@ -70,6 +89,10 @@ export function oneditprepare(node) {
 
     Promise.resolve()
         .then(function () {
+            if (isDuplicatedNode) {
+                return null;
+            }
+
             return getFile(node.id).catch(function () {
                 return null;
             });
@@ -79,6 +102,10 @@ export function oneditprepare(node) {
         })
         .then(function (data) {
             state.asyncApiData = normalizeAsyncApiData(data);
+
+            if (isDuplicatedNode) {
+                return {};
+            }
 
             return getUserSelections(node.id).catch(function () {
                 return {};
@@ -105,6 +132,8 @@ export function oneditsave(node) {
     if (!node?.id) {
         return;
     }
+
+    node.savedNodeId = node.id;
 
     syncStateFromUi();
 

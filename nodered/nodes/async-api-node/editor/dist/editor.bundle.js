@@ -378,9 +378,25 @@
 
   // editor/src/controller.js
   function oneditprepare(node) {
+    const isDuplicatedNode = !!(node.savedNodeId && node.savedNodeId !== node.id);
     resetEditorState();
     resetUi();
     clearFileInput();
+    if (isDuplicatedNode) {
+      node.serverUrl = "";
+      node.topic = "";
+      node.operation = null;
+      node.expectedPayload = [];
+      node.parameters = [];
+      node.parameterValues = {};
+      node.payload = {};
+      node.savedNodeId = "";
+      state.selections.serverUrl = "";
+      state.selections.topic = "";
+      state.selections.operationId = "";
+      state.selections.parameterValues = {};
+      state.selections.payloadValues = {};
+    }
     state.nodeId = node.id || null;
     bindStaticEvents();
     if (!node?.id) {
@@ -391,6 +407,9 @@
     }
     subscribeRuntimeEvents(node.id);
     Promise.resolve().then(function() {
+      if (isDuplicatedNode) {
+        return null;
+      }
       return getFile(node.id).catch(function() {
         return null;
       });
@@ -398,6 +417,9 @@
       return getData(node.id);
     }).then(function(data) {
       state.asyncApiData = normalizeAsyncApiData(data);
+      if (isDuplicatedNode) {
+        return {};
+      }
       return getUserSelections(node.id).catch(function() {
         return {};
       });
@@ -414,6 +436,7 @@
     if (!node?.id) {
       return;
     }
+    node.savedNodeId = node.id;
     syncStateFromUi();
     const selectedChannel = getSelectedChannel();
     const selectedOperation = getSelectedOperation();
@@ -469,7 +492,8 @@
       expectedPayload: { value: [] },
       parameters: { value: [] },
       parameterValues: { value: {} },
-      payload: { value: {} }
+      payload: { value: {} },
+      savedNodeId: { value: "" }
     },
     inputs: 1,
     outputs: 1,

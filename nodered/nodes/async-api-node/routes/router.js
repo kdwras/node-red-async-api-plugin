@@ -317,7 +317,6 @@ module.exports = (RED) => {
      */
     function saveUserSelections(req, res) {
         const {nodeId} = req.params;
-        const payload = req.body;
         const node = getRuntimeNode(nodeId);
 
         if (!node) {

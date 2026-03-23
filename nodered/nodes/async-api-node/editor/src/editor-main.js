@@ -25,7 +25,8 @@ RED.nodes.registerType("async-api-red", {
         expectedPayload: { value: [] },
         parameters: { value: [] },
         parameterValues: { value: {} },
-        payload: { value: {} }
+        payload: { value: {} },
+        savedNodeId: { value: "" }
     },
 
     inputs: 1,
