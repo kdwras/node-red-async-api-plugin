@@ -108,7 +108,7 @@
     "z": "4f4855f52107b72b",
     "g": "c99ee48a54796f90",
     "name": "AC Telemetry",
-    "func": "// === Air Conditioner Telemetry Simulator (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state ---\nconst plugState = global.get('acState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Environment values ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 25);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 50);\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Persistent setpoint (changes every 60 simulated minutes = 1 hour) ---\nlet setpoint = flow.get('ac.setpoint');\nlet setpointTimer = flow.get('ac.setpointTimer') || 0;\n\nsetpointTimer += 1; // 1 tick = 1 minute\n\nif (setpoint === undefined || setpoint === null || setpointTimer >= 60) {\n    // Random setpoint each simulated hour (optional)\n    setpoint = Math.floor(16 + Math.random() * 15); // 16–30°C\n    setpointTimer = 0;\n}\n\n// If you want ALWAYS 23°C, keep this line and remove randomization above:\n// setpoint = 23;\nsetpoint = 23;\n\n// --- Persistent current temperature (don’t reset each tick) ---\nlet current = flow.get('ac.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Natural drift + pull toward environment ---\ncurrent += (Math.random() * 0.3 - 0.15); // small drift ±0.15°C\ncurrent += (envTemp - current) * 0.05;   // gently pull toward env\n\n// --- Determine AC mode ---\nlet mode = 'idle';\nlet currentPower = 0;\n\n// Deadband around setpoint\nconst deadband = 1;\n\nif (current > setpoint + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n} else if (current < setpoint - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.ac') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('ac.setpoint', setpoint);\nflow.set('ac.setpointTimer', setpointTimer);\nflow.set('ac.currentTemp', current);\nflow.set('energy.ac', energy);\n\n// --- Node status feedback ---\nlet color = \"green\";\nlet shape = \"ring\";\nlet text = `Idle | ${current.toFixed(1)}°C → ${setpoint}°C | 0 W`;\n\nif (mode === 'cool') {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else if (mode === 'heat') {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Heating | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"ac\",\n    power: plugState,                    // on/off from smart plug\n    temperature: parseFloat(current.toFixed(1)),\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    currentPower: currentPower,          // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+    "func": "// === Air Conditioner Telemetry Simulator (Smart Plug Controlled) ===\n\n// --- Check Smart Plug state ---\nconst plugState = global.get('acState') || 'off';\nif (plugState !== 'on') {\n    node.status({ fill: 'grey', shape: 'ring', text: 'Plug OFF – telemetry paused' });\n    return null;\n}\n\n// --- Environment values ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 25);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 50);\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Persistent setpoint (changes every 60 simulated minutes = 1 hour) ---\nlet setpoint = flow.get('ac.setpoint');\nlet setpointTimer = flow.get('ac.setpointTimer') || 0;\n\nsetpointTimer += 1; // 1 tick = 1 minute\n\nif (setpoint === undefined || setpoint === null || setpointTimer >= 60) {\n    // Random setpoint each simulated hour (optional)\n    setpoint = Math.floor(16 + Math.random() * 15); // 16–30°C\n    setpointTimer = 0;\n}\n\n// If you want ALWAYS 23°C, keep this line and remove randomization above:\n// setpoint = 23;\nsetpoint = 23;\n\n// --- Persistent current temperature (don’t reset each tick) ---\nlet current = flow.get('ac.currentTemp');\nif (current === undefined || current === null) current = envTemp;\n\n// --- Natural drift + pull toward environment ---\ncurrent += (Math.random() * 0.3 - 0.15); // small drift ±0.15°C\ncurrent += (envTemp - current) * 0.05;   // gently pull toward env\n\n// --- Determine AC mode ---\nlet mode = 'idle';\nlet currentPower = 0;\n\n// Deadband around setpoint\nconst deadband = 1;\n\nif (current > setpoint + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n} else if (current < setpoint - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get('energy.ac') || 0;\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set('ac.setpoint', setpoint);\nflow.set('ac.setpointTimer', setpointTimer);\nflow.set('ac.currentTemp', current);\nflow.set('energy.ac', energy);\n\n// --- Node status feedback ---\nlet color = \"green\";\nlet shape = \"ring\";\nlet text = `Idle | ${current.toFixed(1)}°C → ${setpoint}°C | 0 W`;\n\nif (mode === 'cool') {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Cooling | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else if (mode === 'heat') {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Heating | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    device: \"ac\",\n    power: plugState,                    // on/off from smart plug\n    temperature: parseFloat(current.toFixed(1)),\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    currentPower: currentPower,          // instantaneous Watts\n    energyUsed: parseFloat(energy.toFixed(3)), // cumulative kWh\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\n\nmsg.parameters = {homeId : 2};\n\nreturn msg;\n",
     "outputs": 1,
     "timeout": "",
     "noerr": 0,
@@ -129,6 +129,126 @@
     "z": "4f4855f52107b72b",
     "g": "c99ee48a54796f90",
     "name": "AC AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/ac/state",
+    "operation": {
+      "id": "acTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "ACState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Current operating mode of the AC",
+              "enum": [
+                "cooling",
+                "heating",
+                "fan",
+                "idle",
+                "off"
+              ],
+              "required": true
+            },
+            {
+              "name": "temperature",
+              "type": "number",
+              "description": "Current measured room temperature",
+              "required": true
+            },
+            {
+              "name": "setpoint",
+              "type": "number",
+              "description": "Target temperature set by user or system",
+              "required": true
+            },
+            {
+              "name": "humidity",
+              "type": "number",
+              "description": "Current room humidity in percent",
+              "required": true
+            },
+            {
+              "name": "unit",
+              "type": "string",
+              "description": "Unit for temperature values",
+              "required": false
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Current operating mode of the AC",
+        "enum": [
+          "cooling",
+          "heating",
+          "fan",
+          "idle",
+          "off"
+        ],
+        "required": true
+      },
+      {
+        "name": "temperature",
+        "type": "number",
+        "description": "Current measured room temperature",
+        "required": true
+      },
+      {
+        "name": "setpoint",
+        "type": "number",
+        "description": "Target temperature set by user or system",
+        "required": true
+      },
+      {
+        "name": "humidity",
+        "type": "number",
+        "description": "Current room humidity in percent",
+        "required": true
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "description": "Unit for temperature values",
+        "required": false
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": "1"
+    },
+    "payload": {
+      "mode": "cool",
+      "temperature": "24.3",
+      "setpoint": "23",
+      "humidity": "20.5",
+      "unit": "C",
+      "energyUsed": "1.86"
+    },
+    "savedNodeId": "598f2008fafaa0f4",
     "x": 1970,
     "y": 420,
     "wires": [
@@ -144,9 +264,14 @@
     "z": "4f4855f52107b72b",
     "g": "c99ee48a54796f90",
     "name": "AC Debug",
-    "active": false,
+    "active": true,
     "tosidebar": true,
+    "console": false,
+    "tostatus": false,
     "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
     "x": 2170,
     "y": 400,
     "wires": []
@@ -214,6 +339,168 @@
     "z": "4f4855f52107b72b",
     "g": "lights_group",
     "name": "Lights AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/lights/state",
+    "operation": {
+      "id": "controlLights",
+      "action": "send",
+      "messages": [
+        {
+          "name": "LightState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "state",
+              "type": "string",
+              "description": "Current power state of the light",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "brightness",
+              "type": "integer",
+              "description": "Brightness level as percentage",
+              "minimum": 0,
+              "maximum": 100,
+              "required": true
+            },
+            {
+              "name": "color",
+              "type": "string",
+              "description": "Hex or RGB color value (e.g., \"#FFAA00\" or \"rgb(255,170,0)\")",
+              "required": false
+            },
+            {
+              "name": "colorTemperature",
+              "type": "integer",
+              "description": "Color temperature in Kelvin (e.g., 2700 warm white – 6500 cool white)",
+              "minimum": 1500,
+              "maximum": 9000,
+              "required": false
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Current light mode",
+              "enum": [
+                "normal",
+                "reading",
+                "nightlight",
+                "ambient",
+                "effect"
+              ],
+              "required": true
+            },
+            {
+              "name": "effect",
+              "type": "string",
+              "description": "Active effect (if any, e.g., \"rainbow\", \"pulse\", \"candle\")",
+              "required": false
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "voltage",
+              "type": "number",
+              "description": "Operating voltage in Volts",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "state",
+        "type": "string",
+        "description": "Current power state of the light",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "brightness",
+        "type": "integer",
+        "description": "Brightness level as percentage",
+        "minimum": 0,
+        "maximum": 100,
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex or RGB color value (e.g., \"#FFAA00\" or \"rgb(255,170,0)\")",
+        "required": false
+      },
+      {
+        "name": "colorTemperature",
+        "type": "integer",
+        "description": "Color temperature in Kelvin (e.g., 2700 warm white – 6500 cool white)",
+        "minimum": 1500,
+        "maximum": 9000,
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Current light mode",
+        "enum": [
+          "normal",
+          "reading",
+          "nightlight",
+          "ambient",
+          "effect"
+        ],
+        "required": true
+      },
+      {
+        "name": "effect",
+        "type": "string",
+        "description": "Active effect (if any, e.g., \"rainbow\", \"pulse\", \"candle\")",
+        "required": false
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "voltage",
+        "type": "number",
+        "description": "Operating voltage in Volts",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": "1"
+    },
+    "payload": {
+      "state": "",
+      "brightness": "",
+      "color": "",
+      "colorTemperature": "",
+      "mode": "cool",
+      "effect": "",
+      "energyUsed": "5.06",
+      "voltage": ""
+    },
+    "savedNodeId": "asyncapi_lights",
     "x": 1980,
     "y": 640,
     "wires": [
@@ -229,7 +516,7 @@
     "z": "4f4855f52107b72b",
     "g": "lights_group",
     "name": "Lights Debug",
-    "active": false,
+    "active": true,
     "tosidebar": true,
     "complete": "payload",
     "x": 2210,
@@ -300,51 +587,88 @@
     "g": "fridge_group",
     "name": "Fridge AsyncAPI",
     "serverUrl": "mqtt://172.17.0.1:1883/",
-    "topic": "home/fridge/state",
+    "topic": "home/{homeId}/fridge/state",
     "operation": {
       "id": "fridgeTelemetry",
       "action": "send",
       "messages": [
         {
           "name": "FridgeState",
+          "contentType": "application/json",
           "payload": [
             {
               "name": "power",
               "type": "string",
-              "description": "Power state of the fridge"
+              "description": "Power state of the fridge",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
             },
             {
               "name": "mode",
               "type": "string",
-              "description": "Operating mode"
+              "description": "Operating mode",
+              "enum": [
+                "eco",
+                "normal",
+                "turbo",
+                "vacation"
+              ],
+              "required": true
             },
             {
               "name": "fridgeTemp",
               "type": "number",
-              "description": "Target temperature for fridge compartment in °C"
+              "description": "Target temperature for fridge compartment in °C",
+              "required": true
             },
             {
               "name": "freezerTemp",
               "type": "number",
-              "description": "Target temperature for freezer compartment in °C"
+              "description": "Target temperature for freezer compartment in °C",
+              "required": true
             },
             {
               "name": "doorStatus",
               "type": "string",
-              "description": "Whether fridge or freezer door is open"
+              "description": "Whether fridge or freezer door is open",
+              "enum": [
+                "closed",
+                "fridge_open",
+                "freezer_open",
+                "both_open"
+              ],
+              "required": true
             },
             {
               "name": "humidityControl",
               "type": "string",
-              "description": "Humidity control for vegetable/fruit drawers"
+              "description": "Humidity control for vegetable/fruit drawers",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "required": false
             },
             {
               "name": "alarms",
               "type": "array",
-              "description": "Active alarms or alerts"
+              "description": "Active alarms or alerts",
+              "items": {
+                "type": "string",
+                "example": [
+                  "door_open",
+                  "high_temp",
+                  "filter_expired"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-35>"
+              },
+              "required": false
             }
-          ],
-          "contentType": "application/json"
+          ]
         }
       ]
     },
@@ -352,50 +676,95 @@
       {
         "name": "power",
         "type": "string",
-        "description": "Power state of the fridge"
+        "description": "Power state of the fridge",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
       },
       {
         "name": "mode",
         "type": "string",
-        "description": "Operating mode"
+        "description": "Operating mode",
+        "enum": [
+          "eco",
+          "normal",
+          "turbo",
+          "vacation"
+        ],
+        "required": true
       },
       {
         "name": "fridgeTemp",
         "type": "number",
-        "description": "Target temperature for fridge compartment in °C"
+        "description": "Target temperature for fridge compartment in °C",
+        "required": true
       },
       {
         "name": "freezerTemp",
         "type": "number",
-        "description": "Target temperature for freezer compartment in °C"
+        "description": "Target temperature for freezer compartment in °C",
+        "required": true
       },
       {
         "name": "doorStatus",
         "type": "string",
-        "description": "Whether fridge or freezer door is open"
+        "description": "Whether fridge or freezer door is open",
+        "enum": [
+          "closed",
+          "fridge_open",
+          "freezer_open",
+          "both_open"
+        ],
+        "required": true
       },
       {
         "name": "humidityControl",
         "type": "string",
-        "description": "Humidity control for vegetable/fruit drawers"
+        "description": "Humidity control for vegetable/fruit drawers",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "required": false
       },
       {
         "name": "alarms",
         "type": "array",
-        "description": "Active alarms or alerts"
+        "description": "Active alarms or alerts",
+        "items": {
+          "type": "string",
+          "example": [
+            "door_open",
+            "high_temp",
+            "filter_expired"
+          ],
+          "x-parser-schema-id": "<anonymous-schema-35>"
+        },
+        "required": false
       }
     ],
-    "parameters": [],
-    "parameterValues": {},
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": "1"
+    },
     "payload": {
-      "power": "OFF",
-      "mode": "normal",
-      "fridgeTemp": "4.8",
-      "freezerTemp": "-18.1",
-      "doorStatus": "closed",
-      "humidityControl": "high",
+      "power": "on",
+      "mode": "cool",
+      "fridgeTemp": "",
+      "freezerTemp": "",
+      "doorStatus": "",
+      "humidityControl": "",
       "alarms": ""
     },
+    "savedNodeId": "asyncapi_fridge",
     "x": 1980,
     "y": 860,
     "wires": [
@@ -411,7 +780,7 @@
     "z": "4f4855f52107b72b",
     "g": "fridge_group",
     "name": "Fridge Debug",
-    "active": false,
+    "active": true,
     "tosidebar": true,
     "complete": "payload",
     "x": 2240,
@@ -460,6 +829,193 @@
     "z": "4f4855f52107b72b",
     "g": "launder_group",
     "name": "Launder AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/launder/state",
+    "operation": {
+      "id": "launderTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "LaunderState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "power",
+              "type": "string",
+              "description": "Power state of the machine",
+              "enum": [
+                "ON",
+                "OFF",
+                "STANDBY"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Selected washing program",
+              "enum": [
+                "eco",
+                "normal",
+                "quick",
+                "heavy",
+                "delicate",
+                "wool",
+                "rinse",
+                "spin",
+                "dry"
+              ],
+              "required": true
+            },
+            {
+              "name": "waterTemp",
+              "type": "number",
+              "description": "Current water temperature in °C",
+              "required": true
+            },
+            {
+              "name": "spinSpeed",
+              "type": "integer",
+              "description": "Spin speed in RPM",
+              "required": true
+            },
+            {
+              "name": "remainingTime",
+              "type": "integer",
+              "description": "Estimated remaining time in minutes",
+              "required": true
+            },
+            {
+              "name": "loadWeight",
+              "type": "number",
+              "description": "Estimated laundry load weight in kg",
+              "required": true
+            },
+            {
+              "name": "waterUsed",
+              "type": "number",
+              "description": "Cumulative water used in liters",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "doorStatus",
+              "type": "string",
+              "description": "Current door state",
+              "enum": [
+                "open",
+                "closed",
+                "locked"
+              ],
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "power",
+        "type": "string",
+        "description": "Power state of the machine",
+        "enum": [
+          "ON",
+          "OFF",
+          "STANDBY"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Selected washing program",
+        "enum": [
+          "eco",
+          "normal",
+          "quick",
+          "heavy",
+          "delicate",
+          "wool",
+          "rinse",
+          "spin",
+          "dry"
+        ],
+        "required": true
+      },
+      {
+        "name": "waterTemp",
+        "type": "number",
+        "description": "Current water temperature in °C",
+        "required": true
+      },
+      {
+        "name": "spinSpeed",
+        "type": "integer",
+        "description": "Spin speed in RPM",
+        "required": true
+      },
+      {
+        "name": "remainingTime",
+        "type": "integer",
+        "description": "Estimated remaining time in minutes",
+        "required": true
+      },
+      {
+        "name": "loadWeight",
+        "type": "number",
+        "description": "Estimated laundry load weight in kg",
+        "required": true
+      },
+      {
+        "name": "waterUsed",
+        "type": "number",
+        "description": "Cumulative water used in liters",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "doorStatus",
+        "type": "string",
+        "description": "Current door state",
+        "enum": [
+          "open",
+          "closed",
+          "locked"
+        ],
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "power": "",
+      "mode": "",
+      "waterTemp": "",
+      "spinSpeed": "",
+      "remainingTime": "",
+      "loadWeight": "",
+      "waterUsed": "",
+      "energyUsed": "",
+      "doorStatus": ""
+    },
+    "savedNodeId": "asyncapi_launder",
     "x": 1970,
     "y": 1100,
     "wires": [
@@ -566,6 +1122,142 @@
     "z": "4f4855f52107b72b",
     "g": "dehumidifier_group",
     "name": "Dehumidifier AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/dehumidifier/state",
+    "operation": {
+      "id": "dehumidifierTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "DehumidifierState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "device",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "power",
+              "type": "string",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "enum": [
+                "auto",
+                "manual"
+              ],
+              "required": true
+            },
+            {
+              "name": "fanSpeed",
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "required": true
+            },
+            {
+              "name": "tankLevel",
+              "type": "number",
+              "description": "Water tank fill level in %",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "humidity",
+              "type": "number",
+              "description": "Current room humidity %",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "device",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "power",
+        "type": "string",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "enum": [
+          "auto",
+          "manual"
+        ],
+        "required": true
+      },
+      {
+        "name": "fanSpeed",
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "required": true
+      },
+      {
+        "name": "tankLevel",
+        "type": "number",
+        "description": "Water tank fill level in %",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "humidity",
+        "type": "number",
+        "description": "Current room humidity %",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "device": "fridge",
+      "power": "OFF",
+      "mode": "normal",
+      "fanSpeed": "",
+      "tankLevel": "",
+      "energyUsed": "0.006",
+      "humidity": ""
+    },
     "x": 1990,
     "y": 1360,
     "wires": [
@@ -651,6 +1343,128 @@
     "z": "4f4855f52107b72b",
     "g": "cooker_group",
     "name": "Cooker AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/cooker/state",
+    "operation": {
+      "id": "cookerTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "CookerState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "device",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "power",
+              "type": "string",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "enum": [
+                "idle",
+                "bake",
+                "grill",
+                "roast",
+                "steam"
+              ],
+              "required": true
+            },
+            {
+              "name": "setTemp",
+              "type": "number",
+              "description": "Target temperature in Celsius",
+              "required": true
+            },
+            {
+              "name": "currentTemp",
+              "type": "number",
+              "description": "Current oven temperature",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "device",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "power",
+        "type": "string",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "enum": [
+          "idle",
+          "bake",
+          "grill",
+          "roast",
+          "steam"
+        ],
+        "required": true
+      },
+      {
+        "name": "setTemp",
+        "type": "number",
+        "description": "Target temperature in Celsius",
+        "required": true
+      },
+      {
+        "name": "currentTemp",
+        "type": "number",
+        "description": "Current oven temperature",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "device": "",
+      "power": "",
+      "mode": "",
+      "setTemp": "",
+      "currentTemp": "",
+      "energyUsed": ""
+    },
+    "savedNodeId": "asyncapi_cooker",
     "x": 2070,
     "y": 1580,
     "wires": [
@@ -699,34 +1513,15 @@
       "color": "#a4a4a4"
     },
     "nodes": [
-      "1915adae0ac41c37",
       "dbd082096676a420",
       "f8959e1f024fcb3c",
       "c4d08d0f89251bfb",
-      "1d9d45c177f8141e"
+      "019ba1cac7de95da"
     ],
     "x": 1614,
-    "y": 119,
-    "w": 792,
-    "h": 142
-  },
-  {
-    "id": "1915adae0ac41c37",
-    "type": "debug",
-    "z": "4f4855f52107b72b",
-    "g": "19609f77c4ba5897",
-    "name": "Thermostat Debug",
-    "active": true,
-    "tosidebar": true,
-    "console": true,
-    "tostatus": true,
-    "complete": "payload",
-    "targetType": "msg",
-    "statusVal": "payload",
-    "statusType": "auto",
-    "x": 2260,
-    "y": 160,
-    "wires": []
+    "y": 99,
+    "w": 732,
+    "h": 162
   },
   {
     "id": "dbd082096676a420",
@@ -742,6 +1537,7 @@
       "messages": [
         {
           "name": "ThermostatState",
+          "contentType": "application/json",
           "payload": [
             {
               "name": "temperature",
@@ -778,8 +1574,7 @@
               ],
               "required": true
             }
-          ],
-          "contentType": "application/json"
+          ]
         }
       ]
     },
@@ -827,21 +1622,22 @@
       }
     ],
     "parameterValues": {
-      "homeId": "1"
+      "homeId": ""
     },
     "payload": {
-      "temperature": "22.8",
-      "humidity": "20.9",
-      "mode": "idle",
-      "energyUsed": "0",
-      "unit": "C"
+      "temperature": "",
+      "humidity": "",
+      "mode": "",
+      "energyUsed": "",
+      "unit": ""
     },
-    "x": 2000,
+    "savedNodeId": "dbd082096676a420",
+    "x": 1980,
     "y": 220,
     "wires": [
       [
-        "1915adae0ac41c37",
-        "94935853959483b3"
+        "94935853959483b3",
+        "019ba1cac7de95da"
       ]
     ]
   },
@@ -862,8 +1658,7 @@
     "y": 220,
     "wires": [
       [
-        "dbd082096676a420",
-        "1d9d45c177f8141e"
+        "dbd082096676a420"
       ]
     ]
   },
@@ -879,21 +1674,21 @@
     "wires": []
   },
   {
-    "id": "1d9d45c177f8141e",
+    "id": "019ba1cac7de95da",
     "type": "debug",
     "z": "4f4855f52107b72b",
     "g": "19609f77c4ba5897",
-    "name": "debug 7",
+    "name": "Thermostat debug",
     "active": true,
     "tosidebar": true,
-    "console": true,
+    "console": false,
     "tostatus": false,
-    "complete": "true",
-    "targetType": "full",
+    "complete": "payload",
+    "targetType": "msg",
     "statusVal": "",
     "statusType": "auto",
-    "x": 1920,
-    "y": 180,
+    "x": 2210,
+    "y": 140,
     "wires": []
   },
   {
@@ -2972,7 +3767,7 @@
     "id": "4aafd0fb6b684f3d",
     "type": "group",
     "z": "4f4855f52107b72b",
-    "name": "Dehumidifier Smart Plug Control (Auto)",
+    "name": "Smarthome",
     "style": {
       "label": true
     },
@@ -2998,7 +3793,7 @@
     "_version": "2.1.3"
   },
   {
-    "id": "80250646843771a9",
+    "id": "cf6a5a432170b723",
     "type": "global-config",
     "env": [],
     "modules": {

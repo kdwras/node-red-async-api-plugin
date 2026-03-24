@@ -24,23 +24,38 @@ module.exports = () => {
             throw new Error("AsyncAPI file content is empty.");
         }
 
-        /**
-         * Validate first.
-         */
-        const errors = await parser.validate(fileContent);
+        let diagnostics = [];
 
-        if (Array.isArray(errors) && errors.length > 0) {
-            const message = errors.map(function (error) {
-                return error.message;
-            }).join("; ");
-
-            throw new Error("AsyncAPI validation failed: " + message);
+        try {
+            diagnostics = await parser.validate(fileContent);
+        } catch (err) {
+            throw new Error("AsyncAPI validation failed: " + err.message);
         }
 
-        /**
-         * Parse validated content.
-         */
-        return await parser.parse(fileContent);
+        if (Array.isArray(diagnostics) && diagnostics.length > 0) {
+            console.warn("⚠️ AsyncAPI validation diagnostics:");
+            diagnostics.forEach(function (item, index) {
+                console.warn(`${index + 1}. ${item.message}`);
+            });
+        }
+
+        try {
+            const result = await parser.parse(fileContent);
+
+            const document =
+                result?.document ||
+                result?.extras?.document ||
+                result;
+
+            if (!document) {
+                throw new Error("Parser returned empty document.");
+            }
+
+            return document;
+
+        } catch (err) {
+            throw new Error("AsyncAPI parse failed: " + err.message);
+        }
     }
 
     /**
@@ -53,15 +68,15 @@ module.exports = () => {
         const servers = [];
         const channels = [];
 
+        /**
+         * Guard: no document
+         */
         if (!document) {
-            return {
-                servers: servers,
-                channels: channels
-            };
+            return { servers, channels };
         }
 
         /**
-         * Extract servers.
+         * Extract servers
          */
         document.servers().forEach(function (server) {
             servers.push({
@@ -72,14 +87,14 @@ module.exports = () => {
         });
 
         /**
-         * Extract channels, channel parameters, operations and message payload fields.
+         * Extract channels
          */
         document.channels().forEach(function (channel) {
             const operations = [];
             const parameters = [];
 
             /**
-             * Extract channel parameters.
+             * Channel parameters
              */
             channel.parameters().forEach(function (param) {
                 parameters.push({
@@ -89,13 +104,13 @@ module.exports = () => {
             });
 
             /**
-             * Extract operations.
+             * Operations
              */
             channel.operations().forEach(function (operation) {
                 const messages = [];
 
                 /**
-                 * Extract operation messages.
+                 * Messages
                  */
                 operation.messages().forEach(function (msg) {
                     const payload = [];
@@ -124,7 +139,7 @@ module.exports = () => {
                         name: msg.name(),
                         description: msg.description(),
                         contentType: msg.contentType(),
-                        payload: payload
+                        payload
                     });
                 });
 
@@ -132,25 +147,25 @@ module.exports = () => {
                     id: operation.id(),
                     action: operation.action(),
                     summary: operation.summary(),
-                    messages: messages
+                    messages
                 });
             });
 
             channels.push({
                 address: channel.address(),
-                parameters: parameters,
-                operations: operations
+                parameters,
+                operations
             });
         });
 
         return {
-            servers: servers,
-            channels: channels
+            servers,
+            channels
         };
     }
 
     return {
-        parse: parse,
-        extract: extract
+        parse,
+        extract
     };
 };

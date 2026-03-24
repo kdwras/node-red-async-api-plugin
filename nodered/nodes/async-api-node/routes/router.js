@@ -70,122 +70,6 @@ module.exports = (RED) => {
     }
 
     /**
-     * Convert a parsed AsyncAPI document into a simpler JSON structure
-     * that is easier for the editor UI to consume.
-     *
-     * Extracted data:
-     * - servers
-     * - channels
-     * - operations
-     * - messages
-     * - payload fields
-     * - channel parameters
-     *
-     * @param {object} document - Parsed AsyncAPI document
-     * @returns {{servers: Array, channels: Array}}
-     */
-    function extractAsyncApiData(document) {
-        const servers = [];
-        const channels = [];
-
-        /**
-         * -------------------------------------------------------------
-         * Extract servers
-         * -------------------------------------------------------------
-         */
-        document.servers().forEach((server) => {
-            servers.push({
-                url: server.url(),
-                protocol: server.protocol(),
-                description: server.description()
-            });
-        });
-
-        /**
-         * -------------------------------------------------------------
-         * Extract channels, parameters, operations, and message schemas
-         * -------------------------------------------------------------
-         */
-        document.channels().forEach((channel) => {
-            const operations = [];
-            const parameters = [];
-
-            /**
-             * Extract operations for this channel.
-             */
-            channel.operations().forEach((operation) => {
-                const messages = [];
-
-                /**
-                 * Extract messages and their payload schemas.
-                 */
-                operation.messages().forEach((msg) => {
-                    const payload = [];
-                    const payloadJson = msg.payload()?.json?.();
-
-                    /**
-                     * Determine which payload fields are required.
-                     */
-                    const requiredFields = Array.isArray(payloadJson?.required)
-                        ? payloadJson.required
-                        : [];
-
-                    /**
-                     * Extract payload properties as editor-friendly fields.
-                     */
-                    if (payloadJson?.properties) {
-                        Object.entries(payloadJson.properties).forEach(([propName, propSchema]) => {
-                            payload.push({
-                                name: propName,
-                                type: propSchema.type,
-                                description: propSchema.description,
-                                enum: Array.isArray(propSchema.enum) ? propSchema.enum : undefined,
-                                minimum: propSchema.minimum,
-                                maximum: propSchema.maximum,
-                                items: propSchema.items || undefined,
-                                required: requiredFields.includes(propName)
-                            });
-                        });
-                    }
-
-                    messages.push({
-                        name: msg.name(),
-                        description: msg.description(),
-                        payload,
-                        contentType: msg.contentType()
-                    });
-                });
-
-                operations.push({
-                    id: operation.id(),
-                    action: operation.action(),
-                    summary: operation.summary(),
-                    messages
-                });
-            });
-
-            /**
-             * Extract channel parameters used for topic placeholders.
-             * Example: devices/{deviceId}/status
-             */
-            channel.parameters().forEach((param) => {
-                parameters.push({
-                    id: param.id(),
-                    description: param.description()
-                });
-            });
-
-            channels.push({
-                address: channel.address(),
-                parameters,
-                operations
-            });
-        });
-
-        return {servers, channels};
-    }
-
-    /**
      * =================================================================
      * Route Handlers
      * =================================================================
@@ -203,11 +87,10 @@ module.exports = (RED) => {
      * @param {object} res
      */
     async function getData(req, res) {
-        const {nodeId} = req.params;
-        const node = getRuntimeNode(nodeId);
+        const { nodeId } = req.params;
 
-        if (!node) {
-            return sendNodeNotFound(res);
+        if (!nodeId) {
+            return res.status(400).json({ error: "Missing nodeId" });
         }
 
         try {
@@ -216,11 +99,11 @@ module.exports = (RED) => {
             const fileContent = file?.fileContent;
 
             if (!fileContent) {
-                return res.status(400).json({error: "No file content provided"});
+                return res.status(400).json({ error: "No file content provided" });
             }
 
-            const parsed = await asyncapiService.parse(fileContent);
-            const data = asyncapiService.extract(parsed.document);
+            const parsedDocument = await asyncapiService.parse(fileContent);
+            const data = asyncapiService.extract(parsedDocument);
 
             return res.json(data);
 
@@ -245,11 +128,10 @@ module.exports = (RED) => {
      * @param {object} res
      */
     function uploadFile(req, res) {
-        const {nodeId} = req.params;
-        const node = getRuntimeNode(nodeId);
+        const { nodeId } = req.params;
 
-        if (!node) {
-            return sendNodeNotFound(res);
+        if (!nodeId) {
+            return res.status(400).json({ error: "Missing nodeId" });
         }
 
         if (!req.file) {
@@ -273,11 +155,10 @@ module.exports = (RED) => {
      * @param {object} res
      */
     async function getFile(req, res) {
-        const {nodeId} = req.params;
-        const node = getRuntimeNode(nodeId);
+        const { nodeId } = req.params;
 
-        if (!node) {
-            return sendNodeNotFound(res);
+        if (!nodeId) {
+            return res.status(400).json({ error: "Missing nodeId" });
         }
 
         const fileDir = fileUtils.getFilePath(nodeId);
