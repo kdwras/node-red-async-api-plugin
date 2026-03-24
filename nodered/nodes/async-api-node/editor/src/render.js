@@ -107,18 +107,21 @@ export function renderParameters() {
     }
 
     parameters.forEach(function (param) {
-        const name = param.id || param.name;
-        const savedValue = state.selections.parameterValues?.[name] ?? "";
+        const paramName = param.id || param.name;
+        const savedValue = state.selections.parameterValues?.[paramName] ?? "";
 
         container.append(`
             <div class="form-row">
-                <label>${escapeHtml(name)}</label>
-                <input id="node-input-param-${escapeHtml(name)}" value="${escapeHtml(String(savedValue))}">
+                <label>${escapeHtml(paramName)}</label>
+                <input
+                    id="node-input-param-${state.nodeId}-${escapeHtml(paramName)}"
+                    data-param-name="${escapeHtml(paramName)}"
+                    data-node-id="${state.nodeId}"
+                    value="${escapeHtml(String(savedValue))}">
             </div>
         `);
     });
 }
-
 /**
  * Render payload fields from selected operation.
  */
@@ -143,12 +146,17 @@ export function renderMessages() {
                 return;
             }
 
-            const savedValue = state.selections.payloadValues?.[field.name] ?? "";
+            const fieldName = field.name;
+            const savedValue = state.selections.payloadValues?.[fieldName] ?? "";
 
             container.append(`
                 <div class="form-row">
-                    <label>${escapeHtml(field.name)}</label>
-                    <input id="node-input-${escapeHtml(field.name)}" value="${escapeHtml(String(savedValue))}">
+                    <label>${escapeHtml(fieldName)}</label>
+                    <input
+                        id="node-input-${state.nodeId}-${escapeHtml(fieldName)}"
+                        data-field-name="${escapeHtml(fieldName)}"
+                        data-node-id="${state.nodeId}"
+                        value="${escapeHtml(String(savedValue))}">
                 </div>
             `);
         });

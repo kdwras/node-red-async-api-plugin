@@ -42,9 +42,14 @@ export function getPayloadValuesFromUi() {
     const values = {};
 
     $("#node-messages-display")
-        .find("input[id^='node-input-']:not([id^='node-input-param-'])")
+        .find(`input[data-node-id="${state.nodeId}"]`)
         .each(function () {
-            const name = this.id.replace("node-input-", "");
+            const name = $(this).data("field-name");
+
+            if (!name) {
+                return;
+            }
+
             values[name] = $(this).val() || "";
         });
 
@@ -60,15 +65,19 @@ export function getParameterValuesFromUi() {
     const values = {};
 
     $("#node-parameters-display")
-        .find("input[id^='node-input-param-']")
+        .find(`input[data-node-id="${state.nodeId}"]`)
         .each(function () {
-            const name = this.id.replace("node-input-param-", "");
+            const name = $(this).data("param-name");
+
+            if (!name) {
+                return;
+            }
+
             values[name] = $(this).val() || "";
         });
 
     return values;
 }
-
 /**
  * Synchronize current UI values into state.
  */

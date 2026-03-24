@@ -27,6 +27,7 @@ import {
     renderMessages,
     applySelectionsToUi
 } from "./render.js";
+import {escapeHtml} from "./dom-utils";
 
 /**
  * Bind all static UI events.
@@ -120,9 +121,10 @@ export function bindStaticEvents() {
  */
 export function subscribeRuntimeEvents(nodeId) {
     RED.comms.subscribe(`async-api-red/payload-update/${nodeId}`, function (topic, msg) {
+
         if (msg?.payload && typeof msg.payload === "object") {
             Object.entries(msg.payload).forEach(function ([key, value]) {
-                const input = $(`#node-input-${key}`);
+                const input = $(`#node-input-${nodeId}-${key}`);
 
                 if (input.length) {
                     input.val(value);
@@ -132,7 +134,7 @@ export function subscribeRuntimeEvents(nodeId) {
 
         if (msg?.parameters && typeof msg.parameters === "object") {
             Object.entries(msg.parameters).forEach(function ([key, value]) {
-                const input = $(`#node-input-param-${key}`);
+                const input = $(`#node-input-param-${nodeId}-${key}`);
 
                 if (input.length) {
                     input.val(value);
@@ -140,7 +142,6 @@ export function subscribeRuntimeEvents(nodeId) {
             });
         }
     });
-
     RED.comms.subscribe(`async-api-red/payload-error/${nodeId}`, function (topic, msg) {
         RED.notify(`❌ Validation Error: ${msg.error}`, "error");
     });

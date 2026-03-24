@@ -19,17 +19,37 @@ module.exports = (RED) => {
             return;
         }
 
-        if (node.mqttClient && !node.mqttClient.disconnected) {
+        if (node.mqttClient) {
             return;
         }
 
         node.mqttClient = mqtt.connect(node.serverUrl);
 
+        node.isConnected = false;
         node.subscribedTopic = null;
         node.listenerAttached = false;
 
+
         node.mqttClient.on("connect", function () {
-            node.status({ fill: "green", shape: "dot", text: "connected" });
+            node.isConnected = true;
+
+            node.status({
+                fill: "green",
+                shape: "dot",
+                text: "connected"
+            });
+
+        });
+
+        node.mqttClient.on("close", function () {
+            node.isConnected = false;
+
+            node.status({
+                fill: "red",
+                shape: "ring",
+                text: "disconnected"
+            });
+
         });
 
         node.mqttClient.on("error", function (err) {

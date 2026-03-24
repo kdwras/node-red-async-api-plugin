@@ -170,16 +170,22 @@
   }
   function getPayloadValuesFromUi() {
     const values = {};
-    $("#node-messages-display").find("input[id^='node-input-']:not([id^='node-input-param-'])").each(function() {
-      const name = this.id.replace("node-input-", "");
+    $("#node-messages-display").find(`input[data-node-id="${state.nodeId}"]`).each(function() {
+      const name = $(this).data("field-name");
+      if (!name) {
+        return;
+      }
       values[name] = $(this).val() || "";
     });
     return values;
   }
   function getParameterValuesFromUi() {
     const values = {};
-    $("#node-parameters-display").find("input[id^='node-input-param-']").each(function() {
-      const name = this.id.replace("node-input-param-", "");
+    $("#node-parameters-display").find(`input[data-node-id="${state.nodeId}"]`).each(function() {
+      const name = $(this).data("param-name");
+      if (!name) {
+        return;
+      }
       values[name] = $(this).val() || "";
     });
     return values;
@@ -263,12 +269,16 @@
       return;
     }
     parameters.forEach(function(param) {
-      const name = param.id || param.name;
-      const savedValue = state.selections.parameterValues?.[name] ?? "";
+      const paramName = param.id || param.name;
+      const savedValue = state.selections.parameterValues?.[paramName] ?? "";
       container.append(`
             <div class="form-row">
-                <label>${escapeHtml(name)}</label>
-                <input id="node-input-param-${escapeHtml(name)}" value="${escapeHtml(String(savedValue))}">
+                <label>${escapeHtml(paramName)}</label>
+                <input
+                    id="node-input-param-${state.nodeId}-${escapeHtml(paramName)}"
+                    data-param-name="${escapeHtml(paramName)}"
+                    data-node-id="${state.nodeId}"
+                    value="${escapeHtml(String(savedValue))}">
             </div>
         `);
     });
@@ -289,11 +299,16 @@
         if (!field || !field.name) {
           return;
         }
-        const savedValue = state.selections.payloadValues?.[field.name] ?? "";
+        const fieldName = field.name;
+        const savedValue = state.selections.payloadValues?.[fieldName] ?? "";
         container.append(`
                 <div class="form-row">
-                    <label>${escapeHtml(field.name)}</label>
-                    <input id="node-input-${escapeHtml(field.name)}" value="${escapeHtml(String(savedValue))}">
+                    <label>${escapeHtml(fieldName)}</label>
+                    <input
+                        id="node-input-${state.nodeId}-${escapeHtml(fieldName)}"
+                        data-field-name="${escapeHtml(fieldName)}"
+                        data-node-id="${state.nodeId}"
+                        value="${escapeHtml(String(savedValue))}">
                 </div>
             `);
       });
@@ -350,7 +365,7 @@
     RED.comms.subscribe(`async-api-red/payload-update/${nodeId}`, function(topic, msg) {
       if (msg?.payload && typeof msg.payload === "object") {
         Object.entries(msg.payload).forEach(function([key, value]) {
-          const input = $(`#node-input-${key}`);
+          const input = $(`#node-input-${nodeId}-${key}`);
           if (input.length) {
             input.val(value);
           }
@@ -358,7 +373,7 @@
       }
       if (msg?.parameters && typeof msg.parameters === "object") {
         Object.entries(msg.parameters).forEach(function([key, value]) {
-          const input = $(`#node-input-param-${key}`);
+          const input = $(`#node-input-param-${nodeId}-${key}`);
           if (input.length) {
             input.val(value);
           }
