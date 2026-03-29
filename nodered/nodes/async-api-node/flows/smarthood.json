@@ -1707,7 +1707,7 @@
     "id": "cc220e236c255890",
     "type": "inject",
     "z": "5a540fe05d13dafe",
-    "name": "",
+    "name": "Start simulation",
     "props": [
       {
         "p": "homeId",
@@ -1725,7 +1725,7 @@
     "once": false,
     "onceDelay": 0.1,
     "topic": "",
-    "x": 650,
+    "x": 690,
     "y": 360,
     "wires": [
       [
@@ -1767,7 +1767,7 @@
     "id": "e6838ed8926b30c7",
     "type": "inject",
     "z": "5a540fe05d13dafe",
-    "name": "",
+    "name": "Start simulation",
     "props": [
       {
         "p": "homeId",
@@ -1785,7 +1785,7 @@
     "once": false,
     "onceDelay": 0.1,
     "topic": "",
-    "x": 650,
+    "x": 690,
     "y": 220,
     "wires": [
       [
@@ -1827,7 +1827,7 @@
     "id": "aec31d55cacb41ae",
     "type": "inject",
     "z": "5a540fe05d13dafe",
-    "name": "",
+    "name": "Start simulation",
     "props": [
       {
         "p": "homeId",
@@ -1845,7 +1845,7 @@
     "once": false,
     "onceDelay": 0.1,
     "topic": "",
-    "x": 650,
+    "x": 690,
     "y": 500,
     "wires": [
       [
@@ -1887,7 +1887,7 @@
     "id": "c77630cd4ba126d1",
     "type": "inject",
     "z": "5a540fe05d13dafe",
-    "name": "",
+    "name": "Start simulation",
     "props": [
       {
         "p": "homeId",
@@ -1905,7 +1905,7 @@
     "once": false,
     "onceDelay": 0.1,
     "topic": "",
-    "x": 650,
+    "x": 690,
     "y": 640,
     "wires": [
       [
@@ -1917,7 +1917,7 @@
     "id": "82cd2da6c4790b25",
     "type": "function",
     "z": "5a540fe05d13dafe",
-    "name": "function 2",
+    "name": "Energy result (kWh)",
     "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
     "outputs": 1,
     "timeout": 0,
@@ -1925,7 +1925,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1160,
+    "x": 1200,
     "y": 160,
     "wires": [
       []
@@ -1935,7 +1935,7 @@
     "id": "532444c0bc7b88be",
     "type": "function",
     "z": "5a540fe05d13dafe",
-    "name": "function 3",
+    "name": "Energy result (kWh)",
     "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
     "outputs": 1,
     "timeout": 0,
@@ -1943,7 +1943,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1160,
+    "x": 1200,
     "y": 300,
     "wires": [
       []
@@ -1953,7 +1953,7 @@
     "id": "bb22d14c45d873fd",
     "type": "function",
     "z": "5a540fe05d13dafe",
-    "name": "function 4",
+    "name": "Energy result (kWh)",
     "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
     "outputs": 1,
     "timeout": 0,
@@ -1961,7 +1961,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1160,
+    "x": 1200,
     "y": 440,
     "wires": [
       []
@@ -1971,7 +1971,7 @@
     "id": "03156a1eb3321ed0",
     "type": "function",
     "z": "5a540fe05d13dafe",
-    "name": "function 5",
+    "name": "Energy result (kWh)",
     "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
     "outputs": 1,
     "timeout": 0,
@@ -1979,7 +1979,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1160,
+    "x": 1200,
     "y": 580,
     "wires": [
       []
