@@ -1,0 +1,1988 @@
+[
+  {
+    "id": "subflow_homeid",
+    "type": "subflow",
+    "name": "HomeId Injector",
+    "info": "Injects homeId into msg.parameters and payload",
+    "category": "",
+    "in": [
+      {
+        "x": 140,
+        "y": 620,
+        "wires": [
+          {
+            "id": "272910d0b008a640"
+          }
+        ]
+      }
+    ],
+    "out": [
+      {
+        "x": 1920,
+        "y": 680,
+        "wires": [
+          {
+            "id": "ebe7cfb8b731f7a6",
+            "port": 0
+          }
+        ]
+      }
+    ],
+    "env": [
+      {
+        "name": "homeId",
+        "type": "str",
+        "value": "1"
+      }
+    ],
+    "meta": {},
+    "color": "#DDAA99"
+  },
+  {
+    "id": "ebe7cfb8b731f7a6",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "name": "Total Energy Calculator",
+    "func": "const homeId = msg.homeId || msg.payload?.homeId;\n\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\nlet devices = ['ac', 'light', 'fridge', 'laundry', 'dehumidifier', 'cooker', 'thermostat'];\n\nlet totalKWh = devices.reduce((sum, d) => {\n    return sum + (flow.get(`homes.${homeId}.energy.${d}`) || 0);\n}, 0);\n\nmsg.payload = {\n    homeId,\n    energy: parseFloat(totalKWh.toFixed(3)),\n    unit: \"kWh\"\n};\n\nnode.status({\n    fill: totalKWh === 0 ? \"grey\" : \"green\",\n    shape: totalKWh === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${totalKWh.toFixed(3)} kWh`\n});\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1690,
+    "y": 680,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "e6590b7206d8581f",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "a211020fca463051",
+    "name": "AC Telemetry",
+    "func": "// === Air Conditioner Telemetry Simulator (Smart Plug Controlled) ===\n\n// --- Resolve homeId first ---\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\n\n// --- Environment values ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 25);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 50);\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Persistent setpoint (changes every 60 simulated minutes = 1 hour) ---\nlet setpoint = flow.get(`homes.${homeId}.ac.setpoint`);\nlet setpointTimer = flow.get(`homes.${homeId}.ac.setpointTimer`) || 0;\n\nsetpointTimer += 1; // 1 tick = 1 minute\n\nif (setpoint === undefined || setpoint === null || setpointTimer >= 60) {\n    setpoint = Math.floor(16 + Math.random() * 15); // 16–30°C\n    setpointTimer = 0;\n}\n\n// If you want ALWAYS 23°C, keep this:\nsetpoint = 23;\n\n// --- Persistent current temperature (don’t reset each tick) ---\nlet current = flow.get(`homes.${homeId}.ac.currentTemp`);\nif (current === undefined || current === null) current = envTemp;\n\n// --- Natural drift + pull toward environment ---\ncurrent += (Math.random() * 0.3 - 0.15);\ncurrent += (envTemp - current) * 0.05;\n\n// --- Determine AC mode ---\nlet mode = 'idle';\nlet currentPower = 0;\n\n// Deadband around setpoint\nconst deadband = 1;\n\nif (current > setpoint + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4;\n} else if (current < setpoint - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4;\n}\n\n// --- Energy tracking (kWh) ---\nlet energy = flow.get(`homes.${homeId}.energy.ac`) || 0;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\n\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\nflow.set(`homes.${homeId}.ac.setpoint`, setpoint);\nflow.set(`homes.${homeId}.ac.setpointTimer`, setpointTimer);\nflow.set(`homes.${homeId}.ac.currentTemp`, current);\nflow.set(`homes.${homeId}.energy.ac`, energy);\n\n// --- Node status feedback ---\nlet color = \"green\";\nlet shape = \"ring\";\nlet text = `Home ${homeId} | Idle | ${current.toFixed(1)}°C → ${setpoint}°C | 0 W`;\n\nif (mode === 'cool') {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Home ${homeId} | Cooling | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n} else if (mode === 'heat') {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Home ${homeId} | Heating | ${current.toFixed(1)}°C → ${setpoint}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    homeId: homeId,\n    device: \"ac\",\n    temperature: parseFloat(current.toFixed(1)),\n    humidity: envHumidity,\n    setpoint: setpoint,\n    mode: mode,\n    currentPower: currentPower,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    unit: \"C\",\n    timestamp: new Date().toISOString()\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1020,
+    "y": 420,
+    "wires": [
+      [
+        "01056304da822a78"
+      ]
+    ]
+  },
+  {
+    "id": "01056304da822a78",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "a211020fca463051",
+    "name": "AC AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/ac/state",
+    "operation": {
+      "id": "acTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "ACState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Current operating mode of the AC",
+              "enum": [
+                "cooling",
+                "heating",
+                "fan",
+                "idle",
+                "off"
+              ],
+              "required": true
+            },
+            {
+              "name": "temperature",
+              "type": "number",
+              "description": "Current measured room temperature",
+              "required": true
+            },
+            {
+              "name": "setpoint",
+              "type": "number",
+              "description": "Target temperature set by user or system",
+              "required": true
+            },
+            {
+              "name": "humidity",
+              "type": "number",
+              "description": "Current room humidity in percent",
+              "required": true
+            },
+            {
+              "name": "unit",
+              "type": "string",
+              "description": "Unit for temperature values",
+              "required": false
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Current operating mode of the AC",
+        "enum": [
+          "cooling",
+          "heating",
+          "fan",
+          "idle",
+          "off"
+        ],
+        "required": true
+      },
+      {
+        "name": "temperature",
+        "type": "number",
+        "description": "Current measured room temperature",
+        "required": true
+      },
+      {
+        "name": "setpoint",
+        "type": "number",
+        "description": "Target temperature set by user or system",
+        "required": true
+      },
+      {
+        "name": "humidity",
+        "type": "number",
+        "description": "Current room humidity in percent",
+        "required": true
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "description": "Unit for temperature values",
+        "required": false
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "mode": "",
+      "temperature": "",
+      "setpoint": "",
+      "humidity": "",
+      "unit": "",
+      "energyUsed": ""
+    },
+    "savedNodeId": "01056304da822a78",
+    "x": 1270,
+    "y": 420,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "cc5836e8e5afdbf5",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "a211020fca463051",
+    "name": "AC Device",
+    "info": "",
+    "x": 1000,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "35f57317c6f5c331",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "0aee7daa9b2e2df0",
+    "name": "Lights Telemetry",
+    "func": "// === Smart Light Telemetry Simulator (Controlled by Smart Plug) ===\n\n// --- Resolve homeId first ---\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\n// --- Environment info ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\nlet envLight = parseFloat(msg.payload.lightIntensity ?? 50);\n\n// --- Threshold for turning lights ON/OFF (0–100) ---\nconst lightThreshold = 30;\nlet state = envLight < lightThreshold ? \"ON\" : \"OFF\";\n\n// --- Light behavior when ON ---\nlet brightness = state === \"ON\" ? Math.floor(50 + Math.random() * 51) : 0;\nconst colors = [\"#FFFFFF\", \"#FFAA00\", \"#00FFAA\", \"#AA00FF\"];\nlet color = colors[Math.floor(Math.random() * colors.length)];\nlet colorTemperature = Math.floor(2700 + Math.random() * (6500 - 2700));\nconst modes = [\"normal\", \"reading\", \"nightlight\", \"ambient\", \"effect\"];\nlet mode = modes[Math.floor(Math.random() * modes.length)];\nlet effect = mode === \"effect\"\n    ? [\"rainbow\", \"pulse\", \"candle\"][Math.floor(Math.random() * 3)]\n    : \"\";\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickSeconds = 60;\n\n// --- Power & Energy tracking (kWh cumulative) ---\nlet energy = flow.get(`homes.${homeId}.energy.light`) || 0;\nconst currentPower = state === \"ON\" ? (8 + Math.random() * 2) : 0;\n\nenergy += (currentPower / 1000) * (tickSeconds / 3600);\nflow.set(`homes.${homeId}.energy.light`, energy);\n\n// --- Node status for dashboard ---\nlet colorStatus = state === \"ON\" ? \"green\" : \"red\";\nlet shape = state === \"ON\" ? \"dot\" : \"ring\";\nlet text = `Home ${homeId} | ${state} | ${currentPower.toFixed(1)} W`;\n\nnode.status({ fill: colorStatus, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n        homeId: homeId,\n    device: \"light\",\n    state,\n    brightness,\n    color,\n    colorTemperature,\n    mode,\n    effect,\n    currentPower: parseFloat(currentPower.toFixed(1)),\n    energyUsed: parseFloat(energy.toFixed(3)),\n    voltage: 230,\n    environmentTemp: parseFloat(envTemp),\n    environmentHumidity: parseFloat(envHumidity),\n    environmentLight: parseFloat(envLight),\n    timestamp: new Date().toISOString()\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1020,
+    "y": 600,
+    "wires": [
+      [
+        "d6a783516ac7fa4b"
+      ]
+    ]
+  },
+  {
+    "id": "d6a783516ac7fa4b",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "0aee7daa9b2e2df0",
+    "name": "Lights AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/lights/state",
+    "operation": {
+      "id": "controlLights",
+      "action": "send",
+      "messages": [
+        {
+          "name": "LightState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "state",
+              "type": "string",
+              "description": "Current power state of the light",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "brightness",
+              "type": "integer",
+              "description": "Brightness level as percentage",
+              "minimum": 0,
+              "maximum": 100,
+              "required": true
+            },
+            {
+              "name": "color",
+              "type": "string",
+              "description": "Hex or RGB color value (e.g., \"#FFAA00\" or \"rgb(255,170,0)\")",
+              "required": false
+            },
+            {
+              "name": "colorTemperature",
+              "type": "integer",
+              "description": "Color temperature in Kelvin (e.g., 2700 warm white – 6500 cool white)",
+              "minimum": 1500,
+              "maximum": 9000,
+              "required": false
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Current light mode",
+              "enum": [
+                "normal",
+                "reading",
+                "nightlight",
+                "ambient",
+                "effect"
+              ],
+              "required": true
+            },
+            {
+              "name": "effect",
+              "type": "string",
+              "description": "Active effect (if any, e.g., \"rainbow\", \"pulse\", \"candle\")",
+              "required": false
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "voltage",
+              "type": "number",
+              "description": "Operating voltage in Volts",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "state",
+        "type": "string",
+        "description": "Current power state of the light",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "brightness",
+        "type": "integer",
+        "description": "Brightness level as percentage",
+        "minimum": 0,
+        "maximum": 100,
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex or RGB color value (e.g., \"#FFAA00\" or \"rgb(255,170,0)\")",
+        "required": false
+      },
+      {
+        "name": "colorTemperature",
+        "type": "integer",
+        "description": "Color temperature in Kelvin (e.g., 2700 warm white – 6500 cool white)",
+        "minimum": 1500,
+        "maximum": 9000,
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Current light mode",
+        "enum": [
+          "normal",
+          "reading",
+          "nightlight",
+          "ambient",
+          "effect"
+        ],
+        "required": true
+      },
+      {
+        "name": "effect",
+        "type": "string",
+        "description": "Active effect (if any, e.g., \"rainbow\", \"pulse\", \"candle\")",
+        "required": false
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "voltage",
+        "type": "number",
+        "description": "Operating voltage in Volts",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "state": "",
+      "brightness": "",
+      "color": "",
+      "colorTemperature": "",
+      "mode": "",
+      "effect": "",
+      "energyUsed": "",
+      "voltage": ""
+    },
+    "savedNodeId": "d6a783516ac7fa4b",
+    "x": 1280,
+    "y": 600,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "d2b397e205f25348",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "0aee7daa9b2e2df0",
+    "name": "Lights",
+    "info": "",
+    "x": 990,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "45c14e4dcf6123dd",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "4c03080298063de0",
+    "name": "Fridge Telemetry",
+    "func": "// === Fridge & Freezer Telemetry Simulator (Safe Temperatures) ===\n\n// --- Resolve homeId first ---\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\n// Desired temps (user setpoints)\nconst fridgeSet = flow.get(`homes.${homeId}.fridge.setTemp`) ?? 4;\nconst freezerSet = flow.get(`homes.${homeId}.freezer.setTemp`) ?? -18;\n\n// Current temps (persist across ticks)\nlet fridgeTemp = flow.get(`homes.${homeId}.fridge.currentTemp`);\nlet freezerTemp = flow.get(`homes.${homeId}.freezer.currentTemp`);\n\nif (fridgeTemp === undefined || fridgeTemp === null) {\n    fridgeTemp = fridgeSet + (Math.random() * 2 - 1);\n}\nif (freezerTemp === undefined || freezerTemp === null) {\n    freezerTemp = freezerSet + (Math.random() * 2 - 1);\n}\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickSeconds = 60;\n\n// --- Door status simulation (10% chance door is open) ---\nlet doorStatus = \"closed\";\nif (Math.random() < 0.1) {\n    doorStatus = Math.random() > 0.5 ? \"fridge_open\" : \"freezer_open\";\n}\n\n// --- Natural drift (slightly worse when door open) ---\nlet fridgeDrift = (Math.random() * 0.4 - 0.2);\nlet freezerDrift = (Math.random() * 0.6 - 0.3);\n\nif (doorStatus !== \"closed\") {\n    fridgeDrift += 0.25;\n    freezerDrift += 0.35;\n}\n\nfridgeTemp += fridgeDrift;\nfreezerTemp += freezerDrift;\n\n// --- Compressor state logic ---\nlet compressor = \"OFF\";\nlet currentPower = 5;\n\n// If door open, idle/lighting/fan slightly higher\nif (doorStatus !== \"closed\") currentPower = 20;\n\nif (fridgeTemp > fridgeSet + 1) {\n    compressor = \"ON\";\n    fridgeTemp -= 0.3;\n    if (fridgeTemp < fridgeSet) fridgeTemp = fridgeSet;\n    currentPower = 150;\n}\n\nif (freezerTemp > freezerSet + 1) {\n    compressor = \"ON\";\n    freezerTemp -= 0.5;\n    if (freezerTemp < freezerSet) freezerTemp = freezerSet;\n    currentPower = 150;\n}\n\n// --- Energy usage tracking (kWh cumulative) ---\nlet energy = flow.get(`homes.${homeId}.energy.fridge`) || 0;\nenergy += (currentPower / 1000) * (tickSeconds / 3600);\nflow.set(`homes.${homeId}.energy.fridge`, energy);\n\n// --- Save temps for next tick ---\nflow.set(`homes.${homeId}.fridge.currentTemp`, fridgeTemp);\nflow.set(`homes.${homeId}.freezer.currentTemp`, freezerTemp);\n\n// --- Node status visual feedback ---\nlet color = \"green\";\nlet shape = \"ring\";\nlet text = `Home ${homeId} | Stable | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n\nif (doorStatus !== \"closed\") {\n    color = \"red\";\n    shape = \"dot\";\n    text = `Home ${homeId} | ⚠️ Door Open (${doorStatus.replace(\"_\", \" \")}) | ${currentPower} W`;\n} else if (compressor === \"ON\") {\n    color = \"blue\";\n    shape = \"dot\";\n    text = `Home ${homeId} | Cooling ON | ${fridgeTemp.toFixed(1)}°C / ${freezerTemp.toFixed(1)}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry payload ---\nmsg.payload = {\n        homeId: homeId,\n    device: \"fridge\",\n    power: compressor,\n    mode: \"normal\",\n    fridgeTemp: parseFloat(fridgeTemp.toFixed(1)),\n    freezerTemp: parseFloat(freezerTemp.toFixed(1)),\n    doorStatus,\n    humidityControl: [\"low\", \"medium\", \"high\"][Math.floor(Math.random() * 3)],\n    currentPower,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    alarms: doorStatus !== \"closed\" ? [\"door_open\"] : [],\n    timestamp: new Date().toISOString()\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1030,
+    "y": 800,
+    "wires": [
+      [
+        "9aade0d705c15f97"
+      ]
+    ]
+  },
+  {
+    "id": "9aade0d705c15f97",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "4c03080298063de0",
+    "name": "Fridge AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/fridge/state",
+    "operation": {
+      "id": "fridgeTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "FridgeState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "power",
+              "type": "string",
+              "description": "Power state of the fridge",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Operating mode",
+              "enum": [
+                "eco",
+                "normal",
+                "turbo",
+                "vacation"
+              ],
+              "required": true
+            },
+            {
+              "name": "fridgeTemp",
+              "type": "number",
+              "description": "Target temperature for fridge compartment in °C",
+              "required": true
+            },
+            {
+              "name": "freezerTemp",
+              "type": "number",
+              "description": "Target temperature for freezer compartment in °C",
+              "required": true
+            },
+            {
+              "name": "doorStatus",
+              "type": "string",
+              "description": "Whether fridge or freezer door is open",
+              "enum": [
+                "closed",
+                "fridge_open",
+                "freezer_open",
+                "both_open"
+              ],
+              "required": true
+            },
+            {
+              "name": "humidityControl",
+              "type": "string",
+              "description": "Humidity control for vegetable/fruit drawers",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "required": false
+            },
+            {
+              "name": "alarms",
+              "type": "array",
+              "description": "Active alarms or alerts",
+              "items": {
+                "type": "string",
+                "example": [
+                  "door_open",
+                  "high_temp",
+                  "filter_expired"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-35>"
+              },
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "power",
+        "type": "string",
+        "description": "Power state of the fridge",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Operating mode",
+        "enum": [
+          "eco",
+          "normal",
+          "turbo",
+          "vacation"
+        ],
+        "required": true
+      },
+      {
+        "name": "fridgeTemp",
+        "type": "number",
+        "description": "Target temperature for fridge compartment in °C",
+        "required": true
+      },
+      {
+        "name": "freezerTemp",
+        "type": "number",
+        "description": "Target temperature for freezer compartment in °C",
+        "required": true
+      },
+      {
+        "name": "doorStatus",
+        "type": "string",
+        "description": "Whether fridge or freezer door is open",
+        "enum": [
+          "closed",
+          "fridge_open",
+          "freezer_open",
+          "both_open"
+        ],
+        "required": true
+      },
+      {
+        "name": "humidityControl",
+        "type": "string",
+        "description": "Humidity control for vegetable/fruit drawers",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "required": false
+      },
+      {
+        "name": "alarms",
+        "type": "array",
+        "description": "Active alarms or alerts",
+        "items": {
+          "type": "string",
+          "example": [
+            "door_open",
+            "high_temp",
+            "filter_expired"
+          ],
+          "x-parser-schema-id": "<anonymous-schema-35>"
+        },
+        "required": false
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "power": "",
+      "mode": "",
+      "fridgeTemp": "",
+      "freezerTemp": "",
+      "doorStatus": "",
+      "humidityControl": "",
+      "alarms": ""
+    },
+    "savedNodeId": "9aade0d705c15f97",
+    "x": 1280,
+    "y": 800,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "ddf4976877cb52e7",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "4c03080298063de0",
+    "name": "Fridge Device",
+    "info": "",
+    "x": 1010,
+    "y": 740,
+    "wires": []
+  },
+  {
+    "id": "2c5b9910b1a8c04a",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "cbdb8152b5d22552",
+    "name": "Launder AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/launder/state",
+    "operation": {
+      "id": "launderTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "LaunderState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "power",
+              "type": "string",
+              "description": "Power state of the machine",
+              "enum": [
+                "ON",
+                "OFF",
+                "STANDBY"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "description": "Selected washing program",
+              "enum": [
+                "eco",
+                "normal",
+                "quick",
+                "heavy",
+                "delicate",
+                "wool",
+                "rinse",
+                "spin",
+                "dry"
+              ],
+              "required": true
+            },
+            {
+              "name": "waterTemp",
+              "type": "number",
+              "description": "Current water temperature in °C",
+              "required": true
+            },
+            {
+              "name": "spinSpeed",
+              "type": "integer",
+              "description": "Spin speed in RPM",
+              "required": true
+            },
+            {
+              "name": "remainingTime",
+              "type": "integer",
+              "description": "Estimated remaining time in minutes",
+              "required": true
+            },
+            {
+              "name": "loadWeight",
+              "type": "number",
+              "description": "Estimated laundry load weight in kg",
+              "required": true
+            },
+            {
+              "name": "waterUsed",
+              "type": "number",
+              "description": "Cumulative water used in liters",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "doorStatus",
+              "type": "string",
+              "description": "Current door state",
+              "enum": [
+                "open",
+                "closed",
+                "locked"
+              ],
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "power",
+        "type": "string",
+        "description": "Power state of the machine",
+        "enum": [
+          "ON",
+          "OFF",
+          "STANDBY"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "Selected washing program",
+        "enum": [
+          "eco",
+          "normal",
+          "quick",
+          "heavy",
+          "delicate",
+          "wool",
+          "rinse",
+          "spin",
+          "dry"
+        ],
+        "required": true
+      },
+      {
+        "name": "waterTemp",
+        "type": "number",
+        "description": "Current water temperature in °C",
+        "required": true
+      },
+      {
+        "name": "spinSpeed",
+        "type": "integer",
+        "description": "Spin speed in RPM",
+        "required": true
+      },
+      {
+        "name": "remainingTime",
+        "type": "integer",
+        "description": "Estimated remaining time in minutes",
+        "required": true
+      },
+      {
+        "name": "loadWeight",
+        "type": "number",
+        "description": "Estimated laundry load weight in kg",
+        "required": true
+      },
+      {
+        "name": "waterUsed",
+        "type": "number",
+        "description": "Cumulative water used in liters",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "doorStatus",
+        "type": "string",
+        "description": "Current door state",
+        "enum": [
+          "open",
+          "closed",
+          "locked"
+        ],
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "power": "",
+      "mode": "",
+      "waterTemp": "",
+      "spinSpeed": "",
+      "remainingTime": "",
+      "loadWeight": "",
+      "waterUsed": "",
+      "energyUsed": "",
+      "doorStatus": ""
+    },
+    "savedNodeId": "2c5b9910b1a8c04a",
+    "x": 1270,
+    "y": 1000,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "5e89aee0591904b5",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "cbdb8152b5d22552",
+    "name": "Laundry Telemetry",
+    "func": "// --- Washing Machine Cycle Simulator (restart when remainingTime hits 0) ---\n// What it does:\n// - Runs a normal multi-phase washing cycle\n// - Publishes AsyncAPI-compatible payload fields\n// - Shows TOTAL remaining time for the whole cycle (minutes)\n// - When TOTAL remaining time reaches 0 (cycle completed), it automatically starts a new cycle\n\n// --- Resolve homeId first ---\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n  node.error(\"Missing homeId\");\n  return null;\n}\n\n// ----------------------------\n// Simulation scale (seconds per tick)\n// ----------------------------\nconst scale = global.get(\"simulationScale\") || 60;\nconst tickSeconds = 1 * scale;\n\n\n// ----------------------------\n// Config\n// ----------------------------\nconst modeDurationsMin = {\n  eco:      { filling: 5, washing: 60, rinsing: 15, spinning: 10, drying: 30 },\n  normal:   { filling: 5, washing: 45, rinsing: 15, spinning: 10, drying: 20 },\n  quick:    { filling: 3, washing: 20, rinsing: 10, spinning: 5,  drying: 10 },\n  heavy:    { filling: 5, washing: 75, rinsing: 20, spinning: 15, drying: 40 },\n  delicate: { filling: 5, washing: 30, rinsing: 15, spinning: 5,  drying: 10 }\n};\n\nconst phasePower = {\n  filling: 50,\n  washing: 500,\n  rinsing: 300,\n  spinning: 800,\n  drying: 2000\n};\n\nconst phases = [\"filling\", \"washing\", \"rinsing\", \"spinning\", \"drying\"];\n\n// Helpers\nfunction minToSec(min) { return Math.round(min * 60); }\nfunction clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }\nfunction secondsToCeilMinutes(sec) { return Math.ceil(sec / 60); }\n\n// TOTAL remaining time for whole cycle (seconds)\nfunction totalRemainingSeconds(mode, phase, remainingSeconds) {\n  let total = remainingSeconds;\n  const idx = phases.indexOf(phase);\n  if (idx === -1) return total;\n  for (let i = idx + 1; i < phases.length; i++) {\n    total += minToSec(modeDurationsMin[mode][phases[i]]);\n  }\n  return total;\n}\n\n// Pick random mode\nfunction pickRandomMode() {\n  const modes = Object.keys(modeDurationsMin);\n  return modes[Math.floor(Math.random() * modes.length)];\n}\n\n// Start cycle helper\nfunction startNewCycle() {\n  const newMode = pickRandomMode();\n  const newPhase = \"filling\";\n  const newRemainingSeconds = minToSec(modeDurationsMin[newMode][newPhase]);\n\n  flow.set(`homes.${homeId}.laundry.mode`, newMode);\n  flow.set(`homes.${homeId}.laundry.phase`, newPhase);\n  flow.set(`homes.${homeId}.laundry.remainingSeconds`, newRemainingSeconds);\n  flow.set(`homes.${homeId}.laundry.running`, true);\n\n  // reset counters for each cycle\n  flow.set(`homes.${homeId}.laundry.energyKwh`, 0);\n  flow.set(`homes.${homeId}.laundry.waterLiters`, 0);\n\n  return { newMode, newPhase, newRemainingSeconds };\n}\n\n// ----------------------------\n// Load persistent state\n// ----------------------------\nlet mode = flow.get(`homes.${homeId}.laundry.mode`) || \"normal\";\nlet phase = flow.get(`homes.${homeId}.laundry.phase`) || \"idle\";\nlet remainingSeconds = flow.get(`homes.${homeId}.laundry.remainingSeconds`) || 0;\n\nlet running = flow.get(`homes.${homeId}.laundry.running`);\nif (typeof running !== \"boolean\") running = true;\n\nlet energyKwh = flow.get(`homes.${homeId}.laundry.energyKwh`) || 0;\nlet waterLiters = flow.get(`homes.${homeId}.laundry.waterLiters`) || 0;\n\n// ----------------------------\n// Initialize if first run / idle\n// ----------------------------\nif (phase === \"idle\" || !phases.includes(phase) || remainingSeconds <= 0) {\n  const started = startNewCycle();\n  mode = started.newMode;\n  phase = started.newPhase;\n  remainingSeconds = started.newRemainingSeconds;\n\n  energyKwh = 0;\n  waterLiters = 0;\n}\n\n// ----------------------------\n// Progress current phase timer\n// ----------------------------\nif (running) {\n  remainingSeconds = clamp(remainingSeconds - tickSeconds, 0, 10 ** 12);\n\n  if (remainingSeconds === 0) {\n    const idx = phases.indexOf(phase);\n\n    if (idx >= 0 && idx < phases.length - 1) {\n      phase = phases[idx + 1];\n      remainingSeconds = minToSec(modeDurationsMin[mode][phase]);\n    } else {\n      phase = \"completed\";\n      running = false;\n      remainingSeconds = 0;\n    }\n  }\n}\n\n// ----------------------------\n// If TOTAL remaining time is 0 => restart immediately\n// ----------------------------\nconst totalRemaining = (phase === \"completed\")\n  ? 0\n  : totalRemainingSeconds(mode, phase, remainingSeconds);\n\nif (totalRemaining === 0) {\n  const restarted = startNewCycle();\n  mode = restarted.newMode;\n  phase = restarted.newPhase;\n  remainingSeconds = restarted.newRemainingSeconds;\n\n  energyKwh = 0;\n  waterLiters = 0;\n}\n\n// ----------------------------\n// Power, energy, water\n// ----------------------------\nconst currentPowerW = (running && phases.includes(phase)) ? (phasePower[phase] || 0) : 0;\n\nenergyKwh += (currentPowerW / 1000) * (tickSeconds / 3600);\n\nif (running && [\"filling\", \"washing\", \"rinsing\"].includes(phase)) {\n  waterLiters += (Math.random() * 0.5) * (tickSeconds / 60);\n}\n\n// ----------------------------\n// Simulated values\n// ----------------------------\nconst waterTemp = (phase === \"washing\" && running) ? 40 + Math.random() * 10 : 25;\nconst spinSpeed = (phase === \"spinning\" && running) ? 800 + Math.floor(Math.random() * 400) : 0;\nconst loadWeight = 5 + Math.random() * 3;\nconst doorStatus = (running || phase === \"completed\") ? \"locked\" : \"closed\";\n\n// ----------------------------\n// Persist state\n// ----------------------------\nflow.set(`homes.${homeId}.laundry.mode`, mode);\nflow.set(`homes.${homeId}.laundry.phase`, phase);\nflow.set(`homes.${homeId}.laundry.remainingSeconds`, remainingSeconds);\nflow.set(`homes.${homeId}.laundry.running`, running);\nflow.set(`homes.${homeId}.laundry.energyKwh`, energyKwh);\nflow.set(`homes.${homeId}.laundry.waterLiters`, waterLiters);\n\n// optional alias so total calculator can read a consistent key\nflow.set(`homes.${homeId}.energy.laundry`, energyKwh);\n\n// ----------------------------\n// Remaining time (minutes) for AsyncAPI\n// ----------------------------\nconst minutesLeft = secondsToCeilMinutes(totalRemainingSeconds(mode, phase, remainingSeconds));\n\n// ----------------------------\n// Node status\n// ----------------------------\nnode.status({\n  fill: \"blue\",\n  shape: \"dot\",\n  text: `Home ${homeId} | ${phase.toUpperCase()} | ${minutesLeft} min left | ${currentPowerW} W`\n});\n\n// ----------------------------\n// Map internal vars to AsyncAPI-required names\n// ----------------------------\nconst remainingTime = minutesLeft;\nconst waterUsed = waterLiters;\nconst energy = energyKwh;\nconst currentPower = currentPowerW;\n\n// --- Telemetry payload ---\nmsg.payload = {\n  device: 'laundry',\n  running,\n  mode,\n  phase,\n      homeId: homeId,\n  waterTemp: parseFloat(waterTemp.toFixed(1)),\n  spinSpeed,\n  remainingTime,\n  loadWeight: parseFloat(loadWeight.toFixed(1)),\n  waterUsed: parseFloat(waterUsed.toFixed(2)),\n  energyUsed: parseFloat(energy.toFixed(3)),\n  currentPower,\n  doorStatus\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1030,
+    "y": 1000,
+    "wires": [
+      [
+        "2c5b9910b1a8c04a"
+      ]
+    ]
+  },
+  {
+    "id": "629190ff1714a4a9",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "cbdb8152b5d22552",
+    "name": "Laundry Device",
+    "info": "",
+    "x": 1020,
+    "y": 940,
+    "wires": []
+  },
+  {
+    "id": "80adc5254876a0ed",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "b5883c5de8efbe67",
+    "name": "Dehumidifier Telemetry",
+    "func": "// === Dehumidifier Telemetry Simulator (Smart Plug Controlled) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Resolve homeId first\n// ----------------------------\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n  node.error(\"Missing homeId\");\n  return null;\n}\n\n// ----------------------------\n// Constants / helpers\n// ----------------------------\nconst TICK_SECONDS = 60;\n\nconst clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));\nconst toNum = (v, fallback) => {\n  const n = parseFloat(v);\n  return Number.isFinite(n) ? n : fallback;\n};\n\n\n\n// ----------------------------\n// Inputs (environment)\n// ----------------------------\nconst envHumidity = clamp(toNum(msg.payload?.humidity, 70), 0, 100);\nconst envTemp = toNum(msg.payload?.temperature, 22);\n\n// ----------------------------\n// Control settings (persistable)\n// ----------------------------\nconst targetHumidity = clamp(\n  toNum(flow.get(`homes.${homeId}.dehumidifier.targetHumidity`), 50),\n  20,\n  80\n);\n\nconst hysteresis = clamp(\n  toNum(flow.get(`homes.${homeId}.dehumidifier.hysteresis`), 3),\n  1,\n  10\n);\n\nconst startThreshold = targetHumidity + hysteresis;\nconst stopThreshold  = targetHumidity - hysteresis;\n\nconst tankCapacity = clamp(\n  toNum(flow.get(`homes.${homeId}.dehumidifier.tankCapacity`), 2.0),\n  0.5,\n  10.0\n);\n\n// ----------------------------\n// Persistent state\n// ----------------------------\nlet running = flow.get(`homes.${homeId}.dehumidifier.running`);\nif (typeof running !== \"boolean\") running = false;\n\nlet tankLevel = clamp(\n  toNum(flow.get(`homes.${homeId}.dehumidifier.tankLevel`), 0),\n  0,\n  tankCapacity\n);\n\nlet energyKwh = Math.max(\n  0,\n  toNum(flow.get(`homes.${homeId}.energy.dehumidifier`), 0)\n);\n\n// ----------------------------\n// Tank full logic\n// ----------------------------\nlet tankFull = tankLevel >= tankCapacity;\n\nif (tankFull) {\n  running = false;\n}\n\n// ----------------------------\n// Auto start/stop (humidity hysteresis)\n// ----------------------------\nif (!tankFull) {\n  if (!running && envHumidity >= startThreshold) {\n    running = true;\n  } else if (running && envHumidity <= stopThreshold) {\n    running = false;\n  }\n}\n\n// ----------------------------\n// Fan speed + power model\n// ----------------------------\nlet fanSpeed = \"off\";\nlet currentPowerW = 0;\n\nif (running) {\n  const delta = envHumidity - targetHumidity;\n\n  fanSpeed = delta >= 10 ? \"high\"\n           : delta >= 5  ? \"medium\"\n           : \"low\";\n\n  currentPowerW = fanSpeed === \"high\" ? 260\n               : fanSpeed === \"medium\" ? 220\n               : 180;\n}\n\n// ----------------------------\n// Moisture removal & tank fill (liters per minute)\n// ----------------------------\nif (running) {\n  const delta = Math.max(0, envHumidity - targetHumidity);\n\n  const litersPerMin = clamp(0.01 + (delta / 50) * 0.04, 0.01, 0.05);\n\n  tankLevel = clamp(tankLevel + litersPerMin, 0, tankCapacity);\n\n  if (tankLevel >= tankCapacity) {\n    tankFull = true;\n    running = false;\n    fanSpeed = \"off\";\n    currentPowerW = 0;\n  }\n}\n\n// ----------------------------\n// Energy integration (kWh)\n// ----------------------------\nif (currentPowerW > 0) {\n  energyKwh += (currentPowerW / 1000) * (TICK_SECONDS / 3600);\n}\n\n// ----------------------------\n// Persist state\n// ----------------------------\nflow.set(`homes.${homeId}.dehumidifier.running`, running);\nflow.set(`homes.${homeId}.dehumidifier.tankLevel`, tankLevel);\nflow.set(`homes.${homeId}.energy.dehumidifier`, energyKwh);\n\n// ----------------------------\n// Status\n// ----------------------------\nconst statusText = tankFull\n  ? `Home ${homeId} | TANK FULL | ${tankLevel.toFixed(2)}/${tankCapacity} L | 0 W`\n  : running\n    ? `Home ${homeId} | RUNNING (${fanSpeed}) | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | ${currentPowerW} W`\n    : `Home ${homeId} | IDLE | ${envHumidity.toFixed(1)}% → ${targetHumidity}% | 0 W`;\n\nnode.status({\n  fill: tankFull ? \"red\" : (running ? \"blue\" : \"green\"),\n  shape: running ? \"dot\" : \"ring\",\n  text: statusText\n});\n\n// ----------------------------\n// Telemetry payload\n// ----------------------------\nmsg.payload = {\n  device: \"dehumidifier\",\n  running,\n  mode: \"auto\",\n  targetHumidity: parseFloat(targetHumidity.toFixed(1)),\n  humidity: parseFloat(envHumidity.toFixed(1)),\n  temperature: parseFloat(envTemp.toFixed(1)),\n  fanSpeed,\n  currentPower: currentPowerW,\n  tankLevel: parseFloat(tankLevel.toFixed(2)),\n  tankCapacity,\n  tankFull,\n  energyUsed: parseFloat(energyKwh.toFixed(3)),\n  unit: \"%\",\n      homeId: homeId,\n  timestamp: new Date().toISOString()\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1040,
+    "y": 1200,
+    "wires": [
+      [
+        "a2df53fc53bf932d"
+      ]
+    ]
+  },
+  {
+    "id": "a2df53fc53bf932d",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "b5883c5de8efbe67",
+    "name": "Dehumidifier AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/dehumidifier/state",
+    "operation": {
+      "id": "dehumidifierTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "DehumidifierState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "device",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "power",
+              "type": "string",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "enum": [
+                "auto",
+                "manual"
+              ],
+              "required": true
+            },
+            {
+              "name": "fanSpeed",
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "required": true
+            },
+            {
+              "name": "tankLevel",
+              "type": "number",
+              "description": "Water tank fill level in %",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "humidity",
+              "type": "number",
+              "description": "Current room humidity %",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "device",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "power",
+        "type": "string",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "enum": [
+          "auto",
+          "manual"
+        ],
+        "required": true
+      },
+      {
+        "name": "fanSpeed",
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "required": true
+      },
+      {
+        "name": "tankLevel",
+        "type": "number",
+        "description": "Water tank fill level in %",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "humidity",
+        "type": "number",
+        "description": "Current room humidity %",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "device": "",
+      "power": "",
+      "mode": "",
+      "fanSpeed": "",
+      "tankLevel": "",
+      "energyUsed": "",
+      "humidity": ""
+    },
+    "savedNodeId": "a2df53fc53bf932d",
+    "x": 1290,
+    "y": 1200,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "09a4cd3c5f992726",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "b5883c5de8efbe67",
+    "name": "Dehimidifier Device",
+    "info": "",
+    "x": 1030,
+    "y": 1140,
+    "wires": []
+  },
+  {
+    "id": "a20cc442f0577b88",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "7522eda8675c1d8e",
+    "name": "Cooker Telemetry",
+    "func": "// === Cooker/Oven Telemetry Simulator (30 min Bake Mode) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Resolve homeId first\n// ----------------------------\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n  node.error(\"Missing homeId\");\n  return null;\n}\n\n// ----------------------------\n// Helpers / constants\n// ----------------------------\nconst TICK_SECONDS = 60;\nconst MODE = \"bake\";\nconst CYCLE_SECONDS = 30 * 60;\n\n// ----------------------------\n// Smart plug gate (normalized)\n// ----------------------------\n\n\n// ----------------------------\n// Load / init persistent timer\n// ----------------------------\nlet remainingSeconds = flow.get(`homes.${homeId}.cooker.remainingSeconds`);\nif (remainingSeconds === undefined || remainingSeconds === null) {\n  remainingSeconds = CYCLE_SECONDS;\n}\n\n// ----------------------------\n// Run cycle + auto-restart when finished\n// ----------------------------\nlet running = remainingSeconds > 0;\n\nif (running) {\n  remainingSeconds = Math.max(0, remainingSeconds - TICK_SECONDS);\n  running = remainingSeconds > 0;\n}\n\nif (!running && remainingSeconds === 0) {\n  remainingSeconds = CYCLE_SECONDS;\n  running = true;\n}\n\n// Persist timer\nflow.set(`homes.${homeId}.cooker.remainingSeconds`, remainingSeconds);\n\n// ----------------------------\n// Temperatures / power\n// ----------------------------\nconst currentTemp = running ? 180 : 25;\nconst setTemp = running ? 200 : 0;\nconst currentPowerW = running ? 1500 : 0;\n\n// ----------------------------\n// Energy (kWh cumulative)\n// ----------------------------\nlet energyKwh = flow.get(`homes.${homeId}.energy.cooker`) || 0;\nenergyKwh += (currentPowerW / 1000) * (TICK_SECONDS / 3600);\nflow.set(`homes.${homeId}.energy.cooker`, energyKwh);\n\n// ----------------------------\n// Status\n// ----------------------------\nconst minutesLeft = Math.ceil(remainingSeconds / 60);\n\nconst statusText = running\n  ? `Home ${homeId} | ${MODE.toUpperCase()} | ${currentTemp}°C → ${setTemp}°C | ${minutesLeft} min left | ${currentPowerW} W`\n  : `Home ${homeId} | OFF | Temp: ${currentTemp}°C | 0 W`;\n\nnode.status({\n  fill: running ? \"orange\" : \"grey\",\n  shape: running ? \"dot\" : \"ring\",\n  text: statusText\n});\n\n// ----------------------------\n// Telemetry payload\n// ----------------------------\nmsg.payload = {\n  device: \"cooker\",\n  power: running ? \"ON\" : \"OFF\",\n  mode: MODE,\n  setTemp,\n      homeId: homeId,\n  currentTemp,\n  remainingTime: minutesLeft,\n  currentPower: currentPowerW,\n  energyUsed: parseFloat(energyKwh.toFixed(3)),\n  timestamp: new Date().toISOString()\n};\n\nmsg.parameters = {homeId:homeId};\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1030,
+    "y": 1380,
+    "wires": [
+      [
+        "eeb03fa7939d995b"
+      ]
+    ]
+  },
+  {
+    "id": "eeb03fa7939d995b",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "7522eda8675c1d8e",
+    "name": "Cooker AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/cooker/state",
+    "operation": {
+      "id": "cookerTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "CookerState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "device",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "power",
+              "type": "string",
+              "enum": [
+                "ON",
+                "OFF"
+              ],
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "enum": [
+                "idle",
+                "bake",
+                "grill",
+                "roast",
+                "steam"
+              ],
+              "required": true
+            },
+            {
+              "name": "setTemp",
+              "type": "number",
+              "description": "Target temperature in Celsius",
+              "required": true
+            },
+            {
+              "name": "currentTemp",
+              "type": "number",
+              "description": "Current oven temperature",
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "device",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "power",
+        "type": "string",
+        "enum": [
+          "ON",
+          "OFF"
+        ],
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "enum": [
+          "idle",
+          "bake",
+          "grill",
+          "roast",
+          "steam"
+        ],
+        "required": true
+      },
+      {
+        "name": "setTemp",
+        "type": "number",
+        "description": "Target temperature in Celsius",
+        "required": true
+      },
+      {
+        "name": "currentTemp",
+        "type": "number",
+        "description": "Current oven temperature",
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "device": "",
+      "power": "",
+      "mode": "",
+      "setTemp": "",
+      "currentTemp": "",
+      "energyUsed": ""
+    },
+    "savedNodeId": "eeb03fa7939d995b",
+    "x": 1370,
+    "y": 1380,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "bd78dd50d8193ef9",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "7522eda8675c1d8e",
+    "name": "Cooker Device",
+    "info": "",
+    "x": 1020,
+    "y": 1320,
+    "wires": []
+  },
+  {
+    "id": "73d3627dc2c6cf88",
+    "type": "async-api-red",
+    "z": "subflow_homeid",
+    "g": "0a4c87ecafc99276",
+    "name": " Thermostat AsyncAPI",
+    "serverUrl": "mqtt://172.17.0.1:1883/",
+    "topic": "home/{homeId}/thermostat/state",
+    "operation": {
+      "id": "thermostatTelemetry",
+      "action": "send",
+      "messages": [
+        {
+          "name": "ThermostatState",
+          "contentType": "application/json",
+          "payload": [
+            {
+              "name": "temperature",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "humidity",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "enum": [
+                "heat",
+                "cool",
+                "idle"
+              ],
+              "required": true
+            },
+            {
+              "name": "energyUsed",
+              "type": "number",
+              "description": "Cumulative energy used in kWh",
+              "required": true
+            },
+            {
+              "name": "unit",
+              "type": "string",
+              "enum": [
+                "C",
+                "F"
+              ],
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    "expectedPayload": [
+      {
+        "name": "temperature",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "humidity",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "enum": [
+          "heat",
+          "cool",
+          "idle"
+        ],
+        "required": true
+      },
+      {
+        "name": "energyUsed",
+        "type": "number",
+        "description": "Cumulative energy used in kWh",
+        "required": true
+      },
+      {
+        "name": "unit",
+        "type": "string",
+        "enum": [
+          "C",
+          "F"
+        ],
+        "required": true
+      }
+    ],
+    "parameters": [
+      {
+        "id": "homeId",
+        "description": "Unique identifier of the smart home instance"
+      }
+    ],
+    "parameterValues": {
+      "homeId": ""
+    },
+    "payload": {
+      "temperature": "",
+      "humidity": "",
+      "mode": "",
+      "energyUsed": "",
+      "unit": ""
+    },
+    "savedNodeId": "73d3627dc2c6cf88",
+    "x": 1300,
+    "y": 240,
+    "wires": [
+      [
+        "ebe7cfb8b731f7a6"
+      ]
+    ]
+  },
+  {
+    "id": "ba91fb272d98af29",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "0a4c87ecafc99276",
+    "name": "Thermostat Telemetry",
+    "func": "// === Thermostat / HVAC Telemetry (Smart Plug Controlled) ===\n\n// 1) ADD THIS AT THE TOP\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\n\n\n// --- Read environment values from input ---\nlet envTemp = parseFloat(msg.payload.temperature ?? 22);\nlet envHumidity = parseFloat(msg.payload.humidity ?? 45);\n\n// --- Desired temperature (fixed setpoint) ---\n// 3) CHANGE FLOW KEYS\n// old: let desired = flow.get('thermostat.setpoint') ?? 23;\nlet desired = flow.get(`homes.${homeId}.thermostat.setpoint`) ?? 23;\n\n// old: flow.set('thermostat.setpoint', desired);\nflow.set(`homes.${homeId}.thermostat.setpoint`, desired);\n\n// --- Persistent current temperature (don’t reset every tick) ---\n// old: let current = flow.get('thermostat.currentTemp');\nlet current = flow.get(`homes.${homeId}.thermostat.currentTemp`);\n\nif (current === undefined || current === null) current = envTemp;\n\n// --- Simulation step: 1 execution = 1 simulated minute ---\nconst tickDuration = 60; // seconds (simulated)\n\n// --- Small natural drift toward environment ---\ncurrent += (Math.random() * 0.4 - 0.2); // ±0.2°C\ncurrent += (envTemp - current) * 0.05;  // gently pull toward env\n\n// --- Determine HVAC mode ---\nlet mode = 'idle';\nlet currentPower = 0; // Watts\n\nconst deadband = 1; // ±1°C deadband around setpoint\n\nif (current < desired - deadband) {\n    mode = 'heat';\n    currentPower = 2000;\n    current += 0.4; // heating effect per tick\n} else if (current > desired + deadband) {\n    mode = 'cool';\n    currentPower = 1200;\n    current -= 0.4; // cooling effect per tick\n}\n\n// --- Energy tracking (cumulative kWh) ---\n// 4) CHANGE ENERGY KEY\n// old: let energy = flow.get('energy.thermostat') || 0;\nlet energy = flow.get(`homes.${homeId}.energy.thermostat`) || 0;\n\nfunction wattToKwh(powerWatts, seconds) {\n    return (powerWatts / 1000) * (seconds / 3600);\n}\nif (currentPower > 0) energy += wattToKwh(currentPower, tickDuration);\n\n// --- Save state ---\n// old: flow.set('energy.thermostat', energy);\nflow.set(`homes.${homeId}.energy.thermostat`, energy);\n\n// old: flow.set('thermostat.currentTemp', current);\nflow.set(`homes.${homeId}.thermostat.currentTemp`, current);\n\n// optional: only keep this if something else uses it globally\n// old: flow.set('current_temp', current);\nflow.set(`homes.${homeId}.current_temp`, current);\n\n// --- Node status for visual feedback ---\nlet color = 'green';\nlet shape = 'ring';\nlet text = `Home ${homeId} | IDLE | ${current.toFixed(1)}°C → ${desired}°C | 0 W`;\n\nif (mode === 'heat') {\n    color = 'red';\n    shape = 'dot';\n    text = `Home ${homeId} | HEAT | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n} else if (mode === 'cool') {\n    color = 'blue';\n    shape = 'dot';\n    text = `Home ${homeId} | COOL | ${current.toFixed(1)}°C → ${desired}°C | ${currentPower} W`;\n}\n\nnode.status({ fill: color, shape, text });\n\n// --- Telemetry output ---\nmsg.payload = {\n    homeId: homeId,\n    device: \"thermostat\",\n    temperature: parseFloat(current.toFixed(1)),\n    humidity: envHumidity,\n    setpoint: desired,\n    mode,\n    energyUsed: parseFloat(energy.toFixed(3)),\n    currentPower,\n    unit: \"C\",\n    timestamp: new Date().toISOString(),\n};\nmsg.parameters = {homeId:homeId};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1040,
+    "y": 240,
+    "wires": [
+      [
+        "73d3627dc2c6cf88"
+      ]
+    ]
+  },
+  {
+    "id": "b83eb7a5e1ca6966",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "0a4c87ecafc99276",
+    "name": "Thermostat Device",
+    "info": "",
+    "x": 1030,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "888d0e4202a26aca",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "name": "SMARTHOME",
+    "info": "",
+    "x": 340,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "272910d0b008a640",
+    "type": "function",
+    "z": "subflow_homeid",
+    "g": "11ca0e4603062f24",
+    "name": "Environment Generator",
+    "func": "// === Environment Generator (tick-based simulated time) ===\n// Rule: 1 execution (tick) = 1 simulated minute\n\n// ----------------------------\n// Simulated time counter\n// ----------------------------\nconst homeId = msg.homeId || msg.payload?.homeId;\nif (!homeId) {\n    node.error(\"Missing homeId\");\n    return null;\n}\n\nmsg.homeId = homeId;\nmsg.payload = {\n    state: msg.payload?.state || \"on\"\n};\n\n\nlet simMinutesTotal = flow.get(\"simulationMinutes\") || 0;\nsimMinutesTotal += 1;                      // +1 simulated minute per tick\nflow.set(\"simulationMinutes\", simMinutesTotal);\n\nconst simHours = Math.floor(simMinutesTotal / 60) % 24;\nconst simMinutes = simMinutesTotal % 60;\n\nconst simTimeText =\n  `${String(simHours).padStart(2, \"0\")}:${String(simMinutes).padStart(2, \"0\")}`;\n\n// Node status shows simulated clock\nnode.status({\n  fill: \"green\",\n  shape: \"dot\",\n  text: `Sim Time ${simTimeText}`\n});\n\n// ----------------------------\n// Realistic Environment Base\n// ----------------------------\nconst baseTemp = 33;       // °C\nconst baseHumidity = 20;   // %\nconst hour = simHours;     // use simulated hour for lighting\n\n// Get previous state\nlet currentTemp = flow.get(\"env.temperature\");\nlet currentHumidity = flow.get(\"env.humidity\");\nlet currentLight = flow.get(\"env.lightIntensity\");\n\nif (currentTemp === undefined || currentTemp === null) currentTemp = baseTemp;\nif (currentHumidity === undefined || currentHumidity === null) currentHumidity = baseHumidity;\nif (currentLight === undefined || currentLight === null) currentLight = 50;\n\n// ----------------------------\n// Apply small drift\n// ----------------------------\ncurrentTemp += (Math.random() * 0.4 - 0.2);       // ±0.2°C\ncurrentHumidity += (Math.random() * 2 - 1);       // ±1%\ncurrentHumidity = Math.max(20, Math.min(70, currentHumidity)); // clamp\n\n// Light based on simulated time\nif (hour >= 6 && hour < 18) {\n  currentLight = 70 + Math.floor(Math.random() * 30); // day\n} else {\n  currentLight = Math.floor(Math.random() * 20);      // night\n}\n\n// Save state\nflow.set(\"env.temperature\", currentTemp);\nflow.set(\"env.humidity\", currentHumidity);\nflow.set(\"env.lightIntensity\", currentLight);\nflow.set(\"current_temp\", currentTemp);\n\n// ----------------------------\n// Output payload\n// ----------------------------\nmsg.payload = {\n  environment: true,\n  temperature: parseFloat(currentTemp.toFixed(1)),\n  humidity: parseFloat(currentHumidity.toFixed(1)),\n  lightIntensity: currentLight,\n  unit: \"C\",\n  simulatedTime: simTimeText,        // HH:MM\n  simMinutesTotal: simMinutesTotal   // optional (useful for graphs)\n};\n\nreturn msg;\n",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 510,
+    "y": 620,
+    "wires": [
+      [
+        "e6590b7206d8581f",
+        "35f57317c6f5c331",
+        "45c14e4dcf6123dd",
+        "5e89aee0591904b5",
+        "80adc5254876a0ed",
+        "a20cc442f0577b88",
+        "ba91fb272d98af29"
+      ]
+    ]
+  },
+  {
+    "id": "c51da6bc2efd123b",
+    "type": "comment",
+    "z": "subflow_homeid",
+    "g": "11ca0e4603062f24",
+    "name": "Enviroment variables",
+    "info": "",
+    "x": 500,
+    "y": 560,
+    "wires": []
+  },
+  {
+    "id": "0b88f2f2852e2833",
+    "type": "group",
+    "z": "subflow_homeid",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "ebe7cfb8b731f7a6",
+      "a211020fca463051",
+      "0aee7daa9b2e2df0",
+      "4c03080298063de0",
+      "cbdb8152b5d22552",
+      "b5883c5de8efbe67",
+      "7522eda8675c1d8e",
+      "0a4c87ecafc99276",
+      "888d0e4202a26aca",
+      "11ca0e4603062f24"
+    ],
+    "x": 234,
+    "y": 79,
+    "w": 1592,
+    "h": 1368
+  },
+  {
+    "id": "121e7021ab8c41a3",
+    "type": "group",
+    "z": "subflow_homeid",
+    "name": "SMARTHOME",
+    "style": {
+      "label": true
+    },
+    "nodes": [],
+    "x": 230,
+    "y": 10,
+    "w": 99,
+    "h": 40
+  },
+  {
+    "id": "a211020fca463051",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "e6590b7206d8581f",
+      "01056304da822a78",
+      "cc5836e8e5afdbf5"
+    ],
+    "x": 914,
+    "y": 319,
+    "w": 452,
+    "h": 142
+  },
+  {
+    "id": "0aee7daa9b2e2df0",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "35f57317c6f5c331",
+      "d6a783516ac7fa4b",
+      "d2b397e205f25348"
+    ],
+    "x": 914,
+    "y": 499,
+    "w": 472,
+    "h": 142
+  },
+  {
+    "id": "4c03080298063de0",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "45c14e4dcf6123dd",
+      "9aade0d705c15f97",
+      "ddf4976877cb52e7"
+    ],
+    "x": 914,
+    "y": 699,
+    "w": 482,
+    "h": 142
+  },
+  {
+    "id": "cbdb8152b5d22552",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "2c5b9910b1a8c04a",
+      "5e89aee0591904b5",
+      "629190ff1714a4a9"
+    ],
+    "x": 914,
+    "y": 899,
+    "w": 472,
+    "h": 142
+  },
+  {
+    "id": "b5883c5de8efbe67",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "80adc5254876a0ed",
+      "a2df53fc53bf932d",
+      "09a4cd3c5f992726"
+    ],
+    "x": 914,
+    "y": 1099,
+    "w": 502,
+    "h": 142
+  },
+  {
+    "id": "7522eda8675c1d8e",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "a20cc442f0577b88",
+      "eeb03fa7939d995b",
+      "bd78dd50d8193ef9"
+    ],
+    "x": 914,
+    "y": 1279,
+    "w": 572,
+    "h": 142
+  },
+  {
+    "id": "0a4c87ecafc99276",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "73d3627dc2c6cf88",
+      "ba91fb272d98af29",
+      "b83eb7a5e1ca6966"
+    ],
+    "x": 914,
+    "y": 139,
+    "w": 512,
+    "h": 142
+  },
+  {
+    "id": "11ca0e4603062f24",
+    "type": "group",
+    "z": "subflow_homeid",
+    "g": "0b88f2f2852e2833",
+    "style": {
+      "stroke": "#999999",
+      "stroke-opacity": "1",
+      "fill": "none",
+      "fill-opacity": "1",
+      "label": true,
+      "label-position": "nw",
+      "color": "#a4a4a4"
+    },
+    "nodes": [
+      "272910d0b008a640",
+      "c51da6bc2efd123b"
+    ],
+    "x": 374,
+    "y": 519,
+    "w": 272,
+    "h": 142
+  },
+  {
+    "id": "0e230f40eeba010f",
+    "type": "subflow:subflow_homeid",
+    "z": "5a540fe05d13dafe",
+    "name": "Home 2",
+    "x": 900,
+    "y": 360,
+    "wires": [
+      [
+        "80971688440cac0f",
+        "532444c0bc7b88be"
+      ]
+    ]
+  },
+  {
+    "id": "80971688440cac0f",
+    "type": "debug",
+    "z": "5a540fe05d13dafe",
+    "name": "debug 8",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1160,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "cc220e236c255890",
+    "type": "inject",
+    "z": "5a540fe05d13dafe",
+    "name": "",
+    "props": [
+      {
+        "p": "homeId",
+        "v": "2",
+        "vt": "str"
+      },
+      {
+        "p": "enable",
+        "v": "false",
+        "vt": "bool"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 650,
+    "y": 360,
+    "wires": [
+      [
+        "0e230f40eeba010f"
+      ]
+    ]
+  },
+  {
+    "id": "e6611389801b52cb",
+    "type": "subflow:subflow_homeid",
+    "z": "5a540fe05d13dafe",
+    "name": "Home 1",
+    "x": 900,
+    "y": 220,
+    "wires": [
+      [
+        "45db391cc3af6565",
+        "82cd2da6c4790b25"
+      ]
+    ]
+  },
+  {
+    "id": "45db391cc3af6565",
+    "type": "debug",
+    "z": "5a540fe05d13dafe",
+    "name": "debug 10",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1160,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "e6838ed8926b30c7",
+    "type": "inject",
+    "z": "5a540fe05d13dafe",
+    "name": "",
+    "props": [
+      {
+        "p": "homeId",
+        "v": "1",
+        "vt": "str"
+      },
+      {
+        "p": "enabled",
+        "v": "true",
+        "vt": "bool"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 650,
+    "y": 220,
+    "wires": [
+      [
+        "e6611389801b52cb"
+      ]
+    ]
+  },
+  {
+    "id": "ca9df83b63c65427",
+    "type": "subflow:subflow_homeid",
+    "z": "5a540fe05d13dafe",
+    "name": "Home 3",
+    "x": 900,
+    "y": 500,
+    "wires": [
+      [
+        "fb913373e0bf1f1a",
+        "bb22d14c45d873fd"
+      ]
+    ]
+  },
+  {
+    "id": "fb913373e0bf1f1a",
+    "type": "debug",
+    "z": "5a540fe05d13dafe",
+    "name": "debug 11",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1160,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "aec31d55cacb41ae",
+    "type": "inject",
+    "z": "5a540fe05d13dafe",
+    "name": "",
+    "props": [
+      {
+        "p": "homeId",
+        "v": "3",
+        "vt": "str"
+      },
+      {
+        "p": "enabled",
+        "v": "false",
+        "vt": "bool"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 650,
+    "y": 500,
+    "wires": [
+      [
+        "ca9df83b63c65427"
+      ]
+    ]
+  },
+  {
+    "id": "056cc4b53b3e6e0d",
+    "type": "subflow:subflow_homeid",
+    "z": "5a540fe05d13dafe",
+    "name": "Home 4",
+    "x": 900,
+    "y": 640,
+    "wires": [
+      [
+        "566ecaa5cb648f10",
+        "03156a1eb3321ed0"
+      ]
+    ]
+  },
+  {
+    "id": "566ecaa5cb648f10",
+    "type": "debug",
+    "z": "5a540fe05d13dafe",
+    "name": "debug 12",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1160,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "c77630cd4ba126d1",
+    "type": "inject",
+    "z": "5a540fe05d13dafe",
+    "name": "",
+    "props": [
+      {
+        "p": "homeId",
+        "v": "4",
+        "vt": "str"
+      },
+      {
+        "p": "enabled",
+        "v": "false",
+        "vt": "bool"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 650,
+    "y": 640,
+    "wires": [
+      [
+        "056cc4b53b3e6e0d"
+      ]
+    ]
+  },
+  {
+    "id": "82cd2da6c4790b25",
+    "type": "function",
+    "z": "5a540fe05d13dafe",
+    "name": "function 2",
+    "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1160,
+    "y": 160,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "532444c0bc7b88be",
+    "type": "function",
+    "z": "5a540fe05d13dafe",
+    "name": "function 3",
+    "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1160,
+    "y": 300,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "bb22d14c45d873fd",
+    "type": "function",
+    "z": "5a540fe05d13dafe",
+    "name": "function 4",
+    "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1160,
+    "y": 440,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "03156a1eb3321ed0",
+    "type": "function",
+    "z": "5a540fe05d13dafe",
+    "name": "function 5",
+    "func": "const { homeId, energy } = msg.payload || {};\n\nif (energy === undefined) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"No data\" });\n    return msg;\n}\n\nnode.status({\n    fill: energy === 0 ? \"grey\" : \"green\",\n    shape: energy === 0 ? \"ring\" : \"dot\",\n    text: `Home ${homeId} | ${energy} kWh`\n});\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1160,
+    "y": 580,
+    "wires": [
+      []
+    ]
+  }
+]
