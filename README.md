@@ -280,9 +280,10 @@ K. Doras, "Asynchronous Flow-Based Programming in the Web of Things," Dissertati
   url          = {[https://doi.org/10.26233/heallink.tuc.105453](https://doi.org/10.26233/heallink.tuc.105453)}
 }
 ```
+---
 
 ## License
 
 This project is intended for educational and development purposes.
 
----
+
