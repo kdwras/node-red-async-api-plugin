@@ -262,6 +262,25 @@ Rebuild containers:
 
 ---
 
+## Citation
+
+If you use this work, please cite it as:
+
+K. Doras, "Asynchronous Flow-Based Programming in the Web of Things," Dissertation Thesis, Technical University of Crete, Chania, Crete, May 2026. DOI: [10.26233/heallink.tuc.105453](https://doi.org/10.26233/heallink.tuc.105453)
+
+```bibtex
+@phdthesis{doras2026asynchronous,
+  author       = {Doras, K.},
+  title        = {Asynchronous Flow-Based Programming in the Web of Things},
+  school       = {Technical University of Crete},
+  address      = {Chania, Crete},
+  month        = May,
+  year         = {2026},
+  doi          = {10.26233/heallink.tuc.105453},
+  url          = {[https://doi.org/10.26233/heallink.tuc.105453](https://doi.org/10.26233/heallink.tuc.105453)}
+}
+```
+
 ## License
 
 This project is intended for educational and development purposes.
